@@ -10,9 +10,14 @@ import * as React from 'react';
 import { Button, View, Text, StyleSheet, TouchableHighlight, TextInput, Image, Dimensions } from 'react-native';
 import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import SplashScreen from "react-native-splash-screen";
 import EmailLoginScreen from "./app/account/login";
 import JoinScreen from "./app/account/join";
+import ShowbilityHome from "./app/showbility/components/mainTab";
+import SearchTab from "./app/showbility/components/search";
+import MessageTab from "./app/showbility/components/message";
+import MyShowbilTab from "./app/showbility/components/myShowbil";
 
 const styles = StyleSheet.create({
   fontStyle: {
@@ -174,28 +179,20 @@ function App() {
           />
         </Stack.Navigator>
       ) : (
-        <HomeStack.Navigator>
-          <Stack.Screen
-            name="ShobilityMain"
-            component={ShowbilityHome}
-            options={{ headerShown: false }}
-          />
-        </HomeStack.Navigator>
+        <MainTab.Navigator>
+          <MainTab.Screen name="Shobility" component={ShowbilityHome} />
+          <MainTab.Screen name="Search" component={SearchTab} />
+          <MainTab.Screen name="Message" component={MessageTab} />
+          <MainTab.Screen name="MyShowbil" component={MyShowbilTab} />
+        </MainTab.Navigator>
       )}
     </NavigationContainer>
     
   );
 }
 
-const HomeStack = createStackNavigator();
+const MainTab = createBottomTabNavigator();
 
-function ShowbilityHome() {
-  return (
-    <View style={[styles.flexCenter, styles.container]}>
-      <Text>ShobilityMain</Text>
-    </View>
-  )
-}
 
 export default class WelcomPage extends React.Component {
   componentDidMount() {
