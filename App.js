@@ -16,6 +16,7 @@ import EmailLoginScreen from "./app/account/login";
 import JoinScreen from "./app/account/join";
 import ShowbilityHome from "./app/showbility/components/mainTab";
 import SearchTab from "./app/showbility/components/search";
+import NewUploadTab from "./app/showbility/components/search";
 import MessageTab from "./app/showbility/components/message";
 import MyShowbilTab from "./app/showbility/components/myShowbil";
 
@@ -180,10 +181,11 @@ function App() {
         </Stack.Navigator>
       ) : (
         <MainTab.Navigator>
-          <MainTab.Screen name="Shobility" component={ShowbilityHome} />
-          <MainTab.Screen name="Search" component={SearchTab} />
-          <MainTab.Screen name="Message" component={MessageTab} />
-          <MainTab.Screen name="MyShowbil" component={MyShowbilTab} />
+          <MainTab.Screen name="쇼빌리티" component={ShowbilityHome} />
+          <MainTab.Screen name="검색" component={SearchTab} />
+          <MainTab.Screen name="NewUpload" component={NewUploadTab} />
+          <MainTab.Screen name="메세지" component={MessageTab} />
+          <MainTab.Screen name="마이쇼빌" component={MyShowbilTab} />
         </MainTab.Navigator>
       )}
     </NavigationContainer>
