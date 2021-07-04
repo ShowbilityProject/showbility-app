@@ -109,11 +109,23 @@ class ShowbilityHome extends React.Component {
             onPress={() => this.onPressTobText('group')}
           >그룹</Text>
         </View>
-        <FlatList
-          data={this.data}
-          renderItem={this.renderItem}
-          style={ styles.main }>
-        </FlatList>
+        <View style={ styles.main }>
+          <FlatList
+            data={this.data}
+            renderItem={this.renderItem}
+            style={{ display: this.state['showbility'] ? "" : "none" }}>
+          </FlatList>
+          <FlatList
+            // data={this.data}
+            // renderItem={this.renderItem}
+            style={{ display: this.state['ability'] ? "" : "none" }}>
+          </FlatList>
+          <FlatList
+            // data={this.data}
+            // renderItem={this.renderItem}
+            style={{ display: this.state['group'] ? "" : "none" }}>
+          </FlatList>
+        </View>
       </SafeAreaView>
     )
   }
