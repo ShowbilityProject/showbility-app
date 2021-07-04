@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { FlatList, SafeAreaView, Button, View, Text, StyleSheet, TextInput, Image, Dimensions } from 'react-native';
-import { StatusBar } from 'react-native';
-import { thisExpression } from '@babel/types';
-import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
+import { FlatList, SafeAreaView, View, Text, StyleSheet, Image, Modal, Button } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const styles = StyleSheet.create({
     container: {
@@ -32,7 +31,7 @@ const styles = StyleSheet.create({
     main: {
       flex:1,
       height: "100%",
-      width: '100%'
+      width: "100%"
     },
     flatListImage: {
       width:"90%",
@@ -43,7 +42,8 @@ const styles = StyleSheet.create({
     }
   })
 
-class ShowbilityHome extends React.Component {
+
+class SHome extends React.Component {
 
   constructor(props) {
     super(props);
@@ -79,14 +79,13 @@ class ShowbilityHome extends React.Component {
         }else {
           st[k] = false;
         }
-        console.log(k, st[k])
       }
     }
     this.setState(st);
   } 
 
   showModalOnShowbilityItemPressed = (item) => {
-    console.log(item);
+    this.props.navigation.navigate('ContentsModal', item)
   }
 
   renderItem = (itemObject) => {
@@ -135,6 +134,35 @@ class ShowbilityHome extends React.Component {
       </SafeAreaView>
     )
   }
+}
+
+const MainHomeStack = createStackNavigator();
+
+function ContentsModal({route, navigation}) {
+  const item = route.params;
+  return (
+    <SafeAreaView>
+      <Text>{item.url}</Text>
+      <Button onPress={() => navigation.goBack()} title="Dismiss" />
+    </SafeAreaView>
+  )
+}
+
+function ShowbilityHome() {
+  return (
+    <MainHomeStack.Navigator mode="modal">
+        <MainHomeStack.Screen
+          name="Main"
+          component={SHome}
+          options={{ headerShown: false }}
+        />
+        <MainHomeStack.Screen
+          name="ContentsModal"
+          component={ContentsModal}
+          options={{ headerShown: false }}
+        />
+      </MainHomeStack.Navigator>
+  )
 }
 
 export default ShowbilityHome;
