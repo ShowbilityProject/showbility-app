@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FlatList, SafeAreaView, View, Text, StyleSheet, Image, Modal, Button } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
 
 const styles = StyleSheet.create({
@@ -39,6 +39,17 @@ const styles = StyleSheet.create({
       alignSelf: 'center',
       marginTop: 10,
       marginBottom: 10
+    },
+    modalCloseButton: {
+      position: "absolute",
+      right: 10,
+      top: 60,
+      width: 24,
+      height: 24,
+      flex: 1,
+      backgroundColor: "#F85B02",
+      borderRadius: 24,
+      justifyContent: 'center'
     }
   })
 
@@ -140,10 +151,22 @@ const MainHomeStack = createStackNavigator();
 
 function ContentsModal({route, navigation}) {
   const item = route.params;
+  const data = [item];
   return (
-    <SafeAreaView>
-      <Text>{item.url}</Text>
-      <Button onPress={() => navigation.goBack()} title="Dismiss" />
+    <SafeAreaView style={{ flex: 1 }}>
+      <FlatList
+        data={data}
+        renderItem={(itemObject) => {
+          let item = itemObject.item;
+          return (
+            <Image source={{uri:item.url}} style={{ width:"100%", aspectRatio: 1, marginBottom: 10 }} />
+          )
+        }}
+      />
+        <View
+          style={styles.modalCloseButton}>
+          <Text onPress={() => navigation.goBack()} style={{ color: 'white', alignSelf: 'center'}}>X</Text>
+        </View>
     </SafeAreaView>
   )
 }
