@@ -2,6 +2,7 @@ import * as React from 'react';
 import { FlatList, SafeAreaView, Button, View, Text, StyleSheet, TextInput, Image, Dimensions } from 'react-native';
 import { StatusBar } from 'react-native';
 import { thisExpression } from '@babel/types';
+import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 
 const styles = StyleSheet.create({
     container: {
@@ -84,11 +85,16 @@ class ShowbilityHome extends React.Component {
     this.setState(st);
   } 
 
-  renderItem = (item) => {
+  showModalOnShowbilityItemPressed = (item) => {
     console.log(item);
-    console.log(item.item.url);
+  }
+
+  renderItem = (itemObject) => {
+    let item = itemObject.item;
     return (
-      <Image source={{uri:item.item.url}} style={ styles.flatListImage } />
+      <TouchableOpacity onPress={() => this.showModalOnShowbilityItemPressed(item)}>
+        <Image source={{uri:item.url}} style={ styles.flatListImage } />
+      </TouchableOpacity>
     )
   }
 
