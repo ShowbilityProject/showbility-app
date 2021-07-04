@@ -32,6 +32,13 @@ const styles = StyleSheet.create({
       flex:1,
       height: "100%",
       width: '100%'
+    },
+    flatListImage: {
+      width:"90%",
+      aspectRatio: 1,
+      alignSelf: 'center',
+      marginTop: 10,
+      marginBottom: 10
     }
   })
 
@@ -45,6 +52,21 @@ class ShowbilityHome extends React.Component {
       'ability': false,
       'group': false
     };
+
+    this.data = [
+      {
+        id: 0,
+        url: "https://i.pinimg.com/564x/08/94/75/089475365c284288406baf7e5616dd64.jpg",
+      },
+      {
+        id: 1,
+        url: "https://i.pinimg.com/236x/4b/ee/eb/4beeebb760923f65d559e3486f1233c1.jpg",
+      },
+      {
+        id: 2,
+        url: "https://i.pinimg.com/564x/b7/a5/a8/b7a5a801d8b9476bad5906ad88347445.jpg"
+      }
+    ]
   }
 
   onPressTobText = (key) => {
@@ -61,6 +83,14 @@ class ShowbilityHome extends React.Component {
     }
     this.setState(st);
   } 
+
+  renderItem = (item) => {
+    console.log(item);
+    console.log(item.item.url);
+    return (
+      <Image source={{uri:item.item.url}} style={ styles.flatListImage } />
+    )
+  }
 
   render() {
     return (
@@ -79,8 +109,10 @@ class ShowbilityHome extends React.Component {
             onPress={() => this.onPressTobText('group')}
           >그룹</Text>
         </View>
-        <FlatList style={ styles.main }>
-          <Text>ShowbilityMain</Text>
+        <FlatList
+          data={this.data}
+          renderItem={this.renderItem}
+          style={ styles.main }>
         </FlatList>
       </SafeAreaView>
     )
