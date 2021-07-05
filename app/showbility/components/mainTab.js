@@ -165,7 +165,7 @@ function ContentsModal({route, navigation}) {
       />
         <View
           style={styles.modalCloseButton}>
-          <Text onPress={() => navigation.goBack()} style={{ color: 'white', alignSelf: 'center'}}>X</Text>
+          <Text onPress={() => navigation.goBack()} style={{ color: 'white', alignSelf: 'center' }}>&#10005;</Text>
         </View>
     </SafeAreaView>
   )
