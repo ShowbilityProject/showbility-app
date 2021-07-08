@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { FlatList, SafeAreaView, View, Text, StyleSheet, Image, Modal, Button } from 'react-native';
-import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { TouchableOpacity, TouchableWithoutFeedback, TextInput } from 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
+import BottomSheet from '@gorhom/bottom-sheet';
 
 const styles = StyleSheet.create({
     container: {
@@ -50,6 +51,16 @@ const styles = StyleSheet.create({
       backgroundColor: "#F85B02",
       borderRadius: 24,
       justifyContent: 'center'
+    },
+    modalContentTitle: {
+      fontFamily: "JejuGothicOTF",
+      color: "#B2B2B5",
+      fontSize: 12 
+    },
+    modalCount: {
+      padding: 10,
+      color: "#BCBCBC",
+      fontSize: 14
     }
   })
 
@@ -152,6 +163,15 @@ const MainHomeStack = createStackNavigator();
 function ContentsModal({route, navigation}) {
   const item = route.params;
   const data = [item];
+  const snapPoints = React.useMemo(() => ['10%', '50%'], []);
+  
+  let title = "아디다스 2021 비주얼 아트";
+  let likesCount = 91;
+  let viewCount = 91;
+  let commentCount = 91;
+  let createdDate = '2021.12.12.';
+  let description = '기획부터 설계, UI 디자인, 개발 조직과의 협업까지 전 과정의 업무를 수행합니다. 데이터를 파악하며, 비즈니스적인 관점을 고려합니다. 거대한 서비스를 만들어가는 디자이너로서, 전체적인 관점에서 체계적 @ \n기획부터 설계, UI 디자인, 개발 조직과의 협업까지 전 과정의 업무를 수행합니다. 데이터를 파악하며, 비즈니스적인 관점을 고려합니다.';
+  let tags = ['태그1', '태그2', '태그3'];
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <FlatList
@@ -163,10 +183,57 @@ function ContentsModal({route, navigation}) {
           )
         }}
       />
-        <View
-          style={styles.modalCloseButton}>
-          <Text onPress={() => navigation.goBack()} style={{ color: 'white', alignSelf: 'center' }}>&#10005;</Text>
+      <View
+        style={styles.modalCloseButton}>
+        <Text onPress={() => navigation.goBack()} style={{ color: 'white', alignSelf: 'center' }}>&#10005;</Text>
+      </View>
+      <BottomSheet
+        snapPoints={snapPoints}
+      >
+        <View style={{ marginBottom: 20, flexDirection: 'row' }}>
+          <View style={{ flex: 1, height: 70 }}><Image></Image></View>
+          <View style={{ flex: 4 }}>
+            <View style={{ marginBottom: 10 }}>
+              <Text style={{ fontFamily: "JejuGothicOTF", fontSize: 17 }}>{title}</Text>
+            </View>
+            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-end' }}>
+              <View style={{ flex: 1, flexDirection: 'row'}}>
+                <Text style={styles.modalCount}>{likesCount}</Text>
+                <Text style={styles.modalCount}>{viewCount}</Text>
+                <Text style={styles.modalCount}>{commentCount}</Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={{ padding: 10, textAlign: 'right', color: "#BCBCBC", fontSize: 10 }}>{createdDate}</Text>
+              </View>
+            </View>
+          </View>
         </View>
+        <View style={{  }}>
+          <View style={{ paddingRight: 16, paddingLeft: 16, flexDirection: 'row' }}>
+            <View style={{ flex: 1 }}><Text style={styles.modalContentTitle}>프로젝트 소개</Text></View>
+            <View style={{ flex: 1 }}><Text style={{ textAlign:'right', fontFamily: "JejuGothicOTF", color: "#F85B02", fontSize: 12 }}>접어 보기</Text></View>
+          </View>
+          <View style={{ padding: 16 }}>
+            <Text style={{ fontSize: 12, lineHeight: 18, letterSpacing: 0.9 }}>{description}</Text>
+          </View>
+        </View>
+        <View style={{ marginBottom: 20 }}>
+          <View style={{ padding: 16, flexDirection: 'row' }}>
+            <Text style={styles.modalContentTitle}>태그 정보</Text>
+          </View>
+          <View style={{ paddingRight: 16, paddingLeft: 16, flexDirection: 'row' }}>
+            <Text>태그</Text>
+            <Text>태그</Text>
+            <Text>태그</Text>
+          </View>
+        </View>
+        <View style={{  }}>
+          <View style={{ paddingRight: 16, paddingLeft: 16, flexDirection: 'row' }}>
+            <Text style={styles.modalContentTitle}>댓글 (91)</Text>
+          </View>
+          <TextInput style={{ width: '100%', height: 20 }}></TextInput>
+        </View>
+      </BottomSheet>
     </SafeAreaView>
   )
 }
