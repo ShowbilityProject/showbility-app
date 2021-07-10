@@ -231,7 +231,11 @@ function ContentsModal({route, navigation}) {
           <View style={{ paddingRight: 16, paddingLeft: 16, flexDirection: 'row' }}>
             <Text style={styles.modalContentTitle}>댓글 (91)</Text>
           </View>
-          <TextInput style={{ width: '100%', height: 20 }}></TextInput>
+          <View style={{ marginLeft: 16, marginRight: 16, marginTop: 16, borderWidth: 1, borderColor: "#707070", borderRadius: 6 }}>
+            <TextInput
+              placeholder="댓글 달기"
+              style={{ height: 40, paddingLeft: 20, paddingRight: 20, paddingBottom: 11, paddingTop: 12 }}/>
+          </View>
         </View>
       </BottomSheet>
     </SafeAreaView>
