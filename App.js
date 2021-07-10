@@ -19,9 +19,9 @@ function App() {
   return (
     <NavigationContainer>
       {isSignedIn ? (
-        <LoginStackScreen/>
-      ) : (
         <MainTabScreen/>
+      ) : (
+        <LoginStackScreen/>
       )}
     </NavigationContainer>
     
