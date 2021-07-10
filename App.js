@@ -14,7 +14,7 @@ import MainTabScreen from "./app/showbility/mainTab";
 
 
 function App() {
-  const isSignedIn = true;
+  const isSignedIn = false;
   // setVisible(true);
   return (
     <NavigationContainer>
