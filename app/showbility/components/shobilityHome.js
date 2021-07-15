@@ -229,7 +229,8 @@ function ContentsModal({route, navigation}) {
         </View>
         <View style={{  }}>
           <View style={{ paddingRight: 16, paddingLeft: 16, flexDirection: 'row' }}>
-            <Text style={styles.modalContentTitle}>댓글 (91)</Text>
+          <View style={{ flex: 1 }}><Text style={styles.modalContentTitle}>댓글 (91)</Text></View>
+            <View style={{ flex: 1 }}><Text style={{ textAlign:'right', fontFamily: "JejuGothicOTF", color: "#F85B02", fontSize: 12 }}>전체 보기</Text></View>
           </View>
           <View style={{ marginLeft: 16, marginRight: 16, marginTop: 16, borderWidth: 1, borderColor: "#707070", borderRadius: 6 }}>
             <TextInput
