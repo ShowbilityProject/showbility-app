@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
-import ShowbilityHome from './components/shobilityHome';
+import { ShowbilityHome } from './components/shobilityHome';
 import SearchTab from './components/search';
 import NewUploadTab from './components/newUpload';
 import MessageTab from './components/message';
@@ -11,7 +12,7 @@ const MainTab = createBottomTabNavigator();
 
 const getVisibility = (route) => {
     const routeName = getFocusedRouteNameFromRoute(route);
-    if (routeName === "ContentsModal") {
+    if (routeName === "ContentsModal" || routeName === "댓글") {
         return false;
     }
     return true;
@@ -29,4 +30,4 @@ function MainTabScreen() {
     )
   }
   
-  export default MainTabScreen;
+export default MainTabScreen;

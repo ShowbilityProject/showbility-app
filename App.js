@@ -10,16 +10,16 @@ import * as React from 'react';
 import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 import SplashScreen from "react-native-splash-screen";
 import LoginStackScreen from './app/account/loginStack';
-import MainTabScreen from "./app/showbility/mainTab";
+import TopStackScreen from "./app/showbility/mainTab";
 
 
 function App() {
-  const isSignedIn = false;
+  const isSignedIn = true;
   // setVisible(true);
   return (
     <NavigationContainer>
       {isSignedIn ? (
-        <MainTabScreen/>
+        <TopStackScreen/>
       ) : (
         <LoginStackScreen/>
       )}

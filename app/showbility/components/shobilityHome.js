@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { FlatList, SafeAreaView, View, Text, StyleSheet, Image, Modal, Button } from 'react-native';
-import { TouchableOpacity, TouchableWithoutFeedback, TextInput } from 'react-native-gesture-handler';
+import { TouchableOpacity, TouchableWithoutFeedback, TextInput } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import BottomSheet from '@gorhom/bottom-sheet';
+import { type } from 'os';
 
 const styles = StyleSheet.create({
     container: {
@@ -160,7 +161,7 @@ class SHome extends React.Component {
 
 const MainHomeStack = createStackNavigator();
 
-function ContentsModal({route, navigation}) {
+export function ContentsModal({route, navigation}) {
   const item = route.params;
   const data = [item];
   const snapPoints = React.useMemo(() => ['10%', '50%'], []);
@@ -172,6 +173,45 @@ function ContentsModal({route, navigation}) {
   let createdDate = '2021.12.12.';
   let description = '기획부터 설계, UI 디자인, 개발 조직과의 협업까지 전 과정의 업무를 수행합니다. 데이터를 파악하며, 비즈니스적인 관점을 고려합니다. 거대한 서비스를 만들어가는 디자이너로서, 전체적인 관점에서 체계적 @ \n기획부터 설계, UI 디자인, 개발 조직과의 협업까지 전 과정의 업무를 수행합니다. 데이터를 파악하며, 비즈니스적인 관점을 고려합니다.';
   let tags = ['태그1', '태그2', '태그3'];
+  let comments = [
+    {
+      "id": "1f12vr-r1v3vrafv-12rv1213ßrv",
+      "author": "Kimhyeju",
+      "contents": "너무 멋진 작품입니다!",
+      "createdDate": "2021-12-12",
+      "liked": true,
+      "likesCount": 1,
+      "replies": [
+        {
+          "id": "1f12vr-r1v3vrafv-12rv12rv",
+          "author": "Hyechouxx",
+          "contents": "@Kimhyeju 응원 너무 감사합니다!",
+          "createdDate": "2021-12-12",
+          "liked": false,
+          "likesCount": 0,
+          "replies": []
+        },
+        {
+          "id": "1f12vr-r1v3vrafv-12rv12rv1",
+          "author": "Kimhyeju",
+          "contents": "@Hyechouxx 다음 작품도 기대하고 있어요!",
+          "createdDate": "2021-12-12",
+          "liked": true,
+          "likesCount": 0,
+          "replies": []
+        }
+      ]
+    },
+    {
+      "id": "1f12vr-r1v3vrafv-12rv12re",
+      "author": "Kimhyeju",
+      "contents": "너무 멋진 작품입니다!",
+      "createdDate": "2021-12-12",
+      "liked": true,
+      "likesCount": 20,
+      "replies": []
+    }
+  ]
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <FlatList
@@ -229,8 +269,16 @@ function ContentsModal({route, navigation}) {
         </View>
         <View style={{  }}>
           <View style={{ paddingRight: 16, paddingLeft: 16, flexDirection: 'row' }}>
-          <View style={{ flex: 1 }}><Text style={styles.modalContentTitle}>댓글 (91)</Text></View>
-            <View style={{ flex: 1 }}><Text style={{ textAlign:'right', fontFamily: "JejuGothicOTF", color: "#F85B02", fontSize: 12 }}>전체 보기</Text></View>
+            <View style={{ flex: 1 }}><Text style={styles.modalContentTitle}>댓글 (91)</Text></View>
+            <TouchableOpacity style={{ flex: 1 }} onPress={() => navigation.push("댓글", comments)}>
+              <Text style={{ textAlign:'right', fontFamily: "JejuGothicOTF", color: "#F85B02", fontSize: 12 }}>전체 보기</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ paddingRight: 16, paddingLeft: 16, paddingTop: 16, lexDirection: 'row' }}>
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={{ fontSize: 12 }}>{comments[0].author}</Text>
+              <Text style={{ marginLeft: 10 }}>{comments[0].contents}</Text>
+            </View>
           </View>
           <View style={{ marginLeft: 16, marginRight: 16, marginTop: 16, borderWidth: 1, borderColor: "#707070", borderRadius: 6 }}>
             <TextInput
@@ -243,21 +291,117 @@ function ContentsModal({route, navigation}) {
   )
 }
 
-function ShowbilityHome() {
+function ReplyView(reply) {
+  reply = reply.reply;
+  let CommentStyles = {
+    headLayer: {
+      flexDirection: 'row',
+      paddingHorizontal: 18,
+      paddingTop: 20 
+    },
+    replyLayer: {
+      flexDirection: 'row',
+      paddingHorizontal: 38,
+      paddingTop: 20
+    },
+    additionalInfo: {
+      fontSize: 12,
+      color: "#B2B2B5",
+      marginRight: 8
+    }
+  }
   return (
-    <MainHomeStack.Navigator mode="modal">
-        <MainHomeStack.Screen
-          name="Main"
-          component={SHome}
-          options={{ headerShown: false }}
-        />
-        <MainHomeStack.Screen
-          name="ContentsModal"
-          component={ContentsModal}
-          options={{ headerShown: false }}
-        />
-      </MainHomeStack.Navigator>
+    <View style={CommentStyles.replyLayer}>
+      <View>
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={{ fontSize: 12 }}>{reply.author}</Text>
+          <Text style={{ marginLeft: 10, fontSize: 12 }}>{reply.contents}</Text>
+        </View>
+        <View style={{ flexDirection: 'row', marginTop: 10 }}>
+          <Text style={CommentStyles.additionalInfo}>4분</Text>
+          <Text style={CommentStyles.additionalInfo}>좋아요 {reply.likesCount}개</Text>
+          <Text style={CommentStyles.additionalInfo}>답글 달기</Text>
+        </View>
+      </View>
+    </View>
   )
 }
 
-export default ShowbilityHome;
+function CommentsView({route, navigation}) {
+  let CommentStyles = {
+    headLayer: {
+      flexDirection: 'row',
+      paddingHorizontal: 18,
+      paddingTop: 20 
+    },
+    replyLayer: {
+      flexDirection: 'row',
+      paddingHorizontal: 38,
+      paddingTop: 20
+    },
+    additionalInfo: {
+      fontSize: 12,
+      color: "#B2B2B5",
+      marginRight: 8
+    }
+  }
+  const item = route.params;
+  return (
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={item}
+        renderItem={(item) => {
+          let comment = item.item;
+          return (
+            <View>
+              <View style={CommentStyles.headLayer}>
+                <View>
+                  <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ fontSize: 12 }}>{comment.author}</Text>
+                    <Text style={{ marginLeft: 10, fontSize: 12 }}>{comment.contents}</Text>
+                  </View>
+                  <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                    <Text style={CommentStyles.additionalInfo}>4분</Text>
+                    <Text style={CommentStyles.additionalInfo}>좋아요 {comment.likesCount}개</Text>
+                    <Text style={CommentStyles.additionalInfo}>답글 달기</Text>
+                  </View>
+                </View>
+              </View>
+              {
+                comment.replies.map(reply => {
+                  return (
+                    <ReplyView reply={reply} key={reply.id} />
+                  )
+                })
+              }
+            </View>
+          )
+        }}
+      />
+    </SafeAreaView>
+  )
+}
+
+export function ShowbilityHome() {
+  return (
+    <MainHomeStack.Navigator mode="modal">
+      <MainHomeStack.Screen
+        name="Main"
+        component={SHome}
+        options={{ headerShown: false }}
+      />
+      <MainHomeStack.Screen
+        name="ContentsModal"
+        component={ContentsModal}
+        options={{ headerShown: false }}
+      />
+      <MainHomeStack.Screen
+        name="댓글"
+        component={CommentsView}
+        options={{ headerBackTitle: " " }}
+      />
+    </MainHomeStack.Navigator>
+  )
+}
+
+// export default ShowbilityHome;
