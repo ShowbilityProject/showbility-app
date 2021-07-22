@@ -81,8 +81,12 @@ const styles = StyleSheet.create({
 
 
 function LoginScreen({navigation}) {
-    const iconImgSize = Dimensions.get('window').width / 8;
-    const tempImgPath = "../../../assets/imgs/kakao_icon.png";
+    const iconImgSize = Dimensions.get('window').width / 6;
+    const kakao_icon = "../../../assets/imgs/kakao_icon.png";
+    const naver_icon = "../../../assets/imgs/naver_icon.png";
+    const fb_icon = "../../../assets/imgs/fb_icon.png";
+    const gg_icon = "../../../assets/imgs/gg_icon.png";
+    const apple_icon = "../../../assets/imgs/apple_icon.png";
     return (
       <View style={styles.container}>
         <View style={styles.centerContaier}>
@@ -96,11 +100,11 @@ function LoginScreen({navigation}) {
           <Text style={{ fontFamily: "JejuGothicOTF", fontSize: 24 }}>재능을 보여주세요!</Text>
         </View>
         <View style={styles.buttonsContainer}>
-          <Image style={{ height: iconImgSize, width: iconImgSize, margin: 10 }} source={require(tempImgPath)}/>
-          <Image style={{ height: iconImgSize, width: iconImgSize, margin: 10 }} source={require(tempImgPath)}/>
-          <Image style={{ height: iconImgSize, width: iconImgSize, margin: 10 }} source={require(tempImgPath)}/>
-          <Image style={{ height: iconImgSize, width: iconImgSize, margin: 10 }} source={require(tempImgPath)}/>
-          <Image style={{ height: iconImgSize, width: iconImgSize, margin: 10 }} source={require(tempImgPath)}/>
+          <Image style={{ height: iconImgSize, width: iconImgSize, margin: 5 }} source={require(kakao_icon)}/>
+          <Image style={{ height: iconImgSize, width: iconImgSize, margin: 5 }} source={require(naver_icon)}/>
+          <Image style={{ height: iconImgSize, width: iconImgSize, margin: 5 }} source={require(fb_icon)}/>
+          <Image style={{ height: iconImgSize, width: iconImgSize, margin: 5 }} source={require(gg_icon)}/>
+          <Image style={{ height: iconImgSize, width: iconImgSize, margin: 5 }} source={require(apple_icon)}/>
         </View>
         <View style={styles.accountContainer}>
           <TouchableHighlight
