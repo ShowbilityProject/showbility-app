@@ -4,6 +4,7 @@ import { TouchableOpacity, TouchableWithoutFeedback, TextInput } from 'react-nat
 import { createStackNavigator } from '@react-navigation/stack';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { type } from 'os';
+import { AbilityScreen } from './ability';
 
 const styles = StyleSheet.create({
     container: {
@@ -138,21 +139,21 @@ class SHome extends React.Component {
           >그룹</Text>
         </View>
         <View style={ styles.main }>
-          <FlatList
-            data={this.data}
-            renderItem={this.renderItem}
-            style={{ display: this.state['showbility'] ? "" : "none" }}>
-          </FlatList>
-          <FlatList
-            // data={this.data}
-            // renderItem={this.renderItem}
-            style={{ display: this.state['ability'] ? "" : "none" }}>
-          </FlatList>
-          <FlatList
-            // data={this.data}
-            // renderItem={this.renderItem}
-            style={{ display: this.state['group'] ? "" : "none" }}>
-          </FlatList>
+          <View style={{ display: this.state['showbility'] ? "" : "none" }}>
+            <FlatList
+              data={this.data}
+              renderItem={this.renderItem}
+              >
+            </FlatList>
+          </View>
+          <View style={{ display: this.state['ability'] ? "" : "none" }}>
+            <AbilityScreen/>
+          </View>
+          <View>
+            <FlatList
+              style={{ display: this.state['group'] ? "" : "none" }}>
+            </FlatList>
+          </View>
         </View>
       </SafeAreaView>
     )
@@ -165,7 +166,7 @@ export function ContentsModal({route, navigation}) {
   const item = route.params;
   const data = [item];
   const snapPoints = React.useMemo(() => ['10%', '50%'], []);
-  
+
   let title = "아디다스 2021 비주얼 아트";
   let likesCount = 91;
   let viewCount = 91;

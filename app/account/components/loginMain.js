@@ -82,11 +82,11 @@ const styles = StyleSheet.create({
 
 function LoginScreen({navigation}) {
     const iconImgSize = Dimensions.get('window').width / 6;
-    const kakao_icon = "../../../assets/imgs/kakao_icon.png";
-    const naver_icon = "../../../assets/imgs/naver_icon.png";
-    const fb_icon = "../../../assets/imgs/fb_icon.png";
-    const gg_icon = "../../../assets/imgs/gg_icon.png";
-    const apple_icon = "../../../assets/imgs/apple_icon.png";
+    const kakao_icon = "../../../assets/imgs/login/kakao_icon.png";
+    const naver_icon = "../../../assets/imgs/login/naver_icon.png";
+    const fb_icon = "../../../assets/imgs/login/fb_icon.png";
+    const gg_icon = "../../../assets/imgs/login/gg_icon.png";
+    const apple_icon = "../../../assets/imgs/login/apple_icon.png";
     return (
       <View style={styles.container}>
         <View style={styles.centerContaier}>
