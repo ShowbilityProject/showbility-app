@@ -6,17 +6,10 @@ import {
   Text,
   StyleSheet,
   Image,
-  Modal,
-  Button,
 } from 'react-native';
-import {
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  TextInput,
-} from 'react-native';
+import {TouchableOpacity, TextInput} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import BottomSheet from '@gorhom/bottom-sheet';
-import {type} from 'os';
 import {AbilityScreen} from './ability';
 
 const styles = StyleSheet.create({
@@ -136,7 +129,7 @@ class SHome extends React.Component {
   render() {
     return (
       <SafeAreaView style={[styles.flexCenter, styles.container]}>
-        <View style={{backgroundColor: 'yellow', width: '100%'}}>
+        <View style={{width: '100%'}}>
           <View style={styles.tobBar}>
             <Text
               style={[
