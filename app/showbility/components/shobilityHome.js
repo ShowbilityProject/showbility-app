@@ -70,6 +70,11 @@ const styles = StyleSheet.create({
     color: '#BCBCBC',
     fontSize: 14,
   },
+  filterIcon: {
+    position: 'absolute',
+    right: 30,
+    marginTop: 7,
+  },
 });
 
 class SHome extends React.Component {
@@ -155,6 +160,10 @@ class SHome extends React.Component {
               onPress={() => this.onPressTobText('group')}>
               그룹
             </Text>
+            <Image
+              style={styles.filterIcon}
+              source={require('../../../assets/imgs/ICON-24-Filter.png')}
+            />
           </View>
         </View>
         <View style={styles.main}>
