@@ -11,6 +11,7 @@ import {TouchableOpacity, TextInput} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {AbilityScreen} from './ability';
+import { GroupScreen } from './group';
 
 const styles = StyleSheet.create({
   container: {
@@ -173,8 +174,8 @@ class SHome extends React.Component {
           <View style={{display: this.state.ability ? '' : 'none'}}>
             <AbilityScreen />
           </View>
-          <View>
-            <FlatList style={{display: this.state.group ? '' : 'none'}} />
+          <View style={{display: this.state.group ? '' : 'none'}}>
+            <GroupScreen />
           </View>
         </View>
       </SafeAreaView>
