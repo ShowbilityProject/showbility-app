@@ -50,6 +50,16 @@ const styles = StyleSheet.create({
     fontSize: 17,
     padding: 10,
   },
+  suggestTagView: {
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    backgroundColor: "#F7F7F7",
+    marginRight: 10,
+    borderRadius: 5,
+  },
+  suggestTagText: {
+    fontSize: 12,
+  },
 });
 
 function GroupArea(dataObject) {
@@ -93,8 +103,8 @@ function TagSearchArea() {
       <ScrollView horizontal={true}>
         {searchSuggests.map(sgt => {
           return (
-            <View style={{ paddingHorizontal: 15, paddingVertical: 10, backgroundColor: "#F7F7F7", marginRight: 10, borderRadius: 5 }}>
-              <Text style={{ fontSize: 12 }}>{sgt}</Text>
+            <View style={styles.suggestTagView}>
+              <Text style={styles.suggestTagText}>{sgt}</Text>
             </View>
           );
         })}
