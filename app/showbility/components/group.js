@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
 });
 
 function GroupArea(dataObject) {
-  console.log(dataObject);
   let data = dataObject.items;
   let title = dataObject.title;
   const renderItem = itemObject => {
