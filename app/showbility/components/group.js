@@ -95,7 +95,13 @@ function GroupArea(dataObject) {
 }
 
 function TagSearchArea() {
-  let searchSuggests = ['건축물', 'UI/UX', '패션', '스타일', '반려동물'];
+  let searchSuggests = [
+    {id: 0, name: '건축물'},
+    {id: 1, name: 'UI/UX'},
+    {id: 2, name: '패션'},
+    {id: 3, name: '스타일'},
+    {id: 4, name: '반려동물'},
+  ];
   return (
     <View style={styles.searchArea}>
       <TextInput style={styles.textinput} placeholder="태그 검색" />
@@ -103,7 +109,7 @@ function TagSearchArea() {
         {searchSuggests.map(sgt => {
           return (
             <View style={styles.suggestTagView}>
-              <Text style={styles.suggestTagText}>{sgt}</Text>
+              <Text style={styles.suggestTagText}>{sgt.name}</Text>
             </View>
           );
         })}
