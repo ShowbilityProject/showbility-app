@@ -7,8 +7,10 @@ import {
   View,
   ScrollView,
 } from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
 import {TouchableOpacity} from 'react-native';
 import {TagSearchArea} from './tagItems';
+import { useNavigation } from '@react-navigation/core';
 
 const styles = StyleSheet.create({
   flatListImage: {
@@ -68,11 +70,18 @@ const styles = StyleSheet.create({
   suggestTagText: {
     fontSize: 12,
   },
+  showAllText: {
+    textAlign: 'right',
+    fontSize: 12,
+    color: '#F85B02',
+  },
 });
 
 function GroupArea(dataObject) {
+  const navigation = useNavigation();
   let data = dataObject.items;
   let title = dataObject.title;
+
   const renderItem = itemObject => {
     let item = itemObject.item;
     return (
@@ -87,10 +96,17 @@ function GroupArea(dataObject) {
   };
   return (
     <View style={styles.groupArea}>
-      <Text
-        style={[styles.groupTitle, styles.fontJeju, styles.abilityItemTitle]}>
-        {title}
-      </Text>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{flex: 1}}>
+          <Text
+            style={[styles.groupTitle, styles.fontJeju, styles.abilityItemTitle]}>
+            {title}
+          </Text>
+        </View>
+        <View style={{flex: 1}}>
+          <Text style={styles.showAllText} onPress={() => navigation.navigate(title)}>전체 보기</Text>
+        </View>
+      </View>
       <FlatList
         horizontal
         key={'#'}
@@ -174,4 +190,18 @@ export function GroupScreen() {
       <GroupArea title="멤버 모집 중인 그룹" items={data} />
     </ScrollView>
   );
+}
+
+const GroupStack = createStackNavigator();
+
+export function GroupStackScreen() {
+  return (
+    <GroupStack.Navigator initialRouteName="GroupMain">
+      <GroupStack.Screen
+        name="GroupMain"
+        component={GroupScreen}
+        options={{headerShown: false}}
+      />
+    </GroupStack.Navigator>
+  )
 }

@@ -11,8 +11,9 @@ import {TouchableOpacity, TextInput} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {AbilityScreen} from './ability';
-import { GroupScreen } from './group';
-import { FilterScreen } from './filter';
+import {GroupScreen} from './group';
+import {FilterScreen} from './filter';
+import {GroupDepthView} from './groupDepthView';
 
 const styles = StyleSheet.create({
   container: {
@@ -163,11 +164,11 @@ class SHome extends React.Component {
               그룹
             </Text>
             <TouchableOpacity
-             style={styles.filterIcon}
+              style={styles.filterIcon}
               onPress={() =>
                 this.props.navigation.navigate('카테고리&태그 선택')
               }>
-              <Image   
+              <Image
                 source={require('../../../assets/imgs/ICON-24-Filter.png')}
               />
             </TouchableOpacity>
@@ -505,8 +506,21 @@ export function ShowbilityHome() {
         component={FilterScreen}
         options={{headerBackTitle: ' '}}
       />
+      <MainHomeStack.Screen
+        name="마이 그룹"
+        component={GroupDepthView}
+        options={{headerBackTitle: ' '}}
+      />
+      <MainHomeStack.Screen
+        name="쇼빌 그룹 둘러보기"
+        component={GroupDepthView}
+        options={{headerBackTitle: ' '}}
+      />
+      <MainHomeStack.Screen
+        name="멤버 모집 중인 그룹"
+        component={GroupDepthView}
+        options={{headerBackTitle: ' '}}
+      />
     </MainHomeStack.Navigator>
   );
 }
-
-// export default ShowbilityHome;
