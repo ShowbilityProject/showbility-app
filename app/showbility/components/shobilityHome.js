@@ -12,6 +12,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {AbilityScreen} from './ability';
 import { GroupScreen } from './group';
+import { FilterScreen } from './filter';
 
 const styles = StyleSheet.create({
   container: {
@@ -161,10 +162,15 @@ class SHome extends React.Component {
               onPress={() => this.onPressTobText('group')}>
               그룹
             </Text>
-            <Image
-              style={styles.filterIcon}
-              source={require('../../../assets/imgs/ICON-24-Filter.png')}
-            />
+            <TouchableOpacity
+             style={styles.filterIcon}
+              onPress={() =>
+                this.props.navigation.navigate('카테고리&태그 선택')
+              }>
+              <Image   
+                source={require('../../../assets/imgs/ICON-24-Filter.png')}
+              />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.main}>
@@ -492,6 +498,11 @@ export function ShowbilityHome() {
       <MainHomeStack.Screen
         name="댓글"
         component={CommentsView}
+        options={{headerBackTitle: ' '}}
+      />
+      <MainHomeStack.Screen
+        name="카테고리&태그 선택"
+        component={FilterScreen}
         options={{headerBackTitle: ' '}}
       />
     </MainHomeStack.Navigator>

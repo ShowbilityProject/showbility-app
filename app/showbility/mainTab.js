@@ -12,7 +12,12 @@ const MainTab = createBottomTabNavigator();
 
 const getVisibility = route => {
   const routeName = getFocusedRouteNameFromRoute(route);
-  if (routeName === 'ContentsModal' || routeName === '댓글') {
+  console.log('RouteName : ' + routeName);
+  if (
+    routeName === 'ContentsModal' ||
+    routeName === '댓글' ||
+    routeName === '카테고리&태그 선택'
+  ) {
     return false;
   }
   return true;

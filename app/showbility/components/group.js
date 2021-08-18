@@ -1,6 +1,14 @@
 import * as React from 'react';
-import {FlatList, Text, StyleSheet, Image, View, TextInput, ScrollView} from 'react-native';
+import {
+  FlatList,
+  Text,
+  StyleSheet,
+  Image,
+  View,
+  ScrollView,
+} from 'react-native';
 import {TouchableOpacity} from 'react-native';
+import {TagSearchArea} from './tagItems';
 
 const styles = StyleSheet.create({
   flatListImage: {
@@ -53,7 +61,7 @@ const styles = StyleSheet.create({
   suggestTagView: {
     paddingHorizontal: 15,
     paddingVertical: 10,
-    backgroundColor: "#F7F7F7",
+    backgroundColor: '#F7F7F7',
     marginRight: 10,
     borderRadius: 5,
   },
@@ -90,30 +98,6 @@ function GroupArea(dataObject) {
         data={data}
         renderItem={renderItem}
       />
-    </View>
-  );
-}
-
-function TagSearchArea() {
-  let searchSuggests = [
-    {id: 0, name: '건축물'},
-    {id: 1, name: 'UI/UX'},
-    {id: 2, name: '패션'},
-    {id: 3, name: '스타일'},
-    {id: 4, name: '반려동물'},
-  ];
-  return (
-    <View style={styles.searchArea}>
-      <TextInput style={styles.textinput} placeholder="태그 검색" />
-      <ScrollView horizontal={true}>
-        {searchSuggests.map(sgt => {
-          return (
-            <View style={styles.suggestTagView}>
-              <Text style={styles.suggestTagText}>{sgt.name}</Text>
-            </View>
-          );
-        })}
-      </ScrollView>
     </View>
   );
 }
@@ -175,10 +159,16 @@ export function GroupScreen() {
       desc: '그룹설명',
     },
   ];
-
+  let searchSuggests = [
+    {id: 0, name: '건축물'},
+    {id: 1, name: 'UI/UX'},
+    {id: 2, name: '패션'},
+    {id: 3, name: '스타일'},
+    {id: 4, name: '반려동물'},
+  ];
   return (
     <ScrollView>
-      <TagSearchArea />
+      <TagSearchArea items={searchSuggests} />
       <GroupArea title="마이 그룹" items={data} />
       <GroupArea title="쇼빌 그룹 둘러보기" items={data} />
       <GroupArea title="멤버 모집 중인 그룹" items={data} />
