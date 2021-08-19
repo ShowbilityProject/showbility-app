@@ -14,6 +14,7 @@ import {AbilityScreen} from './ability';
 import {GroupScreen} from './group';
 import {FilterScreen} from './filter';
 import {GroupDepthView} from './groupDepthView';
+import { GroupDetail } from './group/groupDetail';
 
 const styles = StyleSheet.create({
   container: {
@@ -519,6 +520,11 @@ export function ShowbilityHome() {
       <MainHomeStack.Screen
         name="멤버 모집 중인 그룹"
         component={GroupDepthView}
+        options={{headerBackTitle: ' '}}
+      />
+      <MainHomeStack.Screen
+        name="GroupDetail"
+        component={GroupDetail}
         options={{headerBackTitle: ' '}}
       />
     </MainHomeStack.Navigator>

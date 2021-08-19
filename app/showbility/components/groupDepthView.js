@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {FlatList, Text, StyleSheet, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native';
+import {useNavigation} from '@react-navigation/core';
 
 const styles = StyleSheet.create({
   flatListImage: {
@@ -27,6 +28,8 @@ const styles = StyleSheet.create({
 });
 
 export function GroupDepthView(object) {
+  const navigation = useNavigation();
+
   let title = object.title;
   let data = [
     {
@@ -78,8 +81,11 @@ export function GroupDepthView(object) {
 
   const renderItem = itemObject => {
     let item = itemObject.item;
+    console.log(item.name);
     return (
-      <TouchableOpacity style={styles.abilityFrame}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('GroupDetail', {name: item.name})}
+        style={styles.abilityFrame}>
         <Image source={{uri: item.url}} style={styles.flatListImage} />
         <Text style={[styles.fontJeju, styles.abilityItemTitle]}>
           {item.name}
