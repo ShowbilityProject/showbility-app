@@ -199,17 +199,3 @@ export function GroupScreen() {
     </ScrollView>
   );
 }
-
-const GroupStack = createStackNavigator();
-
-export function GroupStackScreen() {
-  return (
-    <GroupStack.Navigator initialRouteName="GroupMain">
-      <GroupStack.Screen
-        name="GroupMain"
-        component={GroupScreen}
-        options={{headerShown: false}}
-      />
-    </GroupStack.Navigator>
-  );
-}
