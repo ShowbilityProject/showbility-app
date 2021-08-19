@@ -9,8 +9,8 @@ import {
 } from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {TouchableOpacity} from 'react-native';
-import {TagSearchArea} from './tagItems';
-import { useNavigation } from '@react-navigation/core';
+import {TagSearchArea} from '../tagItems';
+import {useNavigation} from '@react-navigation/core';
 
 const styles = StyleSheet.create({
   flatListImage: {
@@ -99,12 +99,20 @@ function GroupArea(dataObject) {
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <View style={{flex: 1}}>
           <Text
-            style={[styles.groupTitle, styles.fontJeju, styles.abilityItemTitle]}>
+            style={[
+              styles.groupTitle,
+              styles.fontJeju,
+              styles.abilityItemTitle,
+            ]}>
             {title}
           </Text>
         </View>
         <View style={{flex: 1}}>
-          <Text style={styles.showAllText} onPress={() => navigation.navigate(title)}>전체 보기</Text>
+          <Text
+            style={styles.showAllText}
+            onPress={() => navigation.navigate(title)}>
+            전체 보기
+          </Text>
         </View>
       </View>
       <FlatList
@@ -203,5 +211,5 @@ export function GroupStackScreen() {
         options={{headerShown: false}}
       />
     </GroupStack.Navigator>
-  )
+  );
 }

@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   tagView: {
     flex: 4,
   },
-  tagWarpperView:{
+  tagWarpperView: {
     borderColor: '#F7F7F7',
     borderWidth: 2,
     padding: 10,
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: '#F7F7F7',
     justifyContent: 'center',
-  }
+  },
 });
 
 function FilterItemsArea(object) {

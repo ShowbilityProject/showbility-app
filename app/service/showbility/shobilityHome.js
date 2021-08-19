@@ -11,10 +11,10 @@ import {TouchableOpacity, TextInput} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {AbilityScreen} from './ability';
-import {GroupScreen} from './group';
+import {GroupScreen} from './group/group';
 import {FilterScreen} from './filter';
-import {GroupDepthView} from './groupDepthView';
-import { GroupDetail } from './group/groupDetail';
+import {GroupDepthView} from './group/groupDepthView';
+import {GroupDetail} from './group/groupDetail';
 
 const styles = StyleSheet.create({
   container: {

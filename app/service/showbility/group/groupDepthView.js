@@ -81,7 +81,6 @@ export function GroupDepthView(object) {
 
   const renderItem = itemObject => {
     let item = itemObject.item;
-    console.log(item.name);
     return (
       <TouchableOpacity
         onPress={() => navigation.navigate('GroupDetail', {name: item.name})}
