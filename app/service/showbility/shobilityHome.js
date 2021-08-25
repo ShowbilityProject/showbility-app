@@ -15,6 +15,7 @@ import {GroupScreen} from './group/group';
 import {FilterScreen} from './filter';
 import {GroupDepthView} from './group/groupDepthView';
 import {GroupDetail} from './group/groupDetail';
+import {GroupCreate} from './group/groupCreate';
 
 const styles = StyleSheet.create({
   container: {
@@ -525,6 +526,11 @@ export function ShowbilityHome() {
       <MainHomeStack.Screen
         name="GroupDetail"
         component={GroupDetail}
+        options={{headerBackTitle: ' '}}
+      />
+      <MainHomeStack.Screen
+        name="그룹 생성"
+        component={GroupCreate}
         options={{headerBackTitle: ' '}}
       />
     </MainHomeStack.Navigator>

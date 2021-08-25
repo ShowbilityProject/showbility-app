@@ -16,7 +16,8 @@ const getVisibility = route => {
   if (
     routeName === 'ContentsModal' ||
     routeName === '댓글' ||
-    routeName === '카테고리&태그 선택'
+    routeName === '카테고리&태그 선택' ||
+    routeName === '그룹 생성'
   ) {
     return false;
   }

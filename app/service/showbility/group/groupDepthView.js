@@ -29,6 +29,22 @@ const styles = StyleSheet.create({
 
 export function GroupDepthView(object) {
   const navigation = useNavigation();
+  const GroupCreateButtton = (
+    <TouchableOpacity
+      style={{paddingRight: 15}}
+      onPress={() => navigation.navigate('그룹 생성')}>
+      <Text style={[styles.fontJeju, {fontSize: 13, color: '#F85B02'}]}>
+        그룹 생성
+      </Text>
+    </TouchableOpacity>
+  );
+  const defaultButton = null;
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () =>
+        object.route.name === '마이 그룹' ? GroupCreateButtton : defaultButton,
+    });
+  });
 
   let title = object.title;
   let data = [
