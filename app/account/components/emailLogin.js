@@ -6,6 +6,9 @@ import {
   TouchableHighlight,
   TextInput,
 } from 'react-native';
+// import * as SecureStore from 'expo-secure-store';
+import { isEmpty } from '../../common/util';
+import { requestSignIn } from '../../request/account';
 
 const styles = StyleSheet.create({
   fontStyle: {
@@ -90,6 +93,23 @@ const styles = StyleSheet.create({
 });
 
 function EmailLoginScreen({navigation}) {
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const handleEmailChange = (value) => {
+    setEmail(value);
+  }
+  const handlePasswordChange = (value) => {
+    setPassword(value);
+  }
+  const handleLogin = () => {
+    if (isEmpty(email) || isEmpty(password))
+      return false;
+    requestSignIn(email, password)
+    .then(ret => {
+      console.log(ret.headers.get('token'));
+    })
+  }
   return (
     <View
       style={{
@@ -102,18 +122,21 @@ function EmailLoginScreen({navigation}) {
         style={styles.textinput}
         placeholder="이메일"
         keyboardType="email-address"
+        onChangeText={handleEmailChange}
       />
       <TextInput
         style={styles.textinput}
         placeholder="비밀번호"
         secureTextEntry={true}
+        onChangeText={handlePasswordChange}
       />
       <TouchableHighlight
         style={[
           styles.flexCenter,
           styles.fontStyle,
           {width: '90%', height: 52, backgroundColor: '#F7F7F7'},
-        ]}>
+        ]}
+        onPress={handleLogin}>
         <Text styles={{color: '#D8D8D8'}}>로그인</Text>
       </TouchableHighlight>
     </View>

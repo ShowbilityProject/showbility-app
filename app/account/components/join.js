@@ -6,6 +6,9 @@ import {
   TouchableHighlight,
   TextInput,
 } from 'react-native';
+import {requestSignUp} from '../../request/account';
+import {useNavigation} from '@react-navigation/core';
+import { isEmpty } from '../../common/util';
 
 const styles = StyleSheet.create({
   fontStyle: {
@@ -78,17 +81,44 @@ const styles = StyleSheet.create({
   },
 });
 
-function JoinScreen({navigation}) {
+const verifyParameter = (name, email, password, birth) => {
+ if (isEmpty(name) || isEmpty(email) || isEmpty(password) || isEmpty(birth)) {
+   return false;
+ }
+ return true;
+}
+
+function JoinScreen({}) {
+  const [name, setName] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [birth, setBirth] = React.useState('');
+
+  const navigation = useNavigation();
+  const submitHandler = () => {
+    if (!verifyParameter(name, email, password, birth))
+      return false;
+
+    console.log(name,email,password,birth);
+    requestSignUp(name, email, password, birth).then(ret => {
+      console.log(ret);
+      if (ret) {
+        navigation.goBack();
+      }
+    });
+  };
   return (
     <View style={styles.container}>
       <View style={styles.joinScreen}>
-        <TextInput style={styles.textinput} placeholder="이름" />
-        <TextInput style={styles.textinput} placeholder="이메일" />
+        <TextInput style={styles.textinput} placeholder="이름" onChangeText={(nameInput) => setName(nameInput)}/>
+        <TextInput style={styles.textinput} placeholder="이메일" onChangeText={(emailInput) => setEmail(emailInput)}/>
         <TextInput
           style={styles.textinput}
           placeholder="(영문+숫자+특수문자 10자 이상"
+          onChangeText={(pwdInput) => setPassword(pwdInput)}
+          secureTextEntry={true}
         />
-        <TextInput style={styles.textinput} placeholder="출생년도 (ex. 1990)" />
+        <TextInput style={styles.textinput} placeholder="출생년도 (ex. 1990)" onChangeText={(birthInput) => setBirth(birthInput)}/>
       </View>
       <View
         style={{
@@ -128,7 +158,8 @@ function JoinScreen({navigation}) {
             alignItems: 'center',
             height: 52,
             justifyContent: 'center',
-          }}>
+          }}
+          onPress={submitHandler}>
           <Text>회원가입</Text>
         </TouchableHighlight>
       </View>
