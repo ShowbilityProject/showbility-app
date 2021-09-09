@@ -36,7 +36,7 @@ export function TagSearchArea(object) {
       <ScrollView horizontal={true}>
         {items.map(sgt => {
           return (
-            <View style={styles.suggestTagView}>
+            <View style={styles.suggestTagView} key={sgt.id}>
               <Text style={styles.suggestTagText}>{sgt.name}</Text>
             </View>
           );

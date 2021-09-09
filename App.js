@@ -9,8 +9,8 @@
 import * as React from 'react';
 import {NavigationContainer, useFocusEffect} from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
-import LoginStackScreen from './app/account/loginStack';
-import TopStackScreen from './app/service/mainTab';
+import LoginStackScreen from './app/views/account/loginStack';
+import TopStackScreen from './app/views/mainTab';
 
 function App() {
   const isSignedIn = true;
