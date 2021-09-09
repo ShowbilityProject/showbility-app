@@ -6,7 +6,7 @@ import {
   TouchableHighlight,
   TextInput,
 } from 'react-native';
-import {requestSignUp} from '../../../service/request/account';
+import {requestSignUp} from '../../../service/account';
 import {useNavigation} from '@react-navigation/core';
 import { isEmpty } from '../../../common/util';
 

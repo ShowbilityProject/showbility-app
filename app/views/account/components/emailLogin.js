@@ -6,9 +6,8 @@ import {
   TouchableHighlight,
   TextInput,
 } from 'react-native';
-// import * as SecureStore from 'expo-secure-store';
 import { isEmpty } from '../../../common/util';
-import { requestSignIn } from '../../../service/request/account';
+import { requestSignIn } from '../../../service/account';
 
 const styles = StyleSheet.create({
   fontStyle: {
@@ -107,8 +106,8 @@ function EmailLoginScreen({navigation}) {
       return false;
     requestSignIn(email, password)
     .then(ret => {
-      console.log(ret.headers.get('token'));
-    })
+      console.log(ret);
+    });
   }
   return (
     <View
