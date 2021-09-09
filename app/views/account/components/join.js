@@ -6,9 +6,9 @@ import {
   TouchableHighlight,
   TextInput,
 } from 'react-native';
-import {requestSignUp} from '../../request/account';
+import {requestSignUp} from '../../../service/request/account';
 import {useNavigation} from '@react-navigation/core';
-import { isEmpty } from '../../common/util';
+import { isEmpty } from '../../../common/util';
 
 const styles = StyleSheet.create({
   fontStyle: {

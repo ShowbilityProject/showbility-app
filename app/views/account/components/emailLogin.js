@@ -7,8 +7,8 @@ import {
   TextInput,
 } from 'react-native';
 // import * as SecureStore from 'expo-secure-store';
-import { isEmpty } from '../../common/util';
-import { requestSignIn } from '../../request/account';
+import { isEmpty } from '../../../common/util';
+import { requestSignIn } from '../../../service/request/account';
 
 const styles = StyleSheet.create({
   fontStyle: {

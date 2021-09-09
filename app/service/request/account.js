@@ -1,4 +1,4 @@
-import {post} from "../common/requester";
+import {post} from "../../common/requester";
 
 export function requestSignIn(email, password) {
     let uri = "/app/sign/signIn/";
