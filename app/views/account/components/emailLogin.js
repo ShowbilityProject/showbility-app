@@ -6,8 +6,8 @@ import {
   TouchableHighlight,
   TextInput,
 } from 'react-native';
-import { isEmpty } from '../../../common/util';
-import { requestSignIn } from '../../../service/account';
+import {isEmpty} from '../../../common/util';
+import {requestSignIn} from '../../../service/account';
 
 const styles = StyleSheet.create({
   fontStyle: {
@@ -94,31 +94,31 @@ const styles = StyleSheet.create({
 function EmailLoginScreen({navigation}) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [buttonStyle, setButtonStyle] = React.useState({backgroundColor: '#F7F7F7', color: 'black'});
-  
+  const [buttonStyle, setButtonStyle] = React.useState({
+    backgroundColor: '#F7F7F7',
+    color: 'black',
+  });
+
   const validateInput = () => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
     if (reg.test(email) && password.length > 4)
       setButtonStyle({backgroundColor: '#F85B02', color: 'white'});
-    else
-      setButtonStyle({backgroundColor: '#F7F7F7', color: 'black'});
-  }
-  const handleEmailChange = (value) => {
+    else setButtonStyle({backgroundColor: '#F7F7F7', color: 'black'});
+  };
+  const handleEmailChange = value => {
     setEmail(value);
     validateInput();
-  }
-  const handlePasswordChange = (value) => {
+  };
+  const handlePasswordChange = value => {
     setPassword(value);
     validateInput();
-  }
+  };
   const handleLogin = () => {
-    if (isEmpty(email) || isEmpty(password))
-      return false;
-    requestSignIn(email, password)
-    .then(ret => {
+    if (isEmpty(email) || isEmpty(password)) return false;
+    requestSignIn(email, password).then(ret => {
       console.log(ret);
     });
-  }
+  };
   return (
     <View
       style={{
@@ -144,7 +144,7 @@ function EmailLoginScreen({navigation}) {
         style={[
           styles.flexCenter,
           styles.fontStyle,
-          {width: '90%', height: 52 },
+          {width: '90%', height: 52},
           buttonStyle,
         ]}
         onPress={handleLogin}>
