@@ -94,24 +94,26 @@ const styles = StyleSheet.create({
 function EmailLoginScreen({navigation}) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [buttonStyle, setButtonStyle] = React.useState({
-    backgroundColor: '#F7F7F7',
-    color: 'black',
-  });
 
   const validateInput = () => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-    if (reg.test(email) && password.length > 4)
-      setButtonStyle({backgroundColor: '#F85B02', color: 'white'});
-    else setButtonStyle({backgroundColor: '#F7F7F7', color: 'black'});
+    let minPasswordLengthLimit = 4;
+    return reg.test(email) && password.length > minPasswordLengthLimit;
+  }
+
+  const handleButtonStyle = () => {
+    if (validateInput()) return {backgroundColor: '#F85B02'};
+    else return {backgroundColor: '#F7F7F7'};
   };
+  const handleButtonTextStyle = () => {
+    if (validateInput()) return {fontSize: 17, color: 'white'};
+    else return {fontSize: 17, color: 'black'};
+  }
   const handleEmailChange = value => {
     setEmail(value);
-    validateInput();
   };
   const handlePasswordChange = value => {
     setPassword(value);
-    validateInput();
   };
   const handleLogin = () => {
     if (isEmpty(email) || isEmpty(password)) return false;
@@ -144,11 +146,11 @@ function EmailLoginScreen({navigation}) {
         style={[
           styles.flexCenter,
           styles.fontStyle,
-          {width: '90%', height: 52},
-          buttonStyle,
+          {width: '90%', height: 52, borderRadius: 5},
+          handleButtonStyle(),
         ]}
         onPress={handleLogin}>
-        <Text styles={{color: '#D8D8D8'}}>로그인</Text>
+        <Text style={handleButtonTextStyle()}>로그인</Text>
       </TouchableHighlight>
     </View>
   );
