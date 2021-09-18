@@ -4,7 +4,7 @@ import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {ShowbilityHome} from './showbility/shobilityHome';
 import SearchTab from './components/search';
-import NewUploadTab from './components/newUpload';
+import NewUploadTab from './newupload/newUpload';
 import MessageTab from './components/message';
 import MyShowbilTab from './components/myShowbil';
 import {createStackNavigator} from '@react-navigation/stack';
