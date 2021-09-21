@@ -10,7 +10,7 @@ import {
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {launchImageLibrary} from 'react-native-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import {useNavigation} from '@react-navigation/core';
 
 const styles = StyleSheet.create({
   container: {
@@ -44,8 +44,13 @@ const styles = StyleSheet.create({
 });
 
 function NewUploadTab() {
+  const navigation = useNavigation();
   const [images, setImages] = React.useState([]);
   const {height, width} = Dimensions.get('window');
+  const [title, setTitle] = React.useState('');
+  const [categories, setCategories] = React.useState([]);
+  const [tags, setTags] = React.useState([]);
+
   const handleUploadImage = () => {
     let imagePickerOptions = {
       selectionLimit: 0,
@@ -62,18 +67,40 @@ function NewUploadTab() {
     });
   };
 
+  const handleTitleChange = value => {
+    setTitle(value);
+  };
+
+  const selectCategories = value => {
+    setCategories(value);
+  };
+
   return (
     <ScrollView style={[styles.container]}>
       <View style={styles.topWrapper}>
         <View style={styles.inputWrapper}>
-          <TextInput style={styles.inputStyle} placeholder="작품 제목" />
+          <TextInput
+            style={styles.inputStyle}
+            placeholder="작품 제목"
+            onChangeText={handleTitleChange}
+          />
         </View>
         <View style={[styles.inputWrapper, {flexDirection: 'row'}]}>
           <View style={{flex: 1}}>
             <Text style={styles.textStyle}>카테고리</Text>
           </View>
           <View style={{flex: 1}}>
-            <Text style={[styles.textStyle, {textAlign: 'right'}]}>{'>'}</Text>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('카테고리', {
+                  selectCategories: selectCategories,
+                  categories: categories,
+                })
+              }>
+              <Text style={[styles.textStyle, {textAlign: 'right'}]}>
+                {'>'}
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.inputWrapper}>
@@ -95,7 +122,7 @@ function NewUploadTab() {
         })}
         <TouchableOpacity
           onPress={handleUploadImage}
-          style={{alignItems: 'center'}}>
+          style={{alignItems: 'center', marginBottom: 40}}>
           <Ionicons name="add-circle-outline" size={50} color="gray" />
         </TouchableOpacity>
       </View>

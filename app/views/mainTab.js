@@ -8,6 +8,7 @@ import NewUploadTab from './newupload/newUpload';
 import MessageTab from './components/message';
 import MyShowbilTab from './components/myShowbil';
 import {createStackNavigator} from '@react-navigation/stack';
+import {CategoryList} from './newupload/category';
 
 const MainTab = createBottomTabNavigator();
 
@@ -47,6 +48,7 @@ function BaseStackScreen() {
         component={NewUploadTab}
         options={{headerBackTitle: ' '}}
       />
+      <BaseStack.Screen name="카테고리" component={CategoryList} />
     </BaseStack.Navigator>
   );
 }
