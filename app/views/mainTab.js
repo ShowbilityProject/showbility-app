@@ -48,7 +48,7 @@ function BaseStackScreen() {
         component={NewUploadTab}
         options={{headerBackTitle: ' '}}
       />
-      <BaseStack.Screen name="카테고리" component={CategoryList} />
+      <BaseStack.Screen name="카테고리&태그 선택" component={CategoryList} />
     </BaseStack.Navigator>
   );
 }

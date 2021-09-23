@@ -50,11 +50,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#F7F7F7',
     marginRight: 10,
     borderRadius: 5,
+    marginVertical: 5,
   },
   suggestTagText: {
     fontSize: 12,
   },
 });
+
+function ListingLable({values}) {
+  return values.map(value => {
+    return (
+      <View
+        style={styles.suggestTagView}
+        key={value}
+        onStartShouldSetResponder={() => true}>
+        <Text style={styles.suggestTagText}>{value}</Text>
+      </View>
+    );
+  });
+}
 
 function NewUploadTab() {
   const navigation = useNavigation();
@@ -63,9 +77,7 @@ function NewUploadTab() {
   const [title, setTitle] = React.useState('');
   const [categories, setCategories] = React.useState([]);
   const [tags, setTags] = React.useState([]);
-  const [tagStyle, setTagStyle] = React.useState({display: 'none'});
   const [desc, setDesc] = React.useState('');
-  const tagInputRef = React.useRef();
 
   const handleUploadImage = () => {
     let imagePickerOptions = {
@@ -90,16 +102,8 @@ function NewUploadTab() {
     setCategories(value);
   };
 
-  const handleTagPress = () => {
-    setTagStyle({});
-  };
-
-  const addTag = tag => {
-    if (tags.includes(tag) || isEmpty(tag)) return;
-    let temp = tags;
-    temp.unshift(tag);
-    setTags(temp);
-    setTagStyle({display: 'none'});
+  const selectTags = value => {
+    setTags(value);
   };
 
   const handleSubmit = () => {
@@ -113,16 +117,12 @@ function NewUploadTab() {
       images: images,
     };
     console.log(data);
-  }
+  };
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Button
-          onPress={handleSubmit}
-          title="완료"
-          color="#FF3B30"
-        />
+        <Button onPress={handleSubmit} title="완료" color="#FF3B30" />
       ),
     });
   });
@@ -139,14 +139,16 @@ function NewUploadTab() {
         </View>
         <View style={[styles.inputWrapper, {flexDirection: 'row'}]}>
           <View style={{flex: 1}}>
-            <Text style={styles.textStyle}>카테고리</Text>
+            <Text style={styles.textStyle}>카테고리&태그</Text>
           </View>
           <View style={{flex: 1}}>
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate('카테고리', {
+                navigation.navigate('카테고리&태그 선택', {
                   selectCategories: selectCategories,
-                  categories: categories,
+                  categories: categories.slice(),
+                  selectTags: selectTags,
+                  tags: tags.slice(),
                 })
               }>
               <Text style={[styles.textStyle, {textAlign: 'right'}]}>
@@ -155,41 +157,31 @@ function NewUploadTab() {
             </TouchableOpacity>
           </View>
         </View>
-        <Pressable onPress={handleTagPress}>
+        <View>
           <View style={styles.inputWrapper}>
-            <Text style={styles.textStyle}># 태그</Text>
-            <ScrollView horizontal={true} style={{marginBottom: 10}}>
-              <TextInput
-                ref={tagInputRef}
-                style={[tagStyle, { minWidth: 70, marginRight: 10}]}
-                placeholder="태그 입력"
-                returnKeyType="done"
-                onSubmitEditing={event => {
-                  addTag(event.nativeEvent.text);
-                  tagInputRef.current.clear();
-                }}
-              />
-              {tags.map(tag => {
-                return (
-                  <View
-                    style={styles.suggestTagView}
-                    key={tag}
-                    onStartShouldSetResponder={() => true}>
-                    <Text style={styles.suggestTagText}>{tag}</Text>
-                  </View>
-                );
-              })}
-            </ScrollView>
+            <View
+              style={{
+                marginVertical: 10,
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                minHeight: 20,
+              }}>
+              <ListingLable values={categories} />
+              <ListingLable values={tags} />
+            </View>
           </View>
-        </Pressable>
+        </View>
         <View style={styles.inputWrapper}>
           <Text style={styles.textStyle}>프로젝트 설명</Text>
           <TextInput
-            style={[styles.inputStyle, {height: 'auto', minHeight: 100, fontSize: 15}]}
+            style={[
+              styles.inputStyle,
+              {height: 'auto', minHeight: 100, fontSize: 15},
+            ]}
             placeholder="프로젝트 설명"
             multiline={true}
             onChangeText={value => setDesc(value)}
-           />
+          />
         </View>
       </View>
       <View style={{flex: 6, marginTop: 30}}>
