@@ -90,7 +90,12 @@ export function CategoryList({route, navigation}) {
       <View>
         <Text style={styles.titleArea}>
           #{' '}
-          <Text style={{fontSize: 12, color: '#B2B2B5'}}>
+          <Text
+            style={{
+              fontFamily: 'JejuGothicOTF',
+              fontSize: 12,
+              color: '#B2B2B5',
+            }}>
             하단의 추천 태그를 선택 하시면 더 많은 노출이 가능합니다.
           </Text>
         </Text>
@@ -123,7 +128,7 @@ export function CategoryList({route, navigation}) {
       <View style={{flex: 1}}>
         <View style={{flex: 1, flexDirection: 'row'}}>
           <Pressable style={styles.applyButton} onPress={handleSubmit}>
-            <Text style={{fontSize: 17, lineHeight: 52}}>적용 하기</Text>
+            <Text style={styles.applyButtonText}>적용 하기</Text>
           </Pressable>
         </View>
       </View>
@@ -155,16 +160,19 @@ const styles = StyleSheet.create({
     width: 'auto',
   },
   labelNotSelected: {
+    fontFamily: 'JejuGothicOTF',
     fontSize: 12,
     backgroundColor: '#F7F7F7',
     color: 'black',
   },
   labelSelected: {
+    fontFamily: 'JejuGothicOTF',
     fontSize: 12,
     backgroundColor: '#F85B02',
     color: 'white',
   },
   titleArea: {
+    fontFamily: 'JejuGothicOTF',
     fontSize: 12,
     paddingVertical: 15,
   },
@@ -185,5 +193,10 @@ const styles = StyleSheet.create({
     width: '100%',
     borderRadius: 5,
     alignItems: 'center',
+  },
+  applyButtonText: {
+    fontFamily: 'JejuGothicOTF',
+    fontSize: 17,
+    lineHeight: 52,
   },
 });
