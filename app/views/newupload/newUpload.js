@@ -63,6 +63,7 @@ function NewUploadTab() {
   const [categories, setCategories] = React.useState([]);
   const [tags, setTags] = React.useState([]);
   const [tagStyle, setTagStyle] = React.useState({display: 'none'});
+  const [desc, setDesc] = React.useState('');
   const tagInputRef = React.useRef();
 
   const handleUploadImage = () => {
@@ -93,8 +94,7 @@ function NewUploadTab() {
   };
 
   const addTag = tag => {
-    if (tags.includes(tag) || isEmpty(tag))
-      return;
+    if (tags.includes(tag) || isEmpty(tag)) return;
     let temp = tags;
     temp.unshift(tag);
     setTags(temp);
@@ -145,15 +145,26 @@ function NewUploadTab() {
               />
               {tags.map(tag => {
                 return (
-                  <View style={styles.suggestTagView} key={tag} onStartShouldSetResponder={() => true}>
+                  <View
+                    style={styles.suggestTagView}
+                    key={tag}
+                    onStartShouldSetResponder={() => true}>
                     <Text style={styles.suggestTagText}>{tag}</Text>
                   </View>
                 );
               })}
             </ScrollView>
-            
           </View>
         </Pressable>
+        <View style={styles.inputWrapper}>
+          <Text style={styles.textStyle}>프로젝트 설명</Text>
+          <TextInput
+            style={[styles.inputStyle, {height: 'auto', minHeight: 100, fontSize: 15}]}
+            placeholder="프로젝트 설명"
+            multiline={true}
+            onChangeText={value => setDesc(value)}
+           />
+        </View>
       </View>
       <View style={{flex: 6, marginTop: 30}}>
         {images.map(image => {
