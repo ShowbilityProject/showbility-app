@@ -4,11 +4,15 @@ import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {ShowbilityHome} from './showbility/shobilityHome';
 import SearchTab from './components/search';
-import NewUploadTab from './components/newUpload';
+import NewUploadTab from './newupload/newUpload';
 import MessageTab from './components/message';
 import MyShowbilTab from './components/myShowbil';
+import {createStackNavigator} from '@react-navigation/stack';
+import {CategoryList} from './newupload/category';
 
 const MainTab = createBottomTabNavigator();
+
+const BaseStack = createStackNavigator();
 
 const getVisibility = route => {
   const routeName = getFocusedRouteNameFromRoute(route);
@@ -23,6 +27,31 @@ const getVisibility = route => {
   }
   return true;
 };
+
+function BaseStackScreen() {
+  return (
+    <BaseStack.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#FFFFFF',
+        },
+      }}
+      mode="modal">
+      <BaseStack.Screen
+        name="TabScreen"
+        component={MainTabScreen}
+        options={{headerShown: false, headerBackTitle: ''}}
+      />
+      <BaseStack.Screen
+        name="업로드"
+        component={NewUploadTab}
+        options={{headerBackTitle: ' '}}
+      />
+      <BaseStack.Screen name="카테고리&태그 선택" component={CategoryList} />
+    </BaseStack.Navigator>
+  );
+}
 
 function MainTabScreen() {
   return (
@@ -60,6 +89,12 @@ function MainTabScreen() {
         name="NewUpload"
         component={NewUploadTab}
         options={{tabBarLabel: ''}}
+        listeners={({navigation}) => ({
+          tabPress: e => {
+            e.preventDefault();
+            navigation.navigate('업로드');
+          },
+        })}
       />
       <MainTab.Screen name="메세지" component={MessageTab} />
       <MainTab.Screen name="마이쇼빌" component={MyShowbilTab} />
@@ -67,4 +102,4 @@ function MainTabScreen() {
   );
 }
 
-export default MainTabScreen;
+export default BaseStackScreen;
