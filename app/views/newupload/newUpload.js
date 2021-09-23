@@ -7,6 +7,7 @@ import {
   Image,
   Dimensions,
   Pressable,
+  Button,
 } from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {launchImageLibrary} from 'react-native-image-picker';
@@ -100,6 +101,31 @@ function NewUploadTab() {
     setTags(temp);
     setTagStyle({display: 'none'});
   };
+
+  const handleSubmit = () => {
+    // Upload Meta First
+    // Upload images with content id
+    let data = {
+      title: title,
+      categories: categories,
+      tags: tags,
+      desc: desc,
+      images: images,
+    };
+    console.log(data);
+  }
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Button
+          onPress={handleSubmit}
+          title="완료"
+          color="#FF3B30"
+        />
+      ),
+    });
+  });
 
   return (
     <ScrollView style={[styles.container]}>
