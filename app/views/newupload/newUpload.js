@@ -6,11 +6,13 @@ import {
   TextInput,
   Image,
   Dimensions,
+  Pressable,
 } from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {launchImageLibrary} from 'react-native-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/core';
+import {isEmpty} from '../../common/util';
 
 const styles = StyleSheet.create({
   container: {
@@ -26,7 +28,7 @@ const styles = StyleSheet.create({
   },
   inputWrapper: {
     flex: 1,
-    height: 60,
+    height: 'auto',
     borderBottomColor: '#DDDDDD',
     borderBottomWidth: 1,
   },
@@ -41,6 +43,16 @@ const styles = StyleSheet.create({
     fontSize: 17,
     lineHeight: 60,
   },
+  suggestTagView: {
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    backgroundColor: '#F7F7F7',
+    marginRight: 10,
+    borderRadius: 5,
+  },
+  suggestTagText: {
+    fontSize: 12,
+  },
 });
 
 function NewUploadTab() {
@@ -50,13 +62,14 @@ function NewUploadTab() {
   const [title, setTitle] = React.useState('');
   const [categories, setCategories] = React.useState([]);
   const [tags, setTags] = React.useState([]);
+  const [tagStyle, setTagStyle] = React.useState({display: 'none'});
+  const tagInputRef = React.useRef();
 
   const handleUploadImage = () => {
     let imagePickerOptions = {
       selectionLimit: 0,
     };
     launchImageLibrary(imagePickerOptions, e => {
-      // let temp = images + e.assets;
       if (!e.assets) {
         return;
       }
@@ -73,6 +86,19 @@ function NewUploadTab() {
 
   const selectCategories = value => {
     setCategories(value);
+  };
+
+  const handleTagPress = () => {
+    setTagStyle({});
+  };
+
+  const addTag = tag => {
+    if (tags.includes(tag) || isEmpty(tag))
+      return;
+    let temp = tags;
+    temp.unshift(tag);
+    setTags(temp);
+    setTagStyle({display: 'none'});
   };
 
   return (
@@ -103,14 +129,35 @@ function NewUploadTab() {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.inputWrapper}>
-          <Text style={styles.textStyle}># 태그</Text>
-        </View>
+        <Pressable onPress={handleTagPress}>
+          <View style={styles.inputWrapper}>
+            <Text style={styles.textStyle}># 태그</Text>
+            <ScrollView horizontal={true} style={{marginBottom: 10}}>
+              <TextInput
+                ref={tagInputRef}
+                style={[tagStyle, { minWidth: 70, marginRight: 10}]}
+                placeholder="태그 입력"
+                returnKeyType="done"
+                onSubmitEditing={event => {
+                  addTag(event.nativeEvent.text);
+                  tagInputRef.current.clear();
+                }}
+              />
+              {tags.map(tag => {
+                return (
+                  <View style={styles.suggestTagView} key={tag} onStartShouldSetResponder={() => true}>
+                    <Text style={styles.suggestTagText}>{tag}</Text>
+                  </View>
+                );
+              })}
+            </ScrollView>
+            
+          </View>
+        </Pressable>
       </View>
       <View style={{flex: 6, marginTop: 30}}>
         {images.map(image => {
           let i_height = (image.height * width) / image.width;
-          console.log(image);
           return (
             <Image
               style={{width: width, height: i_height, marginBottom: 10}}
