@@ -16,7 +16,9 @@ import {FilterScreen} from './filter';
 import {GroupDepthView} from './group/groupDepthView';
 import {GroupDetail} from './group/groupDetail';
 import {GroupCreate} from './group/groupCreate';
-import { getContentsList } from '../../service/content';
+import {getContentsList} from '../../service/content';
+import {useNavigation} from '@react-navigation/core';
+import {HOST} from '../../common/constant';
 
 const styles = StyleSheet.create({
   container: {
@@ -91,25 +93,8 @@ class SHome extends React.Component {
       showbility: true,
       ability: false,
       group: false,
+      isFetching: false,
     };
-
-    this.data = [
-      {
-        id: 0,
-        url: 'https://i.pinimg.com/564x/08/94/75/089475365c284288406baf7e5616dd64.jpg',
-      },
-      {
-        id: 1,
-        url: 'https://i.pinimg.com/236x/4b/ee/eb/4beeebb760923f65d559e3486f1233c1.jpg',
-      },
-      {
-        id: 2,
-        url: 'https://i.pinimg.com/564x/b7/a5/a8/b7a5a801d8b9476bad5906ad88347445.jpg',
-      },
-    ];
-    getContentsList().then(d => {
-      console.log(d);
-    });
   }
 
   onPressTobText = key => {
@@ -124,20 +109,6 @@ class SHome extends React.Component {
       }
     }
     this.setState(st);
-  };
-
-  showModalOnShowbilityItemPressed = item => {
-    this.props.navigation.navigate('ContentsModal', item);
-  };
-
-  renderItem = itemObject => {
-    let item = itemObject.item;
-    return (
-      <TouchableOpacity
-        onPress={() => this.showModalOnShowbilityItemPressed(item)}>
-        <Image source={{uri: item.url}} style={styles.flatListImage} />
-      </TouchableOpacity>
-    );
   };
 
   render() {
@@ -181,8 +152,8 @@ class SHome extends React.Component {
           </View>
         </View>
         <View style={styles.main}>
-          <View style={{display: this.state.showbility ? '' : 'none'}}>
-            <FlatList data={this.data} renderItem={this.renderItem} />
+          <View style={{flex: 1, display: this.state.showbility ? '' : 'none'}}>
+            <ShowbilityScreen />
           </View>
           <View style={{display: this.state.ability ? '' : 'none'}}>
             <AbilityScreen />
@@ -196,21 +167,72 @@ class SHome extends React.Component {
   }
 }
 
+function ShowbilityScreen() {
+  const navigation = useNavigation();
+  const [data, setData] = React.useState([]);
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const showModalOnShowbilityItemPressed = item => {
+    navigation.navigate('ContentsModal', item);
+  };
+
+  const renderItem = itemObject => {
+    let item = itemObject.item;
+    let source = require('../../../assets/imgs/add_image.png');
+    if (item.images.length > 0) {
+      source = {uri: HOST + item.images[0]};
+    }
+    return (
+      <TouchableOpacity onPress={() => showModalOnShowbilityItemPressed(item)}>
+        <Image source={source} style={styles.flatListImage} />
+      </TouchableOpacity>
+    );
+  };
+
+  const fetchData = () => {
+    console.log('Fetchdata Showbility Home');
+    getContentsList()
+      .then(d => {
+        setData(d.results);
+      })
+      .then(() => setRefreshing(false));
+  };
+
+  const onRefersh = () => {
+    setRefreshing(true);
+    fetchData();
+  };
+
+  React.useEffect(() => {
+    fetchData();
+  }, []);
+
+  return (
+    <FlatList
+      key={'#'}
+      keyExtractor={item => '#' + item.url}
+      data={data}
+      renderItem={renderItem}
+      onRefresh={() => onRefersh()}
+      refreshing={refreshing}
+    />
+  );
+}
+
 const MainHomeStack = createStackNavigator();
 
 export function ContentsModal({route, navigation}) {
   const item = route.params;
-  const data = [item];
+  const data = item.images;
   const snapPoints = React.useMemo(() => ['10%', '50%'], []);
 
-  let title = '아디다스 2021 비주얼 아트';
+  let title = item.title;
   let likesCount = 91;
   let viewCount = 91;
   let commentCount = 91;
-  let createdDate = '2021.12.12.';
-  let description =
-    '기획부터 설계, UI 디자인, 개발 조직과의 협업까지 전 과정의 업무를 수행합니다. 데이터를 파악하며, 비즈니스적인 관점을 고려합니다. 거대한 서비스를 만들어가는 디자이너로서, 전체적인 관점에서 체계적 @ \n기획부터 설계, UI 디자인, 개발 조직과의 협업까지 전 과정의 업무를 수행합니다. 데이터를 파악하며, 비즈니스적인 관점을 고려합니다.';
-  let tags = ['태그1', '태그2', '태그3'];
+  let createdDate = item.created_at.slice(0, 10);
+  let description = item.detail;
+  let tags = item.tags;
   let comments = [
     {
       id: '1f12vr-r1v3vrafv-12rv1213ßrv',
@@ -253,12 +275,15 @@ export function ContentsModal({route, navigation}) {
   return (
     <SafeAreaView style={{flex: 1}}>
       <FlatList
+        key={'#'}
+        keyExtractor={item => '#' + item}
         data={data}
         renderItem={itemObject => {
           let item = itemObject.item;
+          let source = {uri: HOST + item};
           return (
             <Image
-              source={{uri: item.url}}
+              source={source}
               style={{width: '100%', aspectRatio: 1, marginBottom: 10}}
             />
           );
