@@ -358,9 +358,9 @@ export function ContentsModal({route, navigation}) {
           </View>
           <View
             style={{paddingRight: 16, paddingLeft: 16, flexDirection: 'row'}}>
-            <Text>태그</Text>
-            <Text>태그</Text>
-            <Text>태그</Text>
+            {tags.map(tag => {
+              return <Text key={tag}>{tag}</Text>;
+            })}
           </View>
         </View>
         <View style={{}}>
