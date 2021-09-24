@@ -6,9 +6,10 @@ import {ShowbilityHome} from './showbility/shobilityHome';
 import SearchTab from './components/search';
 import NewUploadTab from './newupload/newUpload';
 import MessageTab from './message/message';
-import MyShowbilTab from './components/myShowbil';
+import MyShowbilTab from './myshowbil/myShowbil';
 import {createStackNavigator} from '@react-navigation/stack';
 import {CategoryList} from './newupload/category';
+import {EditProfileScreen} from './myshowbil/editprofile';
 
 const MainTab = createBottomTabNavigator();
 
@@ -48,7 +49,16 @@ function BaseStackScreen() {
         component={NewUploadTab}
         options={{headerBackTitle: ' '}}
       />
-      <BaseStack.Screen name="카테고리&태그 선택" component={CategoryList} />
+      <BaseStack.Screen
+        name="카테고리&태그 선택"
+        component={CategoryList}
+        options={{headerBackTitle: ' '}}
+      />
+      <BaseStack.Screen
+        name="프로필 편집"
+        component={EditProfileScreen}
+        options={{headerBackTitle: ' '}}
+      />
     </BaseStack.Navigator>
   );
 }
