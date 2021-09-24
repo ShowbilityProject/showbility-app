@@ -16,6 +16,7 @@ import {FilterScreen} from './filter';
 import {GroupDepthView} from './group/groupDepthView';
 import {GroupDetail} from './group/groupDetail';
 import {GroupCreate} from './group/groupCreate';
+import { getContentsList } from '../../service/content';
 
 const styles = StyleSheet.create({
   container: {
@@ -106,6 +107,9 @@ class SHome extends React.Component {
         url: 'https://i.pinimg.com/564x/b7/a5/a8/b7a5a801d8b9476bad5906ad88347445.jpg',
       },
     ];
+    getContentsList().then(d => {
+      console.log(d);
+    });
   }
 
   onPressTobText = key => {
