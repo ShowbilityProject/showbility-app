@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {ShowbilityHome} from './showbility/shobilityHome';
 import SearchTab from './components/search';
 import NewUploadTab from './newupload/newUpload';
-import MessageTab from './components/message';
+import MessageTab from './message/message';
 import MyShowbilTab from './myshowbil/myShowbil';
 import {createStackNavigator} from '@react-navigation/stack';
 import {CategoryList} from './newupload/category';
