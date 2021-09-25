@@ -11,7 +11,7 @@ function setToken() {
 export function get(uri) {
   if (isEmpty(jwtToken)) {
   }
-  return fetch(HOST + uri, {
+  return fetch(uri, {
     method: 'GET',
     headers: {
       token: jwtToken,
@@ -20,8 +20,8 @@ export function get(uri) {
 }
 
 export function post(uri, body) {
-  console.log(HOST + uri, body);
-  return fetch(HOST + uri, {
+  console.log(uri, body);
+  return fetch(uri, {
     method: 'POST',
     headers: {
       token: jwtToken,
