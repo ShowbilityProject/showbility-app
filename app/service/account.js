@@ -1,10 +1,10 @@
-import {API_TOKEN} from '../common/constant';
+import {API_TOKEN, HOST} from '../common/constant';
 import {post} from '../common/requester';
 import {storeUserSession} from '../common/securestorage';
 import {isEmpty} from '../common/util';
 
 export function requestSignIn(email, password) {
-  let uri = '/app/sign/signIn/';
+  let uri = HOST + '/app/sign/signIn/';
   let body = {
     email: email,
     password: password,
@@ -30,7 +30,7 @@ export function requestSignIn(email, password) {
 }
 
 export function requestSignUp(name, email, password, birth) {
-  let uri = '/app/sign/signUp/';
+  let uri = HOST + '/app/sign/signUp/';
   let body = {
     name: name,
     email: email,
