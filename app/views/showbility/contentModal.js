@@ -55,8 +55,8 @@ export function ContentsModal({route, navigation}) {
 
   let title = item.title;
   let likesCount = 91;
-  let viewCount = 91;
-  let commentCount = 91;
+  let viewCount = item.views;
+  let commentCount = item.comments.length;
   let createdDate = item.created_at.slice(0, 10);
   let description = item.detail;
   let tags = item.tags;
@@ -156,7 +156,9 @@ export function ContentsModal({route, navigation}) {
           <View
             style={{paddingRight: 16, paddingLeft: 16, flexDirection: 'row'}}>
             <View style={{flex: 1}}>
-              <Text style={styles.modalContentTitle}>댓글 (91)</Text>
+              <Text style={styles.modalContentTitle}>
+                댓글 ({commentCount})
+              </Text>
             </View>
             <TouchableOpacity
               style={{flex: 1}}
@@ -180,8 +182,12 @@ export function ContentsModal({route, navigation}) {
               lexDirection: 'row',
             }}>
             <View style={{flexDirection: 'row'}}>
-              <Text style={{fontSize: 12}}>{comments[0].author}</Text>
-              <Text style={{marginLeft: 10}}>{comments[0].detail}</Text>
+              <Text style={{fontSize: 12}}>
+                {commentCount ? comments[0].author : ''}
+              </Text>
+              <Text style={{marginLeft: 10}}>
+                {commentCount ? comments[0].detail : ''}
+              </Text>
             </View>
           </View>
           <View
