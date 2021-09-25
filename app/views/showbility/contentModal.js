@@ -110,7 +110,7 @@ export function ContentsModal({route, navigation}) {
   const cmtIcon = '../../../assets/imgs/message-circle.png';
 
   let title = item.title;
-  let likesCount = 91;
+  let likesCount = item.likes;
   let viewCount = item.views;
   let commentCount = item.comments.length;
   let createdDate = item.created_at.slice(0, 10);
