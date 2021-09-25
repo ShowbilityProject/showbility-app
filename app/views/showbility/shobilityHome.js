@@ -16,7 +16,7 @@ import {FilterScreen} from './filter';
 import {GroupDepthView} from './group/groupDepthView';
 import {GroupDetail} from './group/groupDetail';
 import {GroupCreate} from './group/groupCreate';
-import {getContentsList} from '../../service/content';
+import {getContent, getContentsList} from '../../service/content';
 import {useNavigation} from '@react-navigation/core';
 import {HOST} from '../../common/constant';
 
@@ -173,7 +173,9 @@ function ShowbilityScreen() {
   const [refreshing, setRefreshing] = React.useState(false);
 
   const showModalOnShowbilityItemPressed = item => {
-    navigation.navigate('ContentsModal', item);
+    getContent(item.url).then(content =>
+      navigation.navigate('ContentsModal', content),
+    );
   };
 
   const renderItem = itemObject => {
@@ -223,7 +225,6 @@ const MainHomeStack = createStackNavigator();
 
 export function ContentsModal({route, navigation}) {
   const item = route.params;
-  const data = item.images;
   const snapPoints = React.useMemo(() => ['10%', '50%'], []);
 
   let title = item.title;
@@ -233,51 +234,13 @@ export function ContentsModal({route, navigation}) {
   let createdDate = item.created_at.slice(0, 10);
   let description = item.detail;
   let tags = item.tags;
-  let comments = [
-    {
-      id: '1f12vr-r1v3vrafv-12rv1213ßrv',
-      author: 'Kimhyeju',
-      contents: '너무 멋진 작품입니다!',
-      createdDate: '2021-12-12',
-      liked: true,
-      likesCount: 1,
-      replies: [
-        {
-          id: '1f12vr-r1v3vrafv-12rv12rv',
-          author: 'Hyechouxx',
-          contents: '@Kimhyeju 응원 너무 감사합니다!',
-          createdDate: '2021-12-12',
-          liked: false,
-          likesCount: 0,
-          replies: [],
-        },
-        {
-          id: '1f12vr-r1v3vrafv-12rv12rv1',
-          author: 'Kimhyeju',
-          contents: '@Hyechouxx 다음 작품도 기대하고 있어요!',
-          createdDate: '2021-12-12',
-          liked: true,
-          likesCount: 0,
-          replies: [],
-        },
-      ],
-    },
-    {
-      id: '1f12vr-r1v3vrafv-12rv12re',
-      author: 'Kimhyeju',
-      contents: '너무 멋진 작품입니다!',
-      createdDate: '2021-12-12',
-      liked: true,
-      likesCount: 20,
-      replies: [],
-    },
-  ];
+  let comments = item.comments;
   return (
     <SafeAreaView style={{flex: 1}}>
       <FlatList
         key={'#'}
         keyExtractor={item => '#' + item}
-        data={data}
+        data={item.images}
         renderItem={itemObject => {
           let item = itemObject.item;
           let source = {uri: HOST + item};
@@ -392,7 +355,7 @@ export function ContentsModal({route, navigation}) {
             }}>
             <View style={{flexDirection: 'row'}}>
               <Text style={{fontSize: 12}}>{comments[0].author}</Text>
-              <Text style={{marginLeft: 10}}>{comments[0].contents}</Text>
+              <Text style={{marginLeft: 10}}>{comments[0].detail}</Text>
             </View>
           </View>
           <View
@@ -445,7 +408,7 @@ function ReplyView(reply) {
       <View>
         <View style={{flexDirection: 'row'}}>
           <Text style={{fontSize: 12}}>{reply.author}</Text>
-          <Text style={{marginLeft: 10, fontSize: 12}}>{reply.contents}</Text>
+          <Text style={{marginLeft: 10, fontSize: 12}}>{reply.detail}</Text>
         </View>
         <View style={{flexDirection: 'row', marginTop: 10}}>
           <Text style={CommentStyles.additionalInfo}>4분</Text>
@@ -484,6 +447,9 @@ function CommentsView({route, navigation}) {
         data={item}
         renderItem={item => {
           let comment = item.item;
+          if (comment.depth > 0) {
+            return;
+          }
           return (
             <View>
               <View style={CommentStyles.headLayer}>
@@ -491,7 +457,7 @@ function CommentsView({route, navigation}) {
                   <View style={{flexDirection: 'row'}}>
                     <Text style={{fontSize: 12}}>{comment.author}</Text>
                     <Text style={{marginLeft: 10, fontSize: 12}}>
-                      {comment.contents}
+                      {comment.detail}
                     </Text>
                   </View>
                   <View style={{flexDirection: 'row', marginTop: 10}}>
@@ -503,8 +469,8 @@ function CommentsView({route, navigation}) {
                   </View>
                 </View>
               </View>
-              {comment.replies.map(reply => {
-                return <ReplyView reply={reply} key={reply.id} />;
+              {comment.childs.map(reply => {
+                return <ReplyView reply={reply} key={reply.url} />;
               })}
             </View>
           );
