@@ -105,6 +105,9 @@ const styles = StyleSheet.create({
 export function ContentsModal({route, navigation}) {
   const item = route.params;
   const snapPoints = React.useMemo(() => ['10%', '50%'], []);
+  const likeIcon = '../../../assets/imgs/like.png';
+  const viewIcon = '../../../assets/imgs/view.png';
+  const cmtIcon = '../../../assets/imgs/message-circle.png';
 
   let title = item.title;
   let likesCount = 91;
@@ -150,9 +153,12 @@ export function ContentsModal({route, navigation}) {
               </Text>
             </View>
             <View style={styles.contentMetaCount}>
-              <View style={{flex: 1, flexDirection: 'row'}}>
+              <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+                <Image source={require(likeIcon)} />
                 <Text style={styles.modalCount}>{likesCount}</Text>
+                <Image source={require(viewIcon)} />
                 <Text style={styles.modalCount}>{viewCount}</Text>
+                <Image source={require(cmtIcon)} />
                 <Text style={styles.modalCount}>{commentCount}</Text>
               </View>
               <View style={{flex: 1}}>
