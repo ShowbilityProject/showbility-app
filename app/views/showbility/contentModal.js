@@ -42,10 +42,52 @@ const styles = StyleSheet.create({
     color: '#BCBCBC',
     fontSize: 14,
   },
+  upperRightTopCloseBtn: {
+    color: 'white',
+    alignSelf: 'center'
+  },
   filterIcon: {
     position: 'absolute',
     right: 30,
     marginTop: 7,
+  },
+  contentMetaCount: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-end'
+  },
+  dateArea: {
+    padding: 10,
+    textAlign: 'right',
+    color: '#BCBCBC',
+    fontSize: 10,
+  },
+  viewOption: {
+    textAlign: 'right',
+    fontFamily: 'JejuGothicOTF',
+    color: '#F85B02',
+    fontSize: 12,
+  },
+  commentWrapper: {
+    paddingRight: 16,
+    paddingLeft: 16,
+    paddingTop: 16,
+    flexDirection: 'row',
+  },
+  commentInputWrapper: {
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 16,
+    borderWidth: 1,
+    borderColor: '#707070',
+    borderRadius: 6,
+  },
+  commentInput: {
+    height: 40,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 11,
+    paddingTop: 12,
   },
 });
 
@@ -81,7 +123,7 @@ export function ContentsModal({route, navigation}) {
       <View style={styles.modalCloseButton}>
         <Text
           onPress={() => navigation.goBack()}
-          style={{color: 'white', alignSelf: 'center'}}>
+          style={styles.upperRightTopCloseBtn}>
           &#10005;
         </Text>
       </View>
@@ -96,23 +138,14 @@ export function ContentsModal({route, navigation}) {
                 {title}
               </Text>
             </View>
-            <View
-              style={{flex: 1, flexDirection: 'row', alignItems: 'flex-end'}}>
+            <View style={styles.contentMetaCount}>
               <View style={{flex: 1, flexDirection: 'row'}}>
                 <Text style={styles.modalCount}>{likesCount}</Text>
                 <Text style={styles.modalCount}>{viewCount}</Text>
                 <Text style={styles.modalCount}>{commentCount}</Text>
               </View>
               <View style={{flex: 1}}>
-                <Text
-                  style={{
-                    padding: 10,
-                    textAlign: 'right',
-                    color: '#BCBCBC',
-                    fontSize: 10,
-                  }}>
-                  {createdDate}
-                </Text>
+                <Text style={styles.dateArea}>{createdDate}</Text>
               </View>
             </View>
           </View>
@@ -124,15 +157,7 @@ export function ContentsModal({route, navigation}) {
               <Text style={styles.modalContentTitle}>프로젝트 소개</Text>
             </View>
             <View style={{flex: 1}}>
-              <Text
-                style={{
-                  textAlign: 'right',
-                  fontFamily: 'JejuGothicOTF',
-                  color: '#F85B02',
-                  fontSize: 12,
-                }}>
-                접어 보기
-              </Text>
+              <Text style={styles.viewOption}>접어 보기</Text>
             </View>
           </View>
           <View style={{padding: 16}}>
@@ -163,24 +188,10 @@ export function ContentsModal({route, navigation}) {
             <TouchableOpacity
               style={{flex: 1}}
               onPress={() => navigation.push('댓글', comments)}>
-              <Text
-                style={{
-                  textAlign: 'right',
-                  fontFamily: 'JejuGothicOTF',
-                  color: '#F85B02',
-                  fontSize: 12,
-                }}>
-                전체 보기
-              </Text>
+              <Text style={styles.viewOption}>전체 보기</Text>
             </TouchableOpacity>
           </View>
-          <View
-            style={{
-              paddingRight: 16,
-              paddingLeft: 16,
-              paddingTop: 16,
-              lexDirection: 'row',
-            }}>
+          <View style={styles.commentWrapper}>
             <View style={{flexDirection: 'row'}}>
               <Text style={{fontSize: 12}}>
                 {commentCount ? comments[0].author : ''}
@@ -190,25 +201,8 @@ export function ContentsModal({route, navigation}) {
               </Text>
             </View>
           </View>
-          <View
-            style={{
-              marginLeft: 16,
-              marginRight: 16,
-              marginTop: 16,
-              borderWidth: 1,
-              borderColor: '#707070',
-              borderRadius: 6,
-            }}>
-            <TextInput
-              placeholder="댓글 달기"
-              style={{
-                height: 40,
-                paddingLeft: 20,
-                paddingRight: 20,
-                paddingBottom: 11,
-                paddingTop: 12,
-              }}
-            />
+          <View style={styles.commentInputWrapper}>
+            <TextInput placeholder="댓글 달기" style={styles.commentInput} />
           </View>
         </View>
       </BottomSheet>
