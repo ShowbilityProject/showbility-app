@@ -8,6 +8,7 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {HOST} from '../../common/constant';
@@ -88,6 +89,16 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     paddingBottom: 11,
     paddingTop: 12,
+  },
+  suggestTagView: {
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    backgroundColor: '#F7F7F7',
+    marginRight: 10,
+    borderRadius: 5,
+  },
+  suggestTagText: {
+    fontSize: 12,
   },
 });
 
@@ -172,9 +183,15 @@ export function ContentsModal({route, navigation}) {
           </View>
           <View
             style={{paddingRight: 16, paddingLeft: 16, flexDirection: 'row'}}>
-            {tags.map(tag => {
-              return <Text key={tag}>{tag}</Text>;
-            })}
+            <ScrollView horizontal={true}>
+              {tags.map(tag => {
+                return (
+                  <View style={styles.suggestTagView} key={tag}>
+                    <Text style={styles.suggestTagText}>{tag}</Text>
+                  </View>
+                );
+              })}
+            </ScrollView>
           </View>
         </View>
         <View style={{}}>
