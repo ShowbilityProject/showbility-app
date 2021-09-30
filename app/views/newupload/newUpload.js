@@ -14,6 +14,10 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/core';
 import {isEmpty} from '../../common/util';
+import {
+  uploadContentMeta,
+  uploadImageWithContentId,
+} from '../../service/content';
 
 const styles = StyleSheet.create({
   container: {
@@ -106,7 +110,7 @@ function NewUploadTab() {
     setTags(value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Upload Meta First
     // Upload images with content id
     let data = {
@@ -114,9 +118,13 @@ function NewUploadTab() {
       categories: categories,
       tags: tags,
       desc: desc,
-      images: images,
     };
-    console.log(data);
+    const res = await uploadContentMeta(title, categories, tags, desc);
+    for (let i = 0; i < images.length; i++) {
+      uploadImageWithContentId(images[i], res.id, i).then(ret =>
+        console.log(ret),
+      );
+    }
   };
 
   React.useLayoutEffect(() => {
