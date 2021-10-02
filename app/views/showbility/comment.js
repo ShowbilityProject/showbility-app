@@ -1,5 +1,13 @@
 import * as React from 'react';
-import {FlatList, SafeAreaView, View, Text, StyleSheet} from 'react-native';
+import {
+  FlatList,
+  SafeAreaView,
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+} from 'react-native';
+import { postComment } from '../../service/comment';
 
 function ReplyView(reply) {
   reply = reply.reply;
@@ -20,6 +28,7 @@ function ReplyView(reply) {
       marginRight: 8,
     },
   };
+
   return (
     <View style={CommentStyles.replyLayer}>
       <View>
@@ -57,7 +66,17 @@ export function CommentsView({route, navigation}) {
       marginRight: 8,
     },
   };
-  const item = route.params;
+  const item = route.params.comments;
+  const contentId = route.params.contentId;
+  const [cmtText, setCmtText] = React.useState('');
+  const commentInput = React.useRef();
+  const submitComment = ({nativeEvent}) => {
+    const text = nativeEvent.text;
+    postComment(text, contentId, null).then(res => {
+      setCmtText('');
+    });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
@@ -93,6 +112,16 @@ export function CommentsView({route, navigation}) {
           );
         }}
       />
+      <View style={styles.commentInputWrapper}>
+        <TextInput
+          ref={commentInput}
+          placeholder="댓글 달기"
+          style={styles.commentInput}
+          value={cmtText}
+          onChangeText={value => setCmtText(value)}
+          onSubmitEditing={submitComment}
+        />
+      </View>
     </SafeAreaView>
   );
 }
@@ -101,5 +130,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
+  },
+  commentInputWrapper: {
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 16,
+    borderWidth: 1,
+    borderColor: '#707070',
+    borderRadius: 6,
+  },
+  commentInput: {
+    height: 40,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 11,
+    paddingTop: 12,
   },
 });

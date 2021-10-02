@@ -12,8 +12,8 @@ import {
 } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {HOST} from '../../common/constant';
-import { getContentById } from '../../service/content';
-import { postComment } from '../../service/comment';
+import {getContentById} from '../../service/content';
+import {postComment} from '../../service/comment';
 
 const styles = StyleSheet.create({
   container: {
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   upperRightTopCloseBtn: {
     color: 'white',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   filterIcon: {
     position: 'absolute',
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   contentMetaCount: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'flex-end'
+    alignItems: 'flex-end',
   },
   dateArea: {
     padding: 10,
@@ -175,7 +175,8 @@ export function ContentsModal({route, navigation}) {
               </Text>
             </View>
             <View style={styles.contentMetaCount}>
-              <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+              <View
+                style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
                 <Image source={require(likeIcon)} />
                 <Text style={styles.modalCount}>{item.likes}</Text>
                 <Image source={require(viewIcon)} />
@@ -234,7 +235,12 @@ export function ContentsModal({route, navigation}) {
             </View>
             <TouchableOpacity
               style={{flex: 1}}
-              onPress={() => navigation.push('댓글', item.comments)}>
+              onPress={() =>
+                navigation.push('댓글', {
+                  comments: item.comments,
+                  contentId: id,
+                })
+              }>
               <Text style={styles.viewOption}>전체 보기</Text>
             </TouchableOpacity>
           </View>
