@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {FlatList, Text, StyleSheet, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native';
+import {getAbilityList} from '../../service/ability';
 
 const styles = StyleSheet.create({
   flatListImage: {
@@ -27,55 +28,23 @@ const styles = StyleSheet.create({
 });
 
 export function AbilityScreen() {
-  let data = [
-    {
-      id: 0,
-      url: 'https://i.pinimg.com/564x/08/94/75/089475365c284288406baf7e5616dd64.jpg',
-      name: '포토그래피',
-    },
-    {
-      id: 1,
-      url: 'https://i.pinimg.com/236x/4b/ee/eb/4beeebb760923f65d559e3486f1233c1.jpg',
-      name: '일러스트레이션',
-    },
-    {
-      id: 2,
-      url: 'https://i.pinimg.com/564x/b7/a5/a8/b7a5a801d8b9476bad5906ad88347445.jpg',
-      name: '건축',
-    },
-    {
-      id: 3,
-      url: 'https://i.pinimg.com/564x/08/94/75/089475365c284288406baf7e5616dd64.jpg',
-      name: '포토그래피',
-    },
-    {
-      id: 4,
-      url: 'https://i.pinimg.com/236x/4b/ee/eb/4beeebb760923f65d559e3486f1233c1.jpg',
-      name: '일러스트레이션',
-    },
-    {
-      id: 5,
-      url: 'https://i.pinimg.com/564x/b7/a5/a8/b7a5a801d8b9476bad5906ad88347445.jpg',
-      name: '건축',
-    },
-    {
-      id: 6,
-      url: 'https://i.pinimg.com/564x/08/94/75/089475365c284288406baf7e5616dd64.jpg',
-      name: '포토그래피',
-    },
-    {
-      id: 7,
-      url: 'https://i.pinimg.com/236x/4b/ee/eb/4beeebb760923f65d559e3486f1233c1.jpg',
-      name: '일러스트레이션',
-    },
-    {
-      id: 8,
-      url: 'https://i.pinimg.com/564x/b7/a5/a8/b7a5a801d8b9476bad5906ad88347445.jpg',
-      name: '건축',
-    },
-  ];
+  const [abilities, setAbilities] = React.useState([]);
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  React.useEffect(() => {
+    setRefreshing(true);
+    refreshData();
+  }, []);
+
+  const refreshData = () => {
+    getAbilityList().then(res => {
+      setAbilities(res.results);
+      setRefreshing(false);
+    });
+  };
 
   const renderItem = itemObject => {
+    console.log(itemObject);
     let item = itemObject.item;
     return (
       <TouchableOpacity style={styles.abilityFrame}>
@@ -89,12 +58,14 @@ export function AbilityScreen() {
   return (
     <FlatList
       key={'#'}
-      keyExtractor={item => '#' + item.id}
-      data={data}
+      keyExtractor={item => '#' + item.name}
+      data={abilities}
       renderItem={renderItem}
       horizontal={false}
       numColumns={2}
       style={styles.flatListFrame}
+      refreshing={refreshing}
+      onRefresh={refreshData}
     />
   );
 }
