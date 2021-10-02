@@ -75,6 +75,7 @@ export function SHome2({route, navigation}) {
   const [categoryFilter, setCategoryFilter] = React.useState([]);
   const [tagFilter, setTagFilter] = React.useState([]);
   const [rerenderKey, setRerenderKey] = React.useState(false);
+  const [changeView, setChangeView] = React.useState(false);
 
   const getCategoryFilter = () => {
     return categoryFilter;
@@ -96,6 +97,7 @@ export function SHome2({route, navigation}) {
       }
     }
     setVisibility(st);
+    setChangeView(!changeView);
   };
 
   return (

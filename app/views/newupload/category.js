@@ -57,7 +57,7 @@ export function CategoryList({route, navigation}) {
         <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
           {categoryData.map(category => {
             return (
-              <View style={{padding: 5}}>
+              <View key={category.name} style={{padding: 5}}>
                 <TouchableOpacity
                   style={[
                     styles.labelStyle,
@@ -99,7 +99,7 @@ export function CategoryList({route, navigation}) {
         <View style={styles.tagArea}>
           {tagData.map(tag => {
             return (
-              <View style={{padding: 5}}>
+              <View key={tag.name} style={{padding: 5}}>
                 <TouchableOpacity
                   style={[
                     styles.labelStyle,
