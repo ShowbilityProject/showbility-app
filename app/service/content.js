@@ -8,6 +8,12 @@ export function getContentsList(page = 1, page_size = 10) {
     .catch(err => console.log(err));
 }
 
+export function getNestContentsList(url) {
+  return get(url)
+    .then(response => response.json())
+    .catch(err => console.log(err));
+}
+
 export function getContent(url) {
   return get(url)
     .then(response => response.json())

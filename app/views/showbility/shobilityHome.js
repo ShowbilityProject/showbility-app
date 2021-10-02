@@ -15,7 +15,7 @@ import {FilterScreen} from './filter';
 import {GroupDepthView} from './group/groupDepthView';
 import {GroupDetail} from './group/groupDetail';
 import {GroupCreate} from './group/groupCreate';
-import {getContent, getContentsList} from '../../service/content';
+import {getContent, getContentsList, getNestContentsList} from '../../service/content';
 import {useNavigation} from '@react-navigation/core';
 import {HOST} from '../../common/constant';
 import {CommentsView} from './comment';
@@ -151,6 +151,8 @@ function ShowbilityScreen() {
   const navigation = useNavigation();
   const [data, setData] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [nextURL, setNextURL] = React.useState();
+  const [fetchingNext, setFetchingNext] = React.useState(true);
 
   const showModalOnShowbilityItemPressed = id => {
     navigation.navigate('ContentsModal', id);
@@ -174,6 +176,8 @@ function ShowbilityScreen() {
     getContentsList()
       .then(d => {
         setData(d.results);
+        setNextURL(d.next);
+        setFetchingNext(false);
       })
       .then(() => setRefreshing(false));
   };
@@ -187,6 +191,26 @@ function ShowbilityScreen() {
     fetchData();
   }, []);
 
+  const fetchNext = () => {
+    if (nextURL === null) return;
+    console.log('Fetch next');
+    setFetchingNext(true);
+    getNestContentsList(nextURL).then(res => {
+      data.push.apply(data, res.results);
+      setNextURL(res.next);
+      setData(data);
+      setFetchingNext(false);
+    });
+  };
+
+  const isScrollEnd = ({layoutMeasurement, contentOffset, contentSize}) => {
+    const paddingToBottom = 20;
+    const ret =
+      layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom;
+    return ret;
+  };
+
   return (
     <FlatList
       key={'#'}
@@ -195,6 +219,12 @@ function ShowbilityScreen() {
       renderItem={renderItem}
       onRefresh={() => onRefersh()}
       refreshing={refreshing}
+      onScroll={({nativeEvent}) => {
+        if (isScrollEnd(nativeEvent)) {
+          console.log(fetchingNext);
+          if (!fetchingNext) fetchNext();
+        }
+      }}
     />
   );
 }
