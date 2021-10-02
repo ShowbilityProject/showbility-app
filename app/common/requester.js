@@ -69,13 +69,20 @@ export async function asyncPost(uri, body) {
   return res.json();
 }
 
-export function rawPost(uri, body) {
+export async function rawPost(uri, body) {
   console.log(body);
-  return fetch(uri, {
+  const res = await fetch(uri, {
     method: 'POST',
     headers: {
       Authorization: `JWT ${jwtToken}`,
     },
     body: body,
   });
+
+  if (!res.ok) {
+    const msg = `Error on post ${uri}, msg: ${res.status}`;
+    throw new Error(msg);
+  }
+
+  return res.json();
 }

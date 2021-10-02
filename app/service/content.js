@@ -28,7 +28,7 @@ export async function uploadContentMeta(title, categories, tags, detail) {
   return res;
 }
 
-export function uploadImageWithContentId(image, contentId, order) {
+export async function uploadImageWithContentId(image, contentId, order) {
   const url = `${HOST}/contents/${contentId}/image/`;
   const formData = new FormData();
   const imageData = {
@@ -39,7 +39,6 @@ export function uploadImageWithContentId(image, contentId, order) {
   console.log(image);
   formData.append('image', imageData);
   formData.append('order', order);
-  return rawPost(url, formData)
-    .then(res => res)
-    .catch(err => err);
+  const res = await rawPost(url, formData);
+  return res;
 }

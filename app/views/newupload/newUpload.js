@@ -111,20 +111,11 @@ function NewUploadTab() {
   };
 
   const handleSubmit = async () => {
-    // Upload Meta First
-    // Upload images with content id
-    let data = {
-      title: title,
-      categories: categories,
-      tags: tags,
-      desc: desc,
-    };
     const res = await uploadContentMeta(title, categories, tags, desc);
     for (let i = 0; i < images.length; i++) {
-      uploadImageWithContentId(images[i], res.id, i).then(ret =>
-        console.log(ret),
-      );
+      uploadImageWithContentId(images[i], res.id, i);
     }
+    navigation.navigate('쇼빌리티');
   };
 
   React.useLayoutEffect(() => {
