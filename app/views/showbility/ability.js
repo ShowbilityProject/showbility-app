@@ -44,7 +44,6 @@ export function AbilityScreen() {
   };
 
   const renderItem = itemObject => {
-    console.log(itemObject);
     let item = itemObject.item;
     return (
       <TouchableOpacity style={styles.abilityFrame}>
