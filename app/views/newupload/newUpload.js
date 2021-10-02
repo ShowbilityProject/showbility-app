@@ -115,7 +115,7 @@ function NewUploadTab() {
     for (let i = 0; i < images.length; i++) {
       uploadImageWithContentId(images[i], res.id, i);
     }
-    navigation.navigate('쇼빌리티');
+    navigation.goBack();
   };
 
   React.useLayoutEffect(() => {
