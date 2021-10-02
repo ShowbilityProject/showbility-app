@@ -13,6 +13,7 @@ import {
 import BottomSheet from '@gorhom/bottom-sheet';
 import {HOST} from '../../common/constant';
 import { getContentById } from '../../service/content';
+import { postComment } from '../../service/comment';
 
 const styles = StyleSheet.create({
   container: {
@@ -115,13 +116,27 @@ export function ContentsModal({route, navigation}) {
     tags: [],
     images: [],
   });
+  const [cmtText, setCmtText] = React.useState('');
+  const commentInput = React.useRef();
   const snapPoints = React.useMemo(() => ['10%', '50%'], []);
   const likeIcon = '../../../assets/imgs/like.png';
   const viewIcon = '../../../assets/imgs/view.png';
   const cmtIcon = '../../../assets/imgs/message-circle.png';
 
-  React.useEffect(() => {
+  const submitComment = ({nativeEvent}) => {
+    const text = nativeEvent.text;
+    postComment(text, id, null).then(res => {
+      fetchData(id);
+      setCmtText('');
+    });
+  };
+
+  const fetchData = id => {
     getContentById(id).then(res => setItem(res));
+  };
+
+  React.useEffect(() => {
+    fetchData(id);
   }, [id]);
 
   return (
@@ -234,7 +249,14 @@ export function ContentsModal({route, navigation}) {
             </View>
           </View>
           <View style={styles.commentInputWrapper}>
-            <TextInput placeholder="댓글 달기" style={styles.commentInput} />
+            <TextInput
+              ref={commentInput}
+              placeholder="댓글 달기"
+              style={styles.commentInput}
+              value={cmtText}
+              onChangeText={value => setCmtText(value)}
+              onSubmitEditing={submitComment}
+            />
           </View>
         </View>
       </BottomSheet>
