@@ -1,8 +1,19 @@
 import {HOST} from '../common/constant';
 import {asyncPost, get, post, rawPost} from '../common/requester';
 
-export function getContentsList(page = 1, page_size = 10) {
+export function getContentsList(
+  page = 1,
+  page_size = 10,
+  categories = [],
+  tags = [],
+) {
   let url = `${HOST}/contents/?page=${page}&page_size=${page_size}`;
+  for (var tag in tags) {
+    url = `&tag=${tag}`;
+  }
+  for (var category in categories) {
+    url = `&category=${category}`;
+  }
   return get(url)
     .then(response => response.json())
     .catch(err => console.log(err));
