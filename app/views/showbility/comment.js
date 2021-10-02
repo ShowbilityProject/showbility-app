@@ -130,9 +130,9 @@ export function CommentsView({route, navigation}) {
                       {getTimeString(comment.created_at)}
                     </Text>
                     <Text style={CommentStyles.additionalInfo}>
-                      좋아요 {comment.likesCount}개
+                      좋아요 {comment.likes}개
                     </Text>
-                    <Text style={CommentStyles.additionalInfo}>답글 달기</Text>
+                    {/* <Text style={CommentStyles.additionalInfo}>답글 달기</Text> */}
                   </View>
                 </View>
               </View>
