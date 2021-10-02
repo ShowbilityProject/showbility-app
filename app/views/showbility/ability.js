@@ -47,7 +47,7 @@ export function AbilityScreen() {
     let item = itemObject.item;
     return (
       <TouchableOpacity style={styles.abilityFrame}>
-        <Image source={{uri: item.url}} style={styles.flatListImage} />
+        <Image source={{uri: item.image}} style={styles.flatListImage} />
         <Text style={[styles.fontJeju, styles.abilityItemTitle]}>
           {item.name}
         </Text>
