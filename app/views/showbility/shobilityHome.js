@@ -65,21 +65,16 @@ const styles = StyleSheet.create({
   },
 });
 
-class SHome extends React.Component {
-  constructor(props) {
-    super(props);
-    this.st = true;
-    this.state = {
-      showbility: true,
-      ability: false,
-      group: false,
-      isFetching: false,
-      filter: true,
-    };
-  }
+export function SHome2({route, navigation}) {
+  const [visibility, setVisibility] = React.useState({
+    showbility: true,
+    ability: false,
+    group: false,
+    isFetching: false,
+  });
 
-  onPressTobText = key => {
-    let st = this.state;
+  const onPressTobText = key => {
+    let st = visibility;
     if (!st[key]) {
       for (let k in st) {
         if (k === key) {
@@ -89,73 +84,71 @@ class SHome extends React.Component {
         }
       }
     }
-    this.setState(st);
+    setVisibility(st);
   };
 
-  render() {
-    return (
-      <SafeAreaView style={[styles.flexCenter, styles.container]}>
-        <View style={{width: '100%'}}>
-          <View style={styles.tobBar}>
-            <Text
-              style={[
-                styles.tobBarText,
-                this.state.showbility ? styles.tobBarTextFocused : {},
-              ]}
-              onPress={() => this.onPressTobText('showbility')}>
-              쇼빌리티
-            </Text>
-            <Text
-              style={[
-                styles.tobBarText,
-                this.state.ability ? styles.tobBarTextFocused : {},
-              ]}
-              onPress={() => this.onPressTobText('ability')}>
-              어빌리티
-            </Text>
-            <Text
-              style={[
-                styles.tobBarText,
-                this.state.group ? styles.tobBarTextFocused : {},
-              ]}
-              onPress={() => this.onPressTobText('group')}>
-              그룹
-            </Text>
-            <TouchableOpacity
-              style={styles.filterIcon}
-              onPress={() =>
-                this.props.navigation.navigate('카테고리&태그 선택', {
-                  selectCategories: categories => {
-                    global.filter.categories = categories;
-                  },
-                  selectTags: tags => {
-                    global.filter.tags = tags;
-                  },
-                  categories: global.filter.categories,
-                  tags: global.filter.tags,
-                  isUpload: false,
-                })
-              }>
-              <Image
-                source={require('../../../assets/imgs/ICON-24-Filter.png')}
-              />
-            </TouchableOpacity>
-          </View>
+  return (
+    <SafeAreaView style={[styles.flexCenter, styles.container]}>
+      <View style={{width: '100%'}}>
+        <View style={styles.tobBar}>
+          <Text
+            style={[
+              styles.tobBarText,
+              visibility.showbility ? styles.tobBarTextFocused : {},
+            ]}
+            onPress={() => onPressTobText('showbility')}>
+            쇼빌리티
+          </Text>
+          <Text
+            style={[
+              styles.tobBarText,
+              visibility.ability ? styles.tobBarTextFocused : {},
+            ]}
+            onPress={() => onPressTobText('ability')}>
+            어빌리티
+          </Text>
+          <Text
+            style={[
+              styles.tobBarText,
+              visibility.group ? styles.tobBarTextFocused : {},
+            ]}
+            onPress={() => onPressTobText('group')}>
+            그룹
+          </Text>
+          <TouchableOpacity
+            style={styles.filterIcon}
+            onPress={() =>
+              navigation.navigate('카테고리&태그 선택', {
+                selectCategories: categories => {
+                  global.filter.categories = categories;
+                },
+                selectTags: tags => {
+                  global.filter.tags = tags;
+                },
+                categories: global.filter.categories,
+                tags: global.filter.tags,
+                isUpload: false,
+              })
+            }>
+            <Image
+              source={require('../../../assets/imgs/ICON-24-Filter.png')}
+            />
+          </TouchableOpacity>
         </View>
-        <View style={styles.main}>
-          <View style={{flex: 1, display: this.state.showbility ? '' : 'none'}}>
-            <ShowbilityScreen />
-          </View>
-          <View style={{display: this.state.ability ? '' : 'none'}}>
-            <AbilityScreen />
-          </View>
-          <View style={{display: this.state.group ? '' : 'none'}}>
-            <GroupScreen />
-          </View>
+      </View>
+      <View style={styles.main}>
+        <View style={{flex: 1, display: visibility.showbility ? '' : 'none'}}>
+          <ShowbilityScreen />
         </View>
-      </SafeAreaView>
-    );
-  }
+        <View style={{display: visibility.ability ? '' : 'none'}}>
+          <AbilityScreen />
+        </View>
+        <View style={{display: visibility.group ? '' : 'none'}}>
+          <GroupScreen />
+        </View>
+      </View>
+    </SafeAreaView>
+  );
 }
 
 function ShowbilityScreen() {
@@ -247,7 +240,7 @@ export function ShowbilityHome() {
     <MainHomeStack.Navigator mode="modal">
       <MainHomeStack.Screen
         name="Main"
-        component={SHome}
+        component={SHome2}
         options={{headerShown: false}}
       />
       <MainHomeStack.Screen
