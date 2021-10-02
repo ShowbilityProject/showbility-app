@@ -1,13 +1,18 @@
 import * as React from 'react';
 import {View, StyleSheet, Text, Pressable} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {getCategoryList, getTagList} from '../../service/ability';
 
 export function CategoryList({route, navigation}) {
+  console.log(route.params);
   const selectCategories = route.params.selectCategories;
   const selectTags = route.params.selectTags;
+  const isUpload = route.params.isUpload;
   const [categories, setCategories] = React.useState(route.params.categories);
   const [tags, setTags] = React.useState(route.params.tags);
   const [changeFlag, setChangeFlag] = React.useState(false);
+  const [categoryData, setCategoryData] = React.useState([]);
+  const [tagData, setTagData] = React.useState([]);
   const TYPE_CATEGORY = 'cateogory';
   const TYPE_TAG = 'tag';
 
@@ -37,25 +42,14 @@ export function CategoryList({route, navigation}) {
     navigation.goBack();
   };
 
-  let categoryData = [
-    '포토그래피',
-    '일러스트레이션',
-    '건축',
-    '패션',
-    '웹/모바일',
-    '제품',
-  ];
-  let tagData = [
-    '포토그래프',
-    '생동감',
-    '컬러풀',
-    '자연',
-    '인물',
-    '풍경',
-    '도시',
-    '스포티',
-    '감성',
-  ];
+  const fetchData = () => {
+    getCategoryList().then(res => setCategoryData(res.results));
+    getTagList().then(res => setTagData(res.results));
+  };
+
+  React.useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <View style={styles.baseWrapper}>
@@ -68,18 +62,18 @@ export function CategoryList({route, navigation}) {
                 <TouchableOpacity
                   style={[
                     styles.labelStyle,
-                    categories.includes(category)
+                    categories.includes(category.name)
                       ? styles.labelSelected
                       : styles.labelNotSelected,
                   ]}
-                  onPress={() => handleSelection(category, TYPE_CATEGORY)}>
+                  onPress={() => handleSelection(category.name, TYPE_CATEGORY)}>
                   <Text
                     style={
-                      categories.includes(category)
+                      categories.includes(category.name)
                         ? styles.labelSelected
                         : styles.labelNotSelected
                     }>
-                    {category}
+                    {category.name}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -88,17 +82,21 @@ export function CategoryList({route, navigation}) {
         </View>
       </View>
       <View>
-        <Text style={styles.titleArea}>
-          #{' '}
-          <Text
-            style={{
-              fontFamily: 'JejuGothicOTF',
-              fontSize: 12,
-              color: '#B2B2B5',
-            }}>
-            하단의 추천 태그를 선택 하시면 더 많은 노출이 가능합니다.
+        <Text style={styles.titleArea}>2. 태그</Text>
+
+        {isUpload ? (
+          <Text style={styles.titleArea}>
+            #{' '}
+            <Text
+              style={{
+                fontFamily: 'JejuGothicOTF',
+                fontSize: 12,
+                color: '#B2B2B5',
+              }}>
+              하단의 추천 태그를 선택 하시면 더 많은 노출이 가능합니다.
+            </Text>
           </Text>
-        </Text>
+        ) : null}
         <View style={styles.tagArea}>
           {tagData.map(tag => {
             return (
@@ -106,18 +104,18 @@ export function CategoryList({route, navigation}) {
                 <TouchableOpacity
                   style={[
                     styles.labelStyle,
-                    tags.includes(tag)
+                    tags.includes(tag.name)
                       ? styles.labelSelected
                       : styles.labelNotSelected,
                   ]}
-                  onPress={() => handleSelection(tag, TYPE_TAG)}>
+                  onPress={() => handleSelection(tag.name, TYPE_TAG)}>
                   <Text
                     style={
-                      tags.includes(tag)
+                      tags.includes(tag.name)
                         ? styles.labelSelected
                         : styles.labelNotSelected
                     }>
-                    {tag}
+                    {tag.name}
                   </Text>
                 </TouchableOpacity>
               </View>

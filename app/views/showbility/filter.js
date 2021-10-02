@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Text, StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native';
+import { CategoryList } from '../newupload/category';
 
 const styles = StyleSheet.create({
   fontJeju: {
@@ -92,6 +93,8 @@ function FilterItemsArea(object) {
 }
 
 export function FilterScreen() {
+  const [categories, setCategories] = React.useState([]);
+  const [tags, setTags] = React.useState([]);
   let searchSuggests = [
     {id: 0, name: '포토그래피'},
     {id: 1, name: '일러스트레이션'},
@@ -101,39 +104,15 @@ export function FilterScreen() {
     {id: 4, name: '제품'},
   ];
 
+  const selectCategories = value => {
+    setCategories(value);
+  };
+
+  const selectTags = value => {
+    setTags(value);
+  };
+
   return (
-    <View style={styles.baseView}>
-      <View style={styles.selectionView}>
-        <View style={styles.header}>
-          <Text style={[{fontSize: 17}, styles.fontJeju]}>
-            내가 딱 원하는 그룹 찾기
-          </Text>
-        </View>
-        <View style={styles.categoryView}>
-          <View style={styles.numberHeader}>
-            <Text>1. 카테고리</Text>
-          </View>
-          <FilterItemsArea items={searchSuggests} />
-        </View>
-        <View style={styles.tagView}>
-          <View style={styles.numberHeader}>
-            <Text>2. 태그</Text>
-          </View>
-          <View style={styles.tagWarpperView}>
-            <FilterItemsArea items={searchSuggests} />
-          </View>
-        </View>
-      </View>
-      <View style={styles.bottomView}>
-        <View style={{flex: 1}}>
-          <Text style={{padding: 20}}>
-            선택 태그를 모두 포함하는 그룹이 노출됩니다.
-          </Text>
-          <TouchableOpacity style={styles.applyButton}>
-            <Text>적용하기</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>
+    <CategoryList selectCategories={selectCategories} selectTags={selectTags} />
   );
 }

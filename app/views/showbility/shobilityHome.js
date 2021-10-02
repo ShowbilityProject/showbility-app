@@ -74,6 +74,7 @@ class SHome extends React.Component {
       ability: false,
       group: false,
       isFetching: false,
+      filter: true,
     };
   }
 
@@ -123,7 +124,17 @@ class SHome extends React.Component {
             <TouchableOpacity
               style={styles.filterIcon}
               onPress={() =>
-                this.props.navigation.navigate('카테고리&태그 선택')
+                this.props.navigation.navigate('카테고리&태그 선택', {
+                  selectCategories: categories => {
+                    global.filter.categories = categories;
+                  },
+                  selectTags: tags => {
+                    global.filter.tags = tags;
+                  },
+                  categories: global.filter.categories,
+                  tags: global.filter.tags,
+                  isUpload: false,
+                })
               }>
               <Image
                 source={require('../../../assets/imgs/ICON-24-Filter.png')}
@@ -173,7 +184,7 @@ function ShowbilityScreen() {
 
   const fetchData = () => {
     console.log('Fetchdata Showbility Home');
-    getContentsList()
+    getContentsList(1, 10, global.filter.categories, global.filter.tags)
       .then(d => {
         setData(d.results);
         setNextURL(d.next);
@@ -249,11 +260,11 @@ export function ShowbilityHome() {
         component={CommentsView}
         options={{headerBackTitle: ' '}}
       />
-      <MainHomeStack.Screen
+      {/* <MainHomeStack.Screen
         name="카테고리&태그 선택"
         component={FilterScreen}
         options={{headerBackTitle: ' '}}
-      />
+      /> */}
       <MainHomeStack.Screen
         name="마이 그룹"
         component={GroupDepthView}

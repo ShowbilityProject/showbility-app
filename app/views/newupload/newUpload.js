@@ -148,6 +148,7 @@ function NewUploadTab() {
                   categories: categories.slice(),
                   selectTags: selectTags,
                   tags: tags.slice(),
+                  isUpload: true,
                 })
               }>
               <Text style={[styles.textStyle, {textAlign: 'right'}]}>
