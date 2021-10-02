@@ -16,6 +16,15 @@ export function getContent(url) {
     });
 }
 
+export function getContentById(contentId) {
+  let url = `${HOST}/contents/${contentId}/`;
+  return get(url)
+    .then(response => response.json())
+    .catch(err => {
+      console.log('Get Error : ', err.message);
+    });
+}
+
 export async function uploadContentMeta(title, categories, tags, detail) {
   let url = `${HOST}/contents/`;
   const body = {

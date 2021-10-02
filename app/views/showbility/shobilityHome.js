@@ -152,10 +152,8 @@ function ShowbilityScreen() {
   const [data, setData] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
 
-  const showModalOnShowbilityItemPressed = item => {
-    getContent(item.url).then(content =>
-      navigation.navigate('ContentsModal', content),
-    );
+  const showModalOnShowbilityItemPressed = id => {
+    navigation.navigate('ContentsModal', id);
   };
 
   const renderItem = itemObject => {
@@ -165,7 +163,7 @@ function ShowbilityScreen() {
       source = {uri: HOST + item.images[0]};
     }
     return (
-      <TouchableOpacity onPress={() => showModalOnShowbilityItemPressed(item)}>
+      <TouchableOpacity onPress={() => showModalOnShowbilityItemPressed(item.id)}>
         <Image source={source} style={styles.flatListImage} />
       </TouchableOpacity>
     );

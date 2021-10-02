@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {HOST} from '../../common/constant';
+import { getContentById } from '../../service/content';
 
 const styles = StyleSheet.create({
   container: {
@@ -103,20 +104,26 @@ const styles = StyleSheet.create({
 });
 
 export function ContentsModal({route, navigation}) {
-  const item = route.params;
+  const id = route.params;
+  const [item, setItem] = React.useState({
+    title: '',
+    detail: '',
+    views: 0,
+    likes: 0,
+    comments: [],
+    created_at: '2021-09-09',
+    tags: [],
+    images: [],
+  });
   const snapPoints = React.useMemo(() => ['10%', '50%'], []);
   const likeIcon = '../../../assets/imgs/like.png';
   const viewIcon = '../../../assets/imgs/view.png';
   const cmtIcon = '../../../assets/imgs/message-circle.png';
 
-  let title = item.title;
-  let likesCount = item.likes;
-  let viewCount = item.views;
-  let commentCount = item.comments.length;
-  let createdDate = item.created_at.slice(0, 10);
-  let description = item.detail;
-  let tags = item.tags;
-  let comments = item.comments;
+  React.useEffect(() => {
+    getContentById(id).then(res => setItem(res));
+  }, [id]);
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <FlatList
@@ -149,20 +156,22 @@ export function ContentsModal({route, navigation}) {
           <View style={{flex: 4}}>
             <View style={{marginBottom: 10}}>
               <Text style={{fontFamily: 'JejuGothicOTF', fontSize: 17}}>
-                {title}
+                {item.title}
               </Text>
             </View>
             <View style={styles.contentMetaCount}>
               <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
                 <Image source={require(likeIcon)} />
-                <Text style={styles.modalCount}>{likesCount}</Text>
+                <Text style={styles.modalCount}>{item.likes}</Text>
                 <Image source={require(viewIcon)} />
-                <Text style={styles.modalCount}>{viewCount}</Text>
+                <Text style={styles.modalCount}>{item.views}</Text>
                 <Image source={require(cmtIcon)} />
-                <Text style={styles.modalCount}>{commentCount}</Text>
+                <Text style={styles.modalCount}>{item.comments.length}</Text>
               </View>
               <View style={{flex: 1}}>
-                <Text style={styles.dateArea}>{createdDate}</Text>
+                <Text style={styles.dateArea}>
+                  {item.created_at.slice(0, 10)}
+                </Text>
               </View>
             </View>
           </View>
@@ -179,7 +188,7 @@ export function ContentsModal({route, navigation}) {
           </View>
           <View style={{padding: 16}}>
             <Text style={{fontSize: 12, lineHeight: 18, letterSpacing: 0.9}}>
-              {description}
+              {item.detail}
             </Text>
           </View>
         </View>
@@ -190,7 +199,7 @@ export function ContentsModal({route, navigation}) {
           <View
             style={{paddingRight: 16, paddingLeft: 16, flexDirection: 'row'}}>
             <ScrollView horizontal={true}>
-              {tags.map(tag => {
+              {item.tags.map(tag => {
                 return (
                   <View style={styles.suggestTagView} key={tag}>
                     <Text style={styles.suggestTagText}>{tag}</Text>
@@ -205,22 +214,22 @@ export function ContentsModal({route, navigation}) {
             style={{paddingRight: 16, paddingLeft: 16, flexDirection: 'row'}}>
             <View style={{flex: 1}}>
               <Text style={styles.modalContentTitle}>
-                댓글 ({commentCount})
+                댓글 ({item.comments.length})
               </Text>
             </View>
             <TouchableOpacity
               style={{flex: 1}}
-              onPress={() => navigation.push('댓글', comments)}>
+              onPress={() => navigation.push('댓글', item.comments)}>
               <Text style={styles.viewOption}>전체 보기</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.commentWrapper}>
             <View style={{flexDirection: 'row'}}>
               <Text style={{fontSize: 12}}>
-                {commentCount ? comments[0].author : ''}
+                {item.comments.length ? item.comments[0].author : ''}
               </Text>
               <Text style={{marginLeft: 10}}>
-                {commentCount ? comments[0].detail : ''}
+                {item.comments.length ? item.comments[0].detail : ''}
               </Text>
             </View>
           </View>
