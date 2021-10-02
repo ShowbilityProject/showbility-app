@@ -4,7 +4,6 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {getCategoryList, getTagList} from '../../service/ability';
 
 export function CategoryList({route, navigation}) {
-  console.log(route.params);
   const selectCategories = route.params.selectCategories;
   const selectTags = route.params.selectTags;
   const isUpload = route.params.isUpload;

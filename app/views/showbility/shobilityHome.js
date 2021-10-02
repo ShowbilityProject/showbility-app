@@ -72,6 +72,17 @@ export function SHome2({route, navigation}) {
     group: false,
     isFetching: false,
   });
+  const [categoryFilter, setCategoryFilter] = React.useState([]);
+  const [tagFilter, setTagFilter] = React.useState([]);
+  const [rerenderKey, setRerenderKey] = React.useState(false);
+
+  const getCategoryFilter = () => {
+    return categoryFilter;
+  };
+
+  const getTagFilter = () => {
+    return tagFilter;
+  };
 
   const onPressTobText = key => {
     let st = visibility;
@@ -120,13 +131,15 @@ export function SHome2({route, navigation}) {
             onPress={() =>
               navigation.navigate('카테고리&태그 선택', {
                 selectCategories: categories => {
-                  global.filter.categories = categories;
+                  setCategoryFilter(categories);
+                  setRerenderKey(!rerenderKey);
                 },
                 selectTags: tags => {
-                  global.filter.tags = tags;
+                  setTagFilter(tags);
+                  setRerenderKey(!rerenderKey);
                 },
-                categories: global.filter.categories,
-                tags: global.filter.tags,
+                categories: categoryFilter,
+                tags: tagFilter,
                 isUpload: false,
               })
             }>
@@ -138,7 +151,11 @@ export function SHome2({route, navigation}) {
       </View>
       <View style={styles.main}>
         <View style={{flex: 1, display: visibility.showbility ? '' : 'none'}}>
-          <ShowbilityScreen />
+          <ShowbilityScreen
+            key={rerenderKey}
+            categoryFilter={getCategoryFilter}
+            tagFilter={getTagFilter}
+          />
         </View>
         <View style={{display: visibility.ability ? '' : 'none'}}>
           <AbilityScreen />
@@ -151,7 +168,7 @@ export function SHome2({route, navigation}) {
   );
 }
 
-function ShowbilityScreen() {
+function ShowbilityScreen({categoryFilter, tagFilter}) {
   const navigation = useNavigation();
   const [data, setData] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
@@ -177,7 +194,7 @@ function ShowbilityScreen() {
 
   const fetchData = () => {
     console.log('Fetchdata Showbility Home');
-    getContentsList(1, 10, global.filter.categories, global.filter.tags)
+    getContentsList(1, 10, categoryFilter(), tagFilter())
       .then(d => {
         setData(d.results);
         setNextURL(d.next);

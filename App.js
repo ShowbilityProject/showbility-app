@@ -19,11 +19,6 @@ LogBox.ignoreLogs([
 
 function App() {
   const isSignedIn = true;
-  global.filter = global.filter ? global.filter : {};
-  global.filter.categories = global.filter.categories
-    ? global.filter.categories
-    : [];
-  global.filter.tags = global.filter.tags ? global.filter.tags : [];
   // setVisible(true);
   return (
     <NavigationContainer>

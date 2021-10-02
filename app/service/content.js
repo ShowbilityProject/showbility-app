@@ -8,11 +8,11 @@ export function getContentsList(
   tags = [],
 ) {
   let url = `${HOST}/contents/?page=${page}&page_size=${page_size}`;
-  for (var tag in tags) {
-    url = `&tag=${tag}`;
+  for (const tag of tags) {
+    url += `&tag=${tag}`;
   }
-  for (var category in categories) {
-    url = `&category=${category}`;
+  for (const category of categories) {
+    url += `&category=${category}`;
   }
   return get(url)
     .then(response => response.json())
