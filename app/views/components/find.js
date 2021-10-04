@@ -109,30 +109,11 @@ export function FindScreen({route, navigation}) {
 
   return (
     <View style={styles.baseContainer}>
-      <ScrollView
-        style={styles.tagSearchWrapper}
-        horizontal={true}
-        contentContainerStyle={{alignItems: 'center'}}>
-        {tagFilter.map(tag => {
-          return (
-            <View style={styles.tagWrapper}>
-              <Text style={{flex: 1, color: 'white', fontSize: 12}}>{tag}</Text>
-              <Pressable
-                style={{flex: 1, marginLeft: 5, alignItems: ''}}
-                onPress={() => removeTagFromFilter(tag)}>
-                <Text style={{color: 'white', fontSize: 12}}>x</Text>
-              </Pressable>
-            </View>
-          );
-        })}
-        <TextInput
-          value={tagInput}
-          onChangeText={v => setTagInput(v)}
-          style={styles.textinput}
-          placeholder="태그 검색"
-          onSubmitEditing={handleTagSubmit}
-        />
-      </ScrollView>
+      <FindBar
+        tagFilter={tagFilter}
+        removeTagFromFilter={removeTagFromFilter}
+        handleTagSubmit={handleTagSubmit}
+      />
       <FlatList
         key={'#'}
         keyExtractor={item => '#' + item.id}
@@ -150,6 +131,42 @@ export function FindScreen({route, navigation}) {
         }}
       />
     </View>
+  );
+}
+
+export function FindBar({tagFilter, removeTagFromFilter, handleTagSubmit}) {
+  const [tagInput, setTagInput] = React.useState('');
+
+  const handleSubmit = e => {
+    handleTagSubmit(e);
+    setTagInput('');
+  };
+
+  return (
+    <ScrollView
+      style={styles.tagSearchWrapper}
+      horizontal={true}
+      contentContainerStyle={{alignItems: 'center'}}>
+      {tagFilter.map(tag => {
+        return (
+          <View key={tag} style={styles.tagWrapper}>
+            <Text style={{flex: 1, color: 'white', fontSize: 12}}>{tag}</Text>
+            <Pressable
+              style={{flex: 1, marginLeft: 5, alignItems: ''}}
+              onPress={() => removeTagFromFilter(tag)}>
+              <Text style={{color: 'white', fontSize: 12}}>x</Text>
+            </Pressable>
+          </View>
+        );
+      })}
+      <TextInput
+        value={tagInput}
+        onChangeText={v => setTagInput(v)}
+        style={styles.textinput}
+        placeholder="태그 검색"
+        onSubmitEditing={handleSubmit}
+      />
+    </ScrollView>
   );
 }
 
