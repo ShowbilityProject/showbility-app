@@ -65,16 +65,13 @@ export function FindScreen({route, navigation}) {
   };
 
   const addTagFilter = value => {
-    console.log(tagFilter);
     if (!tagFilter.includes(value)) {
       tagFilter.push(value);
       setTagFilter(tagFilter);
     }
-    console.log(tagFilter);
   };
 
   const removeTagFromFilter = value => {
-    console.log(value);
     let index = tagFilter.indexOf(value);
     if (index !== -1) {
       tagFilter.splice(index, 1);

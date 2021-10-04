@@ -7,10 +7,9 @@ import {
   View,
   ScrollView,
 } from 'react-native';
-import {createStackNavigator} from '@react-navigation/stack';
 import {TouchableOpacity} from 'react-native';
-import {TagSearchArea} from '../tagItems';
 import {useNavigation} from '@react-navigation/core';
+import {FindBar} from '../../components/find';
 
 const styles = StyleSheet.create({
   flatListImage: {
@@ -43,7 +42,6 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   groupArea: {
-    paddingHorizontal: 10,
     marginBottom: 20,
   },
   searchArea: {
@@ -190,9 +188,33 @@ export function GroupScreen() {
     {id: 3, name: '스타일'},
     {id: 4, name: '반려동물'},
   ];
+  const [tagFilter, setTagFilter] = React.useState([]);
+
+  const addTagFilter = value => {
+    if (!tagFilter.includes(value)) {
+      tagFilter.push(value);
+      setTagFilter(tagFilter);
+    }
+  };
+
+  const removeTagFromFilter = value => {
+    let index = tagFilter.indexOf(value);
+    if (index !== -1) {
+      tagFilter.splice(index, 1);
+      setTagFilter(tagFilter);
+    }
+  };
+  const handleTagSubmit = ({nativeEvent}) => {
+    addTagFilter(nativeEvent.text);
+  };
+
   return (
-    <ScrollView>
-      <TagSearchArea items={searchSuggests} />
+    <ScrollView style={{ paddingHorizontal: 15}}>
+      <FindBar
+        tagFilter={tagFilter}
+        removeTagFromFilter={removeTagFromFilter}
+        handleTagSubmit={handleTagSubmit}
+      />
       <GroupArea title="마이 그룹" items={data} />
       <GroupArea title="쇼빌 그룹 둘러보기" items={data} />
       <GroupArea title="멤버 모집 중인 그룹" items={data} />
