@@ -11,6 +11,7 @@ import {
   Pressable,
 } from 'react-native';
 import {HOST} from '../../common/constant';
+import { isEmpty } from '../../common/util';
 import {getContentsList, getNestContentsList} from '../../service/content';
 
 export function FindScreen({route, navigation}) {
@@ -65,7 +66,8 @@ export function FindScreen({route, navigation}) {
   };
 
   const addTagFilter = value => {
-    if (!tagFilter.includes(value)) {
+    if (isEmpty(value)) return;
+    else if (!tagFilter.includes(value)) {
       tagFilter.push(value);
       setTagFilter(tagFilter);
     }

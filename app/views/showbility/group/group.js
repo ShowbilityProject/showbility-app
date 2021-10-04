@@ -10,6 +10,7 @@ import {
 import {TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
 import {FindBar} from '../../components/find';
+import { isEmpty } from '../../../common/util';
 
 const styles = StyleSheet.create({
   flatListImage: {
@@ -189,11 +190,18 @@ export function GroupScreen() {
     {id: 4, name: '반려동물'},
   ];
   const [tagFilter, setTagFilter] = React.useState([]);
+  const [rerenderKey, setRerenderKey] = React.useState(false);
+
+  React.useEffect(() => {
+    console.log(tagFilter);
+  }, [Object.keys(tagFilter).join()]);
 
   const addTagFilter = value => {
-    if (!tagFilter.includes(value)) {
+    if (isEmpty(value)) return;
+    else if (!tagFilter.includes(value)) {
       tagFilter.push(value);
       setTagFilter(tagFilter);
+      setRerenderKey(!rerenderKey);
     }
   };
 
@@ -202,6 +210,7 @@ export function GroupScreen() {
     if (index !== -1) {
       tagFilter.splice(index, 1);
       setTagFilter(tagFilter);
+      setRerenderKey(!rerenderKey);
     }
   };
   const handleTagSubmit = ({nativeEvent}) => {
@@ -211,6 +220,7 @@ export function GroupScreen() {
   return (
     <ScrollView style={{ paddingHorizontal: 15}}>
       <FindBar
+        key={rerenderKey}
         tagFilter={tagFilter}
         removeTagFromFilter={removeTagFromFilter}
         handleTagSubmit={handleTagSubmit}
