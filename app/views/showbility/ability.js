@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/core';
 import * as React from 'react';
 import {FlatList, Text, StyleSheet, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native';
@@ -28,6 +29,7 @@ const styles = StyleSheet.create({
 });
 
 export function AbilityScreen() {
+  const navigation = useNavigation();
   const [abilities, setAbilities] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
 
@@ -46,7 +48,14 @@ export function AbilityScreen() {
   const renderItem = itemObject => {
     let item = itemObject.item;
     return (
-      <TouchableOpacity style={styles.abilityFrame}>
+      <TouchableOpacity
+        style={styles.abilityFrame}
+        onPress={() =>
+          navigation.navigate('Find', {
+            abilityName: item.name,
+            categoryFilter: [item.name],
+          })
+        }>
         <Image source={{uri: item.image}} style={styles.flatListImage} />
         <Text style={[styles.fontJeju, styles.abilityItemTitle]}>
           {item.name}

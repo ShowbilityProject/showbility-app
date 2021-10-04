@@ -2,7 +2,7 @@ import {HOST, APPLICATION_JSON} from './constant';
 import {retrieveUserSession} from './securestorage';
 import {isEmpty} from './util';
 
-let jwtToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImNsb3duIiwiZXhwIjoxNjMzMTc0MDg1LCJlbWFpbCI6IiJ9.yhwsO9MF3MvSLBksEF68pwfTixKkSPL0ik_Y-lZWjw0';
+let jwtToken = '';
 
 function setToken() {
   retrieveUserSession('');

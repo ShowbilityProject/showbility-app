@@ -20,6 +20,7 @@ import {useNavigation} from '@react-navigation/core';
 import {HOST} from '../../common/constant';
 import {CommentsView} from './comment';
 import {ContentsModal} from './contentModal';
+import { FindScreen } from '../components/find';
 
 const styles = StyleSheet.create({
   container: {
@@ -270,6 +271,11 @@ export function ShowbilityHome() {
       <MainHomeStack.Screen
         name="댓글"
         component={CommentsView}
+        options={{headerBackTitle: ' '}}
+      />
+      <MainHomeStack.Screen
+        name="Find"
+        component={FindScreen}
         options={{headerBackTitle: ' '}}
       />
       {/* <MainHomeStack.Screen
