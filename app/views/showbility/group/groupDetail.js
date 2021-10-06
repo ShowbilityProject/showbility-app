@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
+import {getGroupById} from '../../../service/group';
 
 const styles = StyleSheet.create({
   fontJeju: {
@@ -66,50 +67,67 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     borderRadius: 5,
   },
+  imageStyle: {
+    width: 100,
+    height: 100,
+    resizeMode: 'cover',
+    overflow: 'hidden',
+    borderRadius: 50,
+  },
 });
 
-function GroupDetailHeader() {
+function GroupDetailHeader({repr_image, followers, contents}) {
+  const imageSource = repr_image
+    ? {uri: repr_image}
+    : require('../../../../assets/imgs/add_image.png');
   return (
-    <View style={{flex: 1, borderBottomWidth: 1, borderColor: '#F7F7F7', alignItems: 'center'}}>
-      <Image
-        style={{marginTop: 20}}
-        source={require('../../../../assets/imgs/group.png')}
-      />
+    <View
+      style={{
+        flex: 1,
+        borderBottomWidth: 1,
+        borderColor: '#F7F7F7',
+        alignItems: 'center',
+      }}>
+      <Image style={styles.imageStyle} source={imageSource} />
       <View style={{flexDirection: 'row'}}>
-        <View style={{padding:20, alignItems: 'center'}}>
-          <Text style={{color: "#B2B2B5", fontSize: 12, marginBottom: 5}}>팔로워</Text>
-          <Text style={{fontSize: 20}}>356</Text>
+        <View style={{padding: 20, alignItems: 'center'}}>
+          <Text style={{color: '#B2B2B5', fontSize: 12, marginBottom: 5}}>
+            팔로워
+          </Text>
+          <Text style={{fontSize: 20}}>{followers}</Text>
         </View>
-        <View style={{padding:20, alignItems: 'center'}}>
-          <Text style={{color: "#B2B2B5", fontSize: 12, marginBottom: 5}}>작품</Text>
-          <Text style={{fontSize: 20}}>20</Text>
+        <View style={{padding: 20, alignItems: 'center'}}>
+          <Text style={{color: '#B2B2B5', fontSize: 12, marginBottom: 5}}>
+            작품
+          </Text>
+          <Text style={{fontSize: 20}}>{contents}</Text>
         </View>
       </View>
     </View>
   );
 }
 
-function GroupIntroduce(object) {
-  let data = object.data;
+function GroupIntroduce({name, detail}) {
   return (
     <View style={styles.bodyItemSpace}>
-      <View style={[{flexDirection: "row"}, styles.bodyHaederSpaceBody]}>
-        <View style={{flex: 1 }}>
-          <Text style={[styles.bodyHeaderFont, styles.fontJeju]}>그룹 소개</Text>
+      <View style={[{flexDirection: 'row'}, styles.bodyHaederSpaceBody]}>
+        <View style={{flex: 1}}>
+          <Text style={[styles.bodyHeaderFont, styles.fontJeju]}>
+            그룹 소개
+          </Text>
         </View>
         <TouchableOpacity style={{flex: 1}}>
           <Text style={styles.showAllTextFont}>전체 보기</Text>
         </TouchableOpacity>
       </View>
       <View>
-        <Text>{data.content}</Text>
+        <Text>{detail}</Text>
       </View>
     </View>
   );
 }
 
-function GroupTag(object) {
-  let data = object.data;
+function GroupTag({tags}) {
   return (
     <View style={styles.bodyItemSpace}>
       <View>
@@ -121,20 +139,19 @@ function GroupTag(object) {
           ]}>
           대표 태그
         </Text>
-        <FilterItemsArea items={data.tags} />
+        <FilterItemsArea items={tags} />
       </View>
     </View>
   );
 }
 
-function FilterItemsArea(object) {
-  let items = object.items;
+function FilterItemsArea({items}) {
   return (
     <View style={styles.searchArea}>
       {items.map(sgt => {
         return (
           <View style={styles.suggestTagView}>
-            <Text style={styles.suggestTagText}>{sgt.name}</Text>
+            <Text style={styles.suggestTagText}>{sgt}</Text>
           </View>
         );
       })}
@@ -142,60 +159,91 @@ function FilterItemsArea(object) {
   );
 }
 
-function GroupItems(object) {
-  let data = object.data;
+function GroupItems({contents}) {
   return (
     <View style={styles.bodyItemSpace}>
-      <View style={[{flexDirection: "row"}, styles.bodyHaederSpaceBody]}>
-        <View style={{flex: 1 }}>
-          <Text style={[{fontSize: 17}, styles.fontJeju]}>그룹 작품 둘러보기</Text>
+      <View style={[{flexDirection: 'row'}, styles.bodyHaederSpaceBody]}>
+        <View style={{flex: 1}}>
+          <Text style={[{fontSize: 17}, styles.fontJeju]}>
+            그룹 작품 둘러보기
+          </Text>
         </View>
         <TouchableOpacity style={{flex: 1}}>
           <Text style={styles.showAllTextFont}>전체 보기</Text>
         </TouchableOpacity>
       </View>
       <View style={{flexDirection: 'row'}}>
-        <View style={styles.groupImageContainer}>
-          <Image
-            source={{uri: data.groupItems[0].url}}
-            style={styles.groupImage}
-          />
-        </View>
-        <View style={styles.groupImageContainer}>
-          <Image
-            source={{uri: data.groupItems[1].url}}
-            style={styles.groupImage}
-          />
-        </View>
+        {contents.map(content => {
+          return (
+            <View style={styles.groupImageContainer}>
+              <Image source={{uri: content.url}} style={styles.groupImage} />
+            </View>
+          );
+        })}
       </View>
     </View>
   );
 }
 
-function GroupMembers(object) {
-  let data = object.data;
+function GroupMembers({members, members_count}) {
+  const MEMBER_TYPE_STR = {
+    LD: '그룹 장',
+    MB: '그룹 멤버',
+  };
+
   return (
     <View style={styles.bodyItemSpace}>
-      <View style={[{flexDirection: "row"}, styles.bodyHaederSpaceBody]}>
-        <View style={{flex: 1 }}>
-          <Text style={[{fontSize: 17}, styles.fontJeju]}>그룹 멤버<Text>(32명)</Text></Text>
+      <View style={[{flexDirection: 'row'}, styles.bodyHaederSpaceBody]}>
+        <View style={{flex: 1}}>
+          <Text style={[{fontSize: 17}, styles.fontJeju]}>
+            그룹 멤버<Text>({members_count}명)</Text>
+          </Text>
         </View>
         <TouchableOpacity style={{flex: 1}}>
           <Text style={styles.showAllTextFont}>전체 보기</Text>
         </TouchableOpacity>
       </View>
       <View>
-        {data.members.map(member => {
+        {members.map(member => {
           return (
             <View style={{flexDirection: 'row', paddingVertical: 5}}>
-              <Image style={{width: 36, height: 36, marginRight: 5}} source={require("../../../../assets/imgs/group.png")}/>
+              <Image
+                style={{width: 36, height: 36, marginRight: 5}}
+                source={require('../../../../assets/imgs/group.png')}
+              />
               <View>
-                <Text style={[{fontSize: 17, alignSelf: 'stretch', marginBottom: 3}, styles.fontJeju]}>{member.username}</Text>
-                <Text style={{fontSize: 9, alignSelf: 'baseline'}}>{member.position}</Text>
+                <Text
+                  style={[
+                    {fontSize: 17, alignSelf: 'stretch', marginBottom: 3},
+                    styles.fontJeju,
+                  ]}>
+                  {member.user.username}
+                </Text>
+                <Text style={{fontSize: 9, alignSelf: 'baseline'}}>
+                  {MEMBER_TYPE_STR[member.member_type]}
+                </Text>
               </View>
               <View style={{flex: 1}}>
-                <TouchableOpacity style={{alignSelf:'flex-end', borderRadius: 5, backgroundColor: '#F85B02', paddingVertical: 10, paddingHorizontal: 20}}>
-                  <Text style={[styles.fontJeju, {textAlign:'right', textAlignVertical: 'center', color: 'white', fontSize: 12}]}>팔로우</Text>
+                <TouchableOpacity
+                  style={{
+                    alignSelf: 'flex-end',
+                    borderRadius: 5,
+                    backgroundColor: '#F85B02',
+                    paddingVertical: 10,
+                    paddingHorizontal: 20,
+                  }}>
+                  <Text
+                    style={[
+                      styles.fontJeju,
+                      {
+                        textAlign: 'right',
+                        textAlignVertical: 'center',
+                        color: 'white',
+                        fontSize: 12,
+                      },
+                    ]}>
+                    팔로우
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -206,14 +254,13 @@ function GroupMembers(object) {
   );
 }
 
-function GroupDetailBody(object) {
-  let data = object.data;
+function GroupDetailBody({data}) {
   return (
     <View style={{flex: 3, padding: 15}}>
-      <GroupIntroduce data={data} />
-      <GroupTag data={data} />
-      <GroupItems data={data} />
-      <GroupMembers data={data} />
+      <GroupIntroduce name={data.name} detail={data.detail} />
+      <GroupTag tags={data.tags} />
+      <GroupItems contents={data.contents} />
+      <GroupMembers members={data.members} members_count={data.members_count} />
     </View>
   );
 }
@@ -221,86 +268,69 @@ function GroupDetailBody(object) {
 function BottomJoinButtonView() {
   return (
     <View style={{padding: 15}}>
-      <TouchableOpacity style={{width: '100%', paddingVertical: 20, borderRadius: 5, backgroundColor: '#F85B02', alignItems: 'center'}}>
-        <Text style={[styles.fontJeju, {textAlign:'right', textAlignVertical: 'center', color: 'white', fontSize: 17}]}>함께하기</Text>
+      <TouchableOpacity
+        style={{
+          width: '100%',
+          paddingVertical: 20,
+          borderRadius: 5,
+          backgroundColor: '#F85B02',
+          alignItems: 'center',
+        }}>
+        <Text
+          style={[
+            styles.fontJeju,
+            {
+              textAlign: 'right',
+              textAlignVertical: 'center',
+              color: 'white',
+              fontSize: 17,
+            },
+          ]}>
+          함께하기
+        </Text>
       </TouchableOpacity>
     </View>
-  )
+  );
 }
 
 export function GroupDetail({navigation, route}) {
+  const id = route.params.id;
   React.useLayoutEffect(() => {
     navigation.setOptions({
       title: route.params.name,
     });
   });
-
-  let data = {
-    content: `기획부터 설계, UI 디자인, 개발 조직과의 협업까지 전 과정의 업무를 \
-수행합니다. 데이터를 파악하며, 비즈니스적인 관점을 고려합니다.\
-거대한 서비스를 만들어가는 디자이너로서, 전체적인 관점에서 체계적\
-기획부터 설계, UI 디자인, 개발 조직과의 협업까지 전 과정의 업무를 \
-수행합니다. 데이터를 파악하며, 비즈니스적인 관점을 고려합니다. \
-거대한 서비스를 만들어가는 디자이너로서, 전체적인 관점에서 체\
-기획부터 설계, UI 디자인, 개발 조직과의 협업까지 전 과정의 업무를 \
-수행합니다. 데이터를 파악하며, 비즈니스적인 관점을 고려합니다. 
-
-https://showbility.co.rk`,
-    tags: [
-      {
-        id: 0,
-        name: '건축',
-      },
-      {
-        id: 1,
-        name: '패션',
-      },
-      {
-        id: 2,
-        name: 'UI/UX',
-      },
-      {
-        id: 3,
-        name: '스타일',
-      },
-      {
-        id: 4,
-        name: '반려동물',
-      },
-    ],
-    groupItems: [
-      {
-        id: 0,
-        url: 'https://i.pinimg.com/564x/08/94/75/089475365c284288406baf7e5616dd64.jpg',
-        name: '포토그래피',
-      },
-      {
-        id: 1,
-        url: 'https://i.pinimg.com/236x/4b/ee/eb/4beeebb760923f65d559e3486f1233c1.jpg',
-        name: '일러스트레이션',
-      },
-    ],
-    members: [
-      {
-        id: 0,
-        username: 'Hyechou',
-        position: 'leader',
-      },
-      {
-        id: 1,
-        username: 'Hyechou',
-        position: 'member',
-      },
-      {
-        id: 2,
-        username: 'Hyechou',
-        position: 'member',
-      },
-    ],
+  const defaultGroup = {
+    id: 0,
+    tags: [],
+    categories: [],
+    name: '',
+    detail: '',
+    repr_image: '',
+    is_visible: true,
+    created_at: '2021-10-04T11:06:09.964875Z',
+    updated_at: '2021-10-04T11:06:09.964945Z',
+    contents: [],
+    followers_count: 0,
+    contents_count: 0,
+    members_count: 0,
+    members: [],
   };
+  const [data, setData] = React.useState(defaultGroup);
+
+  React.useState(() => {
+    getGroupById(id).then(res => {
+      setData(res);
+    });
+  }, [id]);
+
   return (
     <ScrollView style={styles.baseView}>
-      <GroupDetailHeader />
+      <GroupDetailHeader
+        repr_image={data.repr_image}
+        followers={data.followers_count}
+        contents={data.contents_count}
+      />
       <GroupDetailBody data={data} />
       <BottomJoinButtonView />
     </ScrollView>

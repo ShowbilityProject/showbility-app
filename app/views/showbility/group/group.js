@@ -97,7 +97,11 @@ function GroupArea({title, items, fetchType}) {
       ? {uri: item.repr_image}
       : require('../../../../assets/imgs/add_image.png');
     return (
-      <TouchableOpacity style={styles.touchableArea}>
+      <TouchableOpacity
+        style={styles.touchableArea}
+        onPress={() =>
+          navigation.navigate('GroupDetail', {id: item.id, name: item.name})
+        }>
         <Image source={imageSource} style={styles.flatListImage} />
         <Text style={[styles.fontJeju, {fontSize: 17}]}>{item.name}</Text>
         <Text style={[styles.fontJeju, {fontSize: 10, marginTop: 7}]}>

@@ -41,3 +41,12 @@ export function getGroups(_type = GET_GROUP_TYPE.ALL) {
     .then(res => res.json())
     .catch(err => console.log('Error getGroups', err.message));
 }
+
+export function getGroupById(id) {
+  let url = `${HOST}/group/`;
+  url += `${id}/`;
+  console.log(url);
+  return get(url)
+    .then(res => res.json())
+    .catch(err => console.log('Error getGroupById', err.message));
+}
