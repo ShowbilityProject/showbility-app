@@ -10,7 +10,9 @@ import {
 import {TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
 import {FindBar} from '../../components/find';
-import { isEmpty } from '../../../common/util';
+import {isEmpty} from '../../../common/util';
+import {getGroups, GET_GROUP_TYPE} from '../../../service/group';
+import {HOST} from '../../../common/constant';
 
 const styles = StyleSheet.create({
   flatListImage: {
@@ -18,6 +20,7 @@ const styles = StyleSheet.create({
     aspectRatio: 1.3,
     alignSelf: 'center',
     marginBottom: 7,
+    resizeMode: 'cover',
   },
   abilityFrame: {
     width: '50%',
@@ -76,25 +79,35 @@ const styles = StyleSheet.create({
   },
 });
 
-function GroupArea(dataObject) {
+function GroupArea({title, items, fetchType}) {
   const navigation = useNavigation();
-  let data = dataObject.items;
-  let title = dataObject.title;
+
+  const [data, setData] = React.useState([]);
+
+  React.useEffect(() => {
+    getGroups(fetchType).then(res => {
+      console.log('Received groups ', fetchType);
+      setData(res.results);
+    });
+  }, [fetchType]);
 
   const renderItem = itemObject => {
     let item = itemObject.item;
+    const imageSource = !isEmpty(item.repr_image)
+      ? {uri: item.repr_image}
+      : require('../../../../assets/imgs/add_image.png');
     return (
       <TouchableOpacity style={styles.touchableArea}>
-        <Image source={{uri: item.url}} style={styles.flatListImage} />
+        <Image source={imageSource} style={styles.flatListImage} />
         <Text style={[styles.fontJeju, {fontSize: 17}]}>{item.name}</Text>
         <Text style={[styles.fontJeju, {fontSize: 10, marginTop: 7}]}>
-          {item.desc}
+          {item.detail}
         </Text>
       </TouchableOpacity>
     );
   };
   return (
-    <View style={styles.groupArea}>
+    <View style={data.length > 0 ? styles.groupArea : {display: 'none'}}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <View style={{flex: 1}}>
           <Text
@@ -218,16 +231,24 @@ export function GroupScreen() {
   };
 
   return (
-    <ScrollView style={{ paddingHorizontal: 15}}>
+    <ScrollView style={{paddingHorizontal: 15}}>
       <FindBar
         key={rerenderKey}
         tagFilter={tagFilter}
         removeTagFromFilter={removeTagFromFilter}
         handleTagSubmit={handleTagSubmit}
       />
-      <GroupArea title="마이 그룹" items={data} />
-      <GroupArea title="쇼빌 그룹 둘러보기" items={data} />
-      <GroupArea title="멤버 모집 중인 그룹" items={data} />
+      <GroupArea title="마이 그룹" items={data} fetchType={GET_GROUP_TYPE.MY} />
+      <GroupArea
+        title="쇼빌 그룹 둘러보기"
+        items={data}
+        fetchType={GET_GROUP_TYPE.ALL}
+      />
+      <GroupArea
+        title="멤버 모집 중인 그룹"
+        items={data}
+        fetchType={GET_GROUP_TYPE.GATHERING}
+      />
     </ScrollView>
   );
 }

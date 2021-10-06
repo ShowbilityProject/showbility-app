@@ -1,6 +1,5 @@
-import { HOST } from "../common/constant";
-import { post, rawPost } from "../common/requester";
-
+import {HOST} from '../common/constant';
+import {get, rawPost} from '../common/requester';
 
 export async function createGroup(
   name,
@@ -26,4 +25,19 @@ export async function createGroup(
   formData.append('repr_image', imageData);
   const res = await rawPost(url, formData);
   return res;
+}
+
+export const GET_GROUP_TYPE = {
+  ALL: 'all',
+  MY: 'my',
+  GATHERING: 'gathering',
+};
+
+export function getGroups(_type = GET_GROUP_TYPE.ALL) {
+  let url = `${HOST}/group/`;
+  url += `?type=${_type}`;
+  console.log(url);
+  return get(url)
+    .then(res => res.json())
+    .catch(err => console.log('Error getGroups', err.message));
 }
