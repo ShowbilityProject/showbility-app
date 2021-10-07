@@ -52,7 +52,7 @@ export function AbilityScreen() {
         style={styles.abilityFrame}
         onPress={() =>
           navigation.navigate('Find', {
-            abilityName: item.name,
+            title: item.name,
             categoryFilter: [item.name],
           })
         }>

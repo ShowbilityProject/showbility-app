@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/core';
 import * as React from 'react';
 import {
   Text,
@@ -7,6 +8,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
+import {HOST} from '../../../common/constant';
 import {getGroupById} from '../../../service/group';
 
 const styles = StyleSheet.create({
@@ -60,17 +62,20 @@ const styles = StyleSheet.create({
   },
   groupImageContainer: {
     width: '50%',
+    maxHeight: 150,
     padding: 5,
   },
   groupImage: {
     width: '100%',
-    aspectRatio: 1,
+    height: '100%',
+    // aspectRatio: 1.3,
+    resizeMode: 'cover',
+    overflow: 'hidden',
     borderRadius: 5,
   },
   imageStyle: {
     width: 100,
     height: 100,
-    resizeMode: 'cover',
     overflow: 'hidden',
     borderRadius: 50,
   },
@@ -159,7 +164,8 @@ function FilterItemsArea({items}) {
   );
 }
 
-function GroupItems({contents}) {
+function GroupItems({contents, title, id}) {
+  const navigation = useNavigation();
   return (
     <View style={styles.bodyItemSpace}>
       <View style={[{flexDirection: 'row'}, styles.bodyHaederSpaceBody]}>
@@ -168,16 +174,28 @@ function GroupItems({contents}) {
             그룹 작품 둘러보기
           </Text>
         </View>
-        <TouchableOpacity style={{flex: 1}}>
+        <TouchableOpacity
+          style={{flex: 1}}
+          onPress={() =>
+            navigation.navigate('Find', {title: title, groupFilter: [id]})
+          }>
           <Text style={styles.showAllTextFont}>전체 보기</Text>
         </TouchableOpacity>
       </View>
       <View style={{flexDirection: 'row'}}>
         {contents.map(content => {
+          let source =
+            content.images.length > 0
+              ? {uri: HOST + content.images[0]}
+              : require('../../../../assets/imgs/add_image.png');
           return (
-            <View style={styles.groupImageContainer}>
-              <Image source={{uri: content.url}} style={styles.groupImage} />
-            </View>
+            <TouchableOpacity
+              key={content.url}
+              style={styles.groupImageContainer}
+              onPress={() => navigation.navigate('ContentsModal', content.id)}>
+              <Image source={source} style={styles.groupImage} />
+              <Text>test</Text>
+            </TouchableOpacity>
           );
         })}
       </View>
@@ -259,7 +277,7 @@ function GroupDetailBody({data}) {
     <View style={{flex: 3, padding: 15}}>
       <GroupIntroduce name={data.name} detail={data.detail} />
       <GroupTag tags={data.tags} />
-      <GroupItems contents={data.contents} />
+      <GroupItems contents={data.contents} title={data.name} id={data.id} />
       <GroupMembers members={data.members} members_count={data.members_count} />
     </View>
   );

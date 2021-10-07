@@ -17,6 +17,7 @@ import {getContentsList, getNestContentsList} from '../../service/content';
 export function FindScreen({route, navigation}) {
   const params = route.params;
   const defaultCategory = params.categoryFilter ? params.categoryFilter : [];
+  const groupFilter = params.groupFilter ? params.groupFilter : [];
   // const defaultTag = params.tagFilter ? params.tagFilter : [];
   const [categoryFilter, setCategoryFilter] = React.useState(defaultCategory);
   const [tagFilter, setTagFilter] = React.useState([]);
@@ -28,7 +29,7 @@ export function FindScreen({route, navigation}) {
 
   React.useEffect(() => {
     console.log('called effect');
-    getContentsList(1, 14, categoryFilter, tagFilter)
+    getContentsList(1, 14, categoryFilter, tagFilter, groupFilter)
       .then(res => {
         setNextURL(res.next);
         setData(res.results);
@@ -41,7 +42,7 @@ export function FindScreen({route, navigation}) {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      title: params.abilityName,
+      title: params.title,
     });
   });
 
