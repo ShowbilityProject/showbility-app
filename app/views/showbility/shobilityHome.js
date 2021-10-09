@@ -284,17 +284,7 @@ export function ShowbilityHome() {
         options={{headerBackTitle: ' '}}
       /> */}
       <MainHomeStack.Screen
-        name="마이 그룹"
-        component={GroupDepthView}
-        options={{headerBackTitle: ' '}}
-      />
-      <MainHomeStack.Screen
-        name="쇼빌 그룹 둘러보기"
-        component={GroupDepthView}
-        options={{headerBackTitle: ' '}}
-      />
-      <MainHomeStack.Screen
-        name="멤버 모집 중인 그룹"
+        name="GroupDepthView"
         component={GroupDepthView}
         options={{headerBackTitle: ' '}}
       />

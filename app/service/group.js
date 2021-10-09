@@ -50,3 +50,9 @@ export function getGroupById(id) {
     .then(res => res.json())
     .catch(err => console.log('Error getGroupById', err.message));
 }
+
+export function getNextGroupsList(url) {
+  return get(url)
+    .then(res => res.json())
+    .catch(err => console.log('Error fetching next', err.message));
+}

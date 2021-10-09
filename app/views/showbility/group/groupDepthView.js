@@ -1,9 +1,15 @@
 import * as React from 'react';
-import {FlatList, Text, StyleSheet, Image} from 'react-native';
+import {View, FlatList, Text, StyleSheet, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
+import {getGroups, getNextGroupsList} from '../../../service/group';
 
 const styles = StyleSheet.create({
+  baseContainer: {
+    backgroundColor: 'white',
+    paddingTop: 15,
+    flex: 1
+  },
   flatListImage: {
     width: '100%',
     aspectRatio: 1.3,
@@ -27,8 +33,48 @@ const styles = StyleSheet.create({
   },
 });
 
-export function GroupDepthView(object) {
+export function GroupDepthView({route}) {
+  const title = route.params.title;
+  const fetchType = route.params.fetchType;
   const navigation = useNavigation();
+
+  const [data, setData] = React.useState([]);
+  const [nextURL, setNextURL] = React.useState();
+  const [refreshing, setRefreshing] = React.useState(false);
+  const [fetchingNext, setFetchingNext] = React.useState(true);
+
+  React.useEffect(() => {
+    getGroups(fetchType)
+      .then(res => {
+        setData(res.results);
+        setNextURL(res.next);
+      })
+      .then(() => {
+        setRefreshing(false);
+        setFetchingNext(false);
+      });
+  }, [fetchType]);
+
+  const fetchNext = () => {
+    if (nextURL === null) return;
+    console.log('Fetch next');
+    setFetchingNext(true);
+    getNextGroupsList(nextURL).then(res => {
+      data.push.apply(data, res.results);
+      setNextURL(res.next);
+      setData(data);
+      setFetchingNext(false);
+    });
+  };
+
+  const isScrollEnd = ({layoutMeasurement, contentOffset, contentSize}) => {
+    const paddingToBottom = 20;
+    const ret =
+      layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom;
+    return ret;
+  };
+
   const GroupCreateButtton = (
     <TouchableOpacity
       style={{paddingRight: 15}}
@@ -38,70 +84,25 @@ export function GroupDepthView(object) {
       </Text>
     </TouchableOpacity>
   );
+
   const defaultButton = null;
   React.useLayoutEffect(() => {
     navigation.setOptions({
+      title: title,
       headerRight: () =>
-        object.route.name === '마이 그룹' ? GroupCreateButtton : defaultButton,
+        title === '마이 그룹' ? GroupCreateButtton : defaultButton,
     });
   });
-
-  let title = object.title;
-  let data = [
-    {
-      id: 0,
-      url: 'https://i.pinimg.com/564x/08/94/75/089475365c284288406baf7e5616dd64.jpg',
-      name: '포토그래피',
-    },
-    {
-      id: 1,
-      url: 'https://i.pinimg.com/236x/4b/ee/eb/4beeebb760923f65d559e3486f1233c1.jpg',
-      name: '일러스트레이션',
-    },
-    {
-      id: 2,
-      url: 'https://i.pinimg.com/564x/b7/a5/a8/b7a5a801d8b9476bad5906ad88347445.jpg',
-      name: '건축',
-    },
-    {
-      id: 3,
-      url: 'https://i.pinimg.com/564x/08/94/75/089475365c284288406baf7e5616dd64.jpg',
-      name: '포토그래피',
-    },
-    {
-      id: 4,
-      url: 'https://i.pinimg.com/236x/4b/ee/eb/4beeebb760923f65d559e3486f1233c1.jpg',
-      name: '일러스트레이션',
-    },
-    {
-      id: 5,
-      url: 'https://i.pinimg.com/564x/b7/a5/a8/b7a5a801d8b9476bad5906ad88347445.jpg',
-      name: '건축',
-    },
-    {
-      id: 6,
-      url: 'https://i.pinimg.com/564x/08/94/75/089475365c284288406baf7e5616dd64.jpg',
-      name: '포토그래피',
-    },
-    {
-      id: 7,
-      url: 'https://i.pinimg.com/236x/4b/ee/eb/4beeebb760923f65d559e3486f1233c1.jpg',
-      name: '일러스트레이션',
-    },
-    {
-      id: 8,
-      url: 'https://i.pinimg.com/564x/b7/a5/a8/b7a5a801d8b9476bad5906ad88347445.jpg',
-      name: '건축',
-    },
-  ];
 
   const renderItem = itemObject => {
     let item = itemObject.item;
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate('GroupDetail', {name: item.name})}
+        onPress={() =>
+          navigation.navigate('GroupDetail', {id: item.id, name: item.name})
+        }
         style={styles.abilityFrame}>
-        <Image source={{uri: item.url}} style={styles.flatListImage} />
+        <Image source={{uri: item.repr_image}} style={styles.flatListImage} />
         <Text style={[styles.fontJeju, styles.abilityItemTitle]}>
           {item.name}
         </Text>
@@ -109,14 +110,23 @@ export function GroupDepthView(object) {
     );
   };
   return (
-    <FlatList
-      key={'#'}
-      keyExtractor={item => '#' + item.id}
-      data={data}
-      renderItem={renderItem}
-      horizontal={false}
-      numColumns={2}
-      style={styles.flatListFrame}
-    />
+    <View style={styles.baseContainer}>
+      <FlatList
+        key={'#'}
+        keyExtractor={item => '#' + item.id}
+        data={data}
+        renderItem={renderItem}
+        horizontal={false}
+        numColumns={2}
+        refreshing={refreshing}
+        style={styles.flatListFrame}
+        onScroll={({nativeEvent}) => {
+          if (isScrollEnd(nativeEvent)) {
+            console.log(fetchingNext);
+            if (!fetchingNext) fetchNext();
+          }
+        }}
+      />
+    </View>
   );
 }

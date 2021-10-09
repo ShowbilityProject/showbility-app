@@ -126,7 +126,12 @@ function GroupArea({title, items, fetchType}) {
         <View style={{flex: 1}}>
           <Text
             style={styles.showAllText}
-            onPress={() => navigation.navigate(title)}>
+            onPress={() =>
+              navigation.navigate('GroupDepthView', {
+                title: title,
+                fetchType: fetchType,
+              })
+            }>
             전체 보기
           </Text>
         </View>
