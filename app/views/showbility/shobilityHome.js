@@ -21,6 +21,7 @@ import {HOST} from '../../common/constant';
 import {CommentsView} from './comment';
 import {ContentsModal} from './contentModal';
 import { FindScreen } from '../components/find';
+import { GroupMember } from './group/groupMember';
 
 const styles = StyleSheet.create({
   container: {
@@ -291,6 +292,11 @@ export function ShowbilityHome() {
       <MainHomeStack.Screen
         name="GroupDetail"
         component={GroupDetail}
+        options={{headerBackTitle: ' '}}
+      />
+      <MainHomeStack.Screen
+        name="GroupMemeber"
+        component={GroupMember}
         options={{headerBackTitle: ' '}}
       />
       <MainHomeStack.Screen

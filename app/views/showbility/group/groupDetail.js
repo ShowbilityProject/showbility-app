@@ -203,10 +203,18 @@ function GroupItems({contents, title, id}) {
   );
 }
 
-function GroupMembers({members, members_count}) {
+function GroupMembers({members, members_count, id}) {
+  const navigation = useNavigation();
   const MEMBER_TYPE_STR = {
     LD: '그룹 장',
     MB: '그룹 멤버',
+    MG: '운영진',
+  };
+
+  const memberTypeColor = {
+    LD: '#F85B02',
+    MB: 'black',
+    MG: '#F85B02',
   };
 
   return (
@@ -217,7 +225,9 @@ function GroupMembers({members, members_count}) {
             그룹 멤버<Text>({members_count}명)</Text>
           </Text>
         </View>
-        <TouchableOpacity style={{flex: 1}}>
+        <TouchableOpacity
+          style={{flex: 1}}
+          onPress={() => navigation.navigate('GroupMemeber', {groupId: id})}>
           <Text style={styles.showAllTextFont}>전체 보기</Text>
         </TouchableOpacity>
       </View>
@@ -237,7 +247,12 @@ function GroupMembers({members, members_count}) {
                   ]}>
                   {member.user.username}
                 </Text>
-                <Text style={{fontSize: 9, alignSelf: 'baseline'}}>
+                <Text
+                  style={{
+                    fontSize: 9,
+                    alignSelf: 'baseline',
+                    color: memberTypeColor[member.member_type],
+                  }}>
                   {MEMBER_TYPE_STR[member.member_type]}
                 </Text>
               </View>
@@ -278,7 +293,11 @@ function GroupDetailBody({data}) {
       <GroupIntroduce name={data.name} detail={data.detail} />
       <GroupTag tags={data.tags} />
       <GroupItems contents={data.contents} title={data.name} id={data.id} />
-      <GroupMembers members={data.members} members_count={data.members_count} />
+      <GroupMembers
+        members={data.members}
+        members_count={data.members_count}
+        id={data.id}
+      />
     </View>
   );
 }

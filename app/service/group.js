@@ -56,3 +56,16 @@ export function getNextGroupsList(url) {
     .then(res => res.json())
     .catch(err => console.log('Error fetching next', err.message));
 }
+
+export function getGroupMemebersByGroupId(groupId) {
+  let url = `${HOST}/group/${groupId}/members/`;
+  return get(url)
+    .then(res => res.json())
+    .catch(err => console.log('Error fetching group members', err.message));
+}
+
+export function getNext(url) {
+  return get(url)
+    .then(res => res.json())
+    .catch(err => console.log('Error fetching next', err.message));
+}
