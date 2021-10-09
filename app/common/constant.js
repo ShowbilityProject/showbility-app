@@ -1,3 +1,14 @@
-export const HOST = "http://127.0.0.1:8000";
+export const HOST = 'http://127.0.0.1:8000';
 export const APPLICATION_JSON = 'application/json';
 export const API_TOKEN = 'jwtToken';
+export const MEMBER_TYPE_STR = {
+  LD: '그룹 장',
+  MB: '그룹 멤버',
+  MG: '운영진',
+};
+export const MEMBER_STATUS_TYPE = {
+  ACTIVE: 'AT',
+  NOT_LOGIN: 'NL',
+  NOT_JOINED: 'NA',
+  PENDING: 'PN',
+};

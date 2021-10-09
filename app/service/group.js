@@ -1,5 +1,5 @@
 import {HOST} from '../common/constant';
-import {get, rawPost} from '../common/requester';
+import {get, post, rawPost} from '../common/requester';
 
 export async function createGroup(
   name,
@@ -62,6 +62,16 @@ export function getGroupMemebersByGroupId(groupId) {
   return get(url)
     .then(res => res.json())
     .catch(err => console.log('Error fetching group members', err.message));
+}
+
+export function requestGroupJoin(groupId) {
+  let url = `${HOST}/group/${groupId}/members/`;
+  return post(url)
+    .then(res => {
+      if (res.ok) return res.json();
+      else return res.status;
+    })
+    .catch(err => console.log('Error request join group', err.message));
 }
 
 export function getNext(url) {

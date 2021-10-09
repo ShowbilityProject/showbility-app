@@ -7,9 +7,10 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
-import {HOST} from '../../../common/constant';
-import {getGroupById} from '../../../service/group';
+import {HOST, MEMBER_STATUS_TYPE} from '../../../common/constant';
+import {getGroupById, requestGroupJoin} from '../../../service/group';
 
 const styles = StyleSheet.create({
   fontJeju: {
@@ -302,15 +303,43 @@ function GroupDetailBody({data}) {
   );
 }
 
-function BottomJoinButtonView() {
+function BottomJoinButtonView({id, member_status}) {
+  // NL: Not Login, NA: Not Available, PN: Pending, MB: Member, MG: Manager, LD: Leader
+  const [status, setStatus] = React.useState(member_status);
+
+  React.useEffect(() => setStatus(member_status), [member_status]);
+
+  const handleJoin = () => {
+    if (!isValid[member_status]) {
+      requestGroupJoin(id).then(res => {
+        if (res === 401) Alert.alert('에러', '로그인이 필요합니다.');
+        else setStatus('PN');
+      });
+    }
+  };
+
+  const isValid = () => {
+    return (
+      status === MEMBER_STATUS_TYPE.ACTIVE ||
+      status === MEMBER_STATUS_TYPE.PENDING
+    );
+  };
+
+  const getText = () => {
+    if (status === MEMBER_STATUS_TYPE.ACTIVE) return '그룹 멤버';
+    else if (status === MEMBER_STATUS_TYPE.NOT_JOINED) return '함께하기';
+    else if (status === MEMBER_STATUS_TYPE.PENDING) return '그룹 멤버 수락 대기 중';
+  };
+
   return (
     <View style={{padding: 15}}>
       <TouchableOpacity
+        onPress={() => handleJoin()}
         style={{
           width: '100%',
           paddingVertical: 20,
           borderRadius: 5,
-          backgroundColor: '#F85B02',
+          backgroundColor: isValid() ? '#F7F7F7' : '#F85B02',
           alignItems: 'center',
         }}>
         <Text
@@ -319,11 +348,11 @@ function BottomJoinButtonView() {
             {
               textAlign: 'right',
               textAlignVertical: 'center',
-              color: 'white',
+              color: isValid() ? 'black' : 'white',
               fontSize: 17,
             },
           ]}>
-          함께하기
+          {getText()}
         </Text>
       </TouchableOpacity>
     </View>
@@ -352,6 +381,7 @@ export function GroupDetail({navigation, route}) {
     contents_count: 0,
     members_count: 0,
     members: [],
+    current_user: 'NA',
   };
   const [data, setData] = React.useState(defaultGroup);
 
@@ -369,7 +399,7 @@ export function GroupDetail({navigation, route}) {
         contents={data.contents_count}
       />
       <GroupDetailBody data={data} />
-      <BottomJoinButtonView />
+      <BottomJoinButtonView id={data.id} member_status={data.current_user} />
     </ScrollView>
   );
 }
