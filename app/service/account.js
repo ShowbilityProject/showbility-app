@@ -1,5 +1,5 @@
 import {API_TOKEN, HOST} from '../common/constant';
-import {post} from '../common/requester';
+import {get, post} from '../common/requester';
 import {storeUserSession} from '../common/securestorage';
 import {isEmpty} from '../common/util';
 
@@ -58,4 +58,11 @@ export function requestSignUp(name, email, password, birth) {
 export function validateToken(token) {
   let uri = '/app/sign/validate-token';
   return post(uri).then(response => response);
+}
+
+export function getMyProfile() {
+  let uri = HOST + '/user/my/';
+  return get(uri)
+    .then(res => res.json())
+    .catch(err => console.log(err.message));
 }
