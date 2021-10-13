@@ -1,5 +1,5 @@
 import {API_TOKEN, HOST} from '../common/constant';
-import {get, post} from '../common/requester';
+import {get, post, rawPost} from '../common/requester';
 import {storeUserSession} from '../common/securestorage';
 import {isEmpty} from '../common/util';
 
@@ -65,4 +65,9 @@ export function getMyProfile() {
   return get(uri)
     .then(res => res.json())
     .catch(err => console.log(err.message));
+}
+
+export async function updateMyProfile(formData) {
+  let uri = HOST + '/user/my/';
+  return await rawPost(uri, formData);
 }

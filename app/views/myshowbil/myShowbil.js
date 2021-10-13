@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     overflow: 'hidden',
   },
-  detailHeaderWrapper:{
+  detailHeaderWrapper: {
     flex: 1,
     borderBottomWidth: 1,
     borderColor: '#F7F7F7',
@@ -101,25 +101,18 @@ const styles = StyleSheet.create({
   },
 });
 
-function MyDetailHeader({
-  name,
-  followers,
-  followings,
-  contents,
-  profile_image,
-  isMy,
-}) {
+function MyDetailHeader({data, isMy}) {
   const navigation = useNavigation();
-  const imageSource = profile_image
-    ? {uri: profile_image}
+  const imageSource = data.profile_image
+    ? {uri: data.profile_image}
     : require('../../../assets/imgs/group.png');
   return (
     <View style={styles.detailHeaderWrapper}>
       <View style={{flex: 1, width: '100%'}}>
-        <Text style={{fontSize: 20, textAlign: 'center'}}>{name}</Text>
+        <Text style={{fontSize: 20, textAlign: 'center'}}>{data.nickname}</Text>
         <Pressable
           style={{position: 'absolute', right: 15}}
-          onPress={() => navigation.navigate('프로필 편집')}>
+          onPress={() => navigation.navigate('프로필 편집', {data: data})}>
           <Ionicons name="settings-sharp" size={20} color={'black'} />
         </Pressable>
       </View>
@@ -129,19 +122,19 @@ function MyDetailHeader({
           <Text style={{color: '#B2B2B5', fontSize: 12, marginBottom: 5}}>
             팔로워
           </Text>
-          <Text style={styles.headerCount}>{followers}</Text>
+          <Text style={styles.headerCount}>{data.followers}</Text>
         </View>
         <View style={{padding:20, alignItems: 'center'}}>
           <Text style={{color: '#B2B2B5', fontSize: 12, marginBottom: 5}}>
             팔로잉
           </Text>
-          <Text style={styles.headerCount}>{followings}</Text>
+          <Text style={styles.headerCount}>{data.followings}</Text>
         </View>
         <View style={{padding:20, alignItems: 'center'}}>
           <Text style={{color: '#B2B2B5', fontSize: 12, marginBottom: 5}}>
             작품
           </Text>
-          <Text style={styles.headerCount}>{contents}</Text>
+          <Text style={styles.headerCount}>{data.contents_count}</Text>
         </View>
       </View>
       <View
@@ -235,7 +228,6 @@ function MyItems({contents}) {
 }
 
 function MyDetailBody({data}) {
-  console.log(data);
   return (
     <View style={{flex: 3, padding: 15}}>
       <MyIntroduce data={data} />
@@ -245,7 +237,8 @@ function MyDetailBody({data}) {
   );
 }
 
-export function GroupDetail({navigation, route}) {
+export function GroupDetail({route}) {
+  const navigation = useNavigation();
   const defaultData = {
     description: '',
     nickname: '',
@@ -262,19 +255,17 @@ export function GroupDetail({navigation, route}) {
 
   React.useEffect(() => {
     getMyProfile().then(res => setData(res));
+    const willFocusSubscription = navigation.addListener('focus', () => {
+      getMyProfile().then(res => setData(res));
+    });
+
+    return willFocusSubscription;
   }, []);
 
   return (
     <SafeAreaView style={styles.baseView}>
       <ScrollView style={styles.baseView}>
-        <MyDetailHeader
-          name={data.nickname}
-          followers={data.followers}
-          followings={data.followings}
-          contents={data.contents_count}
-          profile_image={data.profile_image}
-          isMy={true}
-        />
+        <MyDetailHeader data={data} isMy={true} />
         <MyDetailBody data={data} />
       </ScrollView>
     </SafeAreaView>
