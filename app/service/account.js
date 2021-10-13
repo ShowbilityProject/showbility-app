@@ -3,6 +3,17 @@ import {post} from '../common/requester';
 import {storeUserSession} from '../common/securestorage';
 import {isEmpty} from '../common/util';
 
+function saveToken(token) {
+  return storeUserSession(API_TOKEN, token).then(r => {
+    if (r === true) {
+      console.log('Save Token Succeed');
+    } else {
+      console.log('Save Token failed');
+    }
+    return r;
+  });
+}
+
 export function requestSignIn(email, password) {
   let uri = HOST + '/getToken/';
   let body = {
@@ -14,15 +25,7 @@ export function requestSignIn(email, password) {
     .then(jwtToken => {
       console.log(jwtToken['token']);
       if (isEmpty(jwtToken)) return false;
-      else
-        return storeUserSession(API_TOKEN, jwtToken).then(r => {
-          if (r == true) {
-            console.log('Save Token Succeed');
-          } else {
-            console.log('Save Token failed');
-          }
-          return r;
-        });
+      else return saveToken(jwtToken);
     })
     .catch(err => {
       console.log('Error in requestSignIn:' + err);
@@ -31,21 +34,21 @@ export function requestSignIn(email, password) {
 }
 
 export function requestSignUp(name, email, password, birth) {
-  let uri = HOST + '/app/sign/signUp/';
+  let uri = HOST + '/user/';
   let body = {
-    name: name,
+    nickname: name,
     email: email,
     password: password,
-    birth: birth,
+    date_of_birth: birth,
   };
   return post(uri, body)
-    .then(response => {
-      if (response.status == 200) {
-        return true;
-      } else {
-        console.log(response.body);
-        return false;
-      }
+    .then(res => {
+      if (res.ok) return res;
+      else throw Error(res.status);
+    })
+    .then(response => response.json())
+    .then(json => {
+      return saveToken(json['token']);
     })
     .catch(err => {
       console.log(err);
