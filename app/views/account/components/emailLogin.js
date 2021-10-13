@@ -99,7 +99,7 @@ function EmailLoginScreen({navigation}) {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
     let minPasswordLengthLimit = 4;
     return reg.test(email) && password.length > minPasswordLengthLimit;
-  }
+  };
 
   const handleButtonStyle = () => {
     if (validateInput()) return {backgroundColor: '#F85B02'};

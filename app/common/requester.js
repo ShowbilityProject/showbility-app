@@ -1,11 +1,16 @@
-import {HOST, APPLICATION_JSON} from './constant';
+import {HOST, APPLICATION_JSON, API_TOKEN} from './constant';
 import {retrieveUserSession} from './securestorage';
 import {isEmpty} from './util';
 
 let jwtToken = '';
 
-function setToken() {
-  retrieveUserSession('');
+function getToken(refresh = false) {
+  if (isEmpty(jwtToken)) jwtToken = retrieveUserSession(API_TOKEN);
+  return jwtToken;
+}
+
+export function setToken(token) {
+  jwtToken = token;
 }
 
 function getCommonOptions() {
@@ -15,7 +20,7 @@ function getCommonOptions() {
     },
   };
   if (!isEmpty(jwtToken)) {
-    options.headers['Authorization'] = `JWT ${jwtToken}`;
+    options.headers['Authorization'] = `JWT ${getToken()}`;
   }
   return options;
 }

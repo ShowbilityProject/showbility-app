@@ -4,14 +4,15 @@ import {storeUserSession} from '../common/securestorage';
 import {isEmpty} from '../common/util';
 
 export function requestSignIn(email, password) {
-  let uri = HOST + '/app/sign/signIn/';
+  let uri = HOST + '/getToken/';
   let body = {
     email: email,
     password: password,
   };
   return post(uri, body)
-    .then(ret => ret.headers.get('token'))
+    .then(ret => ret.json())
     .then(jwtToken => {
+      console.log(jwtToken['token']);
       if (isEmpty(jwtToken)) return false;
       else
         return storeUserSession(API_TOKEN, jwtToken).then(r => {
