@@ -173,8 +173,8 @@ function MyIntroduce(object) {
   );
 }
 
-function MyTag(object) {
-  let data = object.data;
+function MyTag({data}) {
+  data = data ? data : [];
   return (
     <View style={styles.bodyItemSpace}>
       <View>
@@ -192,8 +192,8 @@ function MyTag(object) {
   );
 }
 
-function FilterItemsArea(object) {
-  let items = object.items;
+function FilterItemsArea({items}) {
+  items = items ? items : [];
   return (
     <View style={styles.searchArea}>
       {items.map(sgt => {
@@ -208,6 +208,7 @@ function FilterItemsArea(object) {
 }
 
 function MyItems({contents}) {
+  contents = contents ? contents : [];
   return (
     <View style={styles.bodyItemSpace}>
       <View style={{flexDirection: 'row'}}>
@@ -256,7 +257,14 @@ export function GroupDetail({route}) {
   React.useEffect(() => {
     getMyProfile().then(res => setData(res));
     const willFocusSubscription = navigation.addListener('focus', () => {
-      getMyProfile().then(res => setData(res));
+      getMyProfile().then(res => {
+        if (res !== false) {
+          setData(res);
+        } else {
+          console.log('Failed to retrieve profile');
+          setData(defaultData);
+        }
+      });
     });
 
     return willFocusSubscription;

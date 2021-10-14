@@ -63,7 +63,13 @@ export function validateToken(token) {
 export function getMyProfile() {
   let uri = HOST + '/user/my/';
   return get(uri)
-    .then(res => res.json())
+    .then(res => {
+      if (res.ok) return res.json();
+      else {
+        console.log(res.status, res.body);
+        return false;
+      }
+    })
     .catch(err => console.log(err.message));
 }
 
