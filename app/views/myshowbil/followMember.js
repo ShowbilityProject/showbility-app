@@ -10,7 +10,12 @@ import {
   Pressable,
 } from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {getFollowers} from '../../service/account';
+import {FOLLOW_STATUS} from '../../common/constant';
+import {
+  getFollowers,
+  requestFollow,
+  requestUnfollow,
+} from '../../service/account';
 import {getNext} from '../../service/group';
 
 export function FollowMember({route}) {
@@ -21,6 +26,7 @@ export function FollowMember({route}) {
   const [nextURL, setNextURL] = React.useState();
   const [refreshing, setRefreshing] = React.useState(false);
   const [fetchingNext, setFetchingNext] = React.useState(true);
+  const [extraData, setExtraData] = React.useState(false);
 
   React.useEffect(() => {
     getFollowers(userId, _type)
@@ -67,6 +73,18 @@ export function FollowMember({route}) {
     const imageSource = {
       uri: item.profile_image ? item.profile_image : tempImage,
     };
+    const handleFollowButton = user => {
+      const {followable, id} = user;
+      if (followable === FOLLOW_STATUS.NOT_FOLLOWING) {
+        requestFollow(id);
+        user.followable = FOLLOW_STATUS.FOLLOWING;
+        setExtraData(!extraData);
+      } else if (followable === FOLLOW_STATUS.FOLLOWING) {
+        requestUnfollow(id);
+        user.followable = FOLLOW_STATUS.NOT_FOLLOWING;
+        setExtraData(!extraData);
+      }
+    };
     return (
       <View style={styles.memberRow}>
         <View style={{flex: 1, maxWidth: 40, minHeight: 40, marginRight: 10}}>
@@ -85,9 +103,27 @@ export function FollowMember({route}) {
         <TouchableOpacity
           style={[
             styles.followButton,
-            {display: item.followable == 2 ? 'flex' : 'none'},
-          ]}>
-          <Text style={[styles.fontJeju, {color: 'white'}]}>팔로우</Text>
+            {display: item.followable === FOLLOW_STATUS.SELF ? 'none' : 'flex'},
+            {
+              backgroundColor:
+                item.followable === FOLLOW_STATUS.FOLLOWING
+                  ? '#F7F7F7'
+                  : '#F85B02',
+            },
+          ]}
+          onPress={() => handleFollowButton(item)}>
+          <Text
+            style={[
+              styles.fontJeju,
+              {
+                color:
+                  item.followable === FOLLOW_STATUS.FOLLOWING
+                    ? '#B2B2B5'
+                    : 'white',
+              },
+            ]}>
+            {item.followable === FOLLOW_STATUS.FOLLOWING ? '팔로잉' : '팔로우'}
+          </Text>
         </TouchableOpacity>
       </View>
     );
@@ -104,6 +140,7 @@ export function FollowMember({route}) {
         horizontal={false}
         numColumns={1}
         refreshing={refreshing}
+        extraData={extraData}
         onScroll={({nativeEvent}) => {
           if (isScrollEnd(nativeEvent)) {
             console.log(fetchingNext);

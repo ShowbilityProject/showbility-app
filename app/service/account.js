@@ -94,3 +94,11 @@ export function requestFollow(user_id) {
     .then(res => res.json())
     .catch(() => false);
 }
+
+export function requestUnfollow(user_id) {
+  let uri = HOST + `/user/${user_id}/follow/`;
+  console.log(uri);
+  return post(uri, undefined, true, 'DELETE')
+    .then(res => res.json())
+    .catch(() => false);
+}

@@ -12,3 +12,8 @@ export const MEMBER_STATUS_TYPE = {
   NOT_JOINED: 'NA',
   PENDING: 'PN',
 };
+export const FOLLOW_STATUS = {
+  SELF: 0,
+  FOLLOWING: 1,
+  NOT_FOLLOWING: 2,
+};

@@ -56,9 +56,9 @@ export async function asyncGet(uri) {
   return res.json();
 }
 
-export function post(uri, body, addToken = true) {
+export function post(uri, body, addToken = true, method = 'POST') {
   return getCommonOptions(addToken).then(options => {
-    options.method = 'POST';
+    options.method = method;
     options.body = JSON.stringify(body);
     console.log(options);
     return fetch(uri, options).then(res => {
