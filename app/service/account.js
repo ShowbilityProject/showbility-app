@@ -20,12 +20,12 @@ export function requestSignIn(email, password) {
     email: email,
     password: password,
   };
-  return post(uri, body)
+  return post(uri, body, false)
     .then(ret => ret.json())
-    .then(jwtToken => {
-      console.log(jwtToken['token']);
-      if (isEmpty(jwtToken)) return false;
-      else return saveToken(jwtToken);
+    .then(data => {
+      let token = data.token;
+      if (isEmpty(token)) return false;
+      else return saveToken(token);
     })
     .catch(err => {
       console.log('Error in requestSignIn:' + err);

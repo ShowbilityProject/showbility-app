@@ -2,7 +2,7 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 
 async function storeUserSession(key, data) {
   try {
-    await EncryptedStorage.setItem(key, JSON.stringify(data));
+    await EncryptedStorage.setItem(key, data);
     return true;
   } catch (error) {
     console.log(error);

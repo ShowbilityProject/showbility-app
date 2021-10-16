@@ -17,7 +17,7 @@ export function setToken(token) {
   jwtToken = token;
 }
 
-function getCommonOptions() {
+function getCommonOptions(addToken = true) {
   let options = {
     headers: {
       'Content-Type': APPLICATION_JSON,
@@ -25,7 +25,8 @@ function getCommonOptions() {
   };
   return getToken()
     .then(token => {
-      if (!isEmpty(token) && !token.includes('non_field_errors')) {
+      if (!isEmpty(token) && addToken) {
+        console.log('getToken', token);
         options.headers['Authorization'] = `JWT ${token}`;
       }
     })
@@ -58,11 +59,19 @@ export async function asyncGet(uri) {
   return res.json();
 }
 
-export function post(uri, body) {
-  let options = getCommonOptions();
-  options.method = 'POST';
-  options.body = JSON.stringify(body);
-  return fetch(uri, options);
+export function post(uri, body, addToken = true) {
+  return getCommonOptions(addToken).then(options => {
+    options.method = 'POST';
+    options.body = JSON.stringify(body);
+    console.log(options);
+    return fetch(uri, options).then(res => {
+      if (res.ok) return res;
+      else {
+        let msg = `Error GET ${uri}, ${res.status}, ${res.body}`;
+        throw new Error(msg);
+      }
+    });
+  });
 }
 
 export async function asyncPost(uri, body) {
