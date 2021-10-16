@@ -80,3 +80,17 @@ export async function updateMyProfile(formData) {
   let uri = HOST + '/user/my/';
   return await rawPost(uri, formData);
 }
+
+export function getFollowers(user_id, _type) {
+  let uri = HOST + `/user/${user_id}/${_type}/`;
+  return get(uri)
+    .then(res => res.json())
+    .catch(() => false);
+}
+
+export function requestFollow(user_id) {
+  let uri = HOST + `/user/${user_id}/follow/`;
+  return post(uri)
+    .then(res => res.json())
+    .catch(() => false);
+}

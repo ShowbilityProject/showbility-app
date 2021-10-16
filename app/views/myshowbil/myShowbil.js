@@ -118,18 +118,32 @@ function MyDetailHeader({data, isMy}) {
       </View>
       <Image style={styles.imageStyle} source={imageSource} />
       <View style={{flexDirection: 'row'}}>
-        <View style={{padding:20, alignItems: 'center'}}>
+        <Pressable
+          style={{padding: 20, alignItems: 'center'}}
+          onPress={() =>
+            navigation.navigate('팔로우', {
+              userId: data.id,
+              _type: 'followers',
+            })
+          }>
           <Text style={{color: '#B2B2B5', fontSize: 12, marginBottom: 5}}>
             팔로워
           </Text>
           <Text style={styles.headerCount}>{data.followers}</Text>
-        </View>
-        <View style={{padding:20, alignItems: 'center'}}>
+        </Pressable>
+        <Pressable
+          style={{padding: 20, alignItems: 'center'}}
+          onPress={() =>
+            navigation.navigate('팔로우', {
+              userId: data.id,
+              _type: 'followings',
+            })
+          }>
           <Text style={{color: '#B2B2B5', fontSize: 12, marginBottom: 5}}>
             팔로잉
           </Text>
           <Text style={styles.headerCount}>{data.followings}</Text>
-        </View>
+        </Pressable>
         <View style={{padding:20, alignItems: 'center'}}>
           <Text style={{color: '#B2B2B5', fontSize: 12, marginBottom: 5}}>
             작품

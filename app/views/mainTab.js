@@ -10,6 +10,7 @@ import MyShowbilTab from './myshowbil/myShowbil';
 import {createStackNavigator} from '@react-navigation/stack';
 import {CategoryList} from './newupload/category';
 import {EditProfileScreen} from './myshowbil/editprofile';
+import { FollowMember } from './myshowbil/followMember';
 
 const MainTab = createBottomTabNavigator();
 
@@ -57,6 +58,11 @@ function BaseStackScreen() {
       <BaseStack.Screen
         name="프로필 편집"
         component={EditProfileScreen}
+        options={{headerBackTitle: ' '}}
+      />
+      <BaseStack.Screen
+        name="팔로우"
+        component={FollowMember}
         options={{headerBackTitle: ' '}}
       />
     </BaseStack.Navigator>
