@@ -17,20 +17,17 @@ export function setToken(token) {
   jwtToken = token;
 }
 
-function getCommonOptions(addToken = true) {
+async function getCommonOptions(addToken = true) {
   let options = {
     headers: {
       'Content-Type': APPLICATION_JSON,
     },
   };
-  return getToken()
-    .then(token => {
-      if (!isEmpty(token) && addToken) {
-        console.log('getToken', token);
-        options.headers['Authorization'] = `JWT ${token}`;
-      }
-    })
-    .then(() => options);
+  let token = await getToken();
+  if (!isEmpty(token) && addToken) {
+    options.headers['Authorization'] = `JWT ${token}`;
+  }
+  return options;
 }
 
 export function get(uri) {
@@ -47,7 +44,7 @@ export function get(uri) {
 }
 
 export async function asyncGet(uri) {
-  let options = getCommonOptions();
+  let options = await getCommonOptions();
   options.method = 'GET';
   const res = await fetch(uri, options);
 
@@ -75,7 +72,7 @@ export function post(uri, body, addToken = true) {
 }
 
 export async function asyncPost(uri, body) {
-  let options = getCommonOptions();
+  let options = await getCommonOptions();
   options.method = 'POST';
   options.body = JSON.stringify(body);
   console.log(options);
@@ -91,7 +88,7 @@ export async function asyncPost(uri, body) {
 }
 
 export async function rawPost(uri, body) {
-  let options = getCommonOptions();
+  let options = await getCommonOptions();
   options.method = 'POST';
   options.body = body;
   const res = await fetch(uri, options);
