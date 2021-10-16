@@ -4,9 +4,13 @@ import {isEmpty} from './util';
 
 let jwtToken = '';
 
-function getToken(refresh = false) {
-  if (isEmpty(jwtToken)) jwtToken = retrieveUserSession(API_TOKEN);
-  return jwtToken;
+async function getToken(refresh = false) {
+  if (isEmpty(jwtToken)) {
+    jwtToken = await retrieveUserSession(API_TOKEN);
+    return jwtToken;
+  } else {
+    return jwtToken;
+  }
 }
 
 export function setToken(token) {
@@ -19,16 +23,26 @@ function getCommonOptions() {
       'Content-Type': APPLICATION_JSON,
     },
   };
-  if (!isEmpty(jwtToken)) {
-    options.headers['Authorization'] = `JWT ${getToken()}`;
-  }
-  return options;
+  return getToken()
+    .then(token => {
+      if (!isEmpty(token) && !token.includes('non_field_errors')) {
+        options.headers['Authorization'] = `JWT ${token}`;
+      }
+    })
+    .then(() => options);
 }
 
 export function get(uri) {
-  let options = getCommonOptions();
-  options.method = 'GET';
-  return fetch(uri, options);
+  return getCommonOptions().then(options => {
+    options.method = 'GET';
+    return fetch(uri, options).then(res => {
+      if (res.ok) return res;
+      else {
+        let msg = `Error GET ${uri}, ${res.status}, ${res.body}`;
+        throw new Error(msg);
+      }
+    });
+  });
 }
 
 export async function asyncGet(uri) {

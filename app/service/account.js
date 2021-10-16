@@ -70,7 +70,10 @@ export function getMyProfile() {
         return false;
       }
     })
-    .catch(err => console.log(err.message));
+    .catch(err => {
+      console.log(err.message);
+      return false;
+    });
 }
 
 export async function updateMyProfile(formData) {
