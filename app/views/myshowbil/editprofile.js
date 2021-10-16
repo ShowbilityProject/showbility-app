@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/core';
+import {useNavigation} from '@react-navigation/core';
 import * as React from 'react';
 import {
   View,
@@ -10,8 +10,8 @@ import {
   Pressable,
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
-import { isEmpty } from '../../common/util';
-import { updateMyProfile } from '../../service/account';
+import {isEmpty} from '../../common/util';
+import {updateMyProfile} from '../../service/account';
 
 const styles = StyleSheet.create({
   fontJeju: {
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
   },
-  applyButtonValid:{
+  applyButtonValid: {
     flex: 1,
     height: 52,
     backgroundColor: '#F85B02',
@@ -72,15 +72,23 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 50,
   },
+  tagsStyle: {
+    fontSize: 17,
+    textAlign: 'right',
+    color: '#F85B02',
+    alignSelf: 'center',
+  },
 });
 
 export function EditProfileScreen({route}) {
   const navigation = useNavigation();
-  let {profile_image, nickname, date_of_birth, description, tags} = route.params.data;
+  let {profile_image, nickname, date_of_birth, description, tags} =
+    route.params.data;
   const [image, setImage] = React.useState(profile_image);
   const [nname, setNname] = React.useState(nickname);
   const [dateOfBirth, setDateOfBirth] = React.useState(date_of_birth);
   const [desc, setDesc] = React.useState(description);
+  const [categories, setCategories] = React.useState([]);
   const [tgs, setTgs] = React.useState(tags);
 
   const imageSource = image
@@ -129,9 +137,36 @@ export function EditProfileScreen({route}) {
     formData.append('nickname', nname);
     formData.append('date_of_birth', dateOfBirth);
     formData.append('description', desc);
+    for (var tag of tgs) {
+      formData.append('tags', tag);
+    }
 
     const ret = await updateMyProfile(formData);
     if (ret) navigation.goBack();
+  };
+
+  const selectCategories = value => {
+    setCategories(value);
+  };
+
+  const selectTags = value => {
+    setTgs(value);
+  };
+
+  const getReprTagText = () => {
+    let text = '';
+    if (categories.length) {
+      text = categories[0];
+    } else if (tgs.length) {
+      text = tgs[0];
+    }
+
+    let count = categories.length + tgs.length;
+    if (count > 1) {
+      text += `+${count - 1}`;
+    }
+    console.log(text);
+    return text;
   };
 
   return (
@@ -165,7 +200,15 @@ export function EditProfileScreen({route}) {
           />
         </View>
         <Pressable
-          onPress={() => console.log('태그 설정')}
+          onPress={() =>
+            navigation.push('카테고리&태그 선택', {
+              selectCategories: selectCategories,
+              categories: categories.slice(),
+              selectTags: selectTags,
+              tags: tgs.slice(),
+              isUpload: false,
+            })
+          }
           style={[
             styles.textInputWrapper,
             {justifyContent: 'center', flexDirection: 'row'},
@@ -173,7 +216,14 @@ export function EditProfileScreen({route}) {
           <Text style={{fontSize: 17, alignSelf: 'center', flex: 1}}>
             태그 설정
           </Text>
-          <Text style={{fontSize: 17, alignSelf: 'center'}}>{'>'}</Text>
+          {categories.length > 0 || tgs.length > 0 ? (
+            <Text style={styles.tagsStyle}>{getReprTagText()}</Text>
+          ) : (
+            <Text
+              style={{fontSize: 17, textAlign: 'right', alignSelf: 'center'}}>
+              {'>'}
+            </Text>
+          )}
         </Pressable>
         <View style={{flex: 2, alignItems: 'flex-end', flexDirection: 'row'}}>
           <Pressable style={buttonStyle} onPress={() => handleSubmit()}>

@@ -267,7 +267,7 @@ function FilterItemsArea({items}) {
       {items.map(sgt => {
         return (
           <View style={styles.suggestTagView}>
-            <Text style={styles.suggestTagText}>{sgt.name}</Text>
+            <Text style={styles.suggestTagText}>{sgt}</Text>
           </View>
         );
       })}
