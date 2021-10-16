@@ -60,8 +60,8 @@ export function validateToken(token) {
   return post(uri).then(response => response);
 }
 
-export function getMyProfile() {
-  let uri = HOST + '/user/my/';
+export function getProfile(user_id = 'my') {
+  let uri = HOST + `/user/${user_id}/`;
   return get(uri)
     .then(res => {
       if (res.ok) return res.json();

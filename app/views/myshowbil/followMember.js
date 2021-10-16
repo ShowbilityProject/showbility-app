@@ -1,6 +1,14 @@
 import {useNavigation} from '@react-navigation/core';
 import * as React from 'react';
-import {FlatList, View, Image, Text, StyleSheet, TextInput} from 'react-native';
+import {
+  FlatList,
+  View,
+  Image,
+  Text,
+  StyleSheet,
+  TextInput,
+  Pressable,
+} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {getFollowers} from '../../service/account';
 import {getNext} from '../../service/group';
@@ -54,7 +62,8 @@ export function FollowMember({route}) {
 
   const renderItem = itemObject => {
     let item = itemObject.item;
-    const tempImage = 'http://localhost:8000/media/group/images/tag1_Kyfk4hI.jpeg';
+    const tempImage =
+      'http://localhost:8000/media/group/images/tag1_Kyfk4hI.jpeg';
     const imageSource = {
       uri: item.profile_image ? item.profile_image : tempImage,
     };
@@ -63,9 +72,16 @@ export function FollowMember({route}) {
         <View style={{flex: 1, maxWidth: 40, minHeight: 40, marginRight: 10}}>
           <Image source={imageSource} style={styles.profileImage} />
         </View>
-        <View style={{flex: 1}}>
+        <Pressable
+          style={{flex: 1}}
+          onPress={() =>
+            navigation.push('사용자정보', {
+              user_id: item.id,
+              isMy: false,
+            })
+          }>
           <Text style={{fontSize: 17}}>{item.nickname}</Text>
-        </View>
+        </Pressable>
         <TouchableOpacity style={styles.followButton}>
           <Text style={[styles.fontJeju, {color: 'white'}]}>팔로우</Text>
         </TouchableOpacity>

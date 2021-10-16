@@ -61,6 +61,11 @@ function BaseStackScreen() {
         options={{headerBackTitle: ' '}}
       />
       <BaseStack.Screen
+        name="사용자정보"
+        component={MyShowbilTab}
+        options={{headerBackTitle: ' '}}
+      />
+      <BaseStack.Screen
         name="팔로우"
         component={FollowMember}
         options={{headerBackTitle: ' '}}

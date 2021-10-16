@@ -11,8 +11,8 @@ import {
   Pressable,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { HOST } from '../../common/constant';
-import {getMyProfile} from '../../service/account';
+import {HOST} from '../../common/constant';
+import {getMyProfile, getProfile} from '../../service/account';
 
 const styles = StyleSheet.create({
   fontJeju: {
@@ -109,9 +109,20 @@ function MyDetailHeader({data, isMy}) {
   return (
     <View style={styles.detailHeaderWrapper}>
       <View style={{flex: 1, width: '100%'}}>
-        <Text style={{fontSize: 20, textAlign: 'center'}}>{data.nickname}</Text>
+        <Text
+          style={{
+            fontSize: 20,
+            textAlign: 'center',
+            display: isMy ? 'flex' : 'none',
+          }}>
+          {data.nickname}
+        </Text>
         <Pressable
-          style={{position: 'absolute', right: 15}}
+          style={{
+            position: 'absolute',
+            right: 15,
+            display: isMy ? 'flex' : 'none',
+          }}
           onPress={() => navigation.navigate('프로필 편집', {data: data})}>
           <Ionicons name="settings-sharp" size={20} color={'black'} />
         </Pressable>
@@ -121,7 +132,7 @@ function MyDetailHeader({data, isMy}) {
         <Pressable
           style={{padding: 20, alignItems: 'center'}}
           onPress={() =>
-            navigation.navigate('팔로우', {
+            navigation.push('팔로우', {
               userId: data.id,
               _type: 'followers',
             })
@@ -134,7 +145,7 @@ function MyDetailHeader({data, isMy}) {
         <Pressable
           style={{padding: 20, alignItems: 'center'}}
           onPress={() =>
-            navigation.navigate('팔로우', {
+            navigation.push('팔로우', {
               userId: data.id,
               _type: 'followings',
             })
@@ -257,6 +268,8 @@ function MyDetailBody({data}) {
 }
 
 export function GroupDetail({route}) {
+  const isMy = route.params ? route.params.isMy : true;
+  const user_id = isMy ? 'my' : route.params.user_id;
   const navigation = useNavigation();
   const defaultData = {
     description: '',
@@ -273,9 +286,9 @@ export function GroupDetail({route}) {
   const [data, setData] = React.useState(defaultData);
 
   React.useEffect(() => {
-    getMyProfile().then(res => setData(res));
+    getProfile(user_id).then(res => setData(res));
     const willFocusSubscription = navigation.addListener('focus', () => {
-      getMyProfile().then(res => {
+      getProfile(user_id).then(res => {
         if (res !== false) {
           setData(res);
         } else {
@@ -286,12 +299,18 @@ export function GroupDetail({route}) {
     });
 
     return willFocusSubscription;
-  }, []);
+  }, [user_id]);
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      title: data.nickname,
+    });
+  });
 
   return (
     <SafeAreaView style={styles.baseView}>
       <ScrollView style={styles.baseView}>
-        <MyDetailHeader data={data} isMy={true} />
+        <MyDetailHeader data={data} isMy={isMy} />
         <MyDetailBody data={data} />
       </ScrollView>
     </SafeAreaView>
