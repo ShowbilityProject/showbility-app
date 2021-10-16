@@ -111,7 +111,7 @@ function GroupArea({title, items, fetchType}) {
     );
   };
   return (
-    <View style={data.length > 0 ? styles.groupArea : {display: 'none'}}>
+    <View style={styles.groupArea}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <View style={{flex: 1}}>
           <Text
@@ -125,7 +125,7 @@ function GroupArea({title, items, fetchType}) {
         </View>
         <View style={{flex: 1}}>
           <Text
-            style={styles.showAllText}
+            style={[styles.showAllText]}
             onPress={() =>
               navigation.navigate('GroupDepthView', {
                 title: title,

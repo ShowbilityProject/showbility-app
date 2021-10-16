@@ -246,7 +246,7 @@ function GroupMembers({members, members_count, id}) {
                     {fontSize: 17, alignSelf: 'stretch', marginBottom: 3},
                     styles.fontJeju,
                   ]}>
-                  {member.user.username}
+                  {member.user.nickname}
                 </Text>
                 <Text
                   style={{

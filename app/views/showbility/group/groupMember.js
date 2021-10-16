@@ -71,7 +71,7 @@ export function GroupMember({route}) {
           <Image source={{uri: tempImage}} style={styles.profileImage} />
         </View>
         <View style={{flex: 1}}>
-          <Text style={{fontSize: 17}}>{item.user.username}</Text>
+          <Text style={{fontSize: 17}}>{item.user.nickname}</Text>
           <Text
             style={[
               styles.memberTypeText,
