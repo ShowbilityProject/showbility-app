@@ -222,6 +222,7 @@ function FilterItemsArea({items}) {
 }
 
 function MyItems({contents}) {
+  const navigation = useNavigation();
   contents = contents ? contents : [];
   return (
     <View style={styles.bodyItemSpace}>
@@ -232,9 +233,12 @@ function MyItems({contents}) {
               ? {uri: HOST + content.images[0]}
               : require('../../../assets/imgs/add_image.png');
           return (
-            <View key={content.id} style={styles.groupImageContainer}>
+            <Pressable
+              key={content.id}
+              style={styles.groupImageContainer}
+              onPress={() => navigation.navigate('ContentsModal', content.id)}>
               <Image source={source} style={styles.groupImage} />
-            </View>
+            </Pressable>
           );
         })}
       </View>
