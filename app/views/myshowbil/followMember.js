@@ -82,7 +82,11 @@ export function FollowMember({route}) {
           }>
           <Text style={{fontSize: 17}}>{item.nickname}</Text>
         </Pressable>
-        <TouchableOpacity style={styles.followButton}>
+        <TouchableOpacity
+          style={[
+            styles.followButton,
+            {display: item.followable == 2 ? 'flex' : 'none'},
+          ]}>
           <Text style={[styles.fontJeju, {color: 'white'}]}>팔로우</Text>
         </TouchableOpacity>
       </View>
