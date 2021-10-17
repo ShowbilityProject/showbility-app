@@ -9,9 +9,10 @@ import {
   Image,
   ScrollView,
   Pressable,
+  SafeAreaView,
 } from 'react-native';
 import {HOST} from '../../common/constant';
-import { isEmpty } from '../../common/util';
+import {isEmpty} from '../../common/util';
 import {getContentsList, getNestContentsList} from '../../service/content';
 
 export function FindScreen({route, navigation}) {
@@ -108,29 +109,31 @@ export function FindScreen({route, navigation}) {
   };
 
   return (
-    <View style={styles.baseContainer}>
-      <FindBar
-        tagFilter={tagFilter}
-        removeTagFromFilter={removeTagFromFilter}
-        handleTagSubmit={handleTagSubmit}
-      />
-      <FlatList
-        key={'#'}
-        keyExtractor={item => '#' + item.id}
-        data={data}
-        renderItem={renderItem}
-        horizontal={false}
-        numColumns={2}
-        refreshing={refreshing}
-        style={styles.flatListFrame}
-        onScroll={({nativeEvent}) => {
-          if (isScrollEnd(nativeEvent)) {
-            console.log(fetchingNext);
-            if (!fetchingNext) fetchNext();
-          }
-        }}
-      />
-    </View>
+    <SafeAreaView style={{flex: 1}}>
+      <View style={styles.baseContainer}>
+        <FindBar
+          tagFilter={tagFilter}
+          removeTagFromFilter={removeTagFromFilter}
+          handleTagSubmit={handleTagSubmit}
+        />
+        <FlatList
+          key={'#'}
+          keyExtractor={item => '#' + item.id}
+          data={data}
+          renderItem={renderItem}
+          horizontal={false}
+          numColumns={2}
+          refreshing={refreshing}
+          style={styles.flatListFrame}
+          onScroll={({nativeEvent}) => {
+            if (isScrollEnd(nativeEvent)) {
+              console.log(fetchingNext);
+              if (!fetchingNext) fetchNext();
+            }
+          }}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 

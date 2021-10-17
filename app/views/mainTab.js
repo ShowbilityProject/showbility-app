@@ -10,7 +10,8 @@ import MyShowbilTab from './myshowbil/myShowbil';
 import {createStackNavigator} from '@react-navigation/stack';
 import {CategoryList} from './newupload/category';
 import {EditProfileScreen} from './myshowbil/editprofile';
-import { FollowMember } from './myshowbil/followMember';
+import {FollowMember} from './myshowbil/followMember';
+import {FindScreen} from './components/find';
 
 const MainTab = createBottomTabNavigator();
 
@@ -105,7 +106,11 @@ function MainTabScreen() {
         component={ShowbilityHome}
         options={({route}) => ({tabBarVisible: getVisibility(route)})}
       />
-      <MainTab.Screen name="검색" component={SearchTab} />
+      <MainTab.Screen
+        name="검색"
+        component={FindScreen}
+        initialParams={{categoryFilter: [], groupFilter: []}}
+      />
       <MainTab.Screen
         name="NewUpload"
         component={NewUploadTab}
