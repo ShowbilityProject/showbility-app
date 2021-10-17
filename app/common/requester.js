@@ -1,5 +1,5 @@
 import {HOST, APPLICATION_JSON, API_TOKEN} from './constant';
-import {retrieveUserSession} from './securestorage';
+import {removeUserSession, retrieveUserSession} from './securestorage';
 import {isEmpty} from './util';
 
 let jwtToken = '';
@@ -30,12 +30,16 @@ async function getCommonOptions(addToken = true) {
   return options;
 }
 
-export function get(uri) {
+export function get(uri, retry = false) {
   return getCommonOptions().then(options => {
     options.method = 'GET';
     return fetch(uri, options).then(res => {
       if (res.ok) return res;
       else {
+        if (res.status === 401) {
+          removeUserSession(API_TOKEN);
+          if (!retry) return get(uri, true);
+        }
         let msg = `Error GET ${uri}, ${res.status}, ${res.body}`;
         throw new Error(msg);
       }
@@ -43,12 +47,16 @@ export function get(uri) {
   });
 }
 
-export async function asyncGet(uri) {
+export async function asyncGet(uri, retry = false) {
   let options = await getCommonOptions();
   options.method = 'GET';
   const res = await fetch(uri, options);
 
   if (!res.ok) {
+    if (res.status === 401) {
+      removeUserSession(API_TOKEN);
+      return asyncGet(uri, true);
+    }
     const msg = `Error on post ${uri}, msg: ${res.status}`;
     throw new Error(msg);
   }
@@ -64,6 +72,7 @@ export function post(uri, body, addToken = true, method = 'POST') {
     return fetch(uri, options).then(res => {
       if (res.ok) return res;
       else {
+        if (res.status === 401) removeUserSession(API_TOKEN);
         let msg = `Error GET ${uri}, ${res.status}, ${res.body}`;
         throw new Error(msg);
       }
@@ -79,6 +88,7 @@ export async function asyncPost(uri, body) {
 
   const res = await fetch(uri, options);
 
+  if (res.status === 401) removeUserSession(API_TOKEN);
   if (!res.ok) {
     const msg = `Error on post ${uri}, msg: ${res.status}`;
     throw new Error(msg);
@@ -93,6 +103,7 @@ export async function rawPost(uri, body) {
   options.body = body;
   const res = await fetch(uri, options);
 
+  if (res.status === 401) removeUserSession(API_TOKEN);
   if (!res.ok) {
     const msg = `Error on post ${uri}, msg: ${res.status}`;
     throw new Error(msg);

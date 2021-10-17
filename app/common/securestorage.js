@@ -23,4 +23,13 @@ async function retrieveUserSession(key) {
   }
 }
 
-export {storeUserSession, retrieveUserSession};
+async function removeUserSession(key) {
+  try {
+    EncryptedStorage.removeItem(key);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+export {storeUserSession, retrieveUserSession, removeUserSession};
