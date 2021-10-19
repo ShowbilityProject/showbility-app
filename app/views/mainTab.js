@@ -12,6 +12,7 @@ import {CategoryList} from './newupload/category';
 import {EditProfileScreen} from './myshowbil/editprofile';
 import {FollowMember} from './myshowbil/followMember';
 import {FindScreen} from './components/find';
+import {ContentsModal} from './showbility/contentModal';
 
 const MainTab = createBottomTabNavigator();
 
@@ -70,6 +71,11 @@ function BaseStackScreen() {
         name="팔로우"
         component={FollowMember}
         options={{headerBackTitle: ' '}}
+      />
+      <BaseStack.Screen
+        name="ContentsModal"
+        component={ContentsModal}
+        options={{headerShown: false}}
       />
     </BaseStack.Navigator>
   );

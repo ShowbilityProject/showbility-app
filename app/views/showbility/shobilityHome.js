@@ -11,17 +11,15 @@ import {TouchableOpacity} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {AbilityScreen} from './ability';
 import {GroupScreen} from './group/group';
-import {FilterScreen} from './filter';
 import {GroupDepthView} from './group/groupDepthView';
 import {GroupDetail} from './group/groupDetail';
 import {GroupCreate} from './group/groupCreate';
-import {getContent, getContentsList, getNestContentsList} from '../../service/content';
+import {getContentsList, getNestContentsList} from '../../service/content';
 import {useNavigation} from '@react-navigation/core';
 import {HOST} from '../../common/constant';
 import {CommentsView} from './comment';
-import {ContentsModal} from './contentModal';
-import { FindScreen } from '../components/find';
-import { GroupMember } from './group/groupMember';
+import {FindScreen} from '../components/find';
+import {GroupMember} from './group/groupMember';
 
 const styles = StyleSheet.create({
   container: {
@@ -262,11 +260,6 @@ export function ShowbilityHome() {
       <MainHomeStack.Screen
         name="Main"
         component={SHome2}
-        options={{headerShown: false}}
-      />
-      <MainHomeStack.Screen
-        name="ContentsModal"
-        component={ContentsModal}
         options={{headerShown: false}}
       />
       <MainHomeStack.Screen
