@@ -266,7 +266,7 @@ function FilterItemsArea({items}) {
     <View style={styles.searchArea}>
       {items.map(sgt => {
         return (
-          <View style={styles.suggestTagView}>
+          <View key={sgt} style={styles.suggestTagView}>
             <Text style={styles.suggestTagText}>{sgt}</Text>
           </View>
         );
