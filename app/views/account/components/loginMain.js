@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/core';
 import * as React from 'react';
 import {
   View,
@@ -7,6 +8,7 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
+import { verifyToken } from '../../../service/account';
 
 const styles = StyleSheet.create({
   fontStyle: {
@@ -86,13 +88,23 @@ const styles = StyleSheet.create({
   },
 });
 
-function LoginScreen({navigation}) {
+function LoginScreen() {
   const iconImgSize = Dimensions.get('window').width / 6;
   const kakao_icon = '../../../../assets/imgs/login/kakao_icon.png';
   const naver_icon = '../../../../assets/imgs/login/naver_icon.png';
   const fb_icon = '../../../../assets/imgs/login/fb_icon.png';
   const gg_icon = '../../../../assets/imgs/login/gg_icon.png';
   const apple_icon = '../../../../assets/imgs/login/apple_icon.png';
+  const navigation = useNavigation();
+  React.useEffect(() => {
+    verifyToken().then(res => {
+      if (res) {
+        console.log('Current token is valid, move to app');
+        navigation.navigate('App');
+      }
+    });
+  });
+
   return (
     <View style={styles.container}>
       <View style={styles.centerContaier}>
@@ -153,7 +165,7 @@ function LoginScreen({navigation}) {
       <View style={styles.joinContainer}>
         <Text onPress={() => navigation.push('회원가입')}>회원가입</Text>
         <Text> | </Text>
-        <Text onPress={() => navigation.navigate('ShowbilityHome')}>
+        <Text onPress={() => navigation.navigate('App')}>
           로그인 전 둘러보기
         </Text>
       </View>

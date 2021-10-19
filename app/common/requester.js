@@ -68,7 +68,7 @@ export function post(uri, body, addToken = true, method = 'POST') {
   return getCommonOptions(addToken).then(options => {
     options.method = method;
     options.body = JSON.stringify(body);
-    console.log(options);
+
     return fetch(uri, options).then(res => {
       if (res.ok) return res;
       else {
@@ -80,11 +80,10 @@ export function post(uri, body, addToken = true, method = 'POST') {
   });
 }
 
-export async function asyncPost(uri, body) {
-  let options = await getCommonOptions();
+export async function asyncPost(uri, body, addToken = true) {
+  let options = await getCommonOptions(addToken);
   options.method = 'POST';
   options.body = JSON.stringify(body);
-  console.log(options);
 
   const res = await fetch(uri, options);
 

@@ -1,6 +1,6 @@
 import {API_TOKEN, HOST} from '../common/constant';
-import {get, post, rawPost} from '../common/requester';
-import {storeUserSession} from '../common/securestorage';
+import {asyncGet, asyncPost, get, post, rawPost} from '../common/requester';
+import {retrieveUserSession, storeUserSession} from '../common/securestorage';
 import {isEmpty} from '../common/util';
 
 function saveToken(token) {
@@ -101,4 +101,36 @@ export function requestUnfollow(user_id) {
   return post(uri, undefined, true, 'DELETE')
     .then(res => res.json())
     .catch(() => false);
+}
+
+export async function verifyToken() {
+  let token = await retrieveUserSession(API_TOKEN);
+  let uri = HOST + '/verify-token/';
+  let body = {
+    token: token,
+  };
+  try {
+    let ret = await asyncPost(uri, body, false);
+    let serverToken = ret.token;
+    return token === serverToken;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+}
+
+export async function refreshToken() {
+  let token = await retrieveUserSession(API_TOKEN);
+  let uri = HOST + '/refresh-token/';
+  let body = {
+    token: token,
+  };
+  try {
+    let ret = await asyncPost(uri, body, false);
+    let serverToken = ret.token;
+    return token === serverToken;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
 }
