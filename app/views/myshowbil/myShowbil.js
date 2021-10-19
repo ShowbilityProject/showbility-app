@@ -345,12 +345,6 @@ export function GroupDetail({route}) {
     return willFocusSubscription;
   }, [user_id]);
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      title: data.nickname,
-    });
-  });
-
   return (
     <SafeAreaView style={styles.baseView}>
       <ScrollView style={styles.baseView}>
