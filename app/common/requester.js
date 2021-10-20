@@ -13,6 +13,16 @@ async function getToken(refresh = false) {
   }
 }
 
+function removeToken() {
+  console.log('Remove Token');
+  try {
+    if (isEmpty(jwtToken)) removeUserSession(API_TOKEN);
+    jwtToken = '';
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 export function setToken(token) {
   jwtToken = token;
 }
@@ -37,7 +47,8 @@ export function get(uri, retry = false) {
       if (res.ok) return res;
       else {
         if (res.status === 401) {
-          removeUserSession(API_TOKEN);
+          removeToken();
+          res.json().then(r => console.log(r));
           if (!retry) return get(uri, true);
         }
         let msg = `Error GET ${uri}, ${res.status}, ${res.body}`;
@@ -54,7 +65,8 @@ export async function asyncGet(uri, retry = false) {
 
   if (!res.ok) {
     if (res.status === 401) {
-      removeUserSession(API_TOKEN);
+      removeToken();
+      res.json().then(r => console.log(r));
       return asyncGet(uri, true);
     }
     const msg = `Error on get ${uri}, msg: ${res.status}`;
@@ -72,7 +84,7 @@ export function post(uri, body, addToken = true, method = 'POST') {
     return fetch(uri, options).then(res => {
       if (res.ok) return res;
       else {
-        if (res.status === 401) removeUserSession(API_TOKEN);
+        if (res.status === 401) removeToken();
         let msg = `Error post ${uri}, ${res.status}, ${res.body}`;
         console.log(msg);
         throw new Error(msg);
@@ -88,7 +100,7 @@ export async function asyncPost(uri, body, addToken = true) {
 
   const res = await fetch(uri, options);
 
-  if (res.status === 401) removeUserSession(API_TOKEN);
+  if (res.status === 401) removeToken();
   if (!res.ok) {
     const msg = `Error on post ${uri}, msg: ${res.status}`;
     throw new Error(msg);
@@ -103,7 +115,7 @@ export async function rawPost(uri, body) {
   options.body = body;
   const res = await fetch(uri, options);
 
-  if (res.status === 401) removeUserSession(API_TOKEN);
+  if (res.status === 401) removeToken();
   if (!res.ok) {
     const msg = `Error on post ${uri}, msg: ${res.status}`;
     throw new Error(msg);
