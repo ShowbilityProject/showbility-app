@@ -101,7 +101,7 @@ function JoinScreen({}) {
     console.log(name, email, password, birth);
     requestSignUp(name, email, password, birth).then(ret => {
       if (ret) {
-        navigation.goBack();
+        navigation.navigate('App');
       }
     });
   };
