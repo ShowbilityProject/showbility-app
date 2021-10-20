@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableHighlight,
   TextInput,
+  Alert,
 } from 'react-native';
 import {isEmpty} from '../../../common/util';
 import {requestSignIn} from '../../../service/account';
@@ -108,7 +109,7 @@ function EmailLoginScreen({navigation}) {
   const handleButtonTextStyle = () => {
     if (validateInput()) return {fontSize: 17, color: 'white'};
     else return {fontSize: 17, color: 'black'};
-  }
+  };
   const handleEmailChange = value => {
     setEmail(value);
   };
@@ -118,7 +119,8 @@ function EmailLoginScreen({navigation}) {
   const handleLogin = () => {
     if (isEmpty(email) || isEmpty(password)) return false;
     requestSignIn(email, password).then(ret => {
-      console.log(ret);
+      if(ret) navigation.navigate('App');
+      else Alert.alert('로그인 실패', '아이디와 비밀번호를 확인하세요.');
     });
   };
   return (

@@ -57,7 +57,7 @@ export async function asyncGet(uri, retry = false) {
       removeUserSession(API_TOKEN);
       return asyncGet(uri, true);
     }
-    const msg = `Error on post ${uri}, msg: ${res.status}`;
+    const msg = `Error on get ${uri}, msg: ${res.status}`;
     throw new Error(msg);
   }
 
@@ -73,7 +73,8 @@ export function post(uri, body, addToken = true, method = 'POST') {
       if (res.ok) return res;
       else {
         if (res.status === 401) removeUserSession(API_TOKEN);
-        let msg = `Error GET ${uri}, ${res.status}, ${res.body}`;
+        let msg = `Error post ${uri}, ${res.status}, ${res.body}`;
+        console.log(msg);
         throw new Error(msg);
       }
     });
