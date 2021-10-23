@@ -246,6 +246,7 @@ export function GroupScreen() {
         tagFilter={tagFilter}
         removeTagFromFilter={removeTagFromFilter}
         handleTagSubmit={handleTagSubmit}
+        onFocused={() => {}}
       />
       <GroupArea title="마이 그룹" items={data} fetchType={GET_GROUP_TYPE.MY} />
       <GroupArea

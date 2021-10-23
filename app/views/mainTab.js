@@ -3,7 +3,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {ShowbilityHome} from './showbility/shobilityHome';
-import SearchTab from './components/search';
 import NewUploadTab from './newupload/newUpload';
 import MessageTab from './message/message';
 import MyShowbilTab from './myshowbil/myShowbil';

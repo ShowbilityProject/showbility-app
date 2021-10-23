@@ -10,9 +10,16 @@ import {
   ScrollView,
   Pressable,
   SafeAreaView,
+  Keyboard,
 } from 'react-native';
 import {HOST} from '../../common/constant';
 import {isEmpty} from '../../common/util';
+import {
+  clearRecentSearchWord,
+  getRecentSearchWord,
+  saveSearchWord,
+} from '../../service/common';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {getContentsList, getNestContentsList} from '../../service/content';
 
 export function FindScreen({route, navigation}) {
@@ -27,6 +34,8 @@ export function FindScreen({route, navigation}) {
   const [refreshing, setRefreshing] = React.useState(false);
   const [fetchingNext, setFetchingNext] = React.useState(true);
   const [tagInput, setTagInput] = React.useState('');
+  const [inputFocused, setInputFocused] = React.useState(false);
+  const [recentSearchWords, setRecentSearchWords] = React.useState([]);
 
   React.useEffect(() => {
     console.log('called effect');
@@ -39,7 +48,8 @@ export function FindScreen({route, navigation}) {
         setRefreshing(false);
         setFetchingNext(false);
       });
-  }, [Object.keys(tagFilter).join()]);
+    getRecentSearchWord().then(r => setRecentSearchWords(r));
+  }, [JSON.stringify(tagFilter), refreshing]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -84,10 +94,23 @@ export function FindScreen({route, navigation}) {
     }
   };
 
-  const handleTagSubmit = ({nativeEvent}) => {
+  const handleTagSubmit = async ({nativeEvent}) => {
+    await saveSearchWord(nativeEvent.text);
+    getRecentSearchWord().then(r => setRecentSearchWords(r));
+    setInputFocused(false);
     addTagFilter(nativeEvent.text);
     setTagInput('');
     setRefreshing(true);
+    Keyboard.dismiss();
+  };
+
+  const onSearchInputFocused = () => {
+    setInputFocused(true);
+  };
+
+  const clearSearch = () => {
+    clearRecentSearchWord();
+    setRecentSearchWords([]);
   };
 
   const renderItem = itemObject => {
@@ -115,6 +138,7 @@ export function FindScreen({route, navigation}) {
           tagFilter={tagFilter}
           removeTagFromFilter={removeTagFromFilter}
           handleTagSubmit={handleTagSubmit}
+          onFocused={onSearchInputFocused}
         />
         <FlatList
           key={'#'}
@@ -124,7 +148,10 @@ export function FindScreen({route, navigation}) {
           horizontal={false}
           numColumns={2}
           refreshing={refreshing}
-          style={styles.flatListFrame}
+          style={[
+            styles.flatListFrame,
+            {display: inputFocused ? 'none' : 'flex'},
+          ]}
           onScroll={({nativeEvent}) => {
             if (isScrollEnd(nativeEvent)) {
               console.log(fetchingNext);
@@ -132,12 +159,45 @@ export function FindScreen({route, navigation}) {
             }
           }}
         />
+        <View style={{flex: 1, display: inputFocused ? 'flex' : 'none'}}>
+          <TouchableOpacity onPress={() => clearSearch()}>
+            <Text style={{textAlign: 'right'}}>모두 지우기</Text>
+          </TouchableOpacity>
+          {recentSearchWords.map(word => {
+            return (
+              <TouchableOpacity
+                key={word}
+                style={{
+                  paddingVertical: 5,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  maxHeight: 70,
+                }}
+                onPress={() => handleTagSubmit({nativeEvent: {text: word}})}>
+                <Ionicons name="time-outline" size={20} color={'black'} />
+                <Text
+                  style={{
+                    marginLeft: 10,
+                    fontSize: 15,
+                    justifyContent: 'center',
+                  }}>
+                  {word}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
       </View>
     </SafeAreaView>
   );
 }
 
-export function FindBar({tagFilter, removeTagFromFilter, handleTagSubmit}) {
+export function FindBar({
+  tagFilter,
+  removeTagFromFilter,
+  handleTagSubmit,
+  onFocused,
+}) {
   const [tagInput, setTagInput] = React.useState('');
 
   const handleSubmit = e => {
@@ -168,6 +228,7 @@ export function FindBar({tagFilter, removeTagFromFilter, handleTagSubmit}) {
         style={styles.textinput}
         placeholder="태그 검색"
         onSubmitEditing={handleSubmit}
+        onFocus={() => onFocused()}
       />
     </ScrollView>
   );
