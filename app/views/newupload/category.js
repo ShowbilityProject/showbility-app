@@ -37,18 +37,18 @@ export function CategoryList({route, navigation}) {
 
   const handleSubmit = () => {
     selectCategories(categories);
-    selectTags(tags);
+    selectTags(tags.filter(tag => tagData.some(td => td.name === tag)));
     navigation.goBack();
   };
 
   const fetchData = () => {
     getCategoryList().then(res => setCategoryData(res.results));
-    getTagList().then(res => setTagData(res.results));
+    getTagList(categories).then(res => setTagData(res));
   };
 
   React.useEffect(() => {
     fetchData();
-  }, []);
+  }, [changeFlag]);
 
   return (
     <View style={styles.baseWrapper}>
@@ -80,7 +80,7 @@ export function CategoryList({route, navigation}) {
           })}
         </View>
       </View>
-      <View>
+      <View style={{flex: 1}}>
         <Text style={styles.titleArea}>2. 태그</Text>
 
         {isUpload ? (
@@ -122,7 +122,7 @@ export function CategoryList({route, navigation}) {
           })}
         </View>
       </View>
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, maxHeight: 250}}>
         <View style={{flex: 1, flexDirection: 'row'}}>
           <Pressable style={styles.applyButton} onPress={handleSubmit}>
             <Text style={styles.applyButtonText}>적용 하기</Text>
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#707070',
-    minHeight: 150,
+    height: '100%',
     padding: 5,
   },
   applyButton: {

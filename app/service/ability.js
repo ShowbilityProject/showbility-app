@@ -15,8 +15,13 @@ export function getCategoryList() {
     .catch(err => console.log(err));
 }
 
-export async function getTagList() {
-  let url = `${HOST}/tags/`;
+export async function getTagList(categories = []) {
+  let url = `${HOST}/tags/?`;
+  url += '&sections=' + encodeURIComponent('감성');
+  for (var category of categories) {
+    url += `&categories=${encodeURIComponent(category)}`;
+  }
+  console.log(url);
   const res = await asyncGet(url);
   return res;
 }

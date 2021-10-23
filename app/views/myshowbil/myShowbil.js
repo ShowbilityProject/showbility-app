@@ -337,7 +337,6 @@ export function GroupDetail({route}) {
           setData(res);
         } else {
           console.log('Failed to retrieve profile');
-          setData(defaultData);
         }
       });
     });
