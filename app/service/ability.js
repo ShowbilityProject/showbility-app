@@ -21,7 +21,6 @@ export async function getTagList(categories = []) {
   for (var category of categories) {
     url += `&categories=${encodeURIComponent(category)}`;
   }
-  console.log(url);
   const res = await asyncGet(url);
   return res;
 }
