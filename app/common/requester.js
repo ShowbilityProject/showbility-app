@@ -16,7 +16,7 @@ async function getToken(refresh = false) {
 function removeToken() {
   console.log('Remove Token');
   try {
-    if (isEmpty(jwtToken)) removeUserSession(API_TOKEN);
+    if (!isEmpty(jwtToken)) removeUserSession(API_TOKEN);
     jwtToken = '';
   } catch (e) {
     console.log(e);
