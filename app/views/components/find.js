@@ -132,7 +132,7 @@ export function FindScreen({route, navigation}) {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <View style={styles.baseContainer}>
         <FindBar
           tagFilter={tagFilter}
