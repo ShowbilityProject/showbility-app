@@ -12,6 +12,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		76F4FACFD3548B61A5173FFA /* libPods-Sample2-Sample2Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B589D2B94D406384E07DD383 /* libPods-Sample2-Sample2Tests.a */; };
+		802E2D992723B0E400451DA4 /* splash_text.png in Resources */ = {isa = PBXBuildFile; fileRef = 802E2D982723B0E300451DA4 /* splash_text.png */; };
 		80E834772680CA7E00CAF002 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 80C561352678B760003BBEAB /* fonts */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		F2BD17D4B6027217383E0A2B /* libPods-Sample2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFDF32AFC030B0C3F98BCCEC /* libPods-Sample2.a */; };
@@ -38,6 +39,8 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Sample2/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Sample2/main.m; sourceTree = "<group>"; };
 		7790F09EA3228E21E233253E /* Pods-Sample2-Sample2Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample2-Sample2Tests.debug.xcconfig"; path = "Target Support Files/Pods-Sample2-Sample2Tests/Pods-Sample2-Sample2Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		802E2D932723A9DD00451DA4 /* libswiftWebKit.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftWebKit.tbd; path = usr/lib/swift/libswiftWebKit.tbd; sourceTree = SDKROOT; };
+		802E2D982723B0E300451DA4 /* splash_text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_text.png; sourceTree = "<group>"; };
 		80C561352678B760003BBEAB /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Sample2/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		95777A22BC2F94059AF32007 /* Pods-Sample2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample2.debug.xcconfig"; path = "Target Support Files/Pods-Sample2/Pods-Sample2.debug.xcconfig"; sourceTree = "<group>"; };
@@ -92,6 +95,7 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				802E2D982723B0E300451DA4 /* splash_text.png */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -101,6 +105,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				802E2D932723A9DD00451DA4 /* libswiftWebKit.tbd */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				FFDF32AFC030B0C3F98BCCEC /* libPods-Sample2.a */,
 				B589D2B94D406384E07DD383 /* libPods-Sample2-Sample2Tests.a */,
@@ -210,7 +215,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1300;
 					};
 				};
 			};
@@ -246,6 +251,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				80E834772680CA7E00CAF002 /* fonts in Resources */,
+				802E2D992723B0E400451DA4 /* splash_text.png in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
@@ -495,6 +501,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/swift",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -502,6 +512,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.Showbility;
 				PRODUCT_NAME = Sample2;
+				SWIFT_OBJC_BRIDGING_HEADER = "Sample2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -521,6 +532,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/swift",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -528,6 +543,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.Showbility;
 				PRODUCT_NAME = Sample2;
+				SWIFT_OBJC_BRIDGING_HEADER = "Sample2-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
