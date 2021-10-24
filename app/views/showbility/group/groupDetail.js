@@ -10,6 +10,7 @@ import {
   Alert,
 } from 'react-native';
 import {HOST, MEMBER_STATUS_TYPE} from '../../../common/constant';
+import { isEmpty } from '../../../common/util';
 import {getGroupById, requestGroupJoin} from '../../../service/group';
 
 const styles = StyleSheet.create({
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
 });
 
 function GroupDetailHeader({repr_image, followers, contents}) {
-  const imageSource = repr_image
+  const imageSource = !isEmpty(repr_image)
     ? {uri: repr_image}
     : require('../../../../assets/imgs/add_image.png');
   return (
