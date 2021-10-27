@@ -115,13 +115,13 @@ function NewUploadTab() {
     for (let i = 0; i < images.length; i++) {
       uploadImageWithContentId(images[i], res.id, i);
     }
-    navigation.goBack();
+    navigation.push('그룹 선택', {contentId: res.id});
   };
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Button onPress={handleSubmit} title="완료" color="#FF3B30" />
+        <Button onPress={handleSubmit} title="다음" color="#FF3B30" />
       ),
     });
   });

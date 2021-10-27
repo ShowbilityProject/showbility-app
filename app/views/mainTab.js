@@ -12,6 +12,7 @@ import {EditProfileScreen} from './myshowbil/editprofile';
 import {FollowMember} from './myshowbil/followMember';
 import {FindScreen} from './components/find';
 import {ContentsModal} from './showbility/contentModal';
+import {SelectGroup} from './newupload/selectgroup';
 
 const MainTab = createBottomTabNavigator();
 
@@ -75,6 +76,11 @@ function BaseStackScreen() {
         name="ContentsModal"
         component={ContentsModal}
         options={{headerShown: false}}
+      />
+      <BaseStack.Screen
+        name="그룹 선택"
+        component={SelectGroup}
+        options={{headerBackTitle: ' '}}
       />
     </BaseStack.Navigator>
   );

@@ -79,3 +79,15 @@ export function getNext(url) {
     .then(res => res.json())
     .catch(err => console.log('Error fetching next', err.message));
 }
+
+export function requestAddContentToGroup(groupId, contentId) {
+  let url = `${HOST}/group/${groupId}/contents/`;
+  let body = {
+    content_id: contentId,
+  };
+  return post(url, body)
+    .then(res => res.json())
+    .catch(err =>
+      console.log('Error request add content to group', err.message),
+    );
+}
