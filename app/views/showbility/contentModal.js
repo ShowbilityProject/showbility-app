@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {HOST} from '../../common/constant';
-import {getContentById} from '../../service/content';
+import {getContentById, requestDeleteLikeContent, requestLikeContent} from '../../service/content';
 import {postComment} from '../../service/comment';
 
 const styles = StyleSheet.create({
@@ -115,11 +115,15 @@ export function ContentsModal({route, navigation}) {
     created_at: '2021-09-09',
     tags: [],
     images: [],
+    is_liked_by_user: false,
   });
   const [cmtText, setCmtText] = React.useState('');
+  const [isLiked, setIsLiked] = React.useState(false);
+  const [likes, setLikes] = React.useState(0);
   const commentInput = React.useRef();
   const snapPoints = React.useMemo(() => ['10%', '50%'], []);
   const likeIcon = '../../../assets/imgs/like.png';
+  const likeOnIcon = '../../../assets/imgs/like_on.png';
   const viewIcon = '../../../assets/imgs/view.png';
   const cmtIcon = '../../../assets/imgs/message-circle.png';
 
@@ -132,12 +136,22 @@ export function ContentsModal({route, navigation}) {
   };
 
   const fetchData = id => {
-    getContentById(id).then(res => setItem(res));
+    getContentById(id).then(res => {
+      setItem(res);
+      setIsLiked(res.is_liked_by_user);
+      setLikes(res.likes);
+    });
   };
 
   React.useEffect(() => {
     fetchData(id);
   }, [id]);
+
+  const handleLike = () => {
+    if (!isLiked) requestLikeContent(id);
+    else requestDeleteLikeContent(id);
+    fetchData(id);
+  };
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -177,8 +191,20 @@ export function ContentsModal({route, navigation}) {
             <View style={styles.contentMetaCount}>
               <View
                 style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-                <Image source={require(likeIcon)} />
-                <Text style={styles.modalCount}>{item.likes}</Text>
+                <TouchableOpacity onPress={() => handleLike()}>
+                  {isLiked ? (
+                    <Image source={require(likeOnIcon)} />
+                  ) : (
+                    <Image source={require(likeIcon)} />
+                  )}
+                </TouchableOpacity>
+                <Text
+                  style={[
+                    styles.modalCount,
+                    {color: isLiked ? '#F85B02' : '#BCBCBC'},
+                  ]}>
+                  {item.likes}
+                </Text>
                 <Image source={require(viewIcon)} />
                 <Text style={styles.modalCount}>{item.views}</Text>
                 <Image source={require(cmtIcon)} />

@@ -72,3 +72,15 @@ export async function uploadImageWithContentId(image, contentId, order) {
   const res = await rawPost(url, formData);
   return res;
 }
+
+export async function requestLikeContent(contentId) {
+  const url = `${HOST}/contents/${contentId}/like/`;
+  const ret = await asyncPost(url);
+  return ret.ok;
+}
+
+export async function requestDeleteLikeContent(contentId) {
+  const url = `${HOST}/contents/${contentId}/like/`;
+  const ret = await asyncPost(url, '', true, 'DELETE');
+  return ret.ok;
+}

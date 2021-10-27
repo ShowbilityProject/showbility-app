@@ -93,9 +93,9 @@ export function post(uri, body, addToken = true, method = 'POST') {
   });
 }
 
-export async function asyncPost(uri, body, addToken = true) {
+export async function asyncPost(uri, body, addToken = true, method = 'POST') {
   let options = await getCommonOptions(addToken);
-  options.method = 'POST';
+  options.method = method;
   options.body = JSON.stringify(body);
 
   const res = await fetch(uri, options);
