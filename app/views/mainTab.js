@@ -120,7 +120,7 @@ function MainTabScreen() {
       <MainTab.Screen
         name="검색"
         component={FindScreen}
-        initialParams={{categoryFilter: [], groupFilter: []}}
+        initialParams={{categoryFilter: [], groupFilter: [], isMain: true}}
       />
       <MainTab.Screen
         name="NewUpload"

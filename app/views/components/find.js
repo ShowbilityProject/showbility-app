@@ -24,6 +24,7 @@ import {getContentsList, getNestContentsList} from '../../service/content';
 
 export function FindScreen({route, navigation}) {
   const params = route.params;
+  const isMain = params.isMain ? params.isMain : false;
   const defaultCategory = params.categoryFilter ? params.categoryFilter : [];
   const groupFilter = params.groupFilter ? params.groupFilter : [];
   // const defaultTag = params.tagFilter ? params.tagFilter : [];
@@ -49,7 +50,7 @@ export function FindScreen({route, navigation}) {
         setFetchingNext(false);
       });
     getRecentSearchWord().then(r => setRecentSearchWords(r));
-  }, [JSON.stringify(tagFilter), refreshing]);
+  }, [JSON.stringify(tagFilter), refreshing, JSON.stringify(categoryFilter)]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -82,6 +83,12 @@ export function FindScreen({route, navigation}) {
     else if (!tagFilter.includes(value)) {
       tagFilter.push(value);
       setTagFilter(tagFilter);
+    }
+  };
+
+  const addSelectedTags = tags => {
+    for (let tagData of tags) {
+      addTagFilter(tagData);
     }
   };
 
@@ -134,12 +141,35 @@ export function FindScreen({route, navigation}) {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <View style={styles.baseContainer}>
-        <FindBar
-          tagFilter={tagFilter}
-          removeTagFromFilter={removeTagFromFilter}
-          handleTagSubmit={handleTagSubmit}
-          onFocused={onSearchInputFocused}
-        />
+        <View style={{flex: 1, flexDirection: 'row', maxHeight: 60}}>
+          <FindBar
+            tagFilter={tagFilter}
+            removeTagFromFilter={removeTagFromFilter}
+            handleTagSubmit={handleTagSubmit}
+            onFocused={onSearchInputFocused}
+          />
+          <TouchableOpacity
+            style={[styles.filterIcon, {display: isMain ? 'flex' : 'none'}]}
+            onPress={() =>
+              navigation.navigate('카테고리&태그 선택', {
+                selectCategories: categories => {
+                  setCategoryFilter(categories);
+                  setRefreshing(true);
+                  // setRerenderKey(!rerenderKey);
+                },
+                selectTags: tags => {
+                  addSelectedTags(tags);
+                  setRefreshing(true);
+                  // setRerenderKey(!rerenderKey);
+                },
+                categories: categoryFilter,
+                tags: tagFilter,
+                isUpload: false,
+              })
+            }>
+            <Image source={require('../../../assets/imgs/ICON-24-Filter.png')} />
+          </TouchableOpacity>
+        </View>
         <FlatList
           key={'#'}
           keyExtractor={item => '#' + item.id}
@@ -154,7 +184,6 @@ export function FindScreen({route, navigation}) {
           ]}
           onScroll={({nativeEvent}) => {
             if (isScrollEnd(nativeEvent)) {
-              console.log(fetchingNext);
               if (!fetchingNext) fetchNext();
             }
           }}
@@ -287,5 +316,13 @@ const styles = new StyleSheet.create({
   },
   abilityItemTitle: {
     fontSize: 17,
+  },
+  filterIcon: {
+    flex: 1,
+    maxWidth: 30,
+    justifyContent: 'center',
+    maxHeight: 40,
+    alignItems: 'center',
+    marginLeft: 5,
   },
 });
