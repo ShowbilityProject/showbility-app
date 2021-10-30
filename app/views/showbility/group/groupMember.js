@@ -2,18 +2,21 @@ import {useNavigation} from '@react-navigation/core';
 import * as React from 'react';
 import {FlatList, View, Image, Text, StyleSheet, TextInput} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {getGroupMemebersByGroupId, getNext} from '../../../service/group';
+import { MEMBER_STATUS_TYPE } from '../../../common/constant';
+import {getGroupMemebersByGroupId, getNext, updateMemberStatus} from '../../../service/group';
 
 export function GroupMember({route}) {
   const navigation = useNavigation();
   const groupId = route.params.groupId;
+  const status = route.params.status;
   const [data, setData] = React.useState([]);
   const [nextURL, setNextURL] = React.useState();
   const [refreshing, setRefreshing] = React.useState(false);
   const [fetchingNext, setFetchingNext] = React.useState(true);
+  const [extraData, setExtraData] = React.useState(false);
 
   React.useEffect(() => {
-    getGroupMemebersByGroupId(groupId)
+    getGroupMemebersByGroupId(groupId, status)
       .then(res => {
         setData(res.results);
         setNextURL(res.next);
@@ -22,11 +25,11 @@ export function GroupMember({route}) {
         setRefreshing(false);
         setFetchingNext(false);
       });
-  }, [groupId]);
+  }, [groupId, status]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      title: '그룹 멤버 전체보기',
+      title: status === 'AT' ? '그룹 멤버 전체보기' : '승인 대기 중인 인원',
     });
   });
 
@@ -62,9 +65,37 @@ export function GroupMember({route}) {
     MG: '#F85B02',
   };
 
+  const removeMemberFromList = memberId => {
+    setData(data.filter(member => member.id !== memberId));
+    setExtraData(!extraData);
+  };
+
+  const updateStatus = (memberId, status) => {
+    updateMemberStatus(groupId, memberId, status);
+    removeMemberFromList(memberId);
+  };
+
+  const allowDeny = member => {
+    return (
+      <View style={styles.allowDenyWrapper}>
+        <TouchableOpacity
+          style={styles.allowButton}
+          onPress={() => updateStatus(member.id, MEMBER_STATUS_TYPE.ACTIVE)}>
+          <Text style={[styles.fontJeju, , styles.allowText]}>승인</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.denyButton}
+          onPress={() => updateStatus(member.id, MEMBER_STATUS_TYPE.REJECT)}>
+          <Text style={[styles.fontJeju, styles.denyText]}>거절</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   const renderItem = itemObject => {
     let item = itemObject.item;
-    const tempImage = 'http://localhost:8000/media/group/images/tag1_Kyfk4hI.jpeg';
+    const tempImage =
+      'http://localhost:8000/media/group/images/tag1_Kyfk4hI.jpeg';
     return (
       <View style={styles.memberRow}>
         <View style={{flex: 1, maxWidth: 40, minHeight: 40, marginRight: 10}}>
@@ -82,9 +113,13 @@ export function GroupMember({route}) {
             {MemberTypeString[item.member_type]}
           </Text>
         </View>
-        <TouchableOpacity style={styles.followButton}>
-          <Text style={[styles.fontJeju, {color: 'white'}]}>팔로우</Text>
-        </TouchableOpacity>
+        {status === 'AT' ? (
+          <TouchableOpacity style={styles.followButton}>
+            <Text style={[styles.fontJeju, {color: 'white'}]}>팔로우</Text>
+          </TouchableOpacity>
+        ) : (
+          allowDeny(item)
+        )}
       </View>
     );
   };
@@ -100,6 +135,7 @@ export function GroupMember({route}) {
         horizontal={false}
         numColumns={1}
         refreshing={refreshing}
+        extraData={extraData}
         onScroll={({nativeEvent}) => {
           if (isScrollEnd(nativeEvent)) {
             console.log(fetchingNext);
@@ -152,5 +188,38 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 5,
     justifyContent: 'center',
+  },
+  allowDenyWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignSelf: 'center',
+  },
+  allowButton: {
+    alignSelf: 'flex-end',
+    borderRadius: 5,
+    backgroundColor: '#F85B02',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginRight: 5,
+  },
+  allowText: {
+    textAlign: 'right',
+    textAlignVertical: 'center',
+    color: 'white',
+    fontSize: 12,
+  },
+  denyButton: {
+    alignSelf: 'flex-end',
+    borderRadius: 5,
+    backgroundColor: '#B2B2B5',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  denyText: {
+    textAlign: 'right',
+    textAlignVertical: 'center',
+    color: 'black',
+    fontSize: 12,
   },
 });

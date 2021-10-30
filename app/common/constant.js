@@ -12,6 +12,7 @@ export const MEMBER_STATUS_TYPE = {
   NOT_LOGIN: 'NL',
   NOT_JOINED: 'NA',
   PENDING: 'PN',
+  REJECT: 'RJ',
 };
 export const FOLLOW_STATUS = {
   SELF: 0,

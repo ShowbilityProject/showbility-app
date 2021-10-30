@@ -57,8 +57,8 @@ export function getNextGroupsList(url) {
     .catch(err => console.log('Error fetching next', err.message));
 }
 
-export function getGroupMemebersByGroupId(groupId) {
-  let url = `${HOST}/group/${groupId}/members/`;
+export function getGroupMemebersByGroupId(groupId, status) {
+  let url = `${HOST}/group/${groupId}/members/?status=${status}`;
   return get(url)
     .then(res => res.json())
     .catch(err => console.log('Error fetching group members', err.message));
@@ -90,4 +90,17 @@ export function requestAddContentToGroup(groupId, contentId) {
     .catch(err =>
       console.log('Error request add content to group', err.message),
     );
+}
+
+export function updateMemberStatus(groupId, memberId, status) {
+  let url = `${HOST}/group/${groupId}/members/${memberId}/`;
+  let body = {
+    status: status,
+  };
+  return post(url, body, true, 'PATCH')
+    .then(res => res.json())
+    .catch(err => {
+      console.error('Error update member status', err.message);
+      return false;
+    });
 }

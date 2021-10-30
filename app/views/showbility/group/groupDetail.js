@@ -10,8 +10,8 @@ import {
   Alert,
 } from 'react-native';
 import {HOST, MEMBER_STATUS_TYPE} from '../../../common/constant';
-import { isEmpty } from '../../../common/util';
-import {getGroupById, requestGroupJoin} from '../../../service/group';
+import {isEmpty} from '../../../common/util';
+import {getGroupById, requestGroupJoin, updateMemberStatus} from '../../../service/group';
 
 const styles = StyleSheet.create({
   fontJeju: {
@@ -80,6 +80,39 @@ const styles = StyleSheet.create({
     height: 100,
     overflow: 'hidden',
     borderRadius: 50,
+  },
+  allowDenyWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignSelf: 'center',
+  },
+  allowButton: {
+    alignSelf: 'flex-end',
+    borderRadius: 5,
+    backgroundColor: '#F85B02',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginRight: 5,
+  },
+  allowText: {
+    textAlign: 'right',
+    textAlignVertical: 'center',
+    color: 'white',
+    fontSize: 12,
+  },
+  denyButton: {
+    alignSelf: 'flex-end',
+    borderRadius: 5,
+    backgroundColor: '#B2B2B5',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  denyText: {
+    textAlign: 'right',
+    textAlignVertical: 'center',
+    color: 'black',
+    fontSize: 12,
   },
 });
 
@@ -205,6 +238,45 @@ function GroupItems({contents, title, id}) {
   );
 }
 
+function GroupPendingItems({contents, title, id}) {
+  const navigation = useNavigation();
+  return (
+    <View style={styles.bodyItemSpace}>
+      <View style={[{flexDirection: 'row'}, styles.bodyHaederSpaceBody]}>
+        <View style={{flex: 1}}>
+          <Text style={[{fontSize: 17}, styles.fontJeju]}>
+            승인 대기 중 작품
+          </Text>
+        </View>
+        <TouchableOpacity
+          style={{flex: 1}}
+          onPress={() =>
+            navigation.navigate('Find', {title: title, groupFilter: [id]})
+          }>
+          <Text style={styles.showAllTextFont}>전체 보기</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={{flexDirection: 'row'}}>
+        {contents.map(content => {
+          let source =
+            content.images.length > 0
+              ? {uri: HOST + content.images[0]}
+              : require('../../../../assets/imgs/add_image.png');
+          return (
+            <TouchableOpacity
+              key={content.url}
+              style={styles.groupImageContainer}
+              onPress={() => navigation.navigate('ContentsModal', content.id)}>
+              <Image source={source} style={styles.groupImage} />
+              <Text>test</Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+    </View>
+  );
+}
+
 function GroupMembers({members, members_count, id}) {
   const navigation = useNavigation();
   const MEMBER_TYPE_STR = {
@@ -229,7 +301,9 @@ function GroupMembers({members, members_count, id}) {
         </View>
         <TouchableOpacity
           style={{flex: 1}}
-          onPress={() => navigation.navigate('GroupMemeber', {groupId: id})}>
+          onPress={() =>
+            navigation.navigate('GroupMemeber', {groupId: id, status: 'AT'})
+          }>
           <Text style={styles.showAllTextFont}>전체 보기</Text>
         </TouchableOpacity>
       </View>
@@ -289,17 +363,118 @@ function GroupMembers({members, members_count, id}) {
   );
 }
 
+function GroupPendingMembers({members, id}) {
+  const navigation = useNavigation();
+  const [groupMembers, setGroupMembers] = React.useState(members);
+  const MEMBER_TYPE_STR = {
+    LD: '그룹 장',
+    MB: '그룹 멤버',
+    MG: '운영진',
+  };
+
+  const memberTypeColor = {
+    LD: '#F85B02',
+    MB: 'black',
+    MG: '#F85B02',
+  };
+
+  const removeMemberFromList = memberId => {
+    setGroupMembers(groupMembers.filter(member => member.id !== memberId));
+  };
+
+  const updateStatus = (memberId, status) => {
+    updateMemberStatus(id, memberId, status);
+    removeMemberFromList(memberId);
+  };
+
+  return (
+    <View style={styles.bodyItemSpace}>
+      <View style={[{flexDirection: 'row'}, styles.bodyHaederSpaceBody]}>
+        <View style={{flex: 1}}>
+          <Text style={[{fontSize: 17}, styles.fontJeju]}>
+            승인 대기 중인 인원
+          </Text>
+        </View>
+        <TouchableOpacity
+          style={{flex: 1}}
+          onPress={() =>
+            navigation.navigate('GroupMemeber', {groupId: id, status: 'PN'})
+          }>
+          <Text style={styles.showAllTextFont}>전체 보기</Text>
+        </TouchableOpacity>
+      </View>
+      <View>
+        {groupMembers.map(member => {
+          return (
+            <View
+              key={member.id}
+              style={{flexDirection: 'row', paddingVertical: 5}}>
+              <Image
+                style={{width: 36, height: 36, marginRight: 5}}
+                source={require('../../../../assets/imgs/group.png')}
+              />
+              <View style={{flex: 1}}>
+                <Text
+                  style={[
+                    {fontSize: 17, alignSelf: 'stretch', marginBottom: 3},
+                    styles.fontJeju,
+                  ]}>
+                  {member.user.nickname}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 9,
+                    alignSelf: 'baseline',
+                    color: memberTypeColor[member.member_type],
+                  }}>
+                  {MEMBER_TYPE_STR[member.member_type]}
+                </Text>
+              </View>
+              <View style={styles.allowDenyWrapper}>
+                <TouchableOpacity
+                  style={styles.allowButton}
+                  onPress={() =>
+                    updateStatus(member.id, MEMBER_STATUS_TYPE.ACTIVE)
+                  }>
+                  <Text style={[styles.fontJeju, , styles.allowText]}>승인</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.denyButton}
+                  onPress={() =>
+                    updateStatus(member.id, MEMBER_STATUS_TYPE.REJECT)
+                  }>
+                  <Text style={[styles.fontJeju, styles.denyText]}>거절</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          );
+        })}
+      </View>
+    </View>
+  );
+}
+
 function GroupDetailBody({data}) {
   return (
     <View style={{flex: 3, padding: 15}}>
       <GroupIntroduce name={data.name} detail={data.detail} />
       <GroupTag tags={data.tags} />
       <GroupItems contents={data.contents} title={data.name} id={data.id} />
+      {data.pending_contents ? (
+        <GroupPendingItems
+          contents={data.pending_contents}
+          title={data.name}
+          id={data.id}
+        />
+      ) : undefined}
       <GroupMembers
         members={data.members}
         members_count={data.members_count}
         id={data.id}
       />
+      {data.pending_members ? (
+        <GroupPendingMembers members={data.pending_members} id={data.id} />
+      ) : undefined}
     </View>
   );
 }
@@ -329,7 +504,8 @@ function BottomJoinButtonView({id, member_status}) {
   const getText = () => {
     if (status === MEMBER_STATUS_TYPE.ACTIVE) return '그룹 멤버';
     else if (status === MEMBER_STATUS_TYPE.NOT_JOINED) return '함께하기';
-    else if (status === MEMBER_STATUS_TYPE.PENDING) return '그룹 멤버 수락 대기 중';
+    else if (status === MEMBER_STATUS_TYPE.PENDING)
+      return '그룹 멤버 수락 대기 중';
   };
 
   return (
