@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* Sample2Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* Sample2Tests.m */; };
-		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		00E356F31AD99517003FC87E /* ShowbilityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ShowbilityTests.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		76F4FACFD3548B61A5173FFA /* libPods-Sample2-Sample2Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B589D2B94D406384E07DD383 /* libPods-Sample2-Sample2Tests.a */; };
 		802E2D992723B0E400451DA4 /* splash_text.png in Resources */ = {isa = PBXBuildFile; fileRef = 802E2D982723B0E300451DA4 /* splash_text.png */; };
+		80899194272D1EF8005652CE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		80899196272D20F8005652CE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 80899195272D20F8005652CE /* AppDelegate.m */; };
 		80E834772680CA7E00CAF002 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 80C561352678B760003BBEAB /* fonts */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		F2BD17D4B6027217383E0A2B /* libPods-Sample2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFDF32AFC030B0C3F98BCCEC /* libPods-Sample2.a */; };
@@ -29,20 +29,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* Sample2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Sample2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* ShowbilityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShowbilityTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* Sample2Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Sample2Tests.m; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* Sample2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample2.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Sample2/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Sample2/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Sample2/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Sample2/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Sample2/main.m; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* ShowbilityTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShowbilityTests.m; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* Showbility.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Showbility.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Showbility/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Showbility/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Showbility/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Showbility/main.m; sourceTree = "<group>"; };
 		7790F09EA3228E21E233253E /* Pods-Sample2-Sample2Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample2-Sample2Tests.debug.xcconfig"; path = "Target Support Files/Pods-Sample2-Sample2Tests/Pods-Sample2-Sample2Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		802E2D932723A9DD00451DA4 /* libswiftWebKit.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftWebKit.tbd; path = usr/lib/swift/libswiftWebKit.tbd; sourceTree = SDKROOT; };
 		802E2D982723B0E300451DA4 /* splash_text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_text.png; sourceTree = "<group>"; };
+		80899195272D20F8005652CE /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Showbility/AppDelegate.m; sourceTree = "<group>"; };
 		80C561352678B760003BBEAB /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Sample2/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Showbility/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		95777A22BC2F94059AF32007 /* Pods-Sample2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample2.debug.xcconfig"; path = "Target Support Files/Pods-Sample2/Pods-Sample2.debug.xcconfig"; sourceTree = "<group>"; };
 		B589D2B94D406384E07DD383 /* libPods-Sample2-Sample2Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Sample2-Sample2Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0EF3F50C460EBC29CB7C636 /* Pods-Sample2-Sample2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample2-Sample2Tests.release.xcconfig"; path = "Target Support Files/Pods-Sample2-Sample2Tests/Pods-Sample2-Sample2Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -71,13 +71,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* Sample2Tests */ = {
+		00E356EF1AD99517003FC87E /* ShowbilityTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* Sample2Tests.m */,
+				00E356F21AD99517003FC87E /* ShowbilityTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = Sample2Tests;
+			path = ShowbilityTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -88,18 +88,18 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* Sample2 */ = {
+		13B07FAE1A68108700A75B9A /* Showbility */ = {
 			isa = PBXGroup;
 			children = (
+				80899195272D20F8005652CE /* AppDelegate.m */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
-				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				802E2D982723B0E300451DA4 /* splash_text.png */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = Sample2;
+			name = Showbility;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -124,9 +124,9 @@
 			isa = PBXGroup;
 			children = (
 				80C561352678B760003BBEAB /* fonts */,
-				13B07FAE1A68108700A75B9A /* Sample2 */,
+				13B07FAE1A68108700A75B9A /* Showbility */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* Sample2Tests */,
+				00E356EF1AD99517003FC87E /* ShowbilityTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				B63DBA82784B4BD241E27DF9 /* Pods */,
@@ -139,8 +139,8 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* Sample2.app */,
-				00E356EE1AD99517003FC87E /* Sample2Tests.xctest */,
+				13B07F961A680F5B00A75B9A /* Showbility.app */,
+				00E356EE1AD99517003FC87E /* ShowbilityTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -159,9 +159,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* Sample2Tests */ = {
+		00E356ED1AD99517003FC87E /* ShowbilityTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "Sample2Tests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "ShowbilityTests" */;
 			buildPhases = (
 				BF82DC566C1178282650FA44 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -175,14 +175,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = Sample2Tests;
+			name = ShowbilityTests;
 			productName = Sample2Tests;
-			productReference = 00E356EE1AD99517003FC87E /* Sample2Tests.xctest */;
+			productReference = 00E356EE1AD99517003FC87E /* ShowbilityTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* Sample2 */ = {
+		13B07F861A680F5B00A75B9A /* Showbility */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Sample2" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Showbility" */;
 			buildPhases = (
 				8BB8F70FF5E1A8DB9B765D98 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -197,9 +197,9 @@
 			);
 			dependencies = (
 			);
-			name = Sample2;
+			name = Showbility;
 			productName = Sample2;
-			productReference = 13B07F961A680F5B00A75B9A /* Sample2.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Showbility.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -219,7 +219,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Sample2" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Showbility" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -232,8 +232,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* Sample2 */,
-				00E356ED1AD99517003FC87E /* Sample2Tests */,
+				13B07F861A680F5B00A75B9A /* Showbility */,
+				00E356ED1AD99517003FC87E /* ShowbilityTests */,
 			);
 		};
 /* End PBXProject section */
@@ -412,7 +412,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* Sample2Tests.m in Sources */,
+				00E356F31AD99517003FC87E /* ShowbilityTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,8 +420,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				80899196272D20F8005652CE /* AppDelegate.m in Sources */,
+				80899194272D1EF8005652CE /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,7 +430,7 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* Sample2 */;
+			target = 13B07F861A680F5B00A75B9A /* Showbility */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -459,7 +459,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sample2.app/Sample2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Showbility.app/Showbility";
 			};
 			name = Debug;
 		};
@@ -483,7 +483,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sample2.app/Sample2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Showbility.app/Showbility";
 			};
 			name = Release;
 		};
@@ -496,7 +496,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = FEFW9CZ534;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = Sample2/Info.plist;
+				INFOPLIST_FILE = Showbility/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -510,8 +510,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.Showbility;
-				PRODUCT_NAME = Sample2;
+				PRODUCT_BUNDLE_IDENTIFIER = org.showbility.app.Showbility;
+				PRODUCT_NAME = Showbility;
 				SWIFT_OBJC_BRIDGING_HEADER = "Sample2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -527,7 +527,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = FEFW9CZ534;
-				INFOPLIST_FILE = Sample2/Info.plist;
+				INFOPLIST_FILE = Showbility/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -541,8 +541,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.Showbility;
-				PRODUCT_NAME = Sample2;
+				PRODUCT_BUNDLE_IDENTIFIER = org.showbility.app.Showbility;
+				PRODUCT_NAME = Showbility;
 				SWIFT_OBJC_BRIDGING_HEADER = "Sample2-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -675,7 +675,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "Sample2Tests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "ShowbilityTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -684,7 +684,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Sample2" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Showbility" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -693,7 +693,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Sample2" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Showbility" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "Sample2.app"
-               BlueprintName = "Sample2"
-               ReferencedContainer = "container:Sample2.xcodeproj">
+               BuildableName = "Showbility.app"
+               BlueprintName = "Showbility"
+               ReferencedContainer = "container:Showbility.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "Sample2Tests.xctest"
-               BlueprintName = "Sample2Tests"
-               ReferencedContainer = "container:Sample2.xcodeproj">
+               BuildableName = "ShowbilityTests.xctest"
+               BlueprintName = "ShowbilityTests"
+               ReferencedContainer = "container:Showbility.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Sample2.app"
-            BlueprintName = "Sample2"
-            ReferencedContainer = "container:Sample2.xcodeproj">
+            BuildableName = "Showbility.app"
+            BlueprintName = "Showbility"
+            ReferencedContainer = "container:Showbility.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Sample2.app"
-            BlueprintName = "Sample2"
-            ReferencedContainer = "container:Sample2.xcodeproj">
+            BuildableName = "Showbility.app"
+            BlueprintName = "Showbility"
+            ReferencedContainer = "container:Showbility.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
