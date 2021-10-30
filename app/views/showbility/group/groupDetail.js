@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import {HOST, MEMBER_STATUS_TYPE} from '../../../common/constant';
+import {GROUP_CONTENT_STATUS, HOST, MEMBER_STATUS_TYPE} from '../../../common/constant';
 import {isEmpty} from '../../../common/util';
 import {getGroupById, requestGroupJoin, updateMemberStatus} from '../../../service/group';
 
@@ -245,13 +245,17 @@ function GroupPendingItems({contents, title, id}) {
       <View style={[{flexDirection: 'row'}, styles.bodyHaederSpaceBody]}>
         <View style={{flex: 1}}>
           <Text style={[{fontSize: 17}, styles.fontJeju]}>
-            승인 대기 중 작품
+            승인 대기 중인 작품
           </Text>
         </View>
         <TouchableOpacity
           style={{flex: 1}}
           onPress={() =>
-            navigation.navigate('Find', {title: title, groupFilter: [id]})
+            navigation.navigate('그룹 컨텐츠', {
+              title: '승인 대기 중인 작품',
+              groupId: id,
+              contentsStatus: GROUP_CONTENT_STATUS.PENDING,
+            })
           }>
           <Text style={styles.showAllTextFont}>전체 보기</Text>
         </TouchableOpacity>
@@ -310,7 +314,9 @@ function GroupMembers({members, members_count, id}) {
       <View>
         {members.map(member => {
           return (
-            <View style={{flexDirection: 'row', paddingVertical: 5}}>
+            <View
+              key={member.id}
+              style={{flexDirection: 'row', paddingVertical: 5}}>
               <Image
                 style={{width: 36, height: 36, marginRight: 5}}
                 source={require('../../../../assets/imgs/group.png')}

@@ -1,4 +1,4 @@
-import {HOST} from '../common/constant';
+import {GROUP_CONTENT_STATUS, HOST} from '../common/constant';
 import {get, post, rawPost} from '../common/requester';
 
 export async function createGroup(
@@ -94,6 +94,32 @@ export function requestAddContentToGroup(groupId, contentId) {
 
 export function updateMemberStatus(groupId, memberId, status) {
   let url = `${HOST}/group/${groupId}/members/${memberId}/`;
+  let body = {
+    status: status,
+  };
+  return post(url, body, true, 'PATCH')
+    .then(res => res.json())
+    .catch(err => {
+      console.error('Error update member status', err.message);
+      return false;
+    });
+}
+
+export function getGroupContentList(
+  groupId,
+  status = GROUP_CONTENT_STATUS.ACTIVE,
+) {
+  let url = `${HOST}/group/${groupId}/contents/?status=${status}`;
+  return get(url)
+    .then(res => res.json())
+    .catch(err => {
+      console.error('Error update member status', err.message);
+      return false;
+    });
+}
+
+export function updateGroupContentStatus(groupId, groupContentId, status) {
+  let url = `${HOST}/group/${groupId}/contents/${groupContentId}/`;
   let body = {
     status: status,
   };

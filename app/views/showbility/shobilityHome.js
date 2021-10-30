@@ -20,6 +20,7 @@ import {HOST} from '../../common/constant';
 import {CommentsView} from './comment';
 import {FindScreen} from '../components/find';
 import {GroupMember} from './group/groupMember';
+import { GroupContentsScreen } from './group/groupContent';
 
 const styles = StyleSheet.create({
   container: {
@@ -295,6 +296,11 @@ export function ShowbilityHome() {
       <MainHomeStack.Screen
         name="그룹 생성"
         component={GroupCreate}
+        options={{headerBackTitle: ' '}}
+      />
+      <MainHomeStack.Screen
+        name="그룹 컨텐츠"
+        component={GroupContentsScreen}
         options={{headerBackTitle: ' '}}
       />
     </MainHomeStack.Navigator>

@@ -19,3 +19,9 @@ export const FOLLOW_STATUS = {
   FOLLOWING: 1,
   NOT_FOLLOWING: 2,
 };
+export const GROUP_CONTENT_STATUS = {
+  ACTIVE: 'ACTIVE',
+  PENDING: 'PENDING',
+  REJECT: 'REJECT',
+  DELETE: 'DELETE',
+};
