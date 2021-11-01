@@ -8,6 +8,7 @@ import {
   Dimensions,
   Pressable,
   Button,
+  Alert,
 } from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {launchImageLibrary} from 'react-native-image-picker';
@@ -111,11 +112,20 @@ function NewUploadTab() {
   };
 
   const handleSubmit = async () => {
-    const res = await uploadContentMeta(title, categories, tags, desc);
-    for (let i = 0; i < images.length; i++) {
-      uploadImageWithContentId(images[i], res.id, i);
+    if (
+      isEmpty(title) ||
+      isEmpty(categories) ||
+      isEmpty(desc) ||
+      images.length === 0
+    ) {
+      Alert.alert('필수 항목 누락', '모든 항목을 채워주세요');
+    } else {
+      const res = await uploadContentMeta(title, categories, tags, desc);
+      for (let i = 0; i < images.length; i++) {
+        uploadImageWithContentId(images[i], res.id, i);
+      }
+      navigation.push('그룹 선택', {contentId: res.id});
     }
-    navigation.push('그룹 선택', {contentId: res.id});
   };
 
   React.useLayoutEffect(() => {
