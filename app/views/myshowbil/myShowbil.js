@@ -343,6 +343,7 @@ export function GroupDetail({route}) {
         } else {
           console.log('Failed to retrieve profile');
           setFetched(false);
+          navigation.navigate('Login');
         }
       });
     });
