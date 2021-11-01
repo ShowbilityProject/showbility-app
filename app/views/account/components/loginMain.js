@@ -93,6 +93,7 @@ function LoginScreen() {
   console.log(iconImgSize);
   const kakao_icon = '../../../../assets/imgs/login/kakao_icon.png';
   const gg_icon = '../../../../assets/imgs/login/gg_icon.png';
+  const showbility_icon = require('../../../../assets/imgs/showbility.png');
   const navigation = useNavigation();
   React.useEffect(() => {
     verifyToken().then(res => {
@@ -106,23 +107,7 @@ function LoginScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.centerContaier}>
-        <Text
-          style={{
-            fontFamily: 'Montserrat-Bold',
-            color: '#F85B02',
-            fontSize: 42,
-            marginBottom: 28,
-          }}>
-          SHOW
-          <Text
-            style={{
-              fontFamily: 'Montserrat-Light',
-              color: '#F85B02',
-              fontSize: 42,
-            }}>
-            BILITY
-          </Text>
-        </Text>
+        <Image style={{marginBottom: 30}} source={showbility_icon} />
         <Text
           style={{fontFamily: 'JejuGothicOTF', fontSize: 24, marginBottom: 10}}>
           세상에 당신의
