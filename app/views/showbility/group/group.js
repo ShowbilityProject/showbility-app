@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function GroupArea({title, items, fetchType}) {
+function GroupArea({title, fetchType}) {
   const navigation = useNavigation();
 
   const [data, setData] = React.useState([]);
@@ -148,69 +148,6 @@ function GroupArea({title, items, fetchType}) {
 }
 
 export function GroupScreen() {
-  let data = [
-    {
-      id: 0,
-      url: 'https://i.pinimg.com/564x/08/94/75/089475365c284288406baf7e5616dd64.jpg',
-      name: '그룸명',
-      desc: '그룹설명',
-    },
-    {
-      id: 1,
-      url: 'https://i.pinimg.com/236x/4b/ee/eb/4beeebb760923f65d559e3486f1233c1.jpg',
-      name: '그룸명',
-      desc: '그룹설명',
-    },
-    {
-      id: 2,
-      url: 'https://i.pinimg.com/564x/b7/a5/a8/b7a5a801d8b9476bad5906ad88347445.jpg',
-      name: '그룸명',
-      desc: '그룹설명',
-    },
-    {
-      id: 3,
-      url: 'https://i.pinimg.com/564x/08/94/75/089475365c284288406baf7e5616dd64.jpg',
-      name: '그룸명',
-      desc: '그룹설명',
-    },
-    {
-      id: 4,
-      url: 'https://i.pinimg.com/236x/4b/ee/eb/4beeebb760923f65d559e3486f1233c1.jpg',
-      name: '그룸명',
-      desc: '그룹설명',
-    },
-    {
-      id: 5,
-      url: 'https://i.pinimg.com/564x/b7/a5/a8/b7a5a801d8b9476bad5906ad88347445.jpg',
-      name: '그룸명',
-      desc: '그룹설명',
-    },
-    {
-      id: 6,
-      url: 'https://i.pinimg.com/564x/08/94/75/089475365c284288406baf7e5616dd64.jpg',
-      name: '그룸명',
-      desc: '그룹설명',
-    },
-    {
-      id: 7,
-      url: 'https://i.pinimg.com/236x/4b/ee/eb/4beeebb760923f65d559e3486f1233c1.jpg',
-      name: '그룸명',
-      desc: '그룹설명',
-    },
-    {
-      id: 8,
-      url: 'https://i.pinimg.com/564x/b7/a5/a8/b7a5a801d8b9476bad5906ad88347445.jpg',
-      name: '그룸명',
-      desc: '그룹설명',
-    },
-  ];
-  let searchSuggests = [
-    {id: 0, name: '건축물'},
-    {id: 1, name: 'UI/UX'},
-    {id: 2, name: '패션'},
-    {id: 3, name: '스타일'},
-    {id: 4, name: '반려동물'},
-  ];
   const [tagFilter, setTagFilter] = React.useState([]);
   const [rerenderKey, setRerenderKey] = React.useState(false);
 
@@ -248,17 +185,8 @@ export function GroupScreen() {
         handleTagSubmit={handleTagSubmit}
         onFocused={() => {}}
       />
-      <GroupArea title="마이 그룹" items={data} fetchType={GET_GROUP_TYPE.MY} />
-      <GroupArea
-        title="쇼빌 그룹 둘러보기"
-        items={data}
-        fetchType={GET_GROUP_TYPE.ALL}
-      />
-      <GroupArea
-        title="멤버 모집 중인 그룹"
-        items={data}
-        fetchType={GET_GROUP_TYPE.GATHERING}
-      />
+      <GroupArea title="마이 그룹" fetchType={GET_GROUP_TYPE.MY} />
+      <GroupArea title="쇼빌 그룹 둘러보기" fetchType={GET_GROUP_TYPE.ALL} />
     </ScrollView>
   );
 }
