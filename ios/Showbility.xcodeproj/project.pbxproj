@@ -9,13 +9,13 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* ShowbilityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ShowbilityTests.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		76F4FACFD3548B61A5173FFA /* libPods-Sample2-Sample2Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B589D2B94D406384E07DD383 /* libPods-Sample2-Sample2Tests.a */; };
 		802E2D992723B0E400451DA4 /* splash_text.png in Resources */ = {isa = PBXBuildFile; fileRef = 802E2D982723B0E300451DA4 /* splash_text.png */; };
 		80899194272D1EF8005652CE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		80899196272D20F8005652CE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 80899195272D20F8005652CE /* AppDelegate.m */; };
 		80E834772680CA7E00CAF002 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 80C561352678B760003BBEAB /* fonts */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		F2BD17D4B6027217383E0A2B /* libPods-Sample2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFDF32AFC030B0C3F98BCCEC /* libPods-Sample2.a */; };
+		8BC95E5F4A27AEDDB12216B3 /* libPods-Showbility-ShowbilityTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A2944F8C5205E1B3480C9A18 /* libPods-Showbility-ShowbilityTests.a */; };
+		E7B35A50F4A38850F650EA96 /* libPods-Showbility.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78E96064D8D3A6395BBE3EF6 /* libPods-Showbility.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,23 +32,27 @@
 		00E356EE1AD99517003FC87E /* ShowbilityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShowbilityTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* ShowbilityTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShowbilityTests.m; sourceTree = "<group>"; };
+		07030D5C0D6B3747F6ED4A25 /* Pods-Showbility-ShowbilityTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Showbility-ShowbilityTests.release.xcconfig"; path = "Target Support Files/Pods-Showbility-ShowbilityTests/Pods-Showbility-ShowbilityTests.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Showbility.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Showbility.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Showbility/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Showbility/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Showbility/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Showbility/main.m; sourceTree = "<group>"; };
 		7790F09EA3228E21E233253E /* Pods-Sample2-Sample2Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample2-Sample2Tests.debug.xcconfig"; path = "Target Support Files/Pods-Sample2-Sample2Tests/Pods-Sample2-Sample2Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		78E96064D8D3A6395BBE3EF6 /* libPods-Showbility.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Showbility.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		802E2D932723A9DD00451DA4 /* libswiftWebKit.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftWebKit.tbd; path = usr/lib/swift/libswiftWebKit.tbd; sourceTree = SDKROOT; };
 		802E2D982723B0E300451DA4 /* splash_text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_text.png; sourceTree = "<group>"; };
 		80899195272D20F8005652CE /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Showbility/AppDelegate.m; sourceTree = "<group>"; };
 		80C561352678B760003BBEAB /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Showbility/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		841C5DBBD8DF2C3302E769EC /* Pods-Showbility.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Showbility.debug.xcconfig"; path = "Target Support Files/Pods-Showbility/Pods-Showbility.debug.xcconfig"; sourceTree = "<group>"; };
 		95777A22BC2F94059AF32007 /* Pods-Sample2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample2.debug.xcconfig"; path = "Target Support Files/Pods-Sample2/Pods-Sample2.debug.xcconfig"; sourceTree = "<group>"; };
-		B589D2B94D406384E07DD383 /* libPods-Sample2-Sample2Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Sample2-Sample2Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2944F8C5205E1B3480C9A18 /* libPods-Showbility-ShowbilityTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Showbility-ShowbilityTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6582012EE2DDDF9FB24F047 /* Pods-Showbility.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Showbility.release.xcconfig"; path = "Target Support Files/Pods-Showbility/Pods-Showbility.release.xcconfig"; sourceTree = "<group>"; };
 		D0EF3F50C460EBC29CB7C636 /* Pods-Sample2-Sample2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample2-Sample2Tests.release.xcconfig"; path = "Target Support Files/Pods-Sample2-Sample2Tests/Pods-Sample2-Sample2Tests.release.xcconfig"; sourceTree = "<group>"; };
 		E2C933452498C3BD673A646A /* Pods-Sample2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample2.release.xcconfig"; path = "Target Support Files/Pods-Sample2/Pods-Sample2.release.xcconfig"; sourceTree = "<group>"; };
+		E44151648020E9614718ED58 /* Pods-Showbility-ShowbilityTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Showbility-ShowbilityTests.debug.xcconfig"; path = "Target Support Files/Pods-Showbility-ShowbilityTests/Pods-Showbility-ShowbilityTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		FFDF32AFC030B0C3F98BCCEC /* libPods-Sample2.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Sample2.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76F4FACFD3548B61A5173FFA /* libPods-Sample2-Sample2Tests.a in Frameworks */,
+				8BC95E5F4A27AEDDB12216B3 /* libPods-Showbility-ShowbilityTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,7 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2BD17D4B6027217383E0A2B /* libPods-Sample2.a in Frameworks */,
+				E7B35A50F4A38850F650EA96 /* libPods-Showbility.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,8 +111,8 @@
 			children = (
 				802E2D932723A9DD00451DA4 /* libswiftWebKit.tbd */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				FFDF32AFC030B0C3F98BCCEC /* libPods-Sample2.a */,
-				B589D2B94D406384E07DD383 /* libPods-Sample2-Sample2Tests.a */,
+				78E96064D8D3A6395BBE3EF6 /* libPods-Showbility.a */,
+				A2944F8C5205E1B3480C9A18 /* libPods-Showbility-ShowbilityTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -152,6 +156,10 @@
 				E2C933452498C3BD673A646A /* Pods-Sample2.release.xcconfig */,
 				7790F09EA3228E21E233253E /* Pods-Sample2-Sample2Tests.debug.xcconfig */,
 				D0EF3F50C460EBC29CB7C636 /* Pods-Sample2-Sample2Tests.release.xcconfig */,
+				841C5DBBD8DF2C3302E769EC /* Pods-Showbility.debug.xcconfig */,
+				B6582012EE2DDDF9FB24F047 /* Pods-Showbility.release.xcconfig */,
+				E44151648020E9614718ED58 /* Pods-Showbility-ShowbilityTests.debug.xcconfig */,
+				07030D5C0D6B3747F6ED4A25 /* Pods-Showbility-ShowbilityTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -280,15 +288,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Sample2-Sample2Tests/Pods-Sample2-Sample2Tests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Showbility-ShowbilityTests/Pods-Showbility-ShowbilityTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Sample2-Sample2Tests/Pods-Sample2-Sample2Tests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Showbility-ShowbilityTests/Pods-Showbility-ShowbilityTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Sample2-Sample2Tests/Pods-Sample2-Sample2Tests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Showbility-ShowbilityTests/Pods-Showbility-ShowbilityTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		2D336884C1D28779BD85D7A5 /* [CP] Embed Pods Frameworks */ = {
@@ -297,15 +305,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Sample2/Pods-Sample2-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Showbility/Pods-Showbility-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Sample2/Pods-Sample2-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Showbility/Pods-Showbility-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Sample2/Pods-Sample2-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Showbility/Pods-Showbility-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		56AAC97FE6D25A2D1A8B16D5 /* [CP] Copy Pods Resources */ = {
@@ -314,15 +322,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Sample2/Pods-Sample2-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Showbility/Pods-Showbility-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Sample2/Pods-Sample2-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Showbility/Pods-Showbility-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Sample2/Pods-Sample2-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Showbility/Pods-Showbility-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		78894C51B0F3B6287F69365F /* [CP] Copy Pods Resources */ = {
@@ -331,15 +339,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Sample2-Sample2Tests/Pods-Sample2-Sample2Tests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Showbility-ShowbilityTests/Pods-Showbility-ShowbilityTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Sample2-Sample2Tests/Pods-Sample2-Sample2Tests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Showbility-ShowbilityTests/Pods-Showbility-ShowbilityTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Sample2-Sample2Tests/Pods-Sample2-Sample2Tests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Showbility-ShowbilityTests/Pods-Showbility-ShowbilityTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8BB8F70FF5E1A8DB9B765D98 /* [CP] Check Pods Manifest.lock */ = {
@@ -357,7 +365,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Sample2-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Showbility-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -379,7 +387,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Sample2-Sample2Tests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Showbility-ShowbilityTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -438,7 +446,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7790F09EA3228E21E233253E /* Pods-Sample2-Sample2Tests.debug.xcconfig */;
+			baseConfigurationReference = E44151648020E9614718ED58 /* Pods-Showbility-ShowbilityTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -465,7 +473,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D0EF3F50C460EBC29CB7C636 /* Pods-Sample2-Sample2Tests.release.xcconfig */;
+			baseConfigurationReference = 07030D5C0D6B3747F6ED4A25 /* Pods-Showbility-ShowbilityTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -489,7 +497,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 95777A22BC2F94059AF32007 /* Pods-Sample2.debug.xcconfig */;
+			baseConfigurationReference = 841C5DBBD8DF2C3302E769EC /* Pods-Showbility.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -522,7 +530,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E2C933452498C3BD673A646A /* Pods-Sample2.release.xcconfig */;
+			baseConfigurationReference = B6582012EE2DDDF9FB24F047 /* Pods-Showbility.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
