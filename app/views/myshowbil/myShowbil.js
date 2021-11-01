@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function MyDetailHeader({data, isMy}) {
+function MyDetailHeader({data, isMy, isFetched}) {
   const navigation = useNavigation();
   const imageSource = data.profile_image
     ? {uri: data.profile_image}
@@ -138,7 +138,10 @@ function MyDetailHeader({data, isMy}) {
             right: 15,
             display: isMy ? 'flex' : 'none',
           }}
-          onPress={() => navigation.navigate('프로필 편집', {data: data})}>
+          onPress={() => {
+            if (isFetched) navigation.navigate('프로필 편집', {data: data});
+            else navigation.navigate('Login');
+          }}>
           <Ionicons name="settings-sharp" size={20} color={'black'} />
         </Pressable>
       </View>
@@ -328,6 +331,7 @@ export function GroupDetail({route}) {
   };
 
   const [data, setData] = React.useState(defaultData);
+  const [fetched, setFetched] = React.useState(false);
 
   React.useEffect(() => {
     getProfile(user_id).then(res => setData(res));
@@ -335,8 +339,10 @@ export function GroupDetail({route}) {
       getProfile(user_id).then(res => {
         if (res !== false) {
           setData(res);
+          setFetched(true);
         } else {
           console.log('Failed to retrieve profile');
+          setFetched(false);
         }
       });
     });
@@ -347,7 +353,7 @@ export function GroupDetail({route}) {
   return (
     <SafeAreaView style={styles.baseView}>
       <ScrollView style={styles.baseView}>
-        <MyDetailHeader data={data} isMy={isMy} />
+        <MyDetailHeader data={data} isMy={isMy} isFetched={fetched} />
         <MyDetailBody data={data} />
       </ScrollView>
     </SafeAreaView>
