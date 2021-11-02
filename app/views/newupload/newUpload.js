@@ -19,6 +19,7 @@ import {
   uploadContentMeta,
   uploadImageWithContentId,
 } from '../../service/content';
+import { verifyToken } from '../../service/account';
 
 const styles = StyleSheet.create({
   container: {
@@ -83,6 +84,13 @@ function NewUploadTab() {
   const [categories, setCategories] = React.useState([]);
   const [tags, setTags] = React.useState([]);
   const [desc, setDesc] = React.useState('');
+
+  verifyToken().then(res => {
+    if (!res) {
+      console.info('Current token is not valid, go to login');
+      navigation.navigate('Login');
+    }
+  });
 
   const handleUploadImage = () => {
     let imagePickerOptions = {

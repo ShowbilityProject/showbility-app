@@ -84,7 +84,6 @@ export function EditProfileScreen({route}) {
   const navigation = useNavigation();
   let {profile_image, nickname, date_of_birth, description, tags} =
     route.params.data;
-  console.log(route.params.data);
   const [image, setImage] = React.useState(profile_image);
   const [nname, setNname] = React.useState(nickname);
   const [dateOfBirth, setDateOfBirth] = React.useState(date_of_birth);
