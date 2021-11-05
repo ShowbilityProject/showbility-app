@@ -82,11 +82,9 @@ const styles = StyleSheet.create({
 
 export function EditProfileScreen({route}) {
   const navigation = useNavigation();
-  let {profile_image, nickname, date_of_birth, description, tags} =
-    route.params.data;
+  let {profile_image, nickname, description, tags} = route.params.data;
   const [image, setImage] = React.useState(profile_image);
   const [nname, setNname] = React.useState(nickname);
-  const [dateOfBirth, setDateOfBirth] = React.useState(date_of_birth);
   const [desc, setDesc] = React.useState(description);
   const [categories, setCategories] = React.useState([]);
   const [tgs, setTgs] = React.useState(tags);
@@ -111,7 +109,7 @@ export function EditProfileScreen({route}) {
   };
 
   const validateInput = () => {
-    if (isEmpty(nname) || isEmpty(dateOfBirth)) return false;
+    if (isEmpty(nname)) return false;
     else return true;
   };
 
@@ -135,7 +133,6 @@ export function EditProfileScreen({route}) {
       formData.append('profile_image', imageData);
     }
     formData.append('nickname', nname);
-    formData.append('date_of_birth', dateOfBirth);
     formData.append('description', desc);
     for (var tag of tgs) {
       formData.append('tags', tag);
@@ -181,14 +178,6 @@ export function EditProfileScreen({route}) {
             placeholder="별명"
             value={nname}
             onChangeText={value => setNname(value)}
-          />
-        </View>
-        <View style={styles.textInputWrapper}>
-          <TextInput
-            style={styles.textInputStyle}
-            placeholder="출생년도"
-            value={dateOfBirth}
-            onChangeText={value => setDateOfBirth(value)}
           />
         </View>
         <View style={styles.textInputWrapper}>

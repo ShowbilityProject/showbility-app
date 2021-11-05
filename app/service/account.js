@@ -134,3 +134,11 @@ export async function refreshToken() {
     return false;
   }
 }
+
+export async function requestLoginKakao(data) {
+  let uri = HOST + '/user/kakao/';
+  let ret = await asyncPost(uri, data);
+  let token = ret.token;
+  if (isEmpty(token)) return false;
+  else return saveToken(token);
+}

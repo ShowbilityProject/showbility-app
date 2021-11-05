@@ -7,8 +7,11 @@ import {
   TouchableHighlight,
   Image,
   Dimensions,
+  Pressable,
+  Alert,
 } from 'react-native';
-import {verifyToken} from '../../../service/account';
+import {requestLoginKakao, verifyToken} from '../../../service/account';
+import {login} from '@react-native-seoul/kakao-login';
 
 const styles = StyleSheet.create({
   fontStyle: {
@@ -95,6 +98,7 @@ function LoginScreen() {
   const gg_icon = '../../../../assets/imgs/login/gg_icon.png';
   const showbility_icon = require('../../../../assets/imgs/showbility.png');
   const navigation = useNavigation();
+
   React.useEffect(() => {
     verifyToken().then(res => {
       if (res) {
@@ -103,6 +107,13 @@ function LoginScreen() {
       }
     });
   });
+
+  const signInWithKakao = async () => {
+    const token = await login();
+    let ret = await requestLoginKakao(token);
+    if (ret) navigation.navigate('App');
+    else Alert.alert('로그인 실패', '문제가 발생하였습니다.');
+  };
 
   return (
     <View style={styles.container}>
@@ -117,27 +128,33 @@ function LoginScreen() {
         </Text>
       </View>
       <View style={styles.buttonsContainer}>
-        <Image
-          style={{height: iconImgSize, width: iconImgSize, margin: 5, alignSelf: 'center'}}
-          resizeMode={'contain'}
-          source={require(kakao_icon)}
-        />
-        <Image
-          style={{height: iconImgSize - 9, width: iconImgSize - 9, margin: 5, alignSelf: 'center'}}
-          resizeMode={'contain'}
-          source={require(gg_icon)}
-        />
-      </View>
-      <View style={styles.accountContainer}>
-        <TouchableHighlight
-          onPress={() => navigation.push('이메일 로그인')}
-          style={styles.button}>
-          <Text>이메일 로그인</Text>
-        </TouchableHighlight>
+        <Pressable onPress={signInWithKakao} style={{flex: 1}}>
+          <Image
+            style={{
+              height: iconImgSize,
+              width: iconImgSize,
+              margin: 5,
+              alignSelf: 'flex-end',
+            }}
+            resizeMode={'contain'}
+            source={require(kakao_icon)}
+          />
+        </Pressable>
+        <Pressable style={{flex: 1}}>
+          <Image
+            style={{
+              height: iconImgSize - 9,
+              width: iconImgSize - 9,
+              margin: 5,
+              marginTop: 8,
+              alignSelf: 'flex-start',
+            }}
+            resizeMode={'contain'}
+            source={require(gg_icon)}
+          />
+        </Pressable>
       </View>
       <View style={styles.joinContainer}>
-        <Text onPress={() => navigation.push('회원가입')}>회원가입</Text>
-        <Text> | </Text>
         <Text onPress={() => navigation.navigate('App')}>
           로그인 전 둘러보기
         </Text>
