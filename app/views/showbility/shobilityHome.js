@@ -17,7 +17,6 @@ import {GroupCreate} from './group/groupCreate';
 import {getContentsList, getNestContentsList} from '../../service/content';
 import {useNavigation} from '@react-navigation/core';
 import {HOST} from '../../common/constant';
-import {CommentsView} from './comment';
 import {FindScreen} from '../components/find';
 import {GroupMember} from './group/groupMember';
 import { GroupContentsScreen } from './group/groupContent';
@@ -262,11 +261,6 @@ export function ShowbilityHome() {
         name="Main"
         component={SHome2}
         options={{headerShown: false}}
-      />
-      <MainHomeStack.Screen
-        name="댓글"
-        component={CommentsView}
-        options={{headerBackTitle: ' '}}
       />
       <MainHomeStack.Screen
         name="Find"

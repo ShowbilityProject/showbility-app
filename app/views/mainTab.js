@@ -13,6 +13,8 @@ import {FollowMember} from './myshowbil/followMember';
 import {FindScreen} from './components/find';
 import {ContentsModal} from './showbility/contentModal';
 import {SelectGroup} from './newupload/selectgroup';
+import {CommentsView} from './showbility/comment';
+
 
 const MainTab = createBottomTabNavigator();
 
@@ -80,6 +82,11 @@ function BaseStackScreen() {
       <BaseStack.Screen
         name="그룹 선택"
         component={SelectGroup}
+        options={{headerBackTitle: ' '}}
+      />
+      <BaseStack.Screen
+        name="댓글"
+        component={CommentsView}
         options={{headerBackTitle: ' '}}
       />
     </BaseStack.Navigator>
