@@ -85,12 +85,14 @@ function NewUploadTab() {
   const [tags, setTags] = React.useState([]);
   const [desc, setDesc] = React.useState('');
 
-  verifyToken().then(res => {
-    if (!res) {
-      console.info('Current token is not valid, go to login');
-      navigation.navigate('Login');
-    }
-  });
+  React.useEffect(() => {
+    verifyToken().then(res => {
+      if (!res) {
+        console.info('Current token is not valid, go to login');
+        navigation.navigate('Login');
+      }
+    });
+  }, []);
 
   const handleUploadImage = () => {
     let imagePickerOptions = {
