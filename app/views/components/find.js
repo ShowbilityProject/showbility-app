@@ -180,7 +180,10 @@ export function FindScreen({route, navigation}) {
           refreshing={refreshing}
           style={[
             styles.flatListFrame,
-            {display: inputFocused ? 'none' : 'flex'},
+            {
+              display: inputFocused ? 'none' : 'flex',
+              flex: 1,
+            },
           ]}
           onScroll={({nativeEvent}) => {
             if (isScrollEnd(nativeEvent)) {

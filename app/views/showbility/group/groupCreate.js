@@ -151,7 +151,7 @@ function GroupDetail({group, filter, rerender}) {
         </View>
         <Pressable
           onPress={() =>
-            navigation.navigate('카테고리&태그 선택', {
+            navigation.push('카테고리&태그 선택', {
               selectCategories: categories => {
                 filter.setCategory(categories);
                 rerender();

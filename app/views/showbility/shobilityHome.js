@@ -11,15 +11,16 @@ import {TouchableOpacity} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {AbilityScreen} from './ability';
 import {GroupScreen} from './group/group';
-import {GroupDepthView} from './group/groupDepthView';
-import {GroupDetail} from './group/groupDetail';
-import {GroupCreate} from './group/groupCreate';
 import {getContentsList, getNestContentsList} from '../../service/content';
 import {useNavigation} from '@react-navigation/core';
 import {HOST} from '../../common/constant';
 import {FindScreen} from '../components/find';
+import {GroupContentsScreen} from './group/groupContent';
+import {GroupDepthView} from './group/groupDepthView';
+import {GroupDetail} from './group/groupDetail';
 import {GroupMember} from './group/groupMember';
-import { GroupContentsScreen } from './group/groupContent';
+import {CategoryList} from '../newupload/category';
+import {FollowMember} from '../myshowbil/followMember';
 
 const styles = StyleSheet.create({
   container: {
@@ -188,7 +189,8 @@ function ShowbilityScreen({categoryFilter, tagFilter}) {
       source = {uri: HOST + item.images[0]};
     }
     return (
-      <TouchableOpacity onPress={() => showModalOnShowbilityItemPressed(item.id)}>
+      <TouchableOpacity
+        onPress={() => showModalOnShowbilityItemPressed(item.id)}>
         <Image source={source} style={styles.flatListImage} />
       </TouchableOpacity>
     );
@@ -256,22 +258,22 @@ const MainHomeStack = createStackNavigator();
 
 export function ShowbilityHome() {
   return (
-    <MainHomeStack.Navigator mode="modal">
+    <MainHomeStack.Navigator>
       <MainHomeStack.Screen
         name="Main"
         component={SHome2}
         options={{headerShown: false}}
       />
       <MainHomeStack.Screen
-        name="Find"
+        name="FindStack"
         component={FindScreen}
         options={{headerBackTitle: ' '}}
       />
-      {/* <MainHomeStack.Screen
-        name="카테고리&태그 선택"
-        component={FilterScreen}
+      <MainHomeStack.Screen
+        name="그룹 컨텐츠"
+        component={GroupContentsScreen}
         options={{headerBackTitle: ' '}}
-      /> */}
+      />
       <MainHomeStack.Screen
         name="GroupDepthView"
         component={GroupDepthView}
@@ -288,13 +290,13 @@ export function ShowbilityHome() {
         options={{headerBackTitle: ' '}}
       />
       <MainHomeStack.Screen
-        name="그룹 생성"
-        component={GroupCreate}
+        name="카테고리&태그 선택"
+        component={CategoryList}
         options={{headerBackTitle: ' '}}
       />
       <MainHomeStack.Screen
-        name="그룹 컨텐츠"
-        component={GroupContentsScreen}
+        name="팔로우"
+        component={FollowMember}
         options={{headerBackTitle: ' '}}
       />
     </MainHomeStack.Navigator>

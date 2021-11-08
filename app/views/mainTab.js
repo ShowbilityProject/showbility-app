@@ -9,12 +9,11 @@ import MyShowbilTab from './myshowbil/myShowbil';
 import {createStackNavigator} from '@react-navigation/stack';
 import {CategoryList} from './newupload/category';
 import {EditProfileScreen} from './myshowbil/editprofile';
-import {FollowMember} from './myshowbil/followMember';
 import {FindScreen} from './components/find';
-import {ContentsModal} from './showbility/contentModal';
 import {SelectGroup} from './newupload/selectgroup';
 import {CommentsView} from './showbility/comment';
-
+import {GroupCreate} from './showbility/group/groupCreate';
+import {ContentsModal} from './showbility/contentModal';
 
 const MainTab = createBottomTabNavigator();
 
@@ -27,7 +26,11 @@ const getVisibility = route => {
     routeName === 'ContentsModal' ||
     routeName === '댓글' ||
     routeName === '카테고리&태그 선택' ||
-    routeName === '그룹 생성'
+    routeName === '그룹 생성' ||
+    routeName === '업로드' ||
+    routeName === 'FindStack' ||
+    routeName === 'GroupDetail' ||
+    routeName === 'GroupDepthView'
   ) {
     return false;
   }
@@ -50,29 +53,14 @@ function BaseStackScreen() {
         options={{headerShown: false, headerBackTitle: ''}}
       />
       <BaseStack.Screen
-        name="업로드"
-        component={NewUploadTab}
-        options={{headerBackTitle: ' '}}
-      />
-      <BaseStack.Screen
-        name="카테고리&태그 선택"
-        component={CategoryList}
-        options={{headerBackTitle: ' '}}
-      />
-      <BaseStack.Screen
         name="프로필 편집"
-        component={EditProfileScreen}
-        options={{headerBackTitle: ' '}}
+        component={ProfileEditStack}
+        options={{headerBackTitle: ' ', headerShown: false}}
       />
       <BaseStack.Screen
-        name="사용자정보"
-        component={MyShowbilTab}
-        options={{headerBackTitle: ' '}}
-      />
-      <BaseStack.Screen
-        name="팔로우"
-        component={FollowMember}
-        options={{headerBackTitle: ' '}}
+        name="그룹 생성"
+        component={GroupCreateStack}
+        options={{headerBackTitle: ' ', headerShown: false}}
       />
       <BaseStack.Screen
         name="ContentsModal"
@@ -80,16 +68,78 @@ function BaseStackScreen() {
         options={{headerShown: false}}
       />
       <BaseStack.Screen
-        name="그룹 선택"
-        component={SelectGroup}
-        options={{headerBackTitle: ' '}}
-      />
-      <BaseStack.Screen
         name="댓글"
         component={CommentsView}
         options={{headerBackTitle: ' '}}
       />
+      <BaseStack.Screen
+        name="업로드"
+        component={NewUploadStack}
+        options={{headerShown: false}}
+      />
     </BaseStack.Navigator>
+  );
+}
+
+const ProfileEditStackNav = createStackNavigator();
+
+function ProfileEditStack() {
+  return (
+    <ProfileEditStackNav.Navigator>
+      <ProfileEditStackNav.Screen
+        name="프로필 편집"
+        component={EditProfileScreen}
+        options={{headerBackTitle: ' '}}
+      />
+      <ProfileEditStackNav.Screen
+        name="카테고리&태그 선택"
+        component={CategoryList}
+        options={{headerBackTitle: ' '}}
+      />
+    </ProfileEditStackNav.Navigator>
+  );
+}
+
+const GroupCreateStackNav = createStackNavigator();
+
+function GroupCreateStack() {
+  return (
+    <GroupCreateStackNav.Navigator>
+      <GroupCreateStackNav.Screen
+        name="그룹 생성 "
+        component={GroupCreate}
+        options={{headerBackTitle: ' '}}
+      />
+      <GroupCreateStackNav.Screen
+        name="카테고리&태그 선택"
+        component={CategoryList}
+        options={{headerBackTitle: ' '}}
+      />
+    </GroupCreateStackNav.Navigator>
+  );
+}
+
+const NewUploadStackNav = createStackNavigator();
+
+function NewUploadStack() {
+  return (
+    <NewUploadStackNav.Navigator>
+      <NewUploadStackNav.Screen
+        name="새 업로드"
+        component={NewUploadTab}
+        options={{headerBackTitle: ' '}}
+      />
+      <NewUploadStackNav.Screen
+        name="카테고리&태그 선택"
+        component={CategoryList}
+        options={{headerBackTitle: ' '}}
+      />
+      <NewUploadStackNav.Screen
+        name="그룹 선택"
+        component={SelectGroup}
+        options={{headerBackTitle: ' '}}
+      />
+    </NewUploadStackNav.Navigator>
   );
 }
 

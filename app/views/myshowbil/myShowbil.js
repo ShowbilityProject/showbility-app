@@ -139,7 +139,11 @@ function MyDetailHeader({data, isMy, isFetched}) {
             display: isMy ? 'flex' : 'none',
           }}
           onPress={() => {
-            if (isFetched) navigation.navigate('프로필 편집', {data: data});
+            if (isFetched)
+              navigation.navigate('프로필 편집', {
+                screen: '프로필 편집',
+                params: {data: data},
+              });
             else navigation.navigate('Login');
           }}>
           <Ionicons name="settings-sharp" size={20} color={'black'} />

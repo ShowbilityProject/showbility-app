@@ -65,7 +65,8 @@ export function SelectGroup({route}) {
     for (let groupId of selectedGroups) {
       requestAddContentToGroup(groupId, contentId);
     }
-    navigation.pop(2);
+    navigation.goBack();
+    navigation.goBack();
     navigation.navigate('ContentsModal', contentId);
   };
 

@@ -51,7 +51,7 @@ export function AbilityScreen() {
       <TouchableOpacity
         style={styles.abilityFrame}
         onPress={() =>
-          navigation.navigate('Find', {
+          navigation.navigate('FindStack', {
             title: item.name,
             categoryFilter: [item.name],
           })
