@@ -11,7 +11,7 @@ import {
   Alert,
 } from 'react-native';
 import {requestLoginKakao, verifyToken} from '../../../service/account';
-import {login} from '@react-native-seoul/kakao-login';
+import {login, loginWithKakaoAccount} from '@react-native-seoul/kakao-login';
 
 const styles = StyleSheet.create({
   fontStyle: {
@@ -93,7 +93,6 @@ const styles = StyleSheet.create({
 
 function LoginScreen() {
   const iconImgSize = Dimensions.get('window').width / 6;
-  console.log(iconImgSize);
   const kakao_icon = '../../../../assets/imgs/login/kakao_icon.png';
   const gg_icon = '../../../../assets/imgs/login/gg_icon.png';
   const showbility_icon = require('../../../../assets/imgs/showbility.png');
@@ -109,7 +108,7 @@ function LoginScreen() {
   });
 
   const signInWithKakao = async () => {
-    const token = await login();
+    const token = await loginWithKakaoAccount();
     let ret = await requestLoginKakao(token);
     if (ret) navigation.navigate('App');
     else Alert.alert('로그인 실패', '문제가 발생하였습니다.');
