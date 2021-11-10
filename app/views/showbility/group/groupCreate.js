@@ -71,8 +71,10 @@ const styles = StyleSheet.create({
   },
 });
 
-function GroupImage({setGroupImage}) {
-  const default_image = require('../../../../assets/imgs/add_image.png');
+function GroupImage({setGroupImage, groupImage}) {
+  const default_image = groupImage
+    ? groupImage
+    : require('../../../../assets/imgs/add_image.png');
   const [image, setImage] = React.useState(default_image);
   const handleUploadImage = () => {
     let imagePickerOptions = {
@@ -290,7 +292,11 @@ export function GroupCreate() {
 
   return (
     <View style={styles.baseContainer}>
-      <GroupImage key={groupImage} setGroupImage={setGroupImage} />
+      <GroupImage
+        key={groupImage}
+        setGroupImage={setGroupImage}
+        groupImage={groupImage}
+      />
       <GroupDetail
         key={rerenderKey}
         group={group}
