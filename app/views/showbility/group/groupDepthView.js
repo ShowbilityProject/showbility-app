@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {View, FlatList, Text, StyleSheet, Image} from 'react-native';
+import {View, FlatList, Text, StyleSheet, Image, Alert} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
-import {getGroups, getNextGroupsList} from '../../../service/group';
+import {getGroups, getNextGroupsList, GET_GROUP_TYPE} from '../../../service/group';
+import { verifyToken } from '../../../service/account';
 
 const styles = StyleSheet.create({
   baseContainer: {

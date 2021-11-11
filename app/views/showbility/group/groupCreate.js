@@ -7,12 +7,14 @@ import {
   Switch,
   TextInput,
   Pressable,
+  Alert,
 } from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {createGroup} from '../../../service/group';
 import {isEmpty} from '../../../common/util';
+import { verifyToken } from '../../../service/account';
 
 const styles = StyleSheet.create({
   baseContainer: {
@@ -237,6 +239,7 @@ function BottomButton({handleButton, isFormValid}) {
   );
 }
 export function GroupCreate() {
+  const navigation = useNavigation();
   const [groupImage, setGroupImage] = React.useState();
   const [groupName, setGroupName] = React.useState('');
   const [groupDetail, setGroupDetail] = React.useState('');
@@ -244,6 +247,22 @@ export function GroupCreate() {
   const [categoryFilter, setCategoryFilter] = React.useState([]);
   const [tagFilter, setTagFilter] = React.useState([]);
   const [rerenderKey, setRerenderKey] = React.useState(false);
+
+  React.useEffect(() => {
+    verifyToken().then(res => {
+      if (!res) {
+        console.info('Current token is not valid, go to login');
+        Alert.alert('로그인', '로그인 하시겠습니까?', [
+          {
+            text: '취소',
+            onPress: () => navigation.goBack(),
+            style: 'cancel',
+          },
+          {text: 'OK', onPress: () => navigation.navigate('Login')},
+        ]);
+      }
+    });
+  }, []);
 
   const filter = {
     categoryFilter: categoryFilter,
