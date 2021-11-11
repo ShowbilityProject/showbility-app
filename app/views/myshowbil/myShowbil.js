@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Pressable,
+  Alert,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {FOLLOW_STATUS, HOST} from '../../common/constant';
@@ -347,7 +348,15 @@ export function GroupDetail({route}) {
         } else {
           console.log('Failed to retrieve profile');
           setFetched(false);
-          navigation.navigate('Login');
+          console.info('Current token is not valid, go to login');
+          Alert.alert('로그인', '로그인 하시겠습니까?', [
+            {
+              text: '취소',
+              onPress: () => navigation.goBack(),
+              style: 'cancel',
+            },
+            {text: 'OK', onPress: () => navigation.navigate('Login')},
+          ]);
         }
       });
     });

@@ -89,7 +89,14 @@ function NewUploadTab() {
     verifyToken().then(res => {
       if (!res) {
         console.info('Current token is not valid, go to login');
-        navigation.navigate('Login');
+        Alert.alert('로그인', '로그인 하시겠습니까?', [
+          {
+            text: '취소',
+            onPress: () => navigation.goBack(),
+            style: 'cancel',
+          },
+          {text: 'OK', onPress: () => navigation.navigate('Login')},
+        ]);
       }
     });
   }, []);
