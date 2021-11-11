@@ -16,7 +16,7 @@ import {HOST} from '../../../common/constant';
 
 const styles = StyleSheet.create({
   flatListImage: {
-    height: '80%',
+    height: '75%',
     aspectRatio: 1.3,
     alignSelf: 'center',
     marginBottom: 7,
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
   touchableArea: {
     paddingHorizontal: 5,
-    height: 240,
+    height: 190,
   },
   groupTitle: {
     padding: 5,
