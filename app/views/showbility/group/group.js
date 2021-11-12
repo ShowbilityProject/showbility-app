@@ -91,11 +91,16 @@ function GroupArea({title, fetchType}) {
     });
   }, [fetchType]);
 
+  const getImageUri = d => {
+    let source = require('../../../../assets/imgs/add_image.png');
+    if (!isEmpty(d.small_image)) source = {uri: d.small_image};
+    else if (!isEmpty(d.repr_image)) source = {uri: d.repr_image};
+    return source;
+  }
+
   const renderItem = itemObject => {
     let item = itemObject.item;
-    const imageSource = !isEmpty(item.repr_image)
-      ? {uri: item.repr_image}
-      : require('../../../../assets/imgs/add_image.png');
+    const imageSource = getImageUri(item);
     return (
       <TouchableOpacity
         style={styles.touchableArea}

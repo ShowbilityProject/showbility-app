@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {FOLLOW_STATUS, HOST} from '../../common/constant';
+import { isEmpty } from '../../common/util';
 import {getProfile, requestFollow, requestUnfollow} from '../../service/account';
 
 const styles = StyleSheet.create({
@@ -104,9 +105,6 @@ const styles = StyleSheet.create({
 
 function MyDetailHeader({data, isMy, isFetched}) {
   const navigation = useNavigation();
-  const imageSource = data.profile_image
-    ? {uri: data.profile_image}
-    : require('../../../assets/imgs/group.png');
   const [followable, setFollowable] = React.useState(data.followable);
   const handleFollowButton = () => {
     const id = data.id;
@@ -120,6 +118,13 @@ function MyDetailHeader({data, isMy, isFetched}) {
       setFollowable(FOLLOW_STATUS.NOT_FOLLOWING);
       data.followable = FOLLOW_STATUS.NOT_FOLLOWING;
     }
+  };
+
+  const getImageUri = d => {
+    let source = require('../../../assets/imgs/group.png');
+    if (!isEmpty(d.small_image)) source = {uri: d.small_image};
+    else if (!isEmpty(d.profile_image)) source = {uri: d.profile_image};
+    return source;
   };
 
   return (
@@ -150,7 +155,7 @@ function MyDetailHeader({data, isMy, isFetched}) {
           <Ionicons name="settings-sharp" size={20} color={'black'} />
         </Pressable>
       </View>
-      <Image style={styles.imageStyle} source={imageSource} />
+      <Image style={styles.imageStyle} source={getImageUri(data)} />
       <View style={{flexDirection: 'row'}}>
         <Pressable
           style={{padding: 20, alignItems: 'center'}}

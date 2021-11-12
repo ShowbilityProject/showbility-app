@@ -117,9 +117,6 @@ const styles = StyleSheet.create({
 });
 
 function GroupDetailHeader({repr_image, followers, contents}) {
-  const imageSource = !isEmpty(repr_image)
-    ? {uri: repr_image}
-    : require('../../../../assets/imgs/add_image.png');
   return (
     <View
       style={{
@@ -128,7 +125,7 @@ function GroupDetailHeader({repr_image, followers, contents}) {
         borderColor: '#F7F7F7',
         alignItems: 'center',
       }}>
-      <Image style={styles.imageStyle} source={imageSource} />
+      <Image style={styles.imageStyle} source={repr_image} />
       <View style={{flexDirection: 'row'}}>
         <View style={{padding: 20, alignItems: 'center'}}>
           <Text style={{color: '#B2B2B5', fontSize: 12, marginBottom: 5}}>
@@ -556,6 +553,7 @@ export function GroupDetail({navigation, route}) {
     name: '',
     detail: '',
     repr_image: '',
+    small_image: '',
     is_visible: true,
     created_at: '2021-10-04T11:06:09.964875Z',
     updated_at: '2021-10-04T11:06:09.964945Z',
@@ -574,10 +572,17 @@ export function GroupDetail({navigation, route}) {
     });
   }, [id]);
 
+  const getImageUri = d => {
+    let source = require('../../../../assets/imgs/add_image.png');
+    if (!isEmpty(d.small_image)) source = {uri: d.small_image};
+    else if (!isEmpty(d.repr_image)) source = {uri: d.repr_image};
+    return source;
+  };
+
   return (
     <ScrollView style={styles.baseView}>
       <GroupDetailHeader
-        repr_image={data.repr_image}
+        repr_image={getImageUri(data)}
         followers={data.followers_count}
         contents={data.contents_count}
       />

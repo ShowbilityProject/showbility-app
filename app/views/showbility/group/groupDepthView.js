@@ -4,6 +4,7 @@ import {TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
 import {getGroups, getNextGroupsList, GET_GROUP_TYPE} from '../../../service/group';
 import { verifyToken } from '../../../service/account';
+import { isEmpty } from '../../../common/util';
 
 const styles = StyleSheet.create({
   baseContainer: {
@@ -95,6 +96,13 @@ export function GroupDepthView({route}) {
     });
   });
 
+  const getImageUri = d => {
+    let source = require('../../../../assets/imgs/add_image.png');
+    if (!isEmpty(d.small_image)) source = {uri: d.small_image};
+    else if (!isEmpty(d.repr_image)) source = {uri: d.repr_image};
+    return source;
+  };
+
   const renderItem = itemObject => {
     let item = itemObject.item;
     return (
@@ -103,7 +111,7 @@ export function GroupDepthView({route}) {
           navigation.navigate('GroupDetail', {id: item.id, name: item.name})
         }
         style={styles.abilityFrame}>
-        <Image source={{uri: item.repr_image}} style={styles.flatListImage} />
+        <Image source={getImageUri(item)} style={styles.flatListImage} />
         <Text style={[styles.fontJeju, styles.abilityItemTitle]}>
           {item.name}
         </Text>
