@@ -276,7 +276,7 @@ export function GroupCreate() {
   };
 
   const handleButton = async () => {
-    const ret = createGroup(
+    const ret = await createGroup(
       groupName,
       groupDetail,
       isVisible,
@@ -284,7 +284,10 @@ export function GroupCreate() {
       tagFilter,
       groupImage,
     );
-    console.log(ret);
+    if (ret) {
+      navigation.goBack();
+      navigation.navigate('GroupDetail', {id: ret.id, name: ret.name});
+    }
   };
 
   const group = {
