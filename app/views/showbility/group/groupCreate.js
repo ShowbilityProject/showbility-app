@@ -14,7 +14,7 @@ import {useNavigation} from '@react-navigation/core';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {createGroup} from '../../../service/group';
 import {isEmpty} from '../../../common/util';
-import { verifyToken } from '../../../service/account';
+import {verifyToken} from '../../../service/account';
 
 const styles = StyleSheet.create({
   baseContainer: {
@@ -276,17 +276,19 @@ export function GroupCreate() {
   };
 
   const handleButton = async () => {
-    const ret = await createGroup(
-      groupName,
-      groupDetail,
-      isVisible,
-      categoryFilter,
-      tagFilter,
-      groupImage,
-    );
-    if (ret) {
-      navigation.goBack();
-      navigation.navigate('GroupDetail', {id: ret.id, name: ret.name});
+    if (isFormValid()) {
+      const ret = await createGroup(
+        groupName,
+        groupDetail,
+        isVisible,
+        categoryFilter,
+        tagFilter,
+        groupImage,
+      );
+      if (ret) {
+        navigation.goBack();
+        navigation.navigate('GroupDetail', {id: ret.id, name: ret.name});
+      }
     }
   };
 
@@ -303,8 +305,7 @@ export function GroupCreate() {
     if (
       isEmpty(groupName) ||
       isEmpty(groupDetail) ||
-      !categoryFilter.length ||
-      !tagFilter.length
+      !(categoryFilter.length + tagFilter.length)
     ) {
       return false;
     } else {
