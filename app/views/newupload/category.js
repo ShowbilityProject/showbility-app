@@ -11,6 +11,7 @@ export function CategoryList({route, navigation}) {
   const [tags, setTags] = React.useState(route.params.tags);
   const [changeFlag, setChangeFlag] = React.useState(false);
   const [categoryData, setCategoryData] = React.useState([]);
+  const [categoryFlag, setCategoryFlag] = React.useState(true);
   const [tagData, setTagData] = React.useState([]);
   const TYPE_CATEGORY = 'cateogory';
   const TYPE_TAG = 'tag';
@@ -29,6 +30,7 @@ export function CategoryList({route, navigation}) {
 
     if (_type === TYPE_CATEGORY) {
       setCategories(temp);
+      setCategoryFlag(true);
     } else if (_type === TYPE_TAG) {
       setTags(temp);
     } else return;
@@ -42,8 +44,11 @@ export function CategoryList({route, navigation}) {
   };
 
   const fetchData = () => {
-    getCategoryList().then(res => setCategoryData(res.results));
-    getTagList(categories).then(res => setTagData(res));
+    if (categoryFlag) {
+      getCategoryList().then(res => setCategoryData(res.results));
+      getTagList(categories).then(res => setTagData(res));
+      setCategoryFlag(false);
+    }
   };
 
   React.useEffect(() => {
