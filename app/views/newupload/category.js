@@ -7,8 +7,10 @@ export function CategoryList({route, navigation}) {
   const selectCategories = route.params.selectCategories;
   const selectTags = route.params.selectTags;
   const isUpload = route.params.isUpload;
-  const [categories, setCategories] = React.useState(route.params.categories);
-  const [tags, setTags] = React.useState(route.params.tags);
+  const prevCategories = route.params.categories;
+  const prevTags = route.params.tags;
+  const [categories, setCategories] = React.useState(prevCategories.slice());
+  const [tags, setTags] = React.useState(prevTags.slice());
   const [changeFlag, setChangeFlag] = React.useState(false);
   const [categoryData, setCategoryData] = React.useState([]);
   const [categoryFlag, setCategoryFlag] = React.useState(true);
@@ -35,6 +37,19 @@ export function CategoryList({route, navigation}) {
       setTags(temp);
     } else return;
     setChangeFlag(!changeFlag);
+  };
+
+  const isSameArray = (array1, array2) => {
+    return (
+      array1.length === array2.length &&
+      array1.every((value, index) => value === array2[index])
+    );
+  };
+
+  const isValidNow = () => {
+    return (
+      isSameArray(prevCategories, categories) && isSameArray(prevTags, tags)
+    );
   };
 
   const handleSubmit = () => {
@@ -129,8 +144,17 @@ export function CategoryList({route, navigation}) {
       </View>
       <View style={{flex: 1, maxHeight: 250}}>
         <View style={{flex: 1, flexDirection: 'row'}}>
-          <Pressable style={styles.applyButton} onPress={handleSubmit}>
-            <Text style={styles.applyButtonText}>적용 하기</Text>
+          <Pressable
+            style={isValidNow() ? styles.applyButton : styles.applyButtonValid}
+            onPress={handleSubmit}>
+            <Text
+              style={
+                isValidNow()
+                  ? styles.applyButtonText
+                  : styles.applyButtonTextValid
+              }>
+              적용 하기
+            </Text>
           </Pressable>
         </View>
       </View>
@@ -196,9 +220,24 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
   },
+  applyButtonValid: {
+    alignSelf: 'flex-end',
+    marginBottom: 50,
+    height: 52,
+    backgroundColor: '#F85B02',
+    width: '100%',
+    borderRadius: 5,
+    alignItems: 'center',
+  },
   applyButtonText: {
     fontFamily: 'JejuGothicOTF',
     fontSize: 17,
     lineHeight: 52,
+  },
+  applyButtonTextValid: {
+    fontFamily: 'JejuGothicOTF',
+    fontSize: 17,
+    lineHeight: 52,
+    color: 'white',
   },
 });
