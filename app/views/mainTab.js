@@ -162,8 +162,9 @@ function MainTabScreen() {
           } else if (route.name === '마이쇼빌') {
             iconName = focused ? 'person-sharp' : 'person-outline';
           } else if (route.name === 'NewUpload') {
-            iconName = focused ? 'add-circle-sharp' : 'add-circle-outline';
+            iconName = 'add-circle-sharp';
             size = 35;
+            color = '#F85B02';
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
