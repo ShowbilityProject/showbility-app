@@ -96,7 +96,7 @@ function GroupArea({title, fetchType}) {
     if (!isEmpty(d.small_image)) source = {uri: d.small_image};
     else if (!isEmpty(d.repr_image)) source = {uri: d.repr_image};
     return source;
-  }
+  };
 
   const renderItem = itemObject => {
     let item = itemObject.item;
