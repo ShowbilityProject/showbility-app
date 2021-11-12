@@ -1,17 +1,16 @@
-import { useNavigation } from '@react-navigation/core';
+import {useIsFocused, useNavigation} from '@react-navigation/core';
 import * as React from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  TouchableHighlight,
   Image,
   Dimensions,
   Pressable,
   Alert,
 } from 'react-native';
 import {requestLoginKakao, verifyToken} from '../../../service/account';
-import {login, loginWithKakaoAccount} from '@react-native-seoul/kakao-login';
+import {loginWithKakaoAccount} from '@react-native-seoul/kakao-login';
 
 const styles = StyleSheet.create({
   fontStyle: {
@@ -97,6 +96,7 @@ function LoginScreen() {
   const gg_icon = '../../../../assets/imgs/login/gg_icon.png';
   const showbility_icon = require('../../../../assets/imgs/showbility.png');
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
 
   React.useEffect(() => {
     verifyToken().then(res => {
@@ -108,10 +108,14 @@ function LoginScreen() {
   });
 
   const signInWithKakao = async () => {
-    const token = await loginWithKakaoAccount();
-    let ret = await requestLoginKakao(token);
-    if (ret) navigation.navigate('App');
-    else Alert.alert('로그인 실패', '문제가 발생하였습니다.');
+    try {
+      const token = await loginWithKakaoAccount();
+      let ret = await requestLoginKakao(token);
+      if (ret) navigation.navigate('App');
+      else Alert.alert('로그인 실패', '문제가 발생하였습니다.');
+    } catch (err) {
+      Alert.alert('로그인 실패', '취소되었습니다.');
+    }
   };
 
   return (
