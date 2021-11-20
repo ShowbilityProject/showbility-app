@@ -10,7 +10,7 @@ import {
   Alert,
 } from 'react-native';
 import {requestLoginKakao, verifyToken} from '../../../service/account';
-import {loginWithKakaoAccount} from '@react-native-seoul/kakao-login';
+import {login} from '@react-native-seoul/kakao-login';
 
 const styles = StyleSheet.create({
   fontStyle: {
@@ -109,11 +109,12 @@ function LoginScreen() {
 
   const signInWithKakao = async () => {
     try {
-      const token = await loginWithKakaoAccount();
+      const token = await login();
       let ret = await requestLoginKakao(token);
       if (ret) navigation.navigate('App');
       else Alert.alert('로그인 실패', '문제가 발생하였습니다.');
     } catch (err) {
+      console.error(err);
       Alert.alert('로그인 실패', '취소되었습니다.');
     }
   };
