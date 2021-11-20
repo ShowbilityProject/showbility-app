@@ -114,7 +114,7 @@ function LoginScreen() {
       if (ret) navigation.navigate('App');
       else Alert.alert('로그인 실패', '문제가 발생하였습니다.');
     } catch (err) {
-      console.error(err);
+      // console.error(err);
       Alert.alert('로그인 실패', '취소되었습니다.');
     }
   };
