@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {requestLoginKakao, verifyToken} from '../../../service/account';
 import {login} from '@react-native-seoul/kakao-login';
+import {Color} from '../../../style/colors';
 
 const styles = StyleSheet.create({
   fontStyle: {
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: 10,
+    marginBottom: 50,
   },
   button: {
     alignItems: 'center',
@@ -87,6 +88,11 @@ const styles = StyleSheet.create({
     borderColor: '#DDDDDD',
     borderWidth: 1,
     marginRight: 10,
+  },
+  privacyText: {
+    fontSize: 12,
+    color: Color.veryLightPink,
+    lineHeight: 18
   },
 });
 
@@ -159,16 +165,37 @@ function LoginScreen() {
         </Pressable>
       </View>
       <View style={styles.joinContainer}>
-        <Text onPress={() => navigation.navigate('App')}>
+        <Text
+          style={{
+            fontFamily: 'JejuGothicOTF',
+            fontSize: 14,
+            color: Color.veryLightPink,
+            textDecorationLine: 'underline'
+          }}
+          onPress={() => navigation.navigate('App')}>
           로그인 전 둘러보기
         </Text>
       </View>
       <View style={styles.footerContainer}>
-        <Text style={{fontSize: 12}}>
+        <Text style={styles.privacyText}>
           당신의 재능 활동은 연결된 계정에 노출되지 않습니다.
         </Text>
-        <Text style={{fontSize: 12}}>
-          회원가입시 개인정보 처리방침과 이용약관을 확인하였으며, 동의합니다.
+        <Text style={styles.privacyText}>
+          회원가입시{' '}
+          <Text
+            style={{color: Color.vividBlue}}
+            onPress={() =>
+              navigation.push('Privacy', {title: '개인정보 처리방침'})
+            }>
+            개인정보 처리방침
+          </Text>
+          과{' '}
+          <Text
+            style={{color: Color.vividBlue}}
+            onPress={() => navigation.push('Privacy', {title: '이용약관'})}>
+            이용약관
+          </Text>
+          을 확인하였으며, 동의합니다.
         </Text>
       </View>
     </View>
