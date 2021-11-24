@@ -21,6 +21,7 @@ import {GroupDetail} from './group/groupDetail';
 import {GroupMember} from './group/groupMember';
 import {CategoryList} from '../newupload/category';
 import {FollowMember} from '../myshowbil/followMember';
+import {Color} from '../../style/colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -53,16 +54,25 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   flatListImage: {
-    width: '90%',
+    width: '100%',
     aspectRatio: 1,
     alignSelf: 'center',
     marginTop: 10,
     marginBottom: 10,
+    borderRadius: 5,
   },
   filterIcon: {
     position: 'absolute',
     right: 30,
     marginTop: 7,
+  },
+  shadowBox: {
+    width: '100%',
+    overflow: 'hidden',
+    shadowColor: Color.brownishGrey,
+    shadowOffset: {width: 0, height: 3},
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
   },
 });
 
@@ -190,6 +200,7 @@ function ShowbilityScreen({categoryFilter, tagFilter}) {
     }
     return (
       <TouchableOpacity
+        style={styles.shadowBox}
         onPress={() => showModalOnShowbilityItemPressed(item.id)}>
         <Image source={source} style={styles.flatListImage} />
       </TouchableOpacity>
@@ -244,6 +255,10 @@ function ShowbilityScreen({categoryFilter, tagFilter}) {
       renderItem={renderItem}
       onRefresh={() => onRefersh()}
       refreshing={refreshing}
+      style={{overflow: 'visible'}}
+      contentContainerStyle={{
+        padding: 15,
+      }}
       onScroll={({nativeEvent}) => {
         if (isScrollEnd(nativeEvent)) {
           console.log(fetchingNext);
