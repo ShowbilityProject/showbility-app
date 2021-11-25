@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
   FlatList,
-  SafeAreaView,
   View,
   Text,
   StyleSheet,
@@ -10,10 +9,15 @@ import {
   TouchableOpacity,
   ScrollView,
   StatusBar,
+  Pressable,
 } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {HOST} from '../../common/constant';
-import {getContentById, requestDeleteLikeContent, requestLikeContent} from '../../service/content';
+import {
+  getContentById,
+  requestDeleteLikeContent,
+  requestLikeContent,
+} from '../../service/content';
 import {postComment} from '../../service/comment';
 
 const styles = StyleSheet.create({
@@ -27,8 +31,8 @@ const styles = StyleSheet.create({
   },
   modalCloseButton: {
     position: 'absolute',
-    right: 10,
-    top: 60,
+    right: 15,
+    top: 20,
     width: 24,
     height: 24,
     flex: 1,
@@ -121,10 +125,13 @@ export function ContentsModal({route, navigation}) {
   const [cmtText, setCmtText] = React.useState('');
   const [isLiked, setIsLiked] = React.useState(false);
   const [likes, setLikes] = React.useState(0);
+  const [isFollow, setIsFollow] = React.useState(false);
   const commentInput = React.useRef();
   const snapPoints = React.useMemo(() => ['10%', '50%'], []);
   const likeIcon = '../../../assets/imgs/like.png';
   const likeOnIcon = '../../../assets/imgs/like_on.png';
+  const followOnIcon = '../../../assets/imgs/follow.png';
+  const followIcon = '../../../assets/imgs/follown.png';
   const viewIcon = '../../../assets/imgs/view.png';
   const cmtIcon = '../../../assets/imgs/message-circle.png';
 
@@ -154,31 +161,73 @@ export function ContentsModal({route, navigation}) {
     fetchData(id);
   };
 
+  const titleArea = () => {
+    return (
+      <View
+        style={{
+          justifyContent: 'flex-end',
+          height: 56,
+          paddingHorizontal: 16,
+          paddingVertical: 10,
+        }}>
+        <View style={{flexDirection: 'row'}}>
+          <Text
+            style={{
+              flex: 1,
+              fontSize: 15,
+              fontFamily: 'JejuGothicOTF',
+            }}>
+            {item.title}
+          </Text>
+          <TouchableOpacity
+            style={{alignItems: 'flex-end', marginRight: 20}}
+            onPress={() => handleLike()}>
+            <Image
+              style={{width: 20, height: 20, resizeMode: 'contain'}}
+              source={isLiked ? require(likeOnIcon) : require(likeIcon)}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{alignItems: 'flex-end'}}
+            onPress={() => console.log('follow')}>
+            <Image
+              style={{width: 20, height: 20, resizeMode: 'contain'}}
+              source={isFollow ? require(followOnIcon) : require(followIcon)}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
+
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: 'white'}}>
       <StatusBar hidden={true} />
       <FlatList
         key={'#'}
         keyExtractor={item => '#' + item}
         data={item.images}
+        style={{paddingTop: 44}}
         renderItem={itemObject => {
-          let item = itemObject.item;
-          let source = {uri: HOST + item};
+          let image = itemObject.item;
+          let index = itemObject.index;
+          let source = {uri: HOST + image};
           return (
-            <Image
-              source={source}
-              style={{width: '100%', aspectRatio: 1, marginBottom: 10}}
-            />
+            <View>
+              {index === 0 ? titleArea() : null}
+              <Image
+                source={source}
+                style={{width: '100%', aspectRatio: 1, marginBottom: 10}}
+              />
+            </View>
           );
         }}
       />
-      <View style={styles.modalCloseButton}>
-        <Text
-          onPress={() => navigation.goBack()}
-          style={styles.upperRightTopCloseBtn}>
-          &#10005;
-        </Text>
-      </View>
+      <Pressable
+        onPress={() => navigation.goBack()}
+        style={styles.modalCloseButton}>
+        <Text style={styles.upperRightTopCloseBtn}>&#10005;</Text>
+      </Pressable>
       <BottomSheet snapPoints={snapPoints}>
         <View style={{marginBottom: 20, flexDirection: 'row'}}>
           <View style={{flex: 1, height: 70}}>
