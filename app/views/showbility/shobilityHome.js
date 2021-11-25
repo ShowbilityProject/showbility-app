@@ -33,16 +33,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   tobBar: {
-    marginLeft: 10,
-    height: 52,
+    paddingHorizontal: 16,
+    height: 56,
     width: '100%',
     flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderColor: '#f4f4f6',
+    alignItems: 'center',
   },
   tobBarText: {
     fontFamily: 'JejuGothicOTF',
-    padding: 10,
     fontSize: 18,
-    color: '#D5D5D6',
+    color: Color.lightBlueGrey,
+    marginRight: 20,
   },
   tobBarTextFocused: {
     color: '#000000',
@@ -57,13 +60,13 @@ const styles = StyleSheet.create({
     width: '100%',
     aspectRatio: 1,
     alignSelf: 'center',
-    marginTop: 10,
+    marginTop: 20,
     marginBottom: 10,
     borderRadius: 5,
   },
   filterIcon: {
     position: 'absolute',
-    right: 30,
+    right: 16,
     marginTop: 7,
   },
   shadowBox: {
@@ -158,6 +161,7 @@ export function SHome2({route, navigation}) {
             }>
             <Image
               source={require('../../../assets/imgs/ICON-24-Filter.png')}
+              style={{width: 24, height: 24}}
             />
           </TouchableOpacity>
         </View>
@@ -257,7 +261,7 @@ function ShowbilityScreen({categoryFilter, tagFilter}) {
       refreshing={refreshing}
       style={{overflow: 'visible'}}
       contentContainerStyle={{
-        padding: 15,
+        paddingHorizontal: 16,
       }}
       onScroll={({nativeEvent}) => {
         if (isScrollEnd(nativeEvent)) {
