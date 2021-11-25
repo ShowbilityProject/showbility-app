@@ -1,5 +1,5 @@
-// export const HOST = 'http://52.79.61.228';
-export const HOST = 'http://127.0.0.1:8000';
+export const HOST = 'https://showbility.co.kr';
+// export const HOST = 'http://127.0.0.1:8000';
 export const APPLICATION_JSON = 'application/json';
 export const API_TOKEN = 'jwtToken';
 export const MEMBER_TYPE_STR = {
