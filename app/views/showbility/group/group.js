@@ -12,15 +12,17 @@ import {useNavigation} from '@react-navigation/core';
 import {FindBar} from '../../components/find';
 import {isEmpty} from '../../../common/util';
 import {getGroups, GET_GROUP_TYPE} from '../../../service/group';
-import {HOST} from '../../../common/constant';
+import {Color} from '../../../style/colors';
 
 const styles = StyleSheet.create({
   flatListImage: {
-    height: '75%',
+    width: 165,
+    height: 124,
     aspectRatio: 1.3,
     alignSelf: 'center',
-    marginBottom: 7,
+    marginBottom: 10,
     resizeMode: 'cover',
+    borderRadius: 5,
   },
   abilityFrame: {
     width: '50%',
@@ -109,7 +111,8 @@ function GroupArea({title, fetchType}) {
         }>
         <Image source={imageSource} style={styles.flatListImage} />
         <Text style={[styles.fontJeju, {fontSize: 17}]}>{item.name}</Text>
-        <Text style={[styles.fontJeju, {fontSize: 10, marginTop: 7}]}>
+        <Text
+          style={[{fontSize: 12, marginTop: 5, color: Color.veryLightPink}]}>
           {item.detail}
         </Text>
       </TouchableOpacity>
@@ -117,7 +120,8 @@ function GroupArea({title, fetchType}) {
   };
   return (
     <View style={styles.groupArea}>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View
+        style={{flexDirection: 'row', alignItems: 'center', marginBottom: 20}}>
         <View style={{flex: 1}}>
           <Text
             style={[
