@@ -259,7 +259,7 @@ function ShowbilityScreen({categoryFilter, tagFilter}) {
       renderItem={renderItem}
       onRefresh={() => onRefersh()}
       refreshing={refreshing}
-      style={{overflow: 'visible'}}
+      style={{overflow: 'hidden'}}
       contentContainerStyle={{
         paddingHorizontal: 16,
       }}
