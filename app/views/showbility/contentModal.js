@@ -9,6 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  StatusBar,
 } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {HOST} from '../../common/constant';
@@ -154,7 +155,8 @@ export function ContentsModal({route, navigation}) {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <View style={{flex: 1}}>
+      <StatusBar hidden={true} />
       <FlatList
         key={'#'}
         keyExtractor={item => '#' + item}
@@ -292,6 +294,6 @@ export function ContentsModal({route, navigation}) {
           </View>
         </View>
       </BottomSheet>
-    </SafeAreaView>
+    </View>
   );
 }
