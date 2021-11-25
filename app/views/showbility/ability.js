@@ -10,11 +10,12 @@ const styles = StyleSheet.create({
     aspectRatio: 1.3,
     alignSelf: 'center',
     marginBottom: 7,
+    borderRadius: 5,
   },
   abilityFrame: {
     width: '50%',
     paddingBottom: 5,
-    paddingHorizontal: 5,
+    paddingHorizontal: 6,
     marginBottom: 10,
   },
   fontJeju: {
@@ -25,6 +26,7 @@ const styles = StyleSheet.create({
   },
   flatListFrame: {
     paddingHorizontal: 10,
+    paddingTop: 16,
   },
 });
 
