@@ -1,4 +1,4 @@
-import {useIsFocused, useNavigation} from '@react-navigation/core';
+import {useNavigation} from '@react-navigation/core';
 import * as React from 'react';
 import {
   View,
@@ -99,10 +99,8 @@ const styles = StyleSheet.create({
 function LoginScreen() {
   const iconImgSize = Dimensions.get('window').width / 6;
   const kakao_icon = '../../../../assets/imgs/login/kakao_icon.png';
-  const gg_icon = '../../../../assets/imgs/login/gg_icon.png';
   const showbility_icon = require('../../../../assets/imgs/showbility.png');
   const navigation = useNavigation();
-  const isFocused = useIsFocused();
 
   React.useEffect(() => {
     verifyToken().then(res => {
@@ -144,23 +142,10 @@ function LoginScreen() {
               height: iconImgSize,
               width: iconImgSize,
               margin: 5,
-              alignSelf: 'flex-end',
+              alignSelf: 'center',
             }}
             resizeMode={'contain'}
             source={require(kakao_icon)}
-          />
-        </Pressable>
-        <Pressable style={{flex: 1}}>
-          <Image
-            style={{
-              height: iconImgSize - 9,
-              width: iconImgSize - 9,
-              margin: 5,
-              marginTop: 8,
-              alignSelf: 'flex-start',
-            }}
-            resizeMode={'contain'}
-            source={require(gg_icon)}
           />
         </Pressable>
       </View>
