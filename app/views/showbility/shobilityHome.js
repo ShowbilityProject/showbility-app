@@ -174,10 +174,10 @@ export function SHome2({route, navigation}) {
             tagFilter={getTagFilter}
           />
         </View>
-        <View style={{display: visibility.ability ? '' : 'none'}}>
+        <View style={{flex: 1, display: visibility.ability ? '' : 'none'}}>
           <AbilityScreen />
         </View>
-        <View style={{display: visibility.group ? '' : 'none'}}>
+        <View style={{flex: 1, display: visibility.group ? '' : 'none'}}>
           <GroupScreen />
         </View>
       </View>
