@@ -9,4 +9,5 @@ export const Color = {
   white: '#ffffff',
   black: '#000000',
   veryLightPink: '#bcbcbc',
+  lightBlueGrey: '#d5d5d6',
 };
