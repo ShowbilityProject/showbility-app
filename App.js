@@ -36,7 +36,7 @@ function App(tokenAlive) {
         <RootStack.Screen
           name="App"
           component={TopStackScreen}
-          options={{headerShown: false}}
+          options={{headerShown: false, gestureEnabled: false}}
         />
       </RootStack.Navigator>
       {/* {isSignedIn ? <TopStackScreen /> : <LoginStackScreen />} */}
