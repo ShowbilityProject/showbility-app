@@ -10,6 +10,7 @@ import {
   ScrollView,
   StatusBar,
   Pressable,
+  Dimensions,
 } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {HOST} from '../../common/constant';
@@ -200,6 +201,8 @@ export function ContentsModal({route, navigation}) {
     );
   };
 
+  const win = Dimensions.get('window');
+
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <StatusBar hidden={true} />
@@ -210,14 +213,22 @@ export function ContentsModal({route, navigation}) {
         style={{paddingTop: 44}}
         renderItem={itemObject => {
           let image = itemObject.item;
+          console.log(image);
           let index = itemObject.index;
-          let source = {uri: HOST + image};
+          let source = {uri: image.middle_size_image};
+          const width = image.middle_width;
+          const height = image.middle_height;
+          const ratio = win.width / width;
           return (
             <View>
               {index === 0 ? titleArea() : null}
               <Image
                 source={source}
-                style={{width: '100%', aspectRatio: 1, marginBottom: 10}}
+                style={{
+                  width: '100%',
+                  height: height * ratio,
+                  marginBottom: 10,
+                }}
               />
             </View>
           );
