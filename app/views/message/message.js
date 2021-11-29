@@ -5,15 +5,13 @@ import {
   StyleSheet,
   SafeAreaView,
   Image,
-  FlatList,
+  TextInput,
 } from 'react-native';
-import {TextInput} from 'react-native-gesture-handler';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    flexDirection: 'row',
   },
   flexCenter: {
     alignItems: 'center',
@@ -24,87 +22,83 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#F6F7F9',
     fontSize: 17,
+    height: 40,
+  },
+  fixingText1: {
+    fontFamily: 'JejuGothicOTF',
+    fontSize: 17,
+    lineHeight: 67
+  },
+  fixingText2: {
+    fontFamily: 'JejuGothicOTF',
+    fontSize: 13,
+    lineHeight: 21
+  },
+  msgBodyArea: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: 50,
+  },
+  topContainer: {
+    borderColor: '#f4f4f6',
+    borderBottomWidth: 1,
+    flex: 1,
+    maxHeight: 56,
+    width: '100%',
+  },
+  topHeader: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+  },
+  topText: {
+    fontFamily: 'JejuGothicOTF',
+    fontSize: 17,
+    textAlign: 'center',
   },
 });
 
 function MessageTab() {
-  let messageData = [
-    {
-      sender: 'Hyechou',
-      latestMessage: '너무 멋진 작품입니다.',
-      latestMessageTime: '14:23',
-    },
-    {
-      sender: 'Hyechou2',
-      latestMessage: '너무 멋진 작품입니다.',
-      latestMessageTime: '14:23',
-    },
-  ];
-
-  const renderItem = object => {
-    return (
-      <View style={{flex: 1, flexDirection: 'row'}}>
-        <View style={{flex: 1, maxWidth: 62, padding: 7, paddingLeft: 0}}>
-          <Image
-            style={{width: null, height: null, aspectRatio: 1, flex: 1}}
-            resizeMode={'contain'}
-            source={require('../../../assets/imgs/add_image.png')}
-          />
-        </View>
-        <View style={{flex: 1}}>
-          <View style={{flex: 1, flexDirection: 'row', paddingTop: 5}}>
-            <View style={{flex: 1}}>
-              <Text style={{fontSize: 17}}>Hyechou</Text>
-            </View>
-            <View
-              style={{
-                alignItems: 'flex-end',
-                flex: 1,
-              }}>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={{flex: 1, maxWidth: 50, color: '#B2B2B5'}}>
-                  14:23
-                </Text>
-                <Text style={{flex: 1, maxWidth: 10}}>{'>'}</Text>
-              </View>
-            </View>
-          </View>
-          <View style={{flex: 1}}>
-            <Text style={{fontSize: 12}}>너무 멋진 작품입니다.</Text>
-          </View>
-        </View>
-      </View>
-    );
-  };
+  const fixingImage = require('../../../assets/imgs/fixing.png');
 
   return (
     <SafeAreaView style={[styles.flexCenter, styles.container]}>
-      <View style={{paddingHorizontal: 15, flex: 1, paddingTop: 30}}>
-        <View style={{flex: 1, flexDirection: 'row', maxHeight: 90}}>
+      <View style={styles.topContainer}>
+        <View style={styles.topHeader}>
+          <Text style={{flex: 1, fontFamily: 'JejuGothicOTF', fontSize: 25}}>+</Text>
           <View style={{flex: 1}}>
-            <Text style={{fontFamily: 'JejuGothicOTF', fontSize: 30}}>
-              메시지
-            </Text>
+            <Text style={styles.topText}>메시지</Text>
           </View>
           <View
             style={{flex: 1, flexDirection: 'column', alignItems: 'flex-end'}}>
-            <Text style={{fontFamily: 'JejuGothicOTF', color: '#F85B02'}}>
+            <Text style={{fontFamily: 'JejuGothicOTF', fontSize: 16}}>
               선택
             </Text>
           </View>
         </View>
-        <View style={{flex: 1, maxHeight: 50}}>
-          <TextInput placeholder="검색" style={styles.searchStyle} />
-        </View>
-        <View style={{flex: 1}}>
-          <FlatList
-            key={'#'}
-            keyExtractor={item => '#' + item.sender}
-            data={messageData}
-            renderItem={renderItem}
-            horizontal={false}
-            style={{flex: 1}}
+      </View>
+      <View style={{paddingHorizontal: 15, flex: 1, paddingTop: 10, width: '100%'}}>
+        <View style={{flex: 1, maxHeight: 40}}>
+          <TextInput
+            placeholder="검색"
+            style={styles.searchStyle}
+            editable={false}
           />
+        </View>
+        <View style={styles.msgBodyArea}>
+          <Image
+            source={fixingImage}
+            style={{alignSelf: 'center', width: 73, height: 73}}
+          />
+          <Text style={styles.fixingText1}>아직 준비 중인 서비스입니다.</Text>
+          <Text style={styles.fixingText2}>
+            현재 베타오픈으로 일부 기능이 제한됩니다.
+          </Text>
+          <Text style={styles.fixingText2}>
+            정식 오픈까지 잠시만 기다려주세요.
+          </Text>
         </View>
       </View>
     </SafeAreaView>
