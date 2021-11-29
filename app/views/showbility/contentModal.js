@@ -211,9 +211,9 @@ export function ContentsModal({route, navigation}) {
         keyExtractor={item => '#' + item.id}
         data={item.images}
         style={{paddingTop: 44}}
+        contentContainerStyle={{paddingBottom: 150}}
         renderItem={itemObject => {
           let image = itemObject.item;
-          console.log(image);
           let index = itemObject.index;
           let source = {uri: image.middle_size_image};
           const width = image.middle_width;
