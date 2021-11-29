@@ -60,8 +60,6 @@ const styles = StyleSheet.create({
     width: '100%',
     aspectRatio: 1,
     alignSelf: 'center',
-    marginTop: 20,
-    marginBottom: 10,
     borderRadius: 5,
   },
   filterIcon: {
@@ -71,11 +69,14 @@ const styles = StyleSheet.create({
   },
   shadowBox: {
     width: '100%',
-    overflow: 'hidden',
+    aspectRatio: 1,
+    overflow: 'visible',
     shadowColor: Color.brownishGrey,
     shadowOffset: {width: 0, height: 3},
     shadowOpacity: 0.3,
     shadowRadius: 10,
+    marginTop: 20,
+    marginBottom: 10,
   },
 });
 
