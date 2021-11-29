@@ -144,8 +144,8 @@ export function ContentsModal({route, navigation}) {
     });
   };
 
-  const fetchData = id => {
-    getContentById(id).then(res => {
+  const fetchData = contentId => {
+    getContentById(contentId).then(res => {
       setItem(res);
       setIsLiked(res.is_liked_by_user);
       setLikes(res.likes);
@@ -208,7 +208,7 @@ export function ContentsModal({route, navigation}) {
       <StatusBar hidden={true} />
       <FlatList
         key={'#'}
-        keyExtractor={item => '#' + item}
+        keyExtractor={item => '#' + item.id}
         data={item.images}
         style={{paddingTop: 44}}
         renderItem={itemObject => {
