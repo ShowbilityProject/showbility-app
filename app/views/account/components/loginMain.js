@@ -94,11 +94,23 @@ const styles = StyleSheet.create({
     color: Color.veryLightPink,
     lineHeight: 18
   },
+  kakaoImage: {
+    height: 51,
+    width: 203,
+    margin: 5,
+    alignSelf: 'center',
+    borderRadius: 5,
+  },
+  beforeLoginText: {
+    fontFamily: 'JejuGothicOTF',
+    fontSize: 14,
+    color: Color.veryLightPink,
+    textDecorationLine: 'underline'
+  },
 });
 
 function LoginScreen() {
-  const iconImgSize = Dimensions.get('window').width / 6;
-  const kakao_icon = '../../../../assets/imgs/login/kakao_icon.png';
+  const kakao_icon = '../../../../assets/imgs/login/kakao_icon_new.png';
   const showbility_icon = require('../../../../assets/imgs/showbility.png');
   const navigation = useNavigation();
 
@@ -138,12 +150,7 @@ function LoginScreen() {
       <View style={styles.buttonsContainer}>
         <Pressable onPress={signInWithKakao} style={{flex: 1}}>
           <Image
-            style={{
-              height: iconImgSize,
-              width: iconImgSize,
-              margin: 5,
-              alignSelf: 'center',
-            }}
+            style={styles.kakaoImage}
             resizeMode={'contain'}
             source={require(kakao_icon)}
           />
@@ -151,12 +158,7 @@ function LoginScreen() {
       </View>
       <View style={styles.joinContainer}>
         <Text
-          style={{
-            fontFamily: 'JejuGothicOTF',
-            fontSize: 14,
-            color: Color.veryLightPink,
-            textDecorationLine: 'underline'
-          }}
+          style={styles.beforeLoginText}
           onPress={() => navigation.navigate('App')}>
           로그인 전 둘러보기
         </Text>
