@@ -158,6 +158,7 @@ export function SHome2({route, navigation}) {
                 categories: categoryFilter,
                 tags: tagFilter,
                 isUpload: false,
+                prevScreen: visibility.group ? 'GROUP' : 'FILTER',
               })
             }>
             <Image
@@ -313,6 +314,7 @@ export function ShowbilityHome() {
         name="카테고리&태그 선택"
         component={CategoryList}
         options={{headerBackTitle: ' '}}
+        initialParams={{prevScreen: 'FILTER'}}
       />
       <MainHomeStack.Screen
         name="팔로우"

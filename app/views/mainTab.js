@@ -95,6 +95,7 @@ function ProfileEditStack() {
         name="카테고리&태그 선택"
         component={CategoryList}
         options={{headerBackTitle: ' '}}
+        initialParams={{prevScreen: 'PROFILE'}}
       />
     </ProfileEditStackNav.Navigator>
   );
@@ -114,6 +115,7 @@ function GroupCreateStack() {
         name="카테고리&태그 선택"
         component={CategoryList}
         options={{headerBackTitle: ' '}}
+        initialParams={{prevScreen: 'GROUP_CREATE'}}
       />
     </GroupCreateStackNav.Navigator>
   );
@@ -133,6 +135,7 @@ function NewUploadStack() {
         name="카테고리&태그 선택"
         component={CategoryList}
         options={{headerBackTitle: ' '}}
+        initialParams={{prevScreen: 'UPLOAD'}}
       />
       <NewUploadStackNav.Screen
         name="그룹 선택"
