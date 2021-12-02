@@ -148,6 +148,7 @@ function MainTabScreen() {
     <MainTab.Navigator
       tabBarOptions={{
         activeTintColor: '#F85B02',
+        showLabel: false,
       }}
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
@@ -163,7 +164,7 @@ function MainTabScreen() {
             iconName = focused ? 'person-sharp' : 'person-outline';
           } else if (route.name === 'NewUpload') {
             iconName = 'add-circle-sharp';
-            size = 35;
+            size = 42;
             color = '#F85B02';
           }
 
