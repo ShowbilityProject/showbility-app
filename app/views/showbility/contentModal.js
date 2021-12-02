@@ -218,7 +218,7 @@ export function ContentsModal({route, navigation}) {
           let source = {
             uri: image.middle_size_image
               ? image.middle_size_image
-              : HOST + image,
+              : image.original_image,
           };
           const width = image.middle_width ? image.middle_width : win.width;
           const height = image.middle_height ? image.middle_height : win.width;
