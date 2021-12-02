@@ -19,7 +19,7 @@ import {
   uploadContentMeta,
   uploadImageWithContentId,
 } from '../../service/content';
-import { verifyToken } from '../../service/account';
+import {verifyToken} from '../../service/account';
 
 const styles = StyleSheet.create({
   container: {
@@ -61,6 +61,20 @@ const styles = StyleSheet.create({
   suggestTagText: {
     fontSize: 12,
   },
+  upperRightTopCloseBtn: {
+    color: 'white',
+    alignSelf: 'center',
+  },
+  upperRightTopRemove: {
+    position: 'absolute',
+    right: 16,
+    top: 16,
+    width: 24,
+    height: 24,
+    backgroundColor: '#F85B02',
+    borderRadius: 24,
+    justifyContent: 'center',
+  },
 });
 
 function ListingLable({values}) {
@@ -84,6 +98,7 @@ function NewUploadTab() {
   const [categories, setCategories] = React.useState([]);
   const [tags, setTags] = React.useState([]);
   const [desc, setDesc] = React.useState('');
+  const [forceRefresh, setForceRefresh] = React.useState(false);
 
   React.useEffect(() => {
     verifyToken().then(res => {
@@ -111,7 +126,6 @@ function NewUploadTab() {
       }
       let temp = e.assets;
       temp.push.apply(temp, images);
-      console.log(temp);
       setImages(temp);
     });
   };
@@ -152,6 +166,12 @@ function NewUploadTab() {
       ),
     });
   });
+
+  const removeImageByIndex = index => {
+    images.splice(index, 1);
+    setImages(images);
+    setForceRefresh(!forceRefresh);
+  };
 
   return (
     <ScrollView style={[styles.container]}>
@@ -212,15 +232,22 @@ function NewUploadTab() {
         </View>
       </View>
       <View style={{flex: 6, marginTop: 30}}>
-        {images.map(image => {
+        {images.map((image, index) => {
           let i_height = (image.height * width) / image.width;
           return (
-            <Image
-              style={{width: width, height: i_height, marginBottom: 10}}
-              key={image.fileName}
-              resizeMode="contain"
-              source={image}
-            />
+            <View key={index}>
+              <Image
+                style={{width: width, height: i_height, marginBottom: 10}}
+                key={image.fileName}
+                resizeMode="contain"
+                source={image}
+              />
+              <Pressable
+                onPress={() => removeImageByIndex(index)}
+                style={styles.upperRightTopRemove}>
+                <Text style={styles.upperRightTopCloseBtn}>&#10005;</Text>
+              </Pressable>
+            </View>
           );
         })}
         <TouchableOpacity
