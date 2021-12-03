@@ -121,7 +121,7 @@ function MyDetailHeader({data, isMy, isFetched}) {
   };
 
   const getImageUri = d => {
-    let source = require('../../../assets/imgs/group.png');
+    let source = require('../../../assets/imgs/default_profile.png');
     if (!isEmpty(d.small_image)) source = {uri: d.small_image};
     else if (!isEmpty(d.profile_image)) source = {uri: d.profile_image};
     return source;

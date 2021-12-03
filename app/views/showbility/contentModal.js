@@ -22,6 +22,7 @@ import {
   requestLikeContent,
 } from '../../service/content';
 import {postComment} from '../../service/comment';
+import { isEmpty } from '../../common/util';
 
 const styles = StyleSheet.create({
   container: {
@@ -49,7 +50,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   modalCount: {
-    padding: 10,
+    marginLeft: 10,
+    marginRight: 20,
     color: '#BCBCBC',
     fontSize: 14,
   },
@@ -71,7 +73,7 @@ const styles = StyleSheet.create({
     padding: 10,
     textAlign: 'right',
     color: '#BCBCBC',
-    fontSize: 10,
+    fontSize: 12,
   },
   viewOption: {
     textAlign: 'right',
@@ -110,6 +112,17 @@ const styles = StyleSheet.create({
   suggestTagText: {
     fontSize: 12,
   },
+  profileImage: {
+    width: 51,
+    height: 51,
+    resizeMode: 'cover',
+    borderRadius: 51
+  },
+  iconStyle: {
+    width: 16,
+    height: 16,
+    resizeMode: 'contain'
+  },
 });
 
 export function ContentsModal({route, navigation}) {
@@ -124,6 +137,10 @@ export function ContentsModal({route, navigation}) {
     tags: [],
     images: [],
     is_liked_by_user: false,
+    user: {
+      profile_image: '',
+      nickname: '',
+    },
   });
   const [cmtText, setCmtText] = React.useState('');
   const [isLiked, setIsLiked] = React.useState(false);
@@ -205,6 +222,13 @@ export function ContentsModal({route, navigation}) {
 
   const win = Dimensions.get('window');
 
+  const getUserImage = user => {
+    console.log(user);
+    if (isEmpty(user.profile_image))
+      return require('../../../assets/imgs/default_profile.png');
+    else return {uri: user.profile_image};
+  };
+
   return (
     <KeyboardAvoidingView
       keyboardVerticalOffset={100}
@@ -252,13 +276,19 @@ export function ContentsModal({route, navigation}) {
       </Pressable>
       <BottomSheet snapPoints={snapPoints}>
         <View style={{marginBottom: 20, flexDirection: 'row'}}>
-          <View style={{flex: 1, height: 70}}>
-            <Image />
+          <View style={{flex: 1, height: 80, alignItems: 'center'}}>
+            <Image
+              style={styles.profileImage}
+              source={getUserImage(item.user)}
+            />
           </View>
           <View style={{flex: 4}}>
             <View style={{marginBottom: 10}}>
               <Text style={{fontFamily: 'JejuGothicOTF', fontSize: 17}}>
                 {item.title}
+              </Text>
+              <Text style={{fontSize: 14, marginTop: 7}}>
+                {item.user.nickname}
               </Text>
             </View>
             <View style={styles.contentMetaCount}>
@@ -266,21 +296,29 @@ export function ContentsModal({route, navigation}) {
                 style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
                 <TouchableOpacity onPress={() => handleLike()}>
                   {isLiked ? (
-                    <Image source={require(likeOnIcon)} />
+                    <Image
+                      style={styles.iconStyle}
+                      source={require(likeOnIcon)}
+                    />
                   ) : (
-                    <Image source={require(likeIcon)} />
+                    <Image
+                      style={styles.iconStyle}
+                      source={require(likeIcon)}
+                    />
                   )}
                 </TouchableOpacity>
-                <Text
-                  style={[
-                    styles.modalCount,
-                    {color: isLiked ? '#F85B02' : '#BCBCBC'},
-                  ]}>
-                  {item.likes}
-                </Text>
-                <Image source={require(viewIcon)} />
+                <View>
+                  <Text
+                    style={[
+                      styles.modalCount,
+                      {color: isLiked ? '#F85B02' : '#BCBCBC'},
+                    ]}>
+                    {item.likes}
+                  </Text>
+                </View>
+                <Image style={styles.iconStyle} source={require(viewIcon)} />
                 <Text style={styles.modalCount}>{item.views}</Text>
-                <Image source={require(cmtIcon)} />
+                <Image style={styles.iconStyle} source={require(cmtIcon)} />
                 <Text style={styles.modalCount}>{item.comments.length}</Text>
               </View>
               <View style={{flex: 1}}>
