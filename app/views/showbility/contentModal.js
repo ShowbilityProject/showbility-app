@@ -11,8 +11,10 @@ import {
   StatusBar,
   Pressable,
   Dimensions,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
-import BottomSheet from '@gorhom/bottom-sheet';
+import BottomSheet, {BottomSheetTextInput} from '@gorhom/bottom-sheet';
 import {HOST} from '../../common/constant';
 import {
   getContentById,
@@ -204,7 +206,10 @@ export function ContentsModal({route, navigation}) {
   const win = Dimensions.get('window');
 
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
+    <KeyboardAvoidingView
+      keyboardVerticalOffset={100}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{flex: 1, backgroundColor: 'white'}}>
       <StatusBar hidden={true} />
       <FlatList
         key={'#'}
@@ -349,7 +354,7 @@ export function ContentsModal({route, navigation}) {
             </View>
           </View>
           <View style={styles.commentInputWrapper}>
-            <TextInput
+            <BottomSheetTextInput
               ref={commentInput}
               placeholder="댓글 달기"
               style={styles.commentInput}
@@ -360,6 +365,6 @@ export function ContentsModal({route, navigation}) {
           </View>
         </View>
       </BottomSheet>
-    </View>
+    </KeyboardAvoidingView>
   );
 }

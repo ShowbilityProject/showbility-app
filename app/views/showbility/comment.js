@@ -1,3 +1,4 @@
+import { Header } from '@react-navigation/stack';
 import * as React from 'react';
 import {
   FlatList,
@@ -6,6 +7,8 @@ import {
   Text,
   StyleSheet,
   TextInput,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { getComment, postComment } from '../../service/comment';
 
@@ -107,52 +110,57 @@ export function CommentsView({route, navigation}) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={item}
-        renderItem={item => {
-          let comment = item.item;
-          if (comment.depth > 0) {
-            return;
-          }
-          return (
-            <View>
-              <View style={CommentStyles.headLayer}>
-                <View>
-                  <View style={{flexDirection: 'row'}}>
-                    <Text style={{fontSize: 12}}>{comment.author}</Text>
-                    <Text style={{marginLeft: 10, fontSize: 12}}>
-                      {comment.detail}
-                    </Text>
-                  </View>
-                  <View style={{flexDirection: 'row', marginTop: 10}}>
-                    <Text style={CommentStyles.additionalInfo}>
-                      {getTimeString(comment.created_at)}
-                    </Text>
-                    <Text style={CommentStyles.additionalInfo}>
-                      좋아요 {comment.likes}개
-                    </Text>
-                    {/* <Text style={CommentStyles.additionalInfo}>답글 달기</Text> */}
+    <SafeAreaView style={{flex: 1}}>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={100}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.container}>
+        <FlatList
+          data={item}
+          renderItem={item => {
+            let comment = item.item;
+            if (comment.depth > 0) {
+              return;
+            }
+            return (
+              <View>
+                <View style={CommentStyles.headLayer}>
+                  <View>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={{fontSize: 12}}>{comment.author}</Text>
+                      <Text style={{marginLeft: 10, fontSize: 12}}>
+                        {comment.detail}
+                      </Text>
+                    </View>
+                    <View style={{flexDirection: 'row', marginTop: 10}}>
+                      <Text style={CommentStyles.additionalInfo}>
+                        {getTimeString(comment.created_at)}
+                      </Text>
+                      <Text style={CommentStyles.additionalInfo}>
+                        좋아요 {comment.likes}개
+                      </Text>
+                      {/* <Text style={CommentStyles.additionalInfo}>답글 달기</Text> */}
+                    </View>
                   </View>
                 </View>
+                {comment.childs.map(reply => {
+                  return <ReplyView reply={reply} key={reply.url} />;
+                })}
               </View>
-              {comment.childs.map(reply => {
-                return <ReplyView reply={reply} key={reply.url} />;
-              })}
-            </View>
-          );
-        }}
-      />
-      <View style={styles.commentInputWrapper}>
-        <TextInput
-          ref={commentInput}
-          placeholder="댓글 달기"
-          style={styles.commentInput}
-          value={cmtText}
-          onChangeText={value => setCmtText(value)}
-          onSubmitEditing={submitComment}
+            );
+          }}
         />
-      </View>
+        <View style={styles.commentInputWrapper}>
+          <TextInput
+            ref={commentInput}
+            placeholder="댓글 달기"
+            style={styles.commentInput}
+            value={cmtText}
+            onChangeText={value => setCmtText(value)}
+            onSubmitEditing={submitComment}
+          />
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
