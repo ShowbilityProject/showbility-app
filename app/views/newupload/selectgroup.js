@@ -88,7 +88,7 @@ export function SelectGroup({route}) {
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <FlatList
         key={'#'}
-        keyExtractor={item => '#' + item.name}
+        keyExtractor={item => '#' + item.id}
         data={groups}
         refreshing={refreshing}
         extraData={extraData}
