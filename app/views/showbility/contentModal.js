@@ -215,13 +215,15 @@ export function ContentsModal({route, navigation}) {
         renderItem={itemObject => {
           let image = itemObject.item;
           let index = itemObject.index;
-          let source = {
-            uri: image.middle_size_image
-              ? image.middle_size_image
-              : image.original_image,
-          };
-          const width = image.middle_width ? image.middle_width : win.width;
-          const height = image.middle_height ? image.middle_height : win.width;
+          let width = image.width;
+          let height = image.height;
+          let source = {uri: image.original_image};
+          if (image.middle_size_image) {
+            console.debug('MIDDLESIZE');
+            width = image.middle_width;
+            height = image.middle_height;
+            source = {uri: image.middle_size_image};
+          }
           const ratio = win.width / width;
           return (
             <View>
