@@ -2,15 +2,16 @@ import * as React from 'react';
 import {View, FlatList, Text, StyleSheet, Image, Alert} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
-import {getGroups, getNextGroupsList, GET_GROUP_TYPE} from '../../../service/group';
-import { verifyToken } from '../../../service/account';
-import { isEmpty } from '../../../common/util';
+import {getGroups, getNextGroupsList} from '../../../service/group';
+import {verifyToken} from '../../../service/account';
+import {isEmpty} from '../../../common/util';
+import {Color} from '../../../style/colors';
 
 const styles = StyleSheet.create({
   baseContainer: {
     backgroundColor: 'white',
     paddingTop: 15,
-    flex: 1
+    flex: 1,
   },
   flatListImage: {
     width: '100%',
@@ -32,6 +33,22 @@ const styles = StyleSheet.create({
   },
   flatListFrame: {
     paddingHorizontal: 10,
+  },
+  emptyContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: 100,
+  },
+  emptyTitleText: {
+    fontFamily: 'JejuGothicOTF',
+    fontSize: 17,
+    lineHeight: 67,
+  },
+  emptyDetailText: {
+    fontSize: 13,
+    lineHeight: 21,
+    color: Color.veryLightPink,
   },
 });
 
@@ -120,22 +137,32 @@ export function GroupDepthView({route}) {
   };
   return (
     <View style={styles.baseContainer}>
-      <FlatList
-        key={'#'}
-        keyExtractor={item => '#' + item.id}
-        data={data}
-        renderItem={renderItem}
-        horizontal={false}
-        numColumns={2}
-        refreshing={refreshing}
-        style={styles.flatListFrame}
-        onScroll={({nativeEvent}) => {
-          if (isScrollEnd(nativeEvent)) {
-            console.log(fetchingNext);
-            if (!fetchingNext) fetchNext();
-          }
-        }}
-      />
+      {!data.length ? (
+        <View style={styles.emptyContainer}>
+          <Text style={styles.emptyTitleText}>{title} 없음</Text>
+          <Text style={styles.emptyDetailText}>그룹을 생성하여</Text>
+          <Text style={styles.emptyDetailText}>
+            우리 그룹의 재능을 공유해주세요!
+          </Text>
+        </View>
+      ) : (
+        <FlatList
+          key={'#'}
+          keyExtractor={item => '#' + item.id}
+          data={data}
+          renderItem={renderItem}
+          horizontal={false}
+          numColumns={2}
+          refreshing={refreshing}
+          style={styles.flatListFrame}
+          onScroll={({nativeEvent}) => {
+            if (isScrollEnd(nativeEvent)) {
+              console.log(fetchingNext);
+              if (!fetchingNext) fetchNext();
+            }
+          }}
+        />
+      )}
     </View>
   );
 }
