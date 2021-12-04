@@ -2,29 +2,18 @@ import {HOST, APPLICATION_JSON, API_TOKEN} from './constant';
 import {removeUserSession, retrieveUserSession} from './securestorage';
 import {isEmpty} from './util';
 
-let jwtToken = '';
-
 async function getToken(refresh = false) {
-  if (isEmpty(jwtToken)) {
-    jwtToken = await retrieveUserSession(API_TOKEN);
-    return jwtToken;
-  } else {
-    return jwtToken;
-  }
+  let jwtToken = await retrieveUserSession(API_TOKEN);
+  return jwtToken;
 }
 
 function removeToken() {
   console.log('Remove Token');
   try {
-    if (!isEmpty(jwtToken)) removeUserSession(API_TOKEN);
-    jwtToken = '';
+    removeUserSession(API_TOKEN);
   } catch (e) {
     console.log(e);
   }
-}
-
-export function setToken(token) {
-  jwtToken = token;
 }
 
 async function getCommonOptions(addToken = true) {

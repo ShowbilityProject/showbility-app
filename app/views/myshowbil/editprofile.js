@@ -8,10 +8,12 @@ import {
   TextInput,
   Text,
   Pressable,
+  Alert,
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {isEmpty} from '../../common/util';
-import {updateMyProfile} from '../../service/account';
+import {requestSignOut, updateMyProfile} from '../../service/account';
+import {Color} from '../../style/colors';
 
 const styles = StyleSheet.create({
   fontJeju: {
@@ -43,19 +45,22 @@ const styles = StyleSheet.create({
   },
   applyButton: {
     flex: 1,
-    height: 52,
+    maxHeight: 52,
     backgroundColor: '#F7F7F7',
     width: '100%',
     alignItems: 'center',
+    borderRadius: 5,
   },
   applyButtonValid: {
     flex: 1,
-    height: 52,
+    maxHeight: 52,
     backgroundColor: '#F85B02',
     width: '100%',
     alignItems: 'center',
+    borderRadius: 5,
   },
   applyButtonText: {
+    fontFamily: 'JejuGothicOTF',
     lineHeight: 52,
     fontSize: 17,
     color: '#B2B2B5',
@@ -64,6 +69,7 @@ const styles = StyleSheet.create({
     lineHeight: 52,
     fontSize: 17,
     color: 'white',
+    fontFamily: 'JejuGothicOTF',
   },
   imageStyle: {
     width: 100,
@@ -77,6 +83,23 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     color: '#F85B02',
     alignSelf: 'center',
+  },
+  bottomWrapper: {
+    flex: 1,
+    alignItems: 'flex-end',
+    flexDirection: 'row',
+    paddingBottom: 42,
+  },
+  smallOptionText: {
+    fontSize: 12,
+    color: Color.brownishGrey,
+    textDecorationLine: 'underline',
+  },
+  smallOptionWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    marginBottom: 15,
   },
 });
 
@@ -168,53 +191,65 @@ export function EditProfileScreen({route}) {
 
   return (
     <SafeAreaView style={styles.baseView}>
-      <View style={styles.baseView}>
-        <Pressable style={styles.imageWrapper} onPress={handleUploadImage}>
-          <Image style={styles.imageStyle} source={imageSource} />
-        </Pressable>
-        <View style={styles.textInputWrapper}>
-          <TextInput
-            style={styles.textInputStyle}
-            placeholder="별명"
-            value={nname}
-            onChangeText={value => setNname(value)}
-          />
-        </View>
-        <View style={styles.textInputWrapper}>
-          <TextInput
-            style={styles.textInputStyle}
-            placeholder="자기소개"
-            value={desc}
-            onChangeText={value => setDesc(value)}
-          />
-        </View>
-        <Pressable
-          onPress={() =>
-            navigation.push('카테고리&태그 선택', {
-              selectCategories: selectCategories,
-              categories: categories.slice(),
-              selectTags: selectTags,
-              tags: tgs.slice(),
-              isUpload: false,
-            })
-          }
-          style={[
-            styles.textInputWrapper,
-            {justifyContent: 'center', flexDirection: 'row'},
-          ]}>
-          <Text style={{fontSize: 17, alignSelf: 'center', flex: 1}}>
-            태그 설정
+      <Pressable style={styles.imageWrapper} onPress={handleUploadImage}>
+        <Image style={styles.imageStyle} source={imageSource} />
+      </Pressable>
+      <View style={styles.textInputWrapper}>
+        <TextInput
+          style={styles.textInputStyle}
+          placeholder="별명"
+          value={nname}
+          onChangeText={value => setNname(value)}
+        />
+      </View>
+      <View style={styles.textInputWrapper}>
+        <TextInput
+          style={styles.textInputStyle}
+          placeholder="자기소개"
+          value={desc}
+          onChangeText={value => setDesc(value)}
+        />
+      </View>
+      <Pressable
+        onPress={() =>
+          navigation.push('카테고리&태그 선택', {
+            selectCategories: selectCategories,
+            categories: categories.slice(),
+            selectTags: selectTags,
+            tags: tgs.slice(),
+            isUpload: false,
+          })
+        }
+        style={[
+          styles.textInputWrapper,
+          {justifyContent: 'center', flexDirection: 'row'},
+        ]}>
+        <Text style={{fontSize: 17, alignSelf: 'center', flex: 1}}>
+          태그 설정
+        </Text>
+        {categories.length > 0 || tgs.length > 0 ? (
+          <Text style={styles.tagsStyle}>{getReprTagText()}</Text>
+        ) : (
+          <Text style={{fontSize: 17, textAlign: 'right', alignSelf: 'center'}}>
+            {'>'}
           </Text>
-          {categories.length > 0 || tgs.length > 0 ? (
-            <Text style={styles.tagsStyle}>{getReprTagText()}</Text>
-          ) : (
-            <Text
-              style={{fontSize: 17, textAlign: 'right', alignSelf: 'center'}}>
-              {'>'}
-            </Text>
-          )}
-        </Pressable>
-        <View style={{flex: 2, alignItems: 'flex-end', flexDirection: 'row'}}>
+        )}
+      </Pressable>
+      <View style={styles.bottomWrapper}>
+        <View style={{flex: 1, alignItems: 'flex-end'}}>
+          <View style={styles.smallOptionWrapper}>
+            <Pressable
+              style={{marginRight: 7}}
+              onPress={async () => {
+                let ret = await requestSignOut();
+                if (ret) navigation.navigate('Login');
+              }}>
+              <Text style={styles.smallOptionText}>로그아웃</Text>
+            </Pressable>
+            <Pressable>
+              <Text style={styles.smallOptionText}>회원탈퇴</Text>
+            </Pressable>
+          </View>
           <Pressable style={buttonStyle} onPress={() => handleSubmit()}>
             <Text style={buttonTextStyle}>저장하기</Text>
           </Pressable>

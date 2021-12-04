@@ -1,6 +1,6 @@
 import {API_TOKEN, HOST} from '../common/constant';
 import {asyncGet, asyncPost, get, post, rawPost} from '../common/requester';
-import {retrieveUserSession, storeUserSession} from '../common/securestorage';
+import {removeUserSession, retrieveUserSession, storeUserSession} from '../common/securestorage';
 import {isEmpty} from '../common/util';
 
 function saveToken(token) {
@@ -141,4 +141,9 @@ export async function requestLoginKakao(data) {
   let token = ret.token;
   if (isEmpty(token)) return false;
   else return saveToken(token);
+}
+
+export async function requestSignOut() {
+  let ret = await removeUserSession(API_TOKEN);
+  return ret;
 }

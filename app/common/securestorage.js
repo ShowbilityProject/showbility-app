@@ -25,7 +25,7 @@ async function retrieveUserSession(key) {
 
 async function removeUserSession(key) {
   try {
-    EncryptedStorage.removeItem(key);
+    await EncryptedStorage.removeItem(key);
     return true;
   } catch (error) {
     return false;
