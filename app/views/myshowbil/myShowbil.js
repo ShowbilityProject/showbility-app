@@ -295,6 +295,10 @@ function MyItems({contents}) {
   contents = contents ? contents : [];
   return (
     <View style={styles.bodyItemSpace}>
+      <View style={{flexDirection: 'row', marginBottom: 20}}>
+        <Text style={{flex: 1, fontFamily: 'JejuGothicOTF', fontSize: 17}}>내 작품 둘러보기</Text>
+        <Text style={{fontSize: 12, color: '#F85B02'}}>전체보기</Text>
+      </View>
       <View style={{flexDirection: 'row'}}>
         {contents.map(content => {
           let source =
