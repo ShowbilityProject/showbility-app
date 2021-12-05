@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   groupImage: {
     width: '100%',
-    aspectRatio: 1,
+    aspectRatio: 165 / 124,
     borderRadius: 5,
   },
   headerCount: {
