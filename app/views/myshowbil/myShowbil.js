@@ -94,8 +94,8 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   imageStyle: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
     resizeMode: 'cover',
     overflow: 'hidden',
     borderRadius: 50,
@@ -155,7 +155,9 @@ function MyDetailHeader({data, isMy, isFetched}) {
           <Ionicons name="settings-sharp" size={20} color={'black'} />
         </Pressable>
       </View>
-      <Image style={styles.imageStyle} source={getImageUri(data)} />
+      <View>
+        <Image style={styles.imageStyle} source={getImageUri(data)} />
+      </View>
       <View style={{flexDirection: 'row'}}>
         <Pressable
           style={{padding: 20, alignItems: 'center'}}
