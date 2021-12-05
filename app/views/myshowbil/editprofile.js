@@ -246,7 +246,7 @@ export function EditProfileScreen({route}) {
               }}>
               <Text style={styles.smallOptionText}>로그아웃</Text>
             </Pressable>
-            <Pressable>
+            <Pressable onPress={() => Alert.alert('준비 중입니다.')}>
               <Text style={styles.smallOptionText}>회원탈퇴</Text>
             </Pressable>
           </View>
