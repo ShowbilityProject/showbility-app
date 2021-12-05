@@ -9,6 +9,8 @@ import {
   Pressable,
   Button,
   Alert,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {launchImageLibrary} from 'react-native-image-picker';
@@ -20,6 +22,7 @@ import {
   uploadImageWithContentId,
 } from '../../service/content';
 import {verifyToken} from '../../service/account';
+import {Color} from '../../style/colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -40,7 +43,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   inputStyle: {
-    fontFamily: 'JejuGothicOTF',
     width: '90%',
     height: 60,
     fontSize: 17,
@@ -75,14 +77,20 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     justifyContent: 'center',
   },
+  labelWrapper: {
+    marginVertical: 10,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    minHeight: 20,
+  },
 });
 
 function ListingLable({values}) {
-  return values.map(value => {
+  return values.map((value, index) => {
     return (
       <View
         style={styles.suggestTagView}
-        key={value}
+        key={index + value}
         onStartShouldSetResponder={() => true}>
         <Text style={styles.suggestTagText}>{value}</Text>
       </View>
@@ -97,8 +105,13 @@ function NewUploadTab() {
   const [title, setTitle] = React.useState('');
   const [categories, setCategories] = React.useState([]);
   const [tags, setTags] = React.useState([]);
+  const [freeTags, setFreeTags] = React.useState([]);
+  const [freeTagInput, setFreeTagInput] = React.useState('');
+  const [freeTagFocused, setFreeTagFocused] = React.useState(false);
   const [desc, setDesc] = React.useState('');
   const [forceRefresh, setForceRefresh] = React.useState(false);
+
+  const freeTagInputRef = React.useRef();
 
   React.useEffect(() => {
     verifyToken().then(res => {
@@ -151,7 +164,12 @@ function NewUploadTab() {
     ) {
       Alert.alert('필수 항목 누락', '모든 항목을 채워주세요');
     } else {
-      const res = await uploadContentMeta(title, categories, tags, desc);
+      const res = await uploadContentMeta(
+        title,
+        categories,
+        tags.concat(freeTags),
+        desc,
+      );
       for (let i = 0; i < images.length; i++) {
         uploadImageWithContentId(images[i], res.id, i);
       }
@@ -173,89 +191,165 @@ function NewUploadTab() {
     setForceRefresh(!forceRefresh);
   };
 
+  const convertFreeTagToLabel = value => {
+    if (!freeTags.includes(value)) {
+      freeTags.push(value);
+      setFreeTags(freeTags);
+    }
+  };
+
+  const onFreeTagInputChange = value => {
+    setFreeTagInput(value);
+    let last = value.charAt(value.length - 1);
+    if (last === ' ' || last === '\n') {
+      let word = value.substring(0, value.length - 1);
+      if (word !== ' ' && !isEmpty(word)) {
+        convertFreeTagToLabel(word);
+      }
+      setFreeTagInput('');
+    }
+  };
+
+  const onRemoveFreeTagPressed = index => {
+    freeTags.splice(index, 1);
+    setFreeTags(freeTags);
+    setFreeTagFocused(false);
+    setForceRefresh(!forceRefresh);
+  };
+
   return (
     <ScrollView style={[styles.container]}>
-      <View style={styles.topWrapper}>
-        <View style={styles.inputWrapper}>
-          <TextInput
-            style={styles.inputStyle}
-            placeholder="작품 제목"
-            onChangeText={handleTitleChange}
-          />
-        </View>
-        <View style={[styles.inputWrapper, {flexDirection: 'row'}]}>
-          <View style={{flex: 1}}>
-            <Text style={styles.textStyle}>카테고리&태그</Text>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+          setFreeTagFocused(false);
+        }}>
+        <View>
+          <View style={styles.topWrapper}>
+            <View style={styles.inputWrapper}>
+              <TextInput
+                style={styles.inputStyle}
+                placeholder="작품 제목"
+                onChangeText={handleTitleChange}
+              />
+            </View>
+            <View style={[styles.inputWrapper, {flexDirection: 'row'}]}>
+              <View style={{flex: 1}}>
+                <Text style={styles.textStyle}>태그 설정</Text>
+              </View>
+              <View style={{flex: 1}}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('카테고리&태그 선택', {
+                      selectCategories: selectCategories,
+                      categories: categories.slice(),
+                      selectTags: selectTags,
+                      tags: tags.slice(),
+                      isUpload: true,
+                    })
+                  }>
+                  <Text style={[styles.textStyle, {textAlign: 'right'}]}>
+                    {'>'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View>
+              <View style={styles.inputWrapper}>
+                <View style={styles.labelWrapper}>
+                  <ListingLable values={categories} />
+                  <ListingLable values={tags} />
+                </View>
+              </View>
+              <View style={styles.inputWrapper}>
+                <Pressable
+                  style={styles.labelWrapper}
+                  onPress={() => {
+                    setFreeTagFocused(true);
+                    freeTagInputRef.current.focus();
+                  }}>
+                  {freeTags.length ? (
+                    freeTags.map((value, index) => {
+                      return (
+                        <View
+                          style={[
+                            styles.suggestTagView,
+                            {flexDirection: 'row'},
+                          ]}
+                          key={index + value}>
+                          <Text style={styles.suggestTagText}>{value}</Text>
+                          <Pressable
+                            onPress={() => onRemoveFreeTagPressed(index)}>
+                            <Text
+                              style={[styles.suggestTagText, {marginLeft: 4}]}>
+                              X
+                            </Text>
+                          </Pressable>
+                        </View>
+                      );
+                    })
+                  ) : (
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color: Color.veryLightPink,
+                        display: freeTagFocused ? 'none' : 'flex',
+                      }}>
+                      #해시태그로 원하는 모든 태그를 입력하세요.
+                    </Text>
+                  )}
+                  <TextInput
+                    ref={freeTagInputRef}
+                    style={[
+                      styles.inputStyle,
+                      {display: freeTagFocused ? 'flex' : 'none', height: 40},
+                    ]}
+                    onChangeText={value => onFreeTagInputChange(value)}
+                    value={freeTagInput}
+                  />
+                </Pressable>
+              </View>
+            </View>
+            <View style={styles.inputWrapper}>
+              <Text style={styles.textStyle}>프로젝트 설명</Text>
+              <TextInput
+                style={[
+                  styles.inputStyle,
+                  {height: 'auto', minHeight: 100, fontSize: 15},
+                ]}
+                placeholder="프로젝트 설명"
+                multiline={true}
+                onChangeText={value => setDesc(value)}
+              />
+            </View>
           </View>
-          <View style={{flex: 1}}>
+          <View style={{flex: 6, marginTop: 30}}>
+            {images.map((image, index) => {
+              let i_height = (image.height * width) / image.width;
+              return (
+                <View key={index}>
+                  <Image
+                    style={{width: width, height: i_height, marginBottom: 10}}
+                    key={image.fileName}
+                    resizeMode="contain"
+                    source={image}
+                  />
+                  <Pressable
+                    onPress={() => removeImageByIndex(index)}
+                    style={styles.upperRightTopRemove}>
+                    <Text style={styles.upperRightTopCloseBtn}>&#10005;</Text>
+                  </Pressable>
+                </View>
+              );
+            })}
             <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('카테고리&태그 선택', {
-                  selectCategories: selectCategories,
-                  categories: categories.slice(),
-                  selectTags: selectTags,
-                  tags: tags.slice(),
-                  isUpload: true,
-                })
-              }>
-              <Text style={[styles.textStyle, {textAlign: 'right'}]}>
-                {'>'}
-              </Text>
+              onPress={handleUploadImage}
+              style={{alignItems: 'center', marginBottom: 40}}>
+              <Ionicons name="add-circle-outline" size={50} color="gray" />
             </TouchableOpacity>
           </View>
         </View>
-        <View>
-          <View style={styles.inputWrapper}>
-            <View
-              style={{
-                marginVertical: 10,
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                minHeight: 20,
-              }}>
-              <ListingLable values={categories} />
-              <ListingLable values={tags} />
-            </View>
-          </View>
-        </View>
-        <View style={styles.inputWrapper}>
-          <Text style={styles.textStyle}>프로젝트 설명</Text>
-          <TextInput
-            style={[
-              styles.inputStyle,
-              {height: 'auto', minHeight: 100, fontSize: 15},
-            ]}
-            placeholder="프로젝트 설명"
-            multiline={true}
-            onChangeText={value => setDesc(value)}
-          />
-        </View>
-      </View>
-      <View style={{flex: 6, marginTop: 30}}>
-        {images.map((image, index) => {
-          let i_height = (image.height * width) / image.width;
-          return (
-            <View key={index}>
-              <Image
-                style={{width: width, height: i_height, marginBottom: 10}}
-                key={image.fileName}
-                resizeMode="contain"
-                source={image}
-              />
-              <Pressable
-                onPress={() => removeImageByIndex(index)}
-                style={styles.upperRightTopRemove}>
-                <Text style={styles.upperRightTopCloseBtn}>&#10005;</Text>
-              </Pressable>
-            </View>
-          );
-        })}
-        <TouchableOpacity
-          onPress={handleUploadImage}
-          style={{alignItems: 'center', marginBottom: 40}}>
-          <Ionicons name="add-circle-outline" size={50} color="gray" />
-        </TouchableOpacity>
-      </View>
+      </TouchableWithoutFeedback>
     </ScrollView>
   );
 }
