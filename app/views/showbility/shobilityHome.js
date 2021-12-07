@@ -307,7 +307,7 @@ export function ShowbilityHome() {
         options={{headerBackTitle: ' '}}
       />
       <MainHomeStack.Screen
-        name="GroupMemeber"
+        name="GroupMember"
         component={GroupMember}
         options={{headerBackTitle: ' '}}
       />

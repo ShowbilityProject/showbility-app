@@ -32,7 +32,8 @@ const getVisibility = route => {
     routeName === 'GroupDetail' ||
     routeName === 'GroupDepthView' ||
     routeName === '사용자정보' ||
-    routeName === '팔로우'
+    routeName === '팔로우' ||
+    routeName === 'GroupMember'
   ) {
     return false;
   }

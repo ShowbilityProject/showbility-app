@@ -358,7 +358,7 @@ function GroupMembers({members, members_count, id, refresh, setRefersh}) {
         <TouchableOpacity
           style={{flex: 1}}
           onPress={() =>
-            navigation.navigate('GroupMemeber', {groupId: id, status: 'AT'})
+            navigation.navigate('GroupMember', {groupId: id, status: 'AT'})
           }>
           <Text style={styles.showAllTextFont}>전체 보기</Text>
         </TouchableOpacity>
@@ -466,7 +466,7 @@ function GroupPendingMembers({members, id}) {
         <TouchableOpacity
           style={{flex: 1}}
           onPress={() =>
-            navigation.navigate('GroupMemeber', {groupId: id, status: 'PN'})
+            navigation.navigate('GroupMember', {groupId: id, status: 'PN'})
           }>
           <Text style={styles.showAllTextFont}>전체 보기</Text>
         </TouchableOpacity>

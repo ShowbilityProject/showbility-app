@@ -4,7 +4,7 @@ import {FlatList, View, Image, Text, StyleSheet, TextInput, Pressable} from 'rea
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import { FOLLOW_STATUS, MEMBER_STATUS_TYPE } from '../../../common/constant';
 import { requestFollow, requestUnfollow } from '../../../service/account';
-import {getGroupMemebersByGroupId, getNext, updateMemberStatus} from '../../../service/group';
+import {getGroupMembersByGroupId, getNext, updateMemberStatus} from '../../../service/group';
 
 export function GroupMember({route}) {
   const navigation = useNavigation();
@@ -17,7 +17,7 @@ export function GroupMember({route}) {
   const [extraData, setExtraData] = React.useState(false);
 
   React.useEffect(() => {
-    getGroupMemebersByGroupId(groupId, status)
+    getGroupMembersByGroupId(groupId, status)
       .then(res => {
         setData(res.results);
         setNextURL(res.next);

@@ -57,7 +57,7 @@ export function getNextGroupsList(url) {
     .catch(err => console.log('Error fetching next', err.message));
 }
 
-export function getGroupMemebersByGroupId(groupId, status) {
+export function getGroupMembersByGroupId(groupId, status) {
   let url = `${HOST}/group/${groupId}/members/?status=${status}`;
   return get(url)
     .then(res => res.json())
