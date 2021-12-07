@@ -105,14 +105,17 @@ export function GroupMember({route}) {
       requestFollow(id).then(res => {
         if (res) {
           user.followable = FOLLOW_STATUS.FOLLOWING;
+          setExtraData(!extraData);
         }
       });
     } else if (followable === FOLLOW_STATUS.FOLLOWING) {
       requestUnfollow(id).then(res => {
-        user.followable = FOLLOW_STATUS.NOT_FOLLOWING;
+        if (res) {
+          user.followable = FOLLOW_STATUS.NOT_FOLLOWING;
+          setExtraData(!extraData);
+        }
       });
     }
-    setExtraData(!extraData);
   };
 
   const renderItem = itemObject => {

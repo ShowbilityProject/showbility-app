@@ -333,14 +333,19 @@ function GroupMembers({members, members_count, id, refresh, setRefersh}) {
     const {followable, id} = user;
     if (followable === FOLLOW_STATUS.NOT_FOLLOWING) {
       requestFollow(id).then(res => {
-        if (res) user.followable = FOLLOW_STATUS.FOLLOWING;
+        if (res) {
+          user.followable = FOLLOW_STATUS.FOLLOWING;
+          setRefersh(!refresh);
+        }
       });
     } else if (followable === FOLLOW_STATUS.FOLLOWING) {
       requestUnfollow(id).then(res => {
-        if (res) user.followable = FOLLOW_STATUS.NOT_FOLLOWING;
+        if (res) {
+          user.followable = FOLLOW_STATUS.NOT_FOLLOWING;
+          setRefersh(!refresh);
+        }
       });
     }
-    setRefersh(!refresh);
   };
 
   const getProfileImageSource = user => {

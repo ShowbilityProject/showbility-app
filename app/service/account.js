@@ -91,16 +91,26 @@ export function getFollowers(user_id, _type) {
 export function requestFollow(user_id) {
   let uri = HOST + `/user/${user_id}/follow/`;
   return post(uri)
-    .then(res => res.json())
-    .catch(() => false);
+    .then(res => {
+      return res.ok;
+    })
+    .catch(err => {
+      console.error(err);
+      return false;
+    });
 }
 
 export function requestUnfollow(user_id) {
   let uri = HOST + `/user/${user_id}/follow/`;
   console.log(uri);
   return post(uri, undefined, true, 'DELETE')
-    .then(res => res.json())
-    .catch(() => false);
+    .then(res => {
+      return res.ok;
+    })
+    .catch(err => {
+      console.error(err);
+      return false;
+    });
 }
 
 export async function verifyToken() {
