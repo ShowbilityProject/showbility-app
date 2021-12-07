@@ -8,10 +8,21 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  Pressable,
 } from 'react-native';
-import {GROUP_CONTENT_STATUS, HOST, MEMBER_STATUS_TYPE} from '../../../common/constant';
+import {
+  GROUP_CONTENT_STATUS,
+  HOST,
+  MEMBER_STATUS_TYPE,
+} from '../../../common/constant';
 import {isEmpty} from '../../../common/util';
-import {getGroupById, requestGroupJoin, updateMemberStatus} from '../../../service/group';
+import {
+  getGroupById,
+  requestGroupJoin,
+  updateMemberStatus,
+} from '../../../service/group';
+import {FOLLOW_STATUS} from '../../../common/constant';
+import {requestFollow, requestUnfollow} from '../../../service/account';
 
 const styles = StyleSheet.create({
   fontJeju: {
@@ -113,6 +124,31 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     color: 'black',
     fontSize: 12,
+  },
+  memberRow: {
+    flex: 1,
+    flexDirection: 'row',
+    height: 60,
+    paddingVertical: 10,
+  },
+  profileImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+    borderRadius: 20,
+    overflow: 'hidden',
+  },
+  memberTypeText: {
+    fontSize: 9,
+    marginTop: 5,
+  },
+  followButton: {
+    backgroundColor: '#F85B02',
+    height: '100%',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    justifyContent: 'center',
   },
 });
 
@@ -279,7 +315,7 @@ function GroupPendingItems({contents, title, id}) {
   );
 }
 
-function GroupMembers({members, members_count, id}) {
+function GroupMembers({members, members_count, id, refresh, setRefersh}) {
   const navigation = useNavigation();
   const MEMBER_TYPE_STR = {
     LD: '그룹 장',
@@ -291,6 +327,24 @@ function GroupMembers({members, members_count, id}) {
     LD: '#F85B02',
     MB: 'black',
     MG: '#F85B02',
+  };
+
+  const handleFollowButton = user => {
+    const {followable, id} = user;
+    if (followable === FOLLOW_STATUS.NOT_FOLLOWING) {
+      requestFollow(id);
+      user.followable = FOLLOW_STATUS.FOLLOWING;
+    } else if (followable === FOLLOW_STATUS.FOLLOWING) {
+      requestUnfollow(id);
+      user.followable = FOLLOW_STATUS.NOT_FOLLOWING;
+    }
+    setRefersh(!refresh);
+  };
+
+  const getProfileImageSource = user => {
+    if (user.small_image) return {uri: user.small_image};
+    else if (user.profile_image) return {uri: user.profile_image};
+    else return require('../../../../assets/imgs/default_profile.png');
   };
 
   return (
@@ -311,54 +365,64 @@ function GroupMembers({members, members_count, id}) {
       </View>
       <View>
         {members.map(member => {
+          let user = member.user;
           return (
-            <View
-              key={member.id}
-              style={{flexDirection: 'row', paddingVertical: 5}}>
-              <Image
-                style={{width: 36, height: 36, marginRight: 5}}
-                source={require('../../../../assets/imgs/group.png')}
-              />
-              <View>
-                <Text
-                  style={[
-                    {fontSize: 17, alignSelf: 'stretch', marginBottom: 3},
-                    styles.fontJeju,
-                  ]}>
-                  {member.user.nickname}
-                </Text>
+            <View key={member.id} style={styles.memberRow}>
+              <View
+                style={{flex: 1, maxWidth: 40, minHeight: 40, marginRight: 10}}>
+                <Image
+                  source={getProfileImageSource(user)}
+                  style={styles.profileImage}
+                />
+              </View>
+              <Pressable
+                style={{flex: 1}}
+                onPress={() =>
+                  navigation.push('사용자정보', {
+                    user_id: user.id,
+                    isMy: false,
+                  })
+                }>
+                <Text style={{fontSize: 17}}>{user.nickname}</Text>
                 <Text
                   style={{
-                    fontSize: 9,
-                    alignSelf: 'baseline',
                     color: memberTypeColor[member.member_type],
+                    marginTop: 7,
+                    fontSize: 9,
                   }}>
                   {MEMBER_TYPE_STR[member.member_type]}
                 </Text>
-              </View>
-              <View style={{flex: 1}}>
-                <TouchableOpacity
-                  style={{
-                    alignSelf: 'flex-end',
-                    borderRadius: 5,
-                    backgroundColor: '#F85B02',
-                    paddingVertical: 10,
-                    paddingHorizontal: 20,
-                  }}>
-                  <Text
-                    style={[
-                      styles.fontJeju,
-                      {
-                        textAlign: 'right',
-                        textAlignVertical: 'center',
-                        color: 'white',
-                        fontSize: 12,
-                      },
-                    ]}>
-                    팔로우
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              </Pressable>
+              <TouchableOpacity
+                style={[
+                  styles.followButton,
+                  {
+                    display:
+                      user.followable === FOLLOW_STATUS.SELF ? 'none' : 'flex',
+                  },
+                  {
+                    backgroundColor:
+                      user.followable === FOLLOW_STATUS.FOLLOWING
+                        ? '#F7F7F7'
+                        : '#F85B02',
+                  },
+                ]}
+                onPress={() => handleFollowButton(user)}>
+                <Text
+                  style={[
+                    styles.fontJeju,
+                    {
+                      color:
+                        user.followable === FOLLOW_STATUS.FOLLOWING
+                          ? '#B2B2B5'
+                          : 'white',
+                    },
+                  ]}>
+                  {user.followable === FOLLOW_STATUS.FOLLOWING
+                    ? '팔로잉'
+                    : '팔로우'}
+                </Text>
+              </TouchableOpacity>
             </View>
           );
         })}
@@ -440,7 +504,9 @@ function GroupPendingMembers({members, id}) {
                   onPress={() =>
                     updateStatus(member.id, MEMBER_STATUS_TYPE.ACTIVE)
                   }>
-                  <Text style={[styles.fontJeju, , styles.allowText]}>승인</Text>
+                  <Text style={[styles.fontJeju, , styles.allowText]}>
+                    승인
+                  </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.denyButton}
@@ -458,7 +524,7 @@ function GroupPendingMembers({members, id}) {
   );
 }
 
-function GroupDetailBody({data}) {
+function GroupDetailBody({data, refresh, setRefersh}) {
   return (
     <View style={{flex: 3, padding: 15}}>
       <GroupIntroduce name={data.name} detail={data.detail} />
@@ -475,6 +541,8 @@ function GroupDetailBody({data}) {
         members={data.members}
         members_count={data.members_count}
         id={data.id}
+        refresh={refresh}
+        setRefersh={setRefersh}
       />
       {data.pending_members ? (
         <GroupPendingMembers members={data.pending_members} id={data.id} />
@@ -567,6 +635,7 @@ export function GroupDetail({navigation, route}) {
     current_user: 'NA',
   };
   const [data, setData] = React.useState(defaultGroup);
+  const [refresh, setRefersh] = React.useState(false);
 
   React.useState(() => {
     getGroupById(id).then(res => {
@@ -588,7 +657,7 @@ export function GroupDetail({navigation, route}) {
         followers={data.followers_count}
         contents={data.contents_count}
       />
-      <GroupDetailBody data={data} />
+      <GroupDetailBody data={data} refresh={refresh} setRefersh={setRefersh} />
       <BottomJoinButtonView id={data.id} member_status={data.current_user} />
     </ScrollView>
   );

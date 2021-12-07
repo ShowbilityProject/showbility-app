@@ -30,7 +30,9 @@ const getVisibility = route => {
     routeName === '업로드' ||
     routeName === 'FindStack' ||
     routeName === 'GroupDetail' ||
-    routeName === 'GroupDepthView'
+    routeName === 'GroupDepthView' ||
+    routeName === '사용자정보' ||
+    routeName === '팔로우'
   ) {
     return false;
   }
