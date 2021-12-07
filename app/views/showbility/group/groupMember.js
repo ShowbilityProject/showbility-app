@@ -102,11 +102,15 @@ export function GroupMember({route}) {
   const handleFollowButton = user => {
     const {followable, id} = user;
     if (followable === FOLLOW_STATUS.NOT_FOLLOWING) {
-      requestFollow(id);
-      user.followable = FOLLOW_STATUS.FOLLOWING;
+      requestFollow(id).then(res => {
+        if (res) {
+          user.followable = FOLLOW_STATUS.FOLLOWING;
+        }
+      });
     } else if (followable === FOLLOW_STATUS.FOLLOWING) {
-      requestUnfollow(id);
-      user.followable = FOLLOW_STATUS.NOT_FOLLOWING;
+      requestUnfollow(id).then(res => {
+        user.followable = FOLLOW_STATUS.NOT_FOLLOWING;
+      });
     }
     setExtraData(!extraData);
   };

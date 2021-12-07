@@ -108,15 +108,20 @@ function MyDetailHeader({data, isMy, isFetched}) {
   const [followable, setFollowable] = React.useState(data.followable);
   const handleFollowButton = () => {
     const id = data.id;
-    console.log(followable);
     if (followable === FOLLOW_STATUS.NOT_FOLLOWING) {
-      requestFollow(id);
-      setFollowable(FOLLOW_STATUS.FOLLOWING);
-      data.followable = FOLLOW_STATUS.FOLLOWING;
+      requestFollow(id).then(res => {
+        if (res) {
+          setFollowable(FOLLOW_STATUS.FOLLOWING);
+          data.followable = FOLLOW_STATUS.FOLLOWING;
+        }
+      });
     } else if (followable === FOLLOW_STATUS.FOLLOWING) {
-      requestUnfollow(id);
-      setFollowable(FOLLOW_STATUS.NOT_FOLLOWING);
-      data.followable = FOLLOW_STATUS.NOT_FOLLOWING;
+      requestUnfollow(id).then(res => {
+        if (res) {
+          setFollowable(FOLLOW_STATUS.NOT_FOLLOWING);
+          data.followable = FOLLOW_STATUS.NOT_FOLLOWING;
+        }
+      });
     }
   };
 

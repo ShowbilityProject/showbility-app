@@ -76,13 +76,17 @@ export function FollowMember({route}) {
     const handleFollowButton = user => {
       const {followable, id} = user;
       if (followable === FOLLOW_STATUS.NOT_FOLLOWING) {
-        requestFollow(id);
-        user.followable = FOLLOW_STATUS.FOLLOWING;
-        setExtraData(!extraData);
+        requestFollow(id).then(res => {
+          if (res) {
+            user.followable = FOLLOW_STATUS.FOLLOWING;
+            setExtraData(!extraData);
+          }
+        });
       } else if (followable === FOLLOW_STATUS.FOLLOWING) {
-        requestUnfollow(id);
-        user.followable = FOLLOW_STATUS.NOT_FOLLOWING;
-        setExtraData(!extraData);
+        requestUnfollow(id).then(res => {
+          user.followable = FOLLOW_STATUS.NOT_FOLLOWING;
+          setExtraData(!extraData);
+        });
       }
     };
     return (
