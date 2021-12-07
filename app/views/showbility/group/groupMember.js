@@ -1,8 +1,9 @@
 import {useNavigation} from '@react-navigation/core';
 import * as React from 'react';
-import {FlatList, View, Image, Text, StyleSheet, TextInput} from 'react-native';
+import {FlatList, View, Image, Text, StyleSheet, TextInput, Pressable} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import { MEMBER_STATUS_TYPE } from '../../../common/constant';
+import { FOLLOW_STATUS, MEMBER_STATUS_TYPE } from '../../../common/constant';
+import { requestFollow, requestUnfollow } from '../../../service/account';
 import {getGroupMemebersByGroupId, getNext, updateMemberStatus} from '../../../service/group';
 
 export function GroupMember({route}) {
@@ -53,12 +54,6 @@ export function GroupMember({route}) {
     return ret;
   };
 
-  const MemberTypeString = {
-    LD: '그룹 장',
-    MB: '그룹 멤버',
-    MG: '운영진',
-  };
-
   const memberTypeColor = {
     LD: '#F85B02',
     MB: 'black',
@@ -92,33 +87,92 @@ export function GroupMember({route}) {
     );
   };
 
+  const getProfileImageSource = user => {
+    if (user.small_image) return {uri: user.small_image};
+    else if (user.profile_image) return {uri: user.profile_image};
+    else return require('../../../../assets/imgs/default_profile.png');
+  };
+
+  const MEMBER_TYPE_STR = {
+    LD: '그룹 장',
+    MB: '그룹 멤버',
+    MG: '운영진',
+  };
+
+  const handleFollowButton = user => {
+    const {followable, id} = user;
+    if (followable === FOLLOW_STATUS.NOT_FOLLOWING) {
+      requestFollow(id);
+      user.followable = FOLLOW_STATUS.FOLLOWING;
+    } else if (followable === FOLLOW_STATUS.FOLLOWING) {
+      requestUnfollow(id);
+      user.followable = FOLLOW_STATUS.NOT_FOLLOWING;
+    }
+    setExtraData(!extraData);
+  };
+
   const renderItem = itemObject => {
-    let item = itemObject.item;
-    const tempImage =
-      'http://localhost:8000/media/group/images/tag1_Kyfk4hI.jpeg';
+    let member = itemObject.item;
+    let user = member.user;
     return (
-      <View style={styles.memberRow}>
+      <View key={member.id} style={styles.memberRow}>
         <View style={{flex: 1, maxWidth: 40, minHeight: 40, marginRight: 10}}>
-          <Image source={{uri: tempImage}} style={styles.profileImage} />
+          <Image
+            source={getProfileImageSource(user)}
+            style={styles.profileImage}
+          />
         </View>
-        <View style={{flex: 1}}>
-          <Text style={{fontSize: 17}}>{item.user.nickname}</Text>
+        <Pressable
+          style={{flex: 1}}
+          onPress={() =>
+            navigation.push('사용자정보', {
+              user_id: user.id,
+              isMy: false,
+            })
+          }>
+          <Text style={{fontSize: 17}}>{user.nickname}</Text>
           <Text
-            style={[
-              styles.memberTypeText,
-              {
-                color: memberTypeColor[item.member_type],
-              },
-            ]}>
-            {MemberTypeString[item.member_type]}
+            style={{
+              color: memberTypeColor[member.member_type],
+              marginTop: 7,
+              fontSize: 9,
+            }}>
+            {MEMBER_TYPE_STR[member.member_type]}
           </Text>
-        </View>
-        {status === 'AT' ? (
-          <TouchableOpacity style={styles.followButton}>
-            <Text style={[styles.fontJeju, {color: 'white'}]}>팔로우</Text>
+        </Pressable>
+        {member.status === MEMBER_STATUS_TYPE.ACTIVE ? (
+          <TouchableOpacity
+            style={[
+              styles.followButton,
+              {
+                display:
+                  user.followable === FOLLOW_STATUS.SELF ? 'none' : 'flex',
+              },
+              {
+                backgroundColor:
+                  user.followable === FOLLOW_STATUS.FOLLOWING
+                    ? '#F7F7F7'
+                    : '#F85B02',
+              },
+            ]}
+            onPress={() => handleFollowButton(user)}>
+            <Text
+              style={[
+                styles.fontJeju,
+                {
+                  color:
+                    user.followable === FOLLOW_STATUS.FOLLOWING
+                      ? '#B2B2B5'
+                      : 'white',
+                },
+              ]}>
+              {user.followable === FOLLOW_STATUS.FOLLOWING
+                ? '팔로잉'
+                : '팔로우'}
+            </Text>
           </TouchableOpacity>
         ) : (
-          allowDeny(item)
+          allowDeny(member)
         )}
       </View>
     );
