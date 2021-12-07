@@ -510,6 +510,7 @@ function BottomJoinButtonView({id, member_status}) {
     else if (status === MEMBER_STATUS_TYPE.NOT_JOINED) return '함께하기';
     else if (status === MEMBER_STATUS_TYPE.PENDING)
       return '그룹 멤버 수락 대기 중';
+    else return '함께하기';
   };
 
   return (
