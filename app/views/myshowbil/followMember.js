@@ -66,13 +66,14 @@ export function FollowMember({route}) {
     return ret;
   };
 
+  const getProfileImageSource = user => {
+    if (user.small_image) return {uri: user.small_image};
+    else if (user.profile_image) return {uri: user.profile_image};
+    else return require('../../../assets/imgs/default_profile.png');
+  };
+
   const renderItem = itemObject => {
     let item = itemObject.item;
-    const tempImage =
-      'http://localhost:8000/media/group/images/tag1_Kyfk4hI.jpeg';
-    const imageSource = {
-      uri: item.profile_image ? item.profile_image : tempImage,
-    };
     const handleFollowButton = user => {
       const {followable, id} = user;
       if (followable === FOLLOW_STATUS.NOT_FOLLOWING) {
@@ -92,7 +93,10 @@ export function FollowMember({route}) {
     return (
       <View style={styles.memberRow}>
         <View style={{flex: 1, maxWidth: 40, minHeight: 40, marginRight: 10}}>
-          <Image source={imageSource} style={styles.profileImage} />
+          <Image
+            source={getProfileImageSource(item)}
+            style={styles.profileImage}
+          />
         </View>
         <Pressable
           style={{flex: 1}}
