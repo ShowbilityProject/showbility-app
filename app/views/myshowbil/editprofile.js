@@ -9,6 +9,7 @@ import {
   Text,
   Pressable,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {isEmpty} from '../../common/util';
@@ -250,9 +251,9 @@ export function EditProfileScreen({route}) {
               <Text style={styles.smallOptionText}>회원탈퇴</Text>
             </Pressable>
           </View>
-          <Pressable style={buttonStyle} onPress={() => handleSubmit()}>
+          <TouchableOpacity style={buttonStyle} onPress={() => handleSubmit()}>
             <Text style={buttonTextStyle}>저장하기</Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
