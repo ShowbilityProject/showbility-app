@@ -103,16 +103,17 @@ const styles = StyleSheet.create({
   },
 });
 
-function MyDetailHeader({data, isMy, isFetched}) {
+function MyDetailHeader({data, isMy, isFetched, refresh, setRefresh}) {
   const navigation = useNavigation();
   const [followable, setFollowable] = React.useState(data.followable);
-  const handleFollowButton = () => {
+  const handleFollowButton = React.useCallback(() => {
     const id = data.id;
     if (followable === FOLLOW_STATUS.NOT_FOLLOWING) {
       requestFollow(id).then(res => {
         if (res) {
           setFollowable(FOLLOW_STATUS.FOLLOWING);
           data.followable = FOLLOW_STATUS.FOLLOWING;
+          setRefresh(!refresh);
         }
       });
     } else if (followable === FOLLOW_STATUS.FOLLOWING) {
@@ -120,10 +121,11 @@ function MyDetailHeader({data, isMy, isFetched}) {
         if (res) {
           setFollowable(FOLLOW_STATUS.NOT_FOLLOWING);
           data.followable = FOLLOW_STATUS.NOT_FOLLOWING;
+          setRefresh(!refresh);
         }
       });
     }
-  };
+  }, [data, refresh]);
 
   const getImageUri = d => {
     let source = require('../../../assets/imgs/default_profile.png');
@@ -353,6 +355,7 @@ export function GroupDetail({route}) {
 
   const [data, setData] = React.useState(defaultData);
   const [fetched, setFetched] = React.useState(false);
+  const [refresh, setRefresh] = React.useState(false);
 
   React.useEffect(() => {
     getProfile(user_id).then(res => setData(res));
@@ -383,7 +386,13 @@ export function GroupDetail({route}) {
   return (
     <SafeAreaView style={styles.baseView}>
       <ScrollView style={styles.baseView}>
-        <MyDetailHeader data={data} isMy={isMy} isFetched={fetched} />
+        <MyDetailHeader
+          data={data}
+          isMy={isMy}
+          isFetched={fetched}
+          refresh={refresh}
+          setRefresh={setRefresh}
+        />
         <MyDetailBody data={data} />
       </ScrollView>
     </SafeAreaView>
