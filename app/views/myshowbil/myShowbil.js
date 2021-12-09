@@ -205,7 +205,9 @@ function MyDetailHeader({data, isMy, isFetched, refresh, setRefresh}) {
           flexDirection: 'row',
           display: data.followable === FOLLOW_STATUS.SELF ? 'none' : 'flex',
         }}>
-        <Pressable style={{paddingHorizontal: 3}}>
+        <Pressable
+          style={{paddingHorizontal: 3}}
+          onPress={() => Alert.alert('준비 중입니다.')}>
           <Text style={[styles.detailButtonsCommon, {borderColor: '#707070'}]}>
             메세지
           </Text>
