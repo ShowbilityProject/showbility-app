@@ -15,7 +15,7 @@ import {
   Platform,
 } from 'react-native';
 import BottomSheet, {BottomSheetTextInput} from '@gorhom/bottom-sheet';
-import {HOST} from '../../common/constant';
+import {FOLLOW_STATUS, HOST} from '../../common/constant';
 import {
   getContentById,
   requestDeleteLikeContent,
@@ -23,6 +23,7 @@ import {
 } from '../../service/content';
 import {postComment} from '../../service/comment';
 import { isEmpty } from '../../common/util';
+import { requestFollow, requestUnfollow } from '../../service/account';
 
 const styles = StyleSheet.create({
   container: {
@@ -150,7 +151,7 @@ export function ContentsModal({route, navigation}) {
   const snapPoints = React.useMemo(() => ['10%', '50%'], []);
   const likeIcon = '../../../assets/imgs/like.png';
   const likeOnIcon = '../../../assets/imgs/like_on.png';
-  const followOnIcon = '../../../assets/imgs/follow.png';
+  const followOnIcon = '../../../assets/imgs/follow_on.png';
   const followIcon = '../../../assets/imgs/follown.png';
   const viewIcon = '../../../assets/imgs/view.png';
   const cmtIcon = '../../../assets/imgs/message-circle.png';
@@ -167,6 +168,7 @@ export function ContentsModal({route, navigation}) {
     getContentById(contentId).then(res => {
       setItem(res);
       setIsLiked(res.is_liked_by_user);
+      if (res.user.followable === FOLLOW_STATUS.FOLLOWING) setIsFollow(true);
       setLikes(res.likes);
     });
   };
@@ -179,6 +181,17 @@ export function ContentsModal({route, navigation}) {
     if (!isLiked) requestLikeContent(id);
     else requestDeleteLikeContent(id);
     fetchData(id);
+  };
+
+  const handleFollow = () => {
+    if (!isFollow)
+      requestFollow(item.user.id).then(res => {
+        if (res) setIsFollow(true);
+      });
+    else
+      requestUnfollow(item.user.id).then(res => {
+        if (res) setIsFollow(false);
+      });
   };
 
   const titleArea = () => {
@@ -209,7 +222,7 @@ export function ContentsModal({route, navigation}) {
           </TouchableOpacity>
           <TouchableOpacity
             style={{alignItems: 'flex-end'}}
-            onPress={() => console.log('follow')}>
+            onPress={() => handleFollow()}>
             <Image
               style={{width: 20, height: 20, resizeMode: 'contain'}}
               source={isFollow ? require(followOnIcon) : require(followIcon)}
@@ -223,7 +236,6 @@ export function ContentsModal({route, navigation}) {
   const win = Dimensions.get('window');
 
   const getUserImage = user => {
-    console.log(user);
     if (isEmpty(user.profile_image))
       return require('../../../assets/imgs/default_profile.png');
     else return {uri: user.profile_image};
