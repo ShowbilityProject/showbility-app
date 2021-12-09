@@ -95,7 +95,7 @@ export function requestFollow(user_id) {
       return res.ok;
     })
     .catch(err => {
-      console.error(err);
+      console.info(err);
       return false;
     });
 }
@@ -108,7 +108,7 @@ export function requestUnfollow(user_id) {
       return res.ok;
     })
     .catch(err => {
-      console.error(err);
+      console.info(err);
       return false;
     });
 }
