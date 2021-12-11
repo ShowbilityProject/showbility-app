@@ -248,18 +248,34 @@ function MyDetailHeader({data, isMy, isFetched, refresh, setRefresh}) {
 
 function MyIntroduce(object) {
   let data = object.data;
+  const [fullDesc, setFullDesc] = React.useState(false);
+
   return (
     <View style={styles.bodyItemSpace}>
       <View style={[{flexDirection: 'row'}, styles.bodyHaederSpaceBody]}>
         <View style={{flex: 1}}>
           <Text style={[styles.bodyHeaderFont, styles.fontJeju]}>소개</Text>
         </View>
-        <TouchableOpacity style={{flex: 1}}>
-          <Text style={styles.showAllTextFont}>전체 보기</Text>
+        <TouchableOpacity
+          style={{flex: 1}}
+          onPress={() => setFullDesc(!fullDesc)}>
+          <Text style={styles.showAllTextFont}>
+            {data.description.length > 100
+              ? fullDesc
+                ? '접어 보기'
+                : '전체 보기'
+              : ''}
+          </Text>
         </TouchableOpacity>
       </View>
       <View>
-        <Text>{data.description}</Text>
+        <Text>
+          {data.description.length > 100
+            ? fullDesc
+              ? data.description
+              : data.description.slice(0, 100) + ' ...'
+            : data.description}
+        </Text>
       </View>
     </View>
   );
