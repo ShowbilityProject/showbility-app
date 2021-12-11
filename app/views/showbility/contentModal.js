@@ -151,6 +151,7 @@ export function ContentsModal({route, navigation}) {
   const [isLiked, setIsLiked] = React.useState(false);
   const [likes, setLikes] = React.useState(0);
   const [isFollow, setIsFollow] = React.useState(false);
+  const [fullDesc, setFullDesc] = React.useState(false);
   const commentInput = React.useRef();
   const snapPoints = React.useMemo(() => ['10%', '50%'], []);
   const likeIcon = '../../../assets/imgs/like.png';
@@ -362,13 +363,17 @@ export function ContentsModal({route, navigation}) {
             <View style={{flex: 1}}>
               <Text style={styles.modalContentTitle}>프로젝트 소개</Text>
             </View>
-            <View style={{flex: 1}}>
-              <Text style={styles.viewOption}>접어 보기</Text>
-            </View>
+            <TouchableOpacity
+              style={{flex: 1}}
+              onPress={() => setFullDesc(!fullDesc)}>
+              <Text style={styles.viewOption}>
+                {fullDesc ? '접어 보기' : '전체 보기'}
+              </Text>
+            </TouchableOpacity>
           </View>
           <View style={{padding: 16}}>
             <Text style={{fontSize: 12, lineHeight: 18, letterSpacing: 0.9}}>
-              {item.detail}
+              {fullDesc ? item.detail : item.detail.slice(0, 100) + ' ...'}
             </Text>
           </View>
         </View>
