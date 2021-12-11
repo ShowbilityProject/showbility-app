@@ -154,34 +154,36 @@ export function CategoryList({route, navigation}) {
 
   return (
     <View style={styles.baseWrapper}>
-      <ScrollView style={{flexGrow: 1}}>
-        <View style={{paddingVertical: 19}}>
-          <Text style={{fontFamily: 'JejuGothicOTF', fontSize: 17}}>
-            {titleText[prevScreen]}
-          </Text>
-        </View>
-        <LabelArea
-          title="카테고리"
-          rawData={categoryData}
-          selectedData={categories}
-          _type={TYPE_CATEGORY}
-        />
-        <LabelArea
-          title="기능 태그"
-          rawData={tagData.filter(item => item.section === '기능')}
-          selectedData={tags}
-          _type={TYPE_TAG}
-        />
-        <LabelArea
-          title="감성 태그"
-          rawData={tagData.filter(item => item.section === '감성')}
-          selectedData={tags}
-          _type={TYPE_TAG}
-        />
-      </ScrollView>
+      <View style={{flex: 1, paddingBottom: 20}}>
+        <ScrollView style={{flexGrow: 1}}>
+          <View style={{paddingVertical: 19}}>
+            <Text style={{fontFamily: 'JejuGothicOTF', fontSize: 17}}>
+              {titleText[prevScreen]}
+            </Text>
+          </View>
+          <LabelArea
+            title="카테고리"
+            rawData={categoryData}
+            selectedData={categories}
+            _type={TYPE_CATEGORY}
+          />
+          <LabelArea
+            title="기능 태그"
+            rawData={tagData.filter(item => item.section === '기능')}
+            selectedData={tags}
+            _type={TYPE_TAG}
+          />
+          <LabelArea
+            title="감성 태그"
+            rawData={tagData.filter(item => item.section === '감성')}
+            selectedData={tags}
+            _type={TYPE_TAG}
+          />
+        </ScrollView>
+      </View>
       <View style={styles.footer}>
         <View>
-          <View style={{paddingVertical: 14, marginBottom: 5}}>
+          <View style={{paddingBottom: 14, marginBottom: 5}}>
             {isSelectedAny() ? (
               <View>
                 <View style={{flexDirection: 'row'}}>
@@ -292,13 +294,9 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   footer: {
-    position: 'absolute',
-    flex: 1,
     alignItems: 'flex-end',
     flexDirection: 'row',
     backgroundColor: 'white',
-    bottom: 10,
-    left: 15,
   },
   applyButton: {
     alignSelf: 'flex-end',
