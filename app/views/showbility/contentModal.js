@@ -367,14 +367,22 @@ export function ContentsModal({route, navigation}) {
               <TouchableOpacity
                 style={{flex: 1}}
                 onPress={() => setFullDesc(!fullDesc)}>
-                <Text style={styles.viewOption}>
-                  {fullDesc ? '접어 보기' : '전체 보기'}
+                <Text style={[styles.viewOption]}>
+                  {item.detail.length > 100
+                    ? fullDesc
+                      ? '접어 보기'
+                      : '전체 보기'
+                    : ''}
                 </Text>
               </TouchableOpacity>
             </View>
             <View style={{padding: 16}}>
               <Text style={{fontSize: 12, lineHeight: 18, letterSpacing: 0.9}}>
-                {fullDesc ? item.detail : item.detail.slice(0, 100) + ' ...'}
+                {item.detail.length > 100
+                  ? fullDesc
+                    ? item.detail
+                    : item.detail.slice(0, 100) + ' ...'
+                  : item.detail}
               </Text>
             </View>
           </View>
