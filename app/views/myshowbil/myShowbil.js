@@ -332,7 +332,7 @@ function MyItems({data}) {
           onPress={() =>
             navigation.push('FindStack', {
               isMain: false,
-              title: '내 작품 둘러보기',
+              title: title,
               user_id: data.id,
             })
           }>
@@ -389,6 +389,12 @@ export function GroupDetail({route}) {
   const [data, setData] = React.useState(defaultData);
   const [fetched, setFetched] = React.useState(false);
   const [refresh, setRefresh] = React.useState(false);
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      title: data.nickname,
+    });
+  });
 
   React.useEffect(() => {
     getProfile(user_id).then(res => setData(res));
