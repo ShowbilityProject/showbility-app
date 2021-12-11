@@ -138,8 +138,9 @@ function NewUploadTab() {
         return;
       }
       let temp = e.assets;
-      temp.push.apply(temp, images);
-      setImages(temp);
+      images.push.apply(images, temp);
+      setImages(images);
+      setForceRefresh(!forceRefresh);
     });
   };
 
