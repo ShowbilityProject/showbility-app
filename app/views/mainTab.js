@@ -14,6 +14,9 @@ import {SelectGroup} from './newupload/selectgroup';
 import {CommentsView} from './showbility/comment';
 import {GroupCreate} from './showbility/group/groupCreate';
 import {ContentsModal} from './showbility/contentModal';
+import {verifyToken} from '../service/account';
+import {Alert} from 'react-native';
+import { askIfNotTokenValid } from '../common/util';
 
 const MainTab = createBottomTabNavigator();
 
@@ -194,12 +197,27 @@ function MainTabScreen() {
         listeners={({navigation}) => ({
           tabPress: e => {
             e.preventDefault();
-            navigation.navigate('업로드');
+            verifyToken().then(res => {
+              if (res) navigation.navigate('업로드');
+              else askIfNotTokenValid(navigation);
+            });
           },
         })}
       />
       <MainTab.Screen name="메세지" component={MessageTab} />
-      <MainTab.Screen name="마이쇼빌" component={MyShowbilTab} />
+      <MainTab.Screen
+        name="마이쇼빌"
+        component={MyShowbilTab}
+        listeners={({navigation}) => ({
+          tabPress: e => {
+            e.preventDefault();
+            verifyToken().then(res => {
+              if (res) navigation.navigate('마이쇼빌');
+              else askIfNotTokenValid(navigation);
+            });
+          },
+        })}
+      />
     </MainTab.Navigator>
   );
 }
