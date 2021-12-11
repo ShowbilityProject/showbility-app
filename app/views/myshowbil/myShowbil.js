@@ -315,14 +315,25 @@ function FilterItemsArea({items}) {
   );
 }
 
-function MyItems({contents}) {
+function MyItems({data}) {
   const navigation = useNavigation();
-  contents = contents ? contents : [];
+  const contents = data.contents ? data.contents : [];
   return (
     <View style={styles.bodyItemSpace}>
       <View style={{flexDirection: 'row', marginBottom: 20}}>
-        <Text style={{flex: 1, fontFamily: 'JejuGothicOTF', fontSize: 17}}>내 작품 둘러보기</Text>
-        <Text style={{fontSize: 12, color: '#F85B02'}}>전체보기</Text>
+        <Text style={{flex: 1, fontFamily: 'JejuGothicOTF', fontSize: 17}}>
+          내 작품 둘러보기
+        </Text>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.push('FindStack', {
+              isMain: false,
+              title: '내 작품 둘러보기',
+              user_id: data.id,
+            })
+          }>
+          <Text style={{fontSize: 12, color: '#F85B02'}}>전체보기</Text>
+        </TouchableOpacity>
       </View>
       <View style={{flexDirection: 'row'}}>
         {contents.map(content => {
@@ -349,7 +360,7 @@ function MyDetailBody({data}) {
     <View style={{flex: 3, padding: 15}}>
       <MyIntroduce data={data} />
       <MyTag data={data} />
-      <MyItems contents={data.contents} />
+      <MyItems data={data} />
     </View>
   );
 }

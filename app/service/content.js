@@ -7,6 +7,7 @@ export function getContentsList(
   categories = [],
   tags = [],
   groupIds = [],
+  user_id = undefined,
 ) {
   let url = `${HOST}/contents/?page=${page}&page_size=${page_size}`;
   for (const tag of tags) {
@@ -17,6 +18,9 @@ export function getContentsList(
   }
   for (const groupId of groupIds) {
     url += `&group=${groupId}`;
+  }
+  if (user_id !== undefined) {
+    url += `&user_id=${user_id}`;
   }
   return get(url)
     .then(response => response.json())

@@ -152,6 +152,25 @@ function NewUploadStack() {
   );
 }
 
+const MyShowbilNav = createStackNavigator();
+
+function MyShowbilStack() {
+  return (
+    <MyShowbilNav.Navigator>
+      <MyShowbilNav.Screen
+        name="마이 쇼빌 홈"
+        component={MyShowbilTab}
+        options={{headerShown: false}}
+      />
+      <MyShowbilNav.Screen
+        name="FindStack"
+        component={FindScreen}
+        options={{headerBackTitle: ' '}}
+      />
+    </MyShowbilNav.Navigator>
+  );
+}
+
 function MainTabScreen() {
   return (
     <MainTab.Navigator
@@ -207,7 +226,7 @@ function MainTabScreen() {
       <MainTab.Screen name="메세지" component={MessageTab} />
       <MainTab.Screen
         name="마이쇼빌"
-        component={MyShowbilTab}
+        component={MyShowbilStack}
         listeners={({navigation}) => ({
           tabPress: e => {
             e.preventDefault();

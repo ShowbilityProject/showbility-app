@@ -27,6 +27,7 @@ export function FindScreen({route, navigation}) {
   const isMain = params.isMain ? params.isMain : false;
   const defaultCategory = params.categoryFilter ? params.categoryFilter : [];
   const groupFilter = params.groupFilter ? params.groupFilter : [];
+  const user_id = params.user_id;
   // const defaultTag = params.tagFilter ? params.tagFilter : [];
   const [categoryFilter, setCategoryFilter] = React.useState(defaultCategory);
   const [tagFilter, setTagFilter] = React.useState([]);
@@ -40,7 +41,7 @@ export function FindScreen({route, navigation}) {
 
   React.useEffect(() => {
     console.log('called effect');
-    getContentsList(1, 14, categoryFilter, tagFilter, groupFilter)
+    getContentsList(1, 14, categoryFilter, tagFilter, groupFilter, user_id)
       .then(res => {
         setNextURL(res.next);
         setData(res.results);
