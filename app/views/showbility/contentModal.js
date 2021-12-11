@@ -303,137 +303,139 @@ export function ContentsModal({route, navigation}) {
         <Text style={styles.upperRightTopCloseBtn}>&#10005;</Text>
       </Pressable>
       <BottomSheet snapPoints={snapPoints}>
-        <View style={{marginBottom: 20, flexDirection: 'row'}}>
-          <View style={{flex: 1, height: 80, alignItems: 'center'}}>
-            <Image
-              style={styles.profileImage}
-              source={getUserImage(item.user)}
-            />
-          </View>
-          <View style={{flex: 4}}>
-            <View style={{marginBottom: 10}}>
-              <Text style={{fontFamily: 'JejuGothicOTF', fontSize: 17}}>
-                {item.title}
-              </Text>
-              <Text style={{fontSize: 14, marginTop: 7}}>
-                {item.user.nickname}
-              </Text>
+        <ScrollView contentContainerStyle={{paddingBottom: 40}}>
+          <View style={{marginBottom: 20, flexDirection: 'row'}}>
+            <View style={{flex: 1, height: 80, alignItems: 'center'}}>
+              <Image
+                style={styles.profileImage}
+                source={getUserImage(item.user)}
+              />
             </View>
-            <View style={styles.contentMetaCount}>
-              <View
-                style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-                <TouchableOpacity onPress={() => handleLike()}>
-                  {isLiked ? (
-                    <Image
-                      style={styles.iconStyle}
-                      source={require(likeOnIcon)}
-                    />
-                  ) : (
-                    <Image
-                      style={styles.iconStyle}
-                      source={require(likeIcon)}
-                    />
-                  )}
-                </TouchableOpacity>
-                <View>
-                  <Text
-                    style={[
-                      styles.modalCount,
-                      {color: isLiked ? '#F85B02' : '#BCBCBC'},
-                    ]}>
-                    {item.likes}
+            <View style={{flex: 4}}>
+              <View style={{marginBottom: 10}}>
+                <Text style={{fontFamily: 'JejuGothicOTF', fontSize: 17}}>
+                  {item.title}
+                </Text>
+                <Text style={{fontSize: 14, marginTop: 7}}>
+                  {item.user.nickname}
+                </Text>
+              </View>
+              <View style={styles.contentMetaCount}>
+                <View
+                  style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+                  <TouchableOpacity onPress={() => handleLike()}>
+                    {isLiked ? (
+                      <Image
+                        style={styles.iconStyle}
+                        source={require(likeOnIcon)}
+                      />
+                    ) : (
+                      <Image
+                        style={styles.iconStyle}
+                        source={require(likeIcon)}
+                      />
+                    )}
+                  </TouchableOpacity>
+                  <View>
+                    <Text
+                      style={[
+                        styles.modalCount,
+                        {color: isLiked ? '#F85B02' : '#BCBCBC'},
+                      ]}>
+                      {item.likes}
+                    </Text>
+                  </View>
+                  <Image style={styles.iconStyle} source={require(viewIcon)} />
+                  <Text style={styles.modalCount}>{item.views}</Text>
+                  <Image style={styles.iconStyle} source={require(cmtIcon)} />
+                  <Text style={styles.modalCount}>{item.comments.length}</Text>
+                </View>
+                <View style={{flex: 1}}>
+                  <Text style={styles.dateArea}>
+                    {item.created_at.slice(0, 10)}
                   </Text>
                 </View>
-                <Image style={styles.iconStyle} source={require(viewIcon)} />
-                <Text style={styles.modalCount}>{item.views}</Text>
-                <Image style={styles.iconStyle} source={require(cmtIcon)} />
-                <Text style={styles.modalCount}>{item.comments.length}</Text>
               </View>
+            </View>
+          </View>
+          <View style={{}}>
+            <View
+              style={{paddingRight: 16, paddingLeft: 16, flexDirection: 'row'}}>
               <View style={{flex: 1}}>
-                <Text style={styles.dateArea}>
-                  {item.created_at.slice(0, 10)}
+                <Text style={styles.modalContentTitle}>프로젝트 소개</Text>
+              </View>
+              <TouchableOpacity
+                style={{flex: 1}}
+                onPress={() => setFullDesc(!fullDesc)}>
+                <Text style={styles.viewOption}>
+                  {fullDesc ? '접어 보기' : '전체 보기'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{padding: 16}}>
+              <Text style={{fontSize: 12, lineHeight: 18, letterSpacing: 0.9}}>
+                {fullDesc ? item.detail : item.detail.slice(0, 100) + ' ...'}
+              </Text>
+            </View>
+          </View>
+          <View style={{marginBottom: 20}}>
+            <View style={{padding: 16, flexDirection: 'row'}}>
+              <Text style={styles.modalContentTitle}>태그 정보</Text>
+            </View>
+            <View
+              style={{paddingRight: 16, paddingLeft: 16, flexDirection: 'row'}}>
+              <ScrollView horizontal={true}>
+                {item.tags.map(tag => {
+                  return (
+                    <View style={styles.suggestTagView} key={tag}>
+                      <Text style={styles.suggestTagText}>{tag}</Text>
+                    </View>
+                  );
+                })}
+              </ScrollView>
+            </View>
+          </View>
+          <View style={{}}>
+            <View
+              style={{paddingRight: 16, paddingLeft: 16, flexDirection: 'row'}}>
+              <View style={{flex: 1}}>
+                <Text style={styles.modalContentTitle}>
+                  댓글 ({item.comments.length})
+                </Text>
+              </View>
+              <TouchableOpacity
+                style={{flex: 1}}
+                onPress={() =>
+                  navigation.push('댓글', {
+                    comments: item.comments,
+                    contentId: id,
+                  })
+                }>
+                <Text style={styles.viewOption}>전체 보기</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.commentWrapper}>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={{fontSize: 12}}>
+                  {item.comments.length ? item.comments[0].author : ''}
+                </Text>
+                <Text style={{marginLeft: 10}}>
+                  {item.comments.length ? item.comments[0].detail : ''}
                 </Text>
               </View>
             </View>
-          </View>
-        </View>
-        <View style={{}}>
-          <View
-            style={{paddingRight: 16, paddingLeft: 16, flexDirection: 'row'}}>
-            <View style={{flex: 1}}>
-              <Text style={styles.modalContentTitle}>프로젝트 소개</Text>
-            </View>
-            <TouchableOpacity
-              style={{flex: 1}}
-              onPress={() => setFullDesc(!fullDesc)}>
-              <Text style={styles.viewOption}>
-                {fullDesc ? '접어 보기' : '전체 보기'}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={{padding: 16}}>
-            <Text style={{fontSize: 12, lineHeight: 18, letterSpacing: 0.9}}>
-              {fullDesc ? item.detail : item.detail.slice(0, 100) + ' ...'}
-            </Text>
-          </View>
-        </View>
-        <View style={{marginBottom: 20}}>
-          <View style={{padding: 16, flexDirection: 'row'}}>
-            <Text style={styles.modalContentTitle}>태그 정보</Text>
-          </View>
-          <View
-            style={{paddingRight: 16, paddingLeft: 16, flexDirection: 'row'}}>
-            <ScrollView horizontal={true}>
-              {item.tags.map(tag => {
-                return (
-                  <View style={styles.suggestTagView} key={tag}>
-                    <Text style={styles.suggestTagText}>{tag}</Text>
-                  </View>
-                );
-              })}
-            </ScrollView>
-          </View>
-        </View>
-        <View style={{}}>
-          <View
-            style={{paddingRight: 16, paddingLeft: 16, flexDirection: 'row'}}>
-            <View style={{flex: 1}}>
-              <Text style={styles.modalContentTitle}>
-                댓글 ({item.comments.length})
-              </Text>
-            </View>
-            <TouchableOpacity
-              style={{flex: 1}}
-              onPress={() =>
-                navigation.push('댓글', {
-                  comments: item.comments,
-                  contentId: id,
-                })
-              }>
-              <Text style={styles.viewOption}>전체 보기</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.commentWrapper}>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={{fontSize: 12}}>
-                {item.comments.length ? item.comments[0].author : ''}
-              </Text>
-              <Text style={{marginLeft: 10}}>
-                {item.comments.length ? item.comments[0].detail : ''}
-              </Text>
+            <View style={styles.commentInputWrapper}>
+              <BottomSheetTextInput
+                ref={commentInput}
+                placeholder="댓글 달기"
+                style={styles.commentInput}
+                value={cmtText}
+                onChangeText={value => setCmtText(value)}
+                onSubmitEditing={submitComment}
+              />
             </View>
           </View>
-          <View style={styles.commentInputWrapper}>
-            <BottomSheetTextInput
-              ref={commentInput}
-              placeholder="댓글 달기"
-              style={styles.commentInput}
-              value={cmtText}
-              onChangeText={value => setCmtText(value)}
-              onSubmitEditing={submitComment}
-            />
-          </View>
-        </View>
+        </ScrollView>
       </BottomSheet>
     </KeyboardAvoidingView>
   );
