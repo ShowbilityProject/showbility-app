@@ -241,7 +241,7 @@ export function FindBar({
     <ScrollView
       style={styles.tagSearchWrapper}
       horizontal={true}
-      contentContainerStyle={{alignItems: 'center'}}>
+      contentContainerStyle={{alignItems: 'center', paddingLeft: 10}}>
       {tagFilter.map(tag => {
         return (
           <View key={tag} style={styles.tagWrapper}>
@@ -296,6 +296,7 @@ const styles = new StyleSheet.create({
     backgroundColor: '#F6F7F9',
     fontSize: 17,
     padding: 10,
+    paddingLeft: 0,
   },
   flatListFrame: {
     // paddingHorizontal: 5,
