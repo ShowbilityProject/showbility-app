@@ -17,6 +17,7 @@ import {ContentsModal} from './showbility/contentModal';
 import {verifyToken} from '../service/account';
 import {Alert} from 'react-native';
 import { askIfNotTokenValid } from '../common/util';
+import { FollowMember } from './myshowbil/followMember';
 
 const MainTab = createBottomTabNavigator();
 

@@ -20,9 +20,7 @@ import {GroupDepthView} from './group/groupDepthView';
 import {GroupDetail} from './group/groupDetail';
 import {GroupMember} from './group/groupMember';
 import {CategoryList} from '../newupload/category';
-import {FollowMember} from '../myshowbil/followMember';
 import {Color} from '../../style/colors';
-import MyShowbilTab from '../myshowbil/myShowbil';
 
 const styles = StyleSheet.create({
   container: {
@@ -316,16 +314,6 @@ export function ShowbilityHome() {
         component={CategoryList}
         options={{headerBackTitle: ' '}}
         initialParams={{prevScreen: 'FILTER'}}
-      />
-      <MainHomeStack.Screen
-        name="팔로우"
-        component={FollowMember}
-        options={{headerBackTitle: ' '}}
-      />
-      <MainHomeStack.Screen
-        name="사용자정보"
-        component={MyShowbilTab}
-        options={{headerBackTitle: ' '}}
       />
     </MainHomeStack.Navigator>
   );

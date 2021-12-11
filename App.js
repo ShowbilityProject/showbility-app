@@ -14,6 +14,8 @@ import TopStackScreen from './app/views/mainTab';
 import {LogBox} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {verifyToken} from './app/service/account';
+import {FollowMember} from './app/views/myshowbil/followMember';
+import MyShowbilTab from './app/views/myshowbil/myShowbil';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
@@ -37,6 +39,16 @@ function App(tokenAlive) {
           name="App"
           component={TopStackScreen}
           options={{headerShown: false, gestureEnabled: false}}
+        />
+        <RootStack.Screen
+          name="팔로우"
+          component={FollowMember}
+          options={{headerBackTitle: ' '}}
+        />
+        <RootStack.Screen
+          name="사용자정보"
+          component={MyShowbilTab}
+          options={{headerBackTitle: ' '}}
         />
       </RootStack.Navigator>
       {/* {isSignedIn ? <TopStackScreen /> : <LoginStackScreen />} */}
