@@ -75,12 +75,22 @@ export async function uploadImageWithContentId(image, contentId, order) {
 
 export async function requestLikeContent(contentId) {
   const url = `${HOST}/contents/${contentId}/like/`;
-  const ret = await asyncPost(url);
-  return ret.ok;
+  try {
+    const ret = await asyncPost(url);
+    return ret;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
 }
 
 export async function requestDeleteLikeContent(contentId) {
   const url = `${HOST}/contents/${contentId}/like/`;
-  const ret = await asyncPost(url, '', true, 'DELETE');
-  return ret.ok;
+  try {
+    const ret = await asyncPost(url, '', true, 'DELETE');
+    return ret;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
 }

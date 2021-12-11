@@ -22,8 +22,12 @@ import {
   requestLikeContent,
 } from '../../service/content';
 import {postComment} from '../../service/comment';
-import { isEmpty } from '../../common/util';
-import { requestFollow, requestUnfollow } from '../../service/account';
+import {askIfNotTokenValid, isEmpty} from '../../common/util';
+import {
+  requestFollow,
+  requestUnfollow,
+  verifyToken,
+} from '../../service/account';
 
 const styles = StyleSheet.create({
   container: {
@@ -117,12 +121,12 @@ const styles = StyleSheet.create({
     width: 51,
     height: 51,
     resizeMode: 'cover',
-    borderRadius: 51
+    borderRadius: 51,
   },
   iconStyle: {
     width: 16,
     height: 16,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
 });
 
@@ -177,24 +181,35 @@ export function ContentsModal({route, navigation}) {
     fetchData(id);
   }, [id]);
 
-  const handleLike = () => {
-    if (!isLiked) requestLikeContent(id);
-    else requestDeleteLikeContent(id);
-    fetchData(id);
+  const handleLike = async () => {
+    let ret = await verifyToken();
+    if (ret) {
+      if (!isLiked)
+        requestLikeContent(id).then(r => {
+          if (r) setIsLiked(true);
+        });
+      else
+        requestDeleteLikeContent(id).then(r => {
+          if (r) setIsLiked(false);
+        });
+    } else askIfNotTokenValid(navigation);
   };
 
-  const handleFollow = () => {
-    if (!isFollow)
-      requestFollow(item.user.id).then(res => {
-        if (res) setIsFollow(true);
-      });
-    else
-      requestUnfollow(item.user.id).then(res => {
-        if (res) setIsFollow(false);
-      });
+  const handleFollow = async () => {
+    let ret = verifyToken();
+    if (ret) {
+      if (!isFollow)
+        requestFollow(item.user.id).then(r => {
+          if (r) setIsFollow(true);
+        });
+      else
+        requestUnfollow(item.user.id).then(r => {
+          if (r) setIsFollow(false);
+        });
+    } else askIfNotTokenValid(navigation);
   };
 
-  const titleArea = () => {
+  function TitleArea() {
     return (
       <View
         style={{
@@ -231,7 +246,7 @@ export function ContentsModal({route, navigation}) {
         </View>
       </View>
     );
-  };
+  }
 
   const win = Dimensions.get('window');
 
@@ -268,7 +283,7 @@ export function ContentsModal({route, navigation}) {
           const ratio = win.width / width;
           return (
             <View>
-              {index === 0 ? titleArea() : null}
+              {index === 0 ? <TitleArea /> : null}
               <Image
                 source={source}
                 style={{
