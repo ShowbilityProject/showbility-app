@@ -246,7 +246,7 @@ function GroupItems({contents, title, id}) {
         <TouchableOpacity
           style={{flex: 1}}
           onPress={() =>
-            navigation.navigate('Find', {title: title, groupFilter: [id]})
+            navigation.navigate('FindStack', {title: title, groupFilter: [id]})
           }>
           <Text style={styles.showAllTextFont}>전체 보기</Text>
         </TouchableOpacity>
