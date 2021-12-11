@@ -318,11 +318,15 @@ function FilterItemsArea({items}) {
 function MyItems({data}) {
   const navigation = useNavigation();
   const contents = data.contents ? data.contents : [];
+  const title =
+    data.followable === FOLLOW_STATUS.SELF
+      ? '내 작품 둘러보기'
+      : '작품 둘러보기';
   return (
     <View style={styles.bodyItemSpace}>
       <View style={{flexDirection: 'row', marginBottom: 20}}>
         <Text style={{flex: 1, fontFamily: 'JejuGothicOTF', fontSize: 17}}>
-          내 작품 둘러보기
+          {title}
         </Text>
         <TouchableOpacity
           onPress={() =>
