@@ -146,6 +146,7 @@ export async function refreshToken() {
 }
 
 export async function requestLoginKakao(data) {
+  await requestSignOut();
   let uri = HOST + '/user/kakao/';
   let ret = await asyncPost(uri, data);
   let token = ret.token;
