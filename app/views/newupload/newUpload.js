@@ -325,7 +325,7 @@ function NewUploadTab() {
                           styles.hashTagText,
                           {display: freeTagFocused ? 'none' : 'flex'},
                         ]}>
-                        #해시태그로 원하는 모든 태그를 입력하세요.
+                        원하는 모든 태그를 입력하세요.
                       </Text>
                     )}
                     <TextInput
