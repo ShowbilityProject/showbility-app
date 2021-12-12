@@ -15,9 +15,7 @@ import {CommentsView} from './showbility/comment';
 import {GroupCreate} from './showbility/group/groupCreate';
 import {ContentsModal} from './showbility/contentModal';
 import {verifyToken} from '../service/account';
-import {Alert} from 'react-native';
-import { askIfNotTokenValid } from '../common/util';
-import { FollowMember } from './myshowbil/followMember';
+import {askIfNotTokenValid} from '../common/util';
 
 const MainTab = createBottomTabNavigator();
 
@@ -153,25 +151,6 @@ function NewUploadStack() {
   );
 }
 
-const MyShowbilNav = createStackNavigator();
-
-function MyShowbilStack() {
-  return (
-    <MyShowbilNav.Navigator>
-      <MyShowbilNav.Screen
-        name="마이 쇼빌 홈"
-        component={MyShowbilTab}
-        options={{headerShown: false}}
-      />
-      <MyShowbilNav.Screen
-        name="FindStack"
-        component={FindScreen}
-        options={{headerBackTitle: ' '}}
-      />
-    </MyShowbilNav.Navigator>
-  );
-}
-
 function MainTabScreen() {
   return (
     <MainTab.Navigator
@@ -227,7 +206,7 @@ function MainTabScreen() {
       <MainTab.Screen name="메세지" component={MessageTab} />
       <MainTab.Screen
         name="마이쇼빌"
-        component={MyShowbilStack}
+        component={MyShowbilTab}
         listeners={({navigation}) => ({
           tabPress: e => {
             e.preventDefault();

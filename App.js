@@ -16,7 +16,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {verifyToken} from './app/service/account';
 import {FollowMember} from './app/views/myshowbil/followMember';
 import MyShowbilTab from './app/views/myshowbil/myShowbil';
-import { CategoryList } from './app/views/newupload/category';
+import {CategoryList} from './app/views/newupload/category';
+import {FindScreen} from './app/views/components/find';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
@@ -54,6 +55,11 @@ function App(tokenAlive) {
         <RootStack.Screen
           name="카테고리&태그 선택"
           component={CategoryList}
+          options={{headerBackTitle: ' '}}
+        />
+        <RootStack.Screen
+          name="FindStack"
+          component={FindScreen}
           options={{headerBackTitle: ' '}}
         />
       </RootStack.Navigator>
