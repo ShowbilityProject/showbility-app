@@ -152,7 +152,7 @@ export function FindScreen({route, navigation}) {
           <TouchableOpacity
             style={[styles.filterIcon, {display: isMain ? 'flex' : 'none'}]}
             onPress={() =>
-              navigation.navigate('카테고리&태그 선택', {
+              navigation.push('카테고리&태그 선택', {
                 selectCategories: categories => {
                   setCategoryFilter(categories);
                   setRefreshing(true);
