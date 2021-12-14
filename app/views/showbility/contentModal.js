@@ -153,13 +153,17 @@ export function ContentsModal({route, navigation}) {
   const [isFollow, setIsFollow] = React.useState(false);
   const [fullDesc, setFullDesc] = React.useState(false);
   const commentInput = React.useRef();
-  const snapPoints = React.useMemo(() => ['10%', '50%'], []);
+  const snapPoints = React.useMemo(() => ['10%', '80%'], []);
   const likeIcon = '../../../assets/imgs/like.png';
   const likeOnIcon = '../../../assets/imgs/like_on.png';
   const followOnIcon = '../../../assets/imgs/follow_on.png';
   const followIcon = '../../../assets/imgs/follown.png';
   const viewIcon = '../../../assets/imgs/view.png';
   const cmtIcon = '../../../assets/imgs/message-circle.png';
+  const titleHeight = 56;
+  const statusHeightApprox = 44;
+  const bottomSheetRef = React.useRef();
+  const win = Dimensions.get('window');
 
   const submitComment = ({nativeEvent}) => {
     const text = nativeEvent.text;
@@ -170,16 +174,35 @@ export function ContentsModal({route, navigation}) {
   };
 
   const fetchData = contentId => {
-    getContentById(contentId).then(res => {
+    return getContentById(contentId).then(res => {
       setItem(res);
       setIsLiked(res.is_liked_by_user);
       if (res.user.followable === FOLLOW_STATUS.FOLLOWING) setIsFollow(true);
       setLikes(res.likes);
+      return res;
     });
   };
 
+  const adjustBottomSheetInitialHeight = it => {
+    if (it.images.length === 1) {
+      let image = it.images[0];
+      let width = image.middle_width ? image.middle_width : image.width;
+      let height = image.middle_height ? image.middle_height : image.height;
+      const ratio = win.width / width;
+      height *= ratio;
+      height += titleHeight + statusHeightApprox;
+      console.log(height, win.height);
+      let heightPercent = Math.floor(
+        (100 * (win.height - height)) / win.height,
+      );
+      bottomSheetRef.current.snapToPosition(heightPercent + '%');
+    }
+  };
+
   React.useEffect(() => {
-    fetchData(id);
+    fetchData(id).then(it => {
+      adjustBottomSheetInitialHeight(it);
+    });
   }, [id]);
 
   const handleLike = async () => {
@@ -215,7 +238,7 @@ export function ContentsModal({route, navigation}) {
       <View
         style={{
           justifyContent: 'flex-end',
-          height: 56,
+          height: titleHeight,
           paddingHorizontal: 16,
           paddingVertical: 10,
         }}>
@@ -248,8 +271,6 @@ export function ContentsModal({route, navigation}) {
       </View>
     );
   }
-
-  const win = Dimensions.get('window');
 
   const getUserImage = user => {
     if (isEmpty(user.profile_image))
@@ -302,7 +323,7 @@ export function ContentsModal({route, navigation}) {
         style={styles.modalCloseButton}>
         <Text style={styles.upperRightTopCloseBtn}>&#10005;</Text>
       </Pressable>
-      <BottomSheet snapPoints={snapPoints}>
+      <BottomSheet snapPoints={snapPoints} ref={bottomSheetRef}>
         <ScrollView contentContainerStyle={{paddingBottom: 40}}>
           <View style={{marginBottom: 20, flexDirection: 'row'}}>
             <View style={{flex: 1, height: 80, alignItems: 'center'}}>
