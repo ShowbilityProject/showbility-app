@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import {NavigationContainer, useFocusEffect} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
 import LoginStackScreen from './app/views/account/loginStack';
 import TopStackScreen from './app/views/mainTab';
@@ -18,6 +18,7 @@ import {FollowMember} from './app/views/myshowbil/followMember';
 import MyShowbilTab from './app/views/myshowbil/myShowbil';
 import {CategoryList} from './app/views/newupload/category';
 import {FindScreen} from './app/views/components/find';
+import {EditProfileScreen} from './app/views/myshowbil/editprofile';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
@@ -50,6 +51,11 @@ function App(tokenAlive) {
         <RootStack.Screen
           name="사용자정보"
           component={MyShowbilTab}
+          options={{headerBackTitle: ' '}}
+        />
+        <RootStack.Screen
+          name="프로필 편집"
+          component={EditProfileScreen}
           options={{headerBackTitle: ' '}}
         />
         <RootStack.Screen

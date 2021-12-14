@@ -58,11 +58,6 @@ function BaseStackScreen() {
         options={{headerShown: false, headerBackTitle: ''}}
       />
       <BaseStack.Screen
-        name="프로필 편집"
-        component={ProfileEditStack}
-        options={{headerBackTitle: ' ', headerShown: false}}
-      />
-      <BaseStack.Screen
         name="그룹 생성"
         component={GroupCreateStack}
         options={{headerBackTitle: ' ', headerShown: false}}
@@ -83,26 +78,6 @@ function BaseStackScreen() {
         options={{headerShown: false}}
       />
     </BaseStack.Navigator>
-  );
-}
-
-const ProfileEditStackNav = createStackNavigator();
-
-function ProfileEditStack() {
-  return (
-    <ProfileEditStackNav.Navigator>
-      <ProfileEditStackNav.Screen
-        name="프로필 편집"
-        component={EditProfileScreen}
-        options={{headerBackTitle: ' '}}
-      />
-      <ProfileEditStackNav.Screen
-        name="카테고리&태그 선택"
-        component={CategoryList}
-        options={{headerBackTitle: ' '}}
-        initialParams={{prevScreen: 'PROFILE'}}
-      />
-    </ProfileEditStackNav.Navigator>
   );
 }
 

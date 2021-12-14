@@ -3,13 +3,14 @@ import * as React from 'react';
 import {
   View,
   Image,
-  SafeAreaView,
   StyleSheet,
   TextInput,
   Text,
   Pressable,
   Alert,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {isEmpty} from '../../common/util';
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
   textInputStyle: {
     flex: 1,
     fontSize: 17,
-    paddingHorizontal: 5,
+    paddingTop: 20,
     lineHeight: 20,
   },
   applyButton: {
@@ -174,7 +175,7 @@ export function EditProfileScreen({route}) {
     setTgs(value);
   };
 
-  const getReprTagText = () => {
+  const getReprTagText = React.useCallback(() => {
     let text = '';
     if (categories.length) {
       text = categories[0];
@@ -188,74 +189,82 @@ export function EditProfileScreen({route}) {
     }
     console.log(text);
     return text;
-  };
+  }, [categories, tgs]);
 
   return (
-    <SafeAreaView style={styles.baseView}>
+    <View style={styles.baseView}>
       <Pressable style={styles.imageWrapper} onPress={handleUploadImage}>
         <Image style={styles.imageStyle} source={imageSource} />
       </Pressable>
-      <View style={styles.textInputWrapper}>
-        <TextInput
-          style={styles.textInputStyle}
-          placeholder="별명"
-          value={nname}
-          onChangeText={value => setNname(value)}
-        />
-      </View>
-      <View style={styles.textInputWrapper}>
-        <TextInput
-          style={styles.textInputStyle}
-          placeholder="자기소개"
-          value={desc}
-          onChangeText={value => setDesc(value)}
-        />
-      </View>
-      <Pressable
-        onPress={() =>
-          navigation.push('카테고리&태그 선택', {
-            selectCategories: selectCategories,
-            categories: categories.slice(),
-            selectTags: selectTags,
-            tags: tgs.slice(),
-            isUpload: false,
-          })
-        }
-        style={[
-          styles.textInputWrapper,
-          {justifyContent: 'center', flexDirection: 'row'},
-        ]}>
-        <Text style={{fontSize: 17, alignSelf: 'center', flex: 1}}>
-          태그 설정
-        </Text>
-        {categories.length > 0 || tgs.length > 0 ? (
-          <Text style={styles.tagsStyle}>{getReprTagText()}</Text>
-        ) : (
-          <Text style={{fontSize: 17, textAlign: 'right', alignSelf: 'center'}}>
-            {'>'}
-          </Text>
-        )}
-      </Pressable>
-      <View style={styles.bottomWrapper}>
-        <View style={{flex: 1, alignItems: 'flex-end'}}>
-          <View style={styles.smallOptionWrapper}>
-            <Pressable
-              style={{marginRight: 7}}
-              onPress={async () => {
-                let ret = await requestSignOut();
-                if (ret) navigation.navigate('Login');
-              }}>
-              <Text style={styles.smallOptionText}>로그아웃</Text>
-            </Pressable>
-            <Pressable onPress={() => Alert.alert('준비 중입니다.')}>
-              <Text style={styles.smallOptionText}>회원탈퇴</Text>
-            </Pressable>
+      <TouchableWithoutFeedback
+        style={{flex: 1}}
+        onPress={() => Keyboard.dismiss()}>
+        <View style={{flex: 1}}>
+          <View style={styles.textInputWrapper}>
+            <TextInput
+              style={styles.textInputStyle}
+              placeholder="별명"
+              value={nname}
+              onChangeText={value => setNname(value)}
+            />
           </View>
-          <TouchableOpacity style={buttonStyle} onPress={() => handleSubmit()}>
-            <Text style={buttonTextStyle}>저장하기</Text>
-          </TouchableOpacity>
+          <View style={[styles.textInputWrapper]}>
+            <TextInput
+              style={styles.textInputStyle}
+              placeholder="자기소개"
+              value={desc}
+              onChangeText={value => setDesc(value)}
+              multiline={true}
+            />
+          </View>
+          <Pressable
+            onPress={() =>
+              navigation.push('카테고리&태그 선택', {
+                selectCategories: selectCategories,
+                categories: categories.slice(),
+                selectTags: selectTags,
+                tags: tgs.slice(),
+                isUpload: false,
+                prevScreen: 'PROFILE',
+              })
+            }
+            style={[
+              styles.textInputWrapper,
+              {justifyContent: 'center', flexDirection: 'row'},
+            ]}>
+            <Text style={{fontSize: 17, alignSelf: 'center', flex: 1}}>
+              태그 설정
+            </Text>
+            {categories.length > 0 || tgs.length > 0 ? (
+              <Text style={styles.tagsStyle}>{getReprTagText()}</Text>
+            ) : (
+              <Text style={{fontSize: 17, textAlign: 'right', alignSelf: 'center'}}>
+                {'>'}
+              </Text>
+            )}
+          </Pressable>
+          <View style={styles.bottomWrapper}>
+            <View style={{flex: 1, alignItems: 'flex-end'}}>
+              <View style={styles.smallOptionWrapper}>
+                <Pressable
+                  style={{marginRight: 7}}
+                  onPress={async () => {
+                    let ret = await requestSignOut();
+                    if (ret) navigation.navigate('Login');
+                  }}>
+                  <Text style={styles.smallOptionText}>로그아웃</Text>
+                </Pressable>
+                <Pressable onPress={() => Alert.alert('준비 중입니다.')}>
+                  <Text style={styles.smallOptionText}>회원탈퇴</Text>
+                </Pressable>
+              </View>
+              <TouchableOpacity style={buttonStyle} onPress={() => handleSubmit()}>
+                <Text style={buttonTextStyle}>저장하기</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
-      </View>
-    </SafeAreaView>
+      </TouchableWithoutFeedback>
+    </View>
   );
 }

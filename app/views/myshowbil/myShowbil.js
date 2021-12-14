@@ -155,7 +155,7 @@ function MyDetailHeader({data, isMy, isFetched, refresh, setRefresh}) {
             if (isFetched)
               navigation.navigate('프로필 편집', {
                 screen: '프로필 편집',
-                params: {data: data},
+                data: data,
               });
             else navigation.navigate('Login');
           }}>
