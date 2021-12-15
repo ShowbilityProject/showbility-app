@@ -60,6 +60,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 5,
     marginVertical: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   suggestTagText: {
     fontSize: 12,
@@ -308,11 +310,14 @@ function NewUploadTab() {
                               {flexDirection: 'row'},
                             ]}
                             key={index + value}>
-                            <Text style={styles.suggestTagText}>{value}</Text>
+                            <Text style={[styles.suggestTagText]}>{value}</Text>
                             <Pressable
                               onPress={() => onRemoveFreeTagPressed(index)}>
                               <Text
-                                style={[styles.suggestTagText, {marginLeft: 4}]}>
+                                style={[
+                                  styles.suggestTagText,
+                                  {paddingLeft: 4},
+                                ]}>
                                 X
                               </Text>
                             </Pressable>
