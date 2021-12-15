@@ -73,7 +73,9 @@ export function CategoryList({route, navigation}) {
   const fetchData = () => {
     if (categoryFlag) {
       getCategoryList().then(res => setCategoryData(res.results));
-      getTagList(categories).then(res => setTagData(res));
+      if (categories.length === 0)
+        getTagList(['시각디자인']).then(res => setTagData(res));
+      else getTagList(categories).then(res => setTagData(res));
       setCategoryFlag(false);
     }
   };
