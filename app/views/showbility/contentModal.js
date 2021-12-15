@@ -171,16 +171,26 @@ export function ContentsModal({route, navigation}) {
   const win = Dimensions.get('window');
 
   const fetchData = contentId => {
-    return getContentById(contentId).then(res => {
-      setItem(res);
-      setIsLiked(res.is_liked_by_user);
-      if (res.user.followable === FOLLOW_STATUS.FOLLOWING) setIsFollow(true);
-      setLikes(res.likes);
-      getCurrentUser().then(userInfo => {
-        setIsContentOwn(res.user.id === userInfo.user_id);
+    return getContentById(contentId)
+      .then(res => {
+        if (res) return res;
+        else throw Error('존재하지 않는 작품입니다.');
+      })
+      .then(res => {
+        setItem(res);
+        setIsLiked(res.is_liked_by_user);
+        if (res.user.followable === FOLLOW_STATUS.FOLLOWING) setIsFollow(true);
+        setLikes(res.likes);
+        getCurrentUser().then(userInfo => {
+          setIsContentOwn(res.user.id === userInfo.user_id);
+        });
+        return res;
+      })
+      .catch(err => {
+        Alert.alert(err.message);
+        navigation.goBack();
+        return false;
       });
-      return res;
-    });
   };
 
   const adjustBottomSheetInitialHeight = it => {
@@ -200,7 +210,7 @@ export function ContentsModal({route, navigation}) {
 
   React.useEffect(() => {
     fetchData(id).then(it => {
-      adjustBottomSheetInitialHeight(it);
+      if (it) adjustBottomSheetInitialHeight(it);
     });
   }, [id]);
 

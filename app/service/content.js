@@ -47,6 +47,7 @@ export function getContentById(contentId) {
     .then(response => response.json())
     .catch(err => {
       console.log('Get Error : ', err.message);
+      return false;
     });
 }
 
