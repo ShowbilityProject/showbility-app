@@ -98,3 +98,14 @@ export async function requestDeleteLikeContent(contentId) {
     return false;
   }
 }
+
+export async function requestDeleteContent(contentId) {
+  const url = `${HOST}/contents/${contentId}/`;
+  try {
+    const ret = await post(url, undefined, true, 'DELETE');
+    return ret.ok;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}

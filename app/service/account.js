@@ -2,6 +2,7 @@ import {API_TOKEN, HOST} from '../common/constant';
 import {asyncGet, asyncPost, get, post, rawPost} from '../common/requester';
 import {removeUserSession, retrieveUserSession, storeUserSession} from '../common/securestorage';
 import {isEmpty} from '../common/util';
+import base64 from 'react-native-base64';
 
 function saveToken(token) {
   return storeUserSession(API_TOKEN, token).then(r => {
@@ -157,4 +158,16 @@ export async function requestLoginKakao(data) {
 export async function requestSignOut() {
   let ret = await removeUserSession(API_TOKEN);
   return ret;
+}
+
+// user_id, username, email
+export async function getCurrentUser() {
+  let token = await retrieveUserSession(API_TOKEN);
+  if (isEmpty(token)) return {};
+  else {
+    let infos = token.split('.');
+    let infoString = await base64.decode(infos[1]);
+    infoString = infoString.replace(/\0/g, '');
+    return JSON.parse(infoString);
+  }
 }

@@ -5,7 +5,6 @@ import {
   Text,
   StyleSheet,
   Image,
-  TextInput,
   TouchableOpacity,
   ScrollView,
   StatusBar,
@@ -13,17 +12,23 @@ import {
   Dimensions,
   KeyboardAvoidingView,
   Platform,
+  ActionSheetIOS,
+  Alert,
 } from 'react-native';
 import BottomSheet, {BottomSheetTextInput} from '@gorhom/bottom-sheet';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {FOLLOW_STATUS, HOST} from '../../common/constant';
 import {
   getContentById,
+  requestDeleteContent,
   requestDeleteLikeContent,
   requestLikeContent,
 } from '../../service/content';
 import {postComment} from '../../service/comment';
 import {askIfNotTokenValid, isEmpty} from '../../common/util';
 import {
+  getCurrentUser,
+  getCurrentUserId,
   requestFollow,
   requestUnfollow,
   verifyToken,
@@ -152,6 +157,7 @@ export function ContentsModal({route, navigation}) {
   const [likes, setLikes] = React.useState(0);
   const [isFollow, setIsFollow] = React.useState(false);
   const [fullDesc, setFullDesc] = React.useState(false);
+  const [isContentOwn, setIsContentOwn] = React.useState(false);
   const commentInput = React.useRef();
   const snapPoints = React.useMemo(() => ['10%', '80%'], []);
   const likeIcon = '../../../assets/imgs/like.png';
@@ -179,6 +185,9 @@ export function ContentsModal({route, navigation}) {
       setIsLiked(res.is_liked_by_user);
       if (res.user.followable === FOLLOW_STATUS.FOLLOWING) setIsFollow(true);
       setLikes(res.likes);
+      getCurrentUser().then(userInfo => {
+        setIsContentOwn(res.user.id === userInfo.user_id);
+      });
       return res;
     });
   };
@@ -191,7 +200,6 @@ export function ContentsModal({route, navigation}) {
       const ratio = win.width / width;
       height *= ratio;
       height += titleHeight + statusHeightApprox;
-      console.log(height, win.height);
       let heightPercent = Math.floor(
         (100 * (win.height - height)) / win.height,
       );
@@ -378,6 +386,34 @@ export function ContentsModal({route, navigation}) {
                 </View>
               </View>
             </View>
+            {isContentOwn ? (
+              <Pressable
+                style={{position: 'absolute', right: 15}}
+                onPress={async () => {
+                  ActionSheetIOS.showActionSheetWithOptions(
+                    {
+                      options: ['취소', '수정하기', '삭제'],
+                      destructiveButtonIndex: 2,
+                      cancelButtonIndex: 0,
+                      userInterfaceStyle: 'light',
+                    },
+                    buttonIndex => {
+                      if (buttonIndex === 0) {
+                        // cancel action
+                      } else if (buttonIndex === 1) {
+                        Alert.alert('준비 중입니다.');
+                      } else if (buttonIndex === 2) {
+                        requestDeleteContent(id).then(res => {
+                          if (res) navigation.goBack();
+                          else Alert.alert('문제가 발생하였습니다.');
+                        });
+                      }
+                    },
+                  );
+                }}>
+                <Ionicons name="ellipsis-horizontal" size={20} color={'black'} />
+              </Pressable>
+            ) : null}
           </View>
           <View style={{}}>
             <View
