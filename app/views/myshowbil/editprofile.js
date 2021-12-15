@@ -38,11 +38,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#F4F4F6',
     maxHeight: 60,
+    paddingVertical: 10,
   },
   textInputStyle: {
     flex: 1,
     fontSize: 17,
-    paddingTop: 20,
+    paddingTop: 10,
     lineHeight: 20,
   },
   applyButton: {
@@ -74,8 +75,8 @@ const styles = StyleSheet.create({
     fontFamily: 'JejuGothicOTF',
   },
   imageStyle: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
     resizeMode: 'cover',
     overflow: 'hidden',
     borderRadius: 50,
@@ -103,6 +104,13 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     marginBottom: 15,
   },
+  addIcon: {
+    position: 'absolute',
+    bottom: 4,
+    right: 4,
+    width: 20,
+    height: 20,
+  },
 });
 
 export function EditProfileScreen({route}) {
@@ -113,6 +121,7 @@ export function EditProfileScreen({route}) {
   const [desc, setDesc] = React.useState(description);
   const [categories, setCategories] = React.useState([]);
   const [tgs, setTgs] = React.useState(tags);
+  const addIconSource = require('../../../assets/imgs/add.png');
 
   const imageSource = image
     ? typeof image === 'string'
@@ -193,9 +202,12 @@ export function EditProfileScreen({route}) {
 
   return (
     <View style={styles.baseView}>
-      <Pressable style={styles.imageWrapper} onPress={handleUploadImage}>
-        <Image style={styles.imageStyle} source={imageSource} />
-      </Pressable>
+      <View style={styles.imageWrapper}>
+        <Pressable onPress={handleUploadImage}>
+          <Image style={styles.imageStyle} source={imageSource} />
+          <Image style={styles.addIcon} source={addIconSource} />
+        </Pressable>
+      </View>
       <TouchableWithoutFeedback
         style={{flex: 1}}
         onPress={() => Keyboard.dismiss()}>
@@ -258,7 +270,9 @@ export function EditProfileScreen({route}) {
                   <Text style={styles.smallOptionText}>회원탈퇴</Text>
                 </Pressable>
               </View>
-              <TouchableOpacity style={buttonStyle} onPress={() => handleSubmit()}>
+              <TouchableOpacity
+                style={buttonStyle}
+                onPress={() => handleSubmit()}>
                 <Text style={buttonTextStyle}>저장하기</Text>
               </TouchableOpacity>
             </View>
