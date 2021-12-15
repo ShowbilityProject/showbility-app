@@ -446,7 +446,7 @@ export function ContentsModal({route, navigation}) {
             <View style={styles.commentWrapper}>
               <View style={{flexDirection: 'row'}}>
                 <Text style={{fontSize: 12}}>
-                  {item.comments.length ? item.comments[0].author : ''}
+                  {item.comments.length ? item.comments[0].author.nickname : ''}
                 </Text>
                 <Text style={{marginLeft: 10}}>
                   {item.comments.length ? item.comments[0].detail : ''}

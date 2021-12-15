@@ -125,19 +125,23 @@ export function CommentsView({route, navigation}) {
             if (comment.depth > 0) {
               return;
             }
+            let profileImage = defaultUserIconSource;
+            if (comment.author && comment.author.profile_image !== undefined) {
+              profileImage = {uri: comment.author.profile_image};
+            }
             return (
               <View style={{flexDirection: 'row', paddingVertical: 10}}>
                 <View style={{justifyContent: 'flex-start'}}>
                   <Image
-                    source={defaultUserIconSource}
-                    style={{width: 20, height: 20}}
+                    source={profileImage}
+                    style={{width: 20, height: 20, borderRadius: 10}}
                   />
                 </View>
                 <View style={CommentStyles.headLayer}>
                   <View stlye={{flex: 1}}>
                     <View style={{flexDirection: 'row'}}>
-                      <Text style={{fontSize: 12, fontWeight: '600', lineHeight: 18}}>
-                        {comment.author}
+                      <Text style={styles.authorText}>
+                        {comment.author.nickname}
                       </Text>
                       <Text style={{marginLeft: 10, fontSize: 12, lineHeight: 18}}>
                         {comment.detail}
@@ -194,5 +198,10 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     paddingBottom: 11,
     paddingTop: 12,
+  },
+  authorText: {
+    fontSize: 12,
+    fontWeight: '600',
+    lineHeight: 18,
   },
 });
