@@ -158,7 +158,6 @@ export function ContentsModal({route, navigation}) {
   const [isFollow, setIsFollow] = React.useState(false);
   const [fullDesc, setFullDesc] = React.useState(false);
   const [isContentOwn, setIsContentOwn] = React.useState(false);
-  const commentInput = React.useRef();
   const snapPoints = React.useMemo(() => ['10%', '80%'], []);
   const likeIcon = '../../../assets/imgs/like.png';
   const likeOnIcon = '../../../assets/imgs/like_on.png';
@@ -170,14 +169,6 @@ export function ContentsModal({route, navigation}) {
   const statusHeightApprox = 44;
   const bottomSheetRef = React.useRef();
   const win = Dimensions.get('window');
-
-  const submitComment = ({nativeEvent}) => {
-    const text = nativeEvent.text;
-    postComment(text, id, null).then(res => {
-      fetchData(id);
-      setCmtText('');
-    });
-  };
 
   const fetchData = contentId => {
     return getContentById(contentId).then(res => {
@@ -489,19 +480,34 @@ export function ContentsModal({route, navigation}) {
                 </Text>
               </View>
             </View>
-            <View style={styles.commentInputWrapper}>
-              <BottomSheetTextInput
-                ref={commentInput}
-                placeholder="댓글 달기"
-                style={styles.commentInput}
-                value={cmtText}
-                onChangeText={value => setCmtText(value)}
-                onSubmitEditing={submitComment}
-              />
-            </View>
+            <CommentInputArea contentId={id} fetchData={fetchData} />
           </View>
         </ScrollView>
       </BottomSheet>
     </KeyboardAvoidingView>
+  );
+}
+
+function CommentInputArea({contentId, fetchData}) {
+  const [cmtText, setCmtText] = React.useState('');
+
+  const submitComment = ({nativeEvent}) => {
+    const text = nativeEvent.text;
+    postComment(text, contentId, null).then(res => {
+      setCmtText('');
+      fetchData(contentId);
+    });
+  };
+
+  return (
+    <View style={styles.commentInputWrapper}>
+      <BottomSheetTextInput
+        placeholder="댓글 달기"
+        style={styles.commentInput}
+        value={cmtText}
+        onChangeText={value => setCmtText(value)}
+        onSubmitEditing={submitComment}
+      />
+    </View>
   );
 }
