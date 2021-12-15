@@ -9,6 +9,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
+  Image,
 } from 'react-native';
 import { getComment, postComment } from '../../service/comment';
 
@@ -55,8 +56,7 @@ export function CommentsView({route, navigation}) {
   let CommentStyles = {
     headLayer: {
       flexDirection: 'row',
-      paddingHorizontal: 18,
-      paddingTop: 20,
+      paddingLeft: 4,
     },
     replyLayer: {
       flexDirection: 'row',
@@ -74,6 +74,8 @@ export function CommentsView({route, navigation}) {
   const [item, setItem] = React.useState(route.params.comments);
   const [cmtText, setCmtText] = React.useState('');
   const commentInput = React.useRef();
+  const defaultUserIconSource = require('../../../assets/imgs/default_profile.png');
+
   const submitComment = ({nativeEvent}) => {
     const text = nativeEvent.text;
     postComment(text, contentId, null).then(res => {
@@ -82,13 +84,14 @@ export function CommentsView({route, navigation}) {
     });
   };
 
-  const fetchData = () => {
+  const fetchData = React.useCallback(() => {
     getComment(contentId).then(res => setItem(res.results));
-  };
+  }, [contentId]);
 
   React.useEffect(() => {
+    console.log('useEffect');
     fetchData();
-  }, []);
+  }, [contentId, fetchData]);
 
   const getTimeString = dt => {
     const created_dt = new Date(dt);
@@ -110,7 +113,7 @@ export function CommentsView({route, navigation}) {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <View style={{flex: 1, paddingHorizontal: 15, backgroundColor: 'white'}}>
       <KeyboardAvoidingView
         keyboardVerticalOffset={100}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -123,12 +126,20 @@ export function CommentsView({route, navigation}) {
               return;
             }
             return (
-              <View>
+              <View style={{flexDirection: 'row', paddingVertical: 10}}>
+                <View style={{justifyContent: 'flex-start'}}>
+                  <Image
+                    source={defaultUserIconSource}
+                    style={{width: 20, height: 20}}
+                  />
+                </View>
                 <View style={CommentStyles.headLayer}>
-                  <View>
+                  <View stlye={{flex: 1}}>
                     <View style={{flexDirection: 'row'}}>
-                      <Text style={{fontSize: 12}}>{comment.author}</Text>
-                      <Text style={{marginLeft: 10, fontSize: 12}}>
+                      <Text style={{fontSize: 12, fontWeight: '600', lineHeight: 18}}>
+                        {comment.author}
+                      </Text>
+                      <Text style={{marginLeft: 10, fontSize: 12, lineHeight: 18}}>
                         {comment.detail}
                       </Text>
                     </View>
@@ -161,7 +172,7 @@ export function CommentsView({route, navigation}) {
           />
         </View>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -171,12 +182,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   commentInputWrapper: {
-    marginLeft: 16,
-    marginRight: 16,
     marginTop: 16,
     borderWidth: 1,
     borderColor: '#707070',
     borderRadius: 6,
+    marginBottom: 40,
   },
   commentInput: {
     height: 40,
