@@ -264,6 +264,7 @@ function NewUploadTab() {
                   style={styles.inputStyle}
                   placeholder="작품 제목"
                   onChangeText={handleTitleChange}
+                  onFocus={() => setFreeTagFocused(false)}
                 />
               </View>
               <View style={[styles.inputWrapper, {flexDirection: 'row'}]}>
@@ -355,6 +356,7 @@ function NewUploadTab() {
                   placeholder="프로젝트 설명"
                   multiline={true}
                   onChangeText={value => setDesc(value)}
+                  onFocus={() => setFreeTagFocused(false)}
                 />
               </View>
             </View>
