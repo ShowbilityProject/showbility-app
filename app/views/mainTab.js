@@ -16,6 +16,7 @@ import {GroupCreate} from './showbility/group/groupCreate';
 import {ContentsModal} from './showbility/contentModal';
 import {verifyToken} from '../service/account';
 import {askIfNotTokenValid} from '../common/util';
+import {StackScreenOptions} from '../style/common';
 
 const MainTab = createBottomTabNavigator();
 
@@ -46,11 +47,7 @@ function BaseStackScreen() {
   return (
     <BaseStack.Navigator
       initialRouteName="Home"
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: '#FFFFFF',
-        },
-      }}
+      screenOptions={StackScreenOptions}
       mode="modal">
       <BaseStack.Screen
         name="TabScreen"
@@ -85,7 +82,7 @@ const GroupCreateStackNav = createStackNavigator();
 
 function GroupCreateStack() {
   return (
-    <GroupCreateStackNav.Navigator>
+    <GroupCreateStackNav.Navigator screenOptions={StackScreenOptions}>
       <GroupCreateStackNav.Screen
         name="그룹 생성 "
         component={GroupCreate}
@@ -105,7 +102,7 @@ const NewUploadStackNav = createStackNavigator();
 
 function NewUploadStack() {
   return (
-    <NewUploadStackNav.Navigator>
+    <NewUploadStackNav.Navigator screenOptions={StackScreenOptions}>
       <NewUploadStackNav.Screen
         name="새 업로드"
         component={NewUploadTab}

@@ -21,6 +21,7 @@ import {GroupDetail} from './group/groupDetail';
 import {GroupMember} from './group/groupMember';
 import {CategoryList} from '../newupload/category';
 import {Color} from '../../style/colors';
+import { StackScreenOptions } from '../../style/common';
 
 const styles = StyleSheet.create({
   container: {
@@ -278,7 +279,7 @@ const MainHomeStack = createStackNavigator();
 
 export function ShowbilityHome() {
   return (
-    <MainHomeStack.Navigator>
+    <MainHomeStack.Navigator screenOptions={StackScreenOptions}>
       <MainHomeStack.Screen
         name="Main"
         component={SHome2}

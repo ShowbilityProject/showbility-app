@@ -19,6 +19,7 @@ import MyShowbilTab from './app/views/myshowbil/myShowbil';
 import {CategoryList} from './app/views/newupload/category';
 import {FindScreen} from './app/views/components/find';
 import {EditProfileScreen} from './app/views/myshowbil/editprofile';
+import {StackScreenOptions} from './app/style/common';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
@@ -32,7 +33,9 @@ function App(tokenAlive) {
   console.log(tokenAlive, iScreen);
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName={iScreen}>
+      <RootStack.Navigator
+        initialRouteName={iScreen}
+        screenOptions={StackScreenOptions}>
         <RootStack.Screen
           name="Login"
           component={LoginStackScreen}
