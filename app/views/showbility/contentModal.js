@@ -158,7 +158,8 @@ export function ContentsModal({route, navigation}) {
   const [isFollow, setIsFollow] = React.useState(false);
   const [fullDesc, setFullDesc] = React.useState(false);
   const [isContentOwn, setIsContentOwn] = React.useState(false);
-  const snapPoints = React.useMemo(() => ['10%', '80%'], []);
+  const [snapValues, setSnapValues] = React.useState(['10%', '80%']);
+  const snapPoints = React.useMemo(() => snapValues, [snapValues]);
   const likeIcon = '../../../assets/imgs/like.png';
   const likeOnIcon = '../../../assets/imgs/like_on.png';
   const followOnIcon = '../../../assets/imgs/follow_on.png';
@@ -208,8 +209,11 @@ export function ContentsModal({route, navigation}) {
     let heightPercent = Math.floor(
       (100 * (win.height - totalHeight)) / win.height,
     );
-    if (heightPercent > 10)
-      bottomSheetRef.current.snapToPosition(heightPercent + '%');
+    if (heightPercent > 10) {
+      let newSnaps = [snapValues[0], heightPercent + '%', snapValues[1]];
+      setSnapValues(newSnaps);
+      bottomSheetRef.current.snapToIndex(1);
+    }
   };
 
   React.useEffect(() => {
