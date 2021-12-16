@@ -194,18 +194,22 @@ export function ContentsModal({route, navigation}) {
   };
 
   const adjustBottomSheetInitialHeight = it => {
-    if (it.images.length === 1) {
+    let totalHeight = titleHeight + statusHeightApprox;
+    for (let i = 0; i < it.images.length; i++) {
       let image = it.images[0];
       let width = image.middle_width ? image.middle_width : image.width;
       let height = image.middle_height ? image.middle_height : image.height;
       const ratio = win.width / width;
       height *= ratio;
-      height += titleHeight + statusHeightApprox;
-      let heightPercent = Math.floor(
-        (100 * (win.height - height)) / win.height,
-      );
-      bottomSheetRef.current.snapToPosition(heightPercent + '%');
+      totalHeight += height;
     }
+
+    totalHeight += 10 * (it.images.length - 1); //bottomMargin Size
+    let heightPercent = Math.floor(
+      (100 * (win.height - totalHeight)) / win.height,
+    );
+    if (heightPercent > 10)
+      bottomSheetRef.current.snapToPosition(heightPercent + '%');
   };
 
   React.useEffect(() => {
