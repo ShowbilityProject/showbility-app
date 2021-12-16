@@ -33,11 +33,10 @@ const styles = StyleSheet.create({
     maxHeight: 150,
   },
   textInputWrapper: {
-    flex: 1,
     width: '100%',
     borderBottomWidth: 1,
     borderColor: '#F4F4F6',
-    maxHeight: 60,
+    height: 60,
     paddingVertical: 10,
   },
   textInputStyle: {
@@ -121,6 +120,8 @@ export function EditProfileScreen({route}) {
   const [desc, setDesc] = React.useState(description);
   const [categories, setCategories] = React.useState([]);
   const [tgs, setTgs] = React.useState(tags);
+  const [descHeight, setDescHeight] = React.useState(60);
+  const descRef = React.useRef();
   const addIconSource = require('../../../assets/imgs/add.png');
 
   const imageSource = image
@@ -220,13 +221,21 @@ export function EditProfileScreen({route}) {
               onChangeText={value => setNname(value)}
             />
           </View>
-          <View style={[styles.textInputWrapper]}>
+          <View
+            style={[
+              styles.textInputWrapper,
+              {height: Math.max(descHeight + 40, 60)},
+            ]}>
             <TextInput
-              style={styles.textInputStyle}
+              ref={descRef}
+              style={[styles.textInputStyle]}
               placeholder="자기소개"
               value={desc}
               onChangeText={value => setDesc(value)}
               multiline={true}
+              onContentSizeChange={({nativeEvent}) =>
+                setDescHeight(nativeEvent.contentSize.height)
+              }
             />
           </View>
           <Pressable
