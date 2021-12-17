@@ -51,13 +51,15 @@ export function getContentById(contentId) {
     });
 }
 
-export async function uploadContentMeta(title, categories, tags, detail) {
+// eslint-disable-next-line prettier/prettier
+export async function uploadContentMeta(title, categories, tags, detail, imageIds) {
   let url = `${HOST}/contents/`;
   const body = {
     title: title,
     categories: categories,
     tags: tags,
     detail: detail,
+    image_ids: imageIds,
   };
   const res = await asyncPost(url, body);
   return res;
@@ -74,6 +76,20 @@ export async function uploadImageWithContentId(image, contentId, order) {
   console.log(image);
   formData.append('image', imageData);
   formData.append('order', order);
+  const res = await rawPost(url, formData);
+  return res;
+}
+
+export async function uploadImage(image, order) {
+  const url = `${HOST}/image/`;
+  const formData = new FormData();
+  const imageData = {
+    type: image.type,
+    uri: image.uri,
+    name: image.fileName,
+  };
+  formData.append('original_image', imageData);
+  formData.append('order_in_content', order);
   const res = await rawPost(url, formData);
   return res;
 }

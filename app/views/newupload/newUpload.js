@@ -18,10 +18,7 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/core';
 import {isEmpty} from '../../common/util';
-import {
-  uploadContentMeta,
-  uploadImageWithContentId,
-} from '../../service/content';
+import {uploadContentMeta, uploadImage} from '../../service/content';
 import {verifyToken} from '../../service/account';
 import {Color} from '../../style/colors';
 
@@ -187,16 +184,29 @@ function NewUploadTab() {
       Alert.alert('필수 항목 누락', '모든 항목을 채워주세요');
     } else {
       setLoadingDisplay('flex');
-      const res = await uploadContentMeta(
-        title,
-        categories,
-        tags.concat(freeTags),
-        desc,
-      );
-      for (let i = 0; i < images.length; i++) {
-        await uploadImageWithContentId(images[i], res.id, i);
+      try {
+        let imageIds = [];
+        for (let i = 0; i < images.length; i++) {
+          let ret = await uploadImage(images[i], i);
+          imageIds.push(ret.id);
+        }
+        const res = await uploadContentMeta(
+          title,
+          categories,
+          tags.concat(freeTags),
+          desc,
+          imageIds,
+        );
+        navigation.push('그룹 선택', {contentId: res.id});
+      } catch (err) {
+        console.log(err);
+        setLoadingDisplay('none');
+        Alert.alert(
+          '작품을 게시할 수 없음',
+          '죄송합니다. 작품을 게시하는 중 문제가 발생했습니다. 다시 시도하세요.',
+          [{text: '확인', onPress: () => null}],
+        );
       }
-      navigation.push('그룹 선택', {contentId: res.id});
     }
   };
 
