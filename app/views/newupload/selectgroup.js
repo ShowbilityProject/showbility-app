@@ -1,30 +1,26 @@
-import {useNavigation} from '@react-navigation/core';
 import * as React from 'react';
 import {
-  FlatList,
   View,
   Text,
-  TouchableOpacity,
-  Button,
   StyleSheet,
   Image,
+  Switch,
+  Animated,
+  Button,
 } from 'react-native';
-import {
-  getGroups,
-  GET_GROUP_TYPE,
-  requestAddContentToGroup,
-} from '../../service/group';
+import {getGroups, GET_GROUP_TYPE} from '../../service/group';
+import {Color} from '../../style/colors';
 
 const styles = new StyleSheet.create({
   groupItem: {
     flex: 1,
-    padding: 15,
-    borderBottomWidth: 1,
-    borderColor: '#DDDDDD',
+    paddingVertical: 5,
     flexDirection: 'row',
+    alignItems: 'center',
   },
   groupItemFont: {
-    fontSize: 17,
+    fontSize: 14,
+    lineHeight: 22,
     flex: 1,
   },
   circle: {
@@ -34,41 +30,55 @@ const styles = new StyleSheet.create({
     borderColor: '#DDDDDD',
     borderWidth: 1,
   },
+  groupImage: {
+    width: 36,
+    height: 36,
+    resizeMode: 'cover',
+    borderRadius: 18,
+    marginRight: 15,
+  },
+  textStyle: {
+    fontFamily: 'JejuGothicOTF',
+    fontSize: 17,
+    lineHeight: 60,
+    flex: 1,
+  },
 });
 
-export function SelectGroup({route}) {
-  const contentId = route.params.contentId;
-  const navigation = useNavigation();
+export function SelectGroup(props) {
+  const {selectedGroups, setSelectedGroups} = props;
   const [groups, setGroups] = React.useState([]);
-  const [refreshing, setRefreshing] = React.useState(false);
   const [extraData, setExtraData] = React.useState(false);
-  const [selectedGroups, setSelectedGroups] = React.useState([]);
-  const selectIcon = require('../../../assets/imgs/select_icon.png');
+  const [contentsHeight, setContentsHeight] = React.useState(0);
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const animatedHeight = React.useRef(new Animated.Value(0)).current;
+  const padBottomValue = 20;
+
+  const open = () => {
+    setIsOpen(true);
+    Animated.timing(animatedHeight, {
+      toValue: contentsHeight,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const close = () => {
+    setIsOpen(false);
+    Animated.timing(animatedHeight, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  };
 
   React.useEffect(() => {
     getGroups(GET_GROUP_TYPE.MY).then(res => {
-      setRefreshing(true);
       setGroups(res.results);
-      setRefreshing(false);
+      setContentsHeight(padBottomValue + res.results.length * 46);
     });
   }, []);
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <Button onPress={handleSubmit} title="완료" color="#FF3B30" />
-      ),
-    });
-  });
-
-  const handleSubmit = async () => {
-    for (let groupId of selectedGroups) {
-      requestAddContentToGroup(groupId, contentId);
-    }
-    navigation.goBack();
-    navigation.goBack();
-    navigation.navigate('ContentsModal', contentId);
-  };
 
   const handleSelection = id => {
     if (selectedGroups.includes(id)) {
@@ -85,30 +95,44 @@ export function SelectGroup({route}) {
   };
 
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
-      <FlatList
-        key={'#'}
-        keyExtractor={item => '#' + item.id}
-        data={groups}
-        refreshing={refreshing}
-        extraData={extraData}
-        renderItem={group => {
-          let id = group.item.id;
-          let name = group.item.name;
-          return (
-            <TouchableOpacity
-              style={styles.groupItem}
-              onPress={() => handleSelection(id)}>
-              <Text style={styles.groupItemFont}>{name}</Text>
-              {selectedGroups.includes(id) ? (
-                <Image style={{alignSelf: 'flex-end'}} source={selectIcon} />
-              ) : (
-                <View style={styles.circle} />
-              )}
-            </TouchableOpacity>
-          );
-        }}
-      />
+    <View>
+      <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+        <Text style={styles.textStyle}>그룹 선택</Text>
+        {isOpen ? (
+          <Button title="&or;" color="#d3d7e0" onPress={close} />
+        ) : (
+          <Button title="<" color="#d3d7e0" onPress={open} />
+        )}
+      </View>
+      <Animated.View style={{height: animatedHeight, overflow: 'hidden'}}>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'white',
+            paddingBottom: padBottomValue,
+          }}>
+          {groups.map(group => {
+            let id = group.id;
+            let name = group.name;
+            let groupThumbnail = group.small_image;
+            if (groupThumbnail === null) groupThumbnail = group.repr_image;
+            return (
+              <View key={id} style={styles.groupItem}>
+                <Image
+                  style={styles.groupImage}
+                  source={{uri: groupThumbnail}}
+                />
+                <Text style={styles.groupItemFont}>{name}</Text>
+                <Switch
+                  trackColor={{false: '#767577', true: Color.birghtOrange}}
+                  onValueChange={() => handleSelection(id)}
+                  value={selectedGroups.includes(id)}
+                />
+              </View>
+            );
+          })}
+        </View>
+      </Animated.View>
     </View>
   );
 }

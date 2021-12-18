@@ -21,6 +21,8 @@ import {isEmpty} from '../../common/util';
 import {uploadContentMeta, uploadImage} from '../../service/content';
 import {verifyToken} from '../../service/account';
 import {Color} from '../../style/colors';
+import {SelectGroup} from './selectgroup';
+import {requestAddContentToGroup} from '../../service/group';
 
 const styles = StyleSheet.create({
   container: {
@@ -128,6 +130,7 @@ function NewUploadTab() {
   const [desc, setDesc] = React.useState('');
   const [forceRefresh, setForceRefresh] = React.useState(false);
   const [loadingDisplay, setLoadingDisplay] = React.useState('none');
+  const [selectedGroups, setSelectedGroups] = React.useState([]);
 
   const freeTagInputRef = React.useRef();
 
@@ -190,14 +193,17 @@ function NewUploadTab() {
           let ret = await uploadImage(images[i], i);
           imageIds.push(ret.id);
         }
-        const res = await uploadContentMeta(
+        const content = await uploadContentMeta(
           title,
           categories,
           tags.concat(freeTags),
           desc,
           imageIds,
         );
-        navigation.push('그룹 선택', {contentId: res.id});
+        for (let groupId of selectedGroups)
+          requestAddContentToGroup(groupId, content.id);
+        navigation.goBack();
+        navigation.navigate('ContentsModal', content.id);
       } catch (err) {
         console.log(err);
         setLoadingDisplay('none');
@@ -215,7 +221,7 @@ function NewUploadTab() {
       headerRight: () => (
         <Button
           onPress={handleSubmit}
-          title="다음"
+          title="완료"
           color="#FF3B30"
           disabled={loadingDisplay === 'flex'}
         />
@@ -292,7 +298,11 @@ function NewUploadTab() {
                         isUpload: true,
                       })
                     }>
-                    <Text style={[styles.textStyle, {textAlign: 'right'}]}>
+                    <Text
+                      style={[
+                        styles.textStyle,
+                        {textAlign: 'right', color: '#d3d7e0'},
+                      ]}>
                       {'>'}
                     </Text>
                   </TouchableOpacity>
@@ -355,6 +365,12 @@ function NewUploadTab() {
                     />
                   </Pressable>
                 </View>
+              </View>
+              <View style={styles.inputWrapper}>
+                <SelectGroup
+                  selectedGroups={selectedGroups}
+                  setSelectedGroups={setSelectedGroups}
+                />
               </View>
               <View style={styles.inputWrapper}>
                 <Text style={styles.textStyle}>프로젝트 설명</Text>
