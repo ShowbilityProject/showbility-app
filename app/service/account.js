@@ -155,6 +155,15 @@ export async function requestLoginKakao(data) {
   else return saveToken(token);
 }
 
+export async function requestLoginApple(data) {
+  await requestSignOut();
+  let uri = HOST + '/user/apple/';
+  let ret = await asyncPost(uri, data);
+  let token = ret.token;
+  if (isEmpty(token)) return false;
+  else return saveToken(token);
+}
+
 export async function requestSignOut() {
   let ret = await removeUserSession(API_TOKEN);
   return ret;

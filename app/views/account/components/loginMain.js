@@ -1,15 +1,12 @@
 import {useNavigation} from '@react-navigation/core';
 import * as React from 'react';
+import {View, Text, StyleSheet, Image, Pressable, Alert} from 'react-native';
+import {appleAuth} from '@invertase/react-native-apple-authentication';
 import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  Dimensions,
-  Pressable,
-  Alert,
-} from 'react-native';
-import {requestLoginKakao, verifyToken} from '../../../service/account';
+  requestLoginApple,
+  requestLoginKakao,
+  verifyToken,
+} from '../../../service/account';
 import {login} from '@react-native-seoul/kakao-login';
 import {Color} from '../../../style/colors';
 
@@ -26,11 +23,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     fontFamily: 'JejuGothicOTF',
+    paddingTop: 100,
   },
   buttonsContainer: {
-    flex: 1.3,
-    flexDirection: 'row',
+    flex: 3,
     justifyContent: 'center',
+    alignItems: 'center',
+    // flexDirection: 'row',
   },
   accountContainer: {
     flex: 1,
@@ -92,25 +91,23 @@ const styles = StyleSheet.create({
   privacyText: {
     fontSize: 12,
     color: Color.veryLightPink,
-    lineHeight: 18
+    lineHeight: 18,
   },
   kakaoImage: {
-    height: 51,
-    width: 203,
-    margin: 5,
-    alignSelf: 'center',
-    borderRadius: 5,
+    height: 60,
+    width: 60,
   },
   beforeLoginText: {
     fontFamily: 'JejuGothicOTF',
     fontSize: 14,
     color: Color.veryLightPink,
-    textDecorationLine: 'underline'
+    textDecorationLine: 'underline',
   },
 });
 
 function LoginScreen() {
-  const kakao_icon = '../../../../assets/imgs/login/kakao_icon_new.png';
+  const kakao_icon = '../../../../assets/imgs/login/kakao_login_circle.png';
+  const apple_icon = '../../../../assets/imgs/login/apple_login_circle.png';
   const showbility_icon = require('../../../../assets/imgs/showbility.png');
   const navigation = useNavigation();
 
@@ -135,6 +132,27 @@ function LoginScreen() {
     }
   };
 
+  async function onAppleButtonPress() {
+    // performs login request
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+    });
+    // get current authentication state for user
+    // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
+    const credentialState = await appleAuth.getCredentialStateForUser(
+      appleAuthRequestResponse.user,
+    );
+    // use credentialState response to ensure the user is authenticated
+    if (credentialState === appleAuth.State.AUTHORIZED) {
+      let ret = await requestLoginApple(appleAuthRequestResponse);
+      if (ret) navigation.navigate('App');
+      else Alert.alert('로그인 실패', '문제가 발생하였습니다.');
+    } else {
+      Alert.alert('로그인 실패', 'Apple 인증 서버 응답이 적절하지 않습니다.');
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.centerContaier}>
@@ -148,13 +166,23 @@ function LoginScreen() {
         </Text>
       </View>
       <View style={styles.buttonsContainer}>
-        <Pressable onPress={signInWithKakao} style={{flex: 1}}>
-          <Image
-            style={styles.kakaoImage}
-            resizeMode={'contain'}
-            source={require(kakao_icon)}
-          />
-        </Pressable>
+        <Text
+          style={[
+            styles.beforeLoginText,
+            {paddingBottom: 29, textDecorationLine: 'none'},
+          ]}>
+          SNS 간편 로그인
+        </Text>
+        <View style={{flexDirection: 'row'}}>
+          <Pressable onPress={signInWithKakao} style={{paddingHorizontal: 17}}>
+            <Image style={styles.kakaoImage} source={require(kakao_icon)} />
+          </Pressable>
+          <Pressable
+            onPress={() => onAppleButtonPress()}
+            style={{paddingHorizontal: 17}}>
+            <Image style={styles.kakaoImage} source={require(apple_icon)} />
+          </Pressable>
+        </View>
       </View>
       <View style={styles.joinContainer}>
         <Text
