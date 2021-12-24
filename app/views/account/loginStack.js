@@ -3,7 +3,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import LoginScreen from './components/loginMain';
 import {PrivacyScreen} from './components/privacy';
 import {JoinScreen} from './components/join';
-import { StackScreenOptions } from '../../style/common';
+import {StackScreenOptions} from '../../style/common';
+import {EmailLoginScreen} from './components/emailLogin';
 
 const Stack = createStackNavigator();
 
@@ -23,6 +24,11 @@ function LoginStackScreen() {
       <Stack.Screen
         name="회원가입"
         component={JoinScreen}
+        options={{headerBackTitle: ' '}}
+      />
+      <Stack.Screen
+        name="이메일 로그인"
+        component={EmailLoginScreen}
         options={{headerBackTitle: ' '}}
       />
     </Stack.Navigator>

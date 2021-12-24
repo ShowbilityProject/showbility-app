@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/core';
 import * as React from 'react';
-import {View, Text, StyleSheet, Image, Pressable, Alert} from 'react-native';
+import {View, Text, StyleSheet, Image, Pressable, Alert, TouchableOpacity} from 'react-native';
 import {appleAuth} from '@invertase/react-native-apple-authentication';
 import {
   requestLoginApple,
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   centerContaier: {
-    flex: 9,
+    flex: 6,
     alignItems: 'center',
     justifyContent: 'center',
     fontFamily: 'JejuGothicOTF',
@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     // flexDirection: 'row',
+    paddingHorizontal: 15,
   },
   accountContainer: {
     flex: 1,
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 50,
+    marginBottom: 30,
   },
   button: {
     alignItems: 'center',
@@ -107,6 +108,16 @@ const styles = StyleSheet.create({
     fontFamily: 'JejuGothicOTF',
     fontSize: 14,
     color: Color.birghtOrange,
+  },
+  emailLoginBox: {
+    width: '100%',
+    height: 52,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: Color.veryLightPink,
   },
 });
 
@@ -188,13 +199,18 @@ function LoginScreen() {
             <Image style={styles.kakaoImage} source={require(apple_icon)} />
           </Pressable>
         </View>
+        <TouchableOpacity
+          style={styles.emailLoginBox}
+          onPress={() => navigation.navigate('이메일 로그인')}>
+          <Text style={{fontSize: 17}}>이메일 로그인</Text>
+        </TouchableOpacity>
         <View style={{marginTop: 22, flexDirection: 'row'}}>
           <Text style={[styles.beforeLoginText, {textDecorationLine: 'none'}]}>
             쇼빌리티가 처음이신가요?
           </Text>
           <Pressable
             style={{marginLeft: 10}}
-            onPress={() => navigation.push('회원가입')}>
+            onPress={() => navigation.navigate('회원가입')}>
             <Text style={styles.joinText}>회원가입</Text>
           </Pressable>
         </View>

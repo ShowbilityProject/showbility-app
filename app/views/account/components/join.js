@@ -122,7 +122,7 @@ const styles = new StyleSheet.create({
 
 export function JoinScreen() {
   const navigation = useNavigation();
-  const [name, setName] = React.useState('');
+  const [nickname, setNickname] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [isEmailValid, setIsEmailValid] = React.useState(false);
   const [showEmailError, setShowEmailError] = React.useState(false);
@@ -161,7 +161,7 @@ export function JoinScreen() {
   };
 
   const validateInputs = () => {
-    if (name.length === 0) return false;
+    if (nickname.length === 0) return false;
     else if (!emailRexp.test(email)) return false;
     else if (!validatePassword()) return false;
     else if (!agreedRule) return false;
@@ -192,11 +192,10 @@ export function JoinScreen() {
   const handleSumbit = async () => {
     if (!validateInputs()) return false;
     else {
-      let ret = await requestSignUp(name, email, password);
+      let ret = await requestSignUp(nickname, email, password);
       if (!ret) Alert.alert('회원가입 오류', '회원가입 오류입니다.');
       else {
-        navigation.goBack();
-        navigation.navigate('App');
+        navigation.replace('App');
       }
     }
   };
@@ -214,12 +213,12 @@ export function JoinScreen() {
   return (
     <TouchableWithoutFeedback onPress={() => handleDismiss()}>
       <View style={styles.container}>
-        <View style={[styles.textInputWrapper, getBorderStyle('name')]}>
+        <View style={[styles.textInputWrapper, getBorderStyle('nickname')]}>
           <TextInput
             style={styles.textInput}
-            placeholder={'이름'}
-            onChangeText={v => setName(v)}
-            onFocus={() => setFocusedInput('name')}
+            placeholder={'닉네임'}
+            onChangeText={v => setNickname(v)}
+            onFocus={() => setFocusedInput('nickname')}
           />
         </View>
         <View style={[styles.textInputWrapper, getBorderStyle('email')]}>

@@ -18,9 +18,10 @@ function saveToken(token) {
 export function requestSignIn(email, password) {
   let uri = HOST + '/getToken/';
   let body = {
-    email: email,
+    username: email,
     password: password,
   };
+  console.log(body);
   return post(uri, body, false)
     .then(ret => ret.json())
     .then(data => {
@@ -34,11 +35,11 @@ export function requestSignIn(email, password) {
     });
 }
 
-export async function requestSignUp(name, email, password) {
+export async function requestSignUp(nickname, email, password) {
   let uri = HOST + '/user/';
   let body = {
-    username: name,
-    email: email,
+    username: email,
+    nickname: nickname,
     password: password,
   };
   return post(uri, body)
@@ -56,7 +57,7 @@ export async function requestSignUp(name, email, password) {
 }
 
 // {
-//   "email": [
+//   "username": [
 //       "Enter a valid email address."
 //       "This field must be unique."
 //   ]
@@ -64,7 +65,7 @@ export async function requestSignUp(name, email, password) {
 export async function requestDuplicateEmailCheck(email) {
   let uri = HOST + '/user/validate_email/';
   let body = {
-    email: email,
+    username: email,
   };
   return post(uri, body)
     .then(res => {
