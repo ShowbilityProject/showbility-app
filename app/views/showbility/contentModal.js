@@ -292,7 +292,7 @@ export function ContentsModal({route, navigation}) {
   const getUserImage = user => {
     if (isEmpty(user.profile_image))
       return require('../../../assets/imgs/default_profile.png');
-    else return {uri: user.profile_image};
+    else return {uri: user.small_image || user.profile_image};
   };
 
   return (

@@ -114,8 +114,9 @@ const styles = StyleSheet.create({
 
 export function EditProfileScreen({route}) {
   const navigation = useNavigation();
-  let {profile_image, nickname, description, tags} = route.params.data;
-  const [image, setImage] = React.useState(profile_image);
+  let {profile_image, nickname, description, tags, small_image} =
+    route.params.data;
+  const [image, setImage] = React.useState(small_image || profile_image);
   const [nname, setNname] = React.useState(nickname);
   const [desc, setDesc] = React.useState(description);
   const [categories, setCategories] = React.useState([]);

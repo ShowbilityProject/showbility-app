@@ -127,7 +127,9 @@ export function CommentsView({route, navigation}) {
             }
             let profileImage = defaultUserIconSource;
             if (comment.author && comment.author.profile_image !== undefined) {
-              profileImage = {uri: comment.author.profile_image};
+              profileImage = {
+                uri: comment.author.small_image || comment.author.profile_image,
+              };
             }
             return (
               <View style={{flexDirection: 'row', paddingVertical: 10}}>
