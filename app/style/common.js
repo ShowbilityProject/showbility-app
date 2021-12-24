@@ -15,5 +15,8 @@ export const StackScreenOptions = {
   headerStyle: {
     backgroundColor: Color.white,
   },
+  cardStyle: {
+    backgroundColor: Color.white,
+  },
   backgroundColor: Color.white,
 };

@@ -103,6 +103,11 @@ const styles = StyleSheet.create({
     color: Color.veryLightPink,
     textDecorationLine: 'underline',
   },
+  joinText: {
+    fontFamily: 'JejuGothicOTF',
+    fontSize: 14,
+    color: Color.birghtOrange,
+  },
 });
 
 function LoginScreen() {
@@ -181,6 +186,16 @@ function LoginScreen() {
             onPress={() => onAppleButtonPress()}
             style={{paddingHorizontal: 17}}>
             <Image style={styles.kakaoImage} source={require(apple_icon)} />
+          </Pressable>
+        </View>
+        <View style={{marginTop: 22, flexDirection: 'row'}}>
+          <Text style={[styles.beforeLoginText, {textDecorationLine: 'none'}]}>
+            쇼빌리티가 처음이신가요?
+          </Text>
+          <Pressable
+            style={{marginLeft: 10}}
+            onPress={() => navigation.push('회원가입')}>
+            <Text style={styles.joinText}>회원가입</Text>
           </Pressable>
         </View>
       </View>

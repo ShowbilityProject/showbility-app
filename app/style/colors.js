@@ -10,4 +10,5 @@ export const Color = {
   black: '#000000',
   veryLightPink: '#bcbcbc',
   lightBlueGrey: '#d5d5d6',
+  paleGray: '#f4f4f6',
 };

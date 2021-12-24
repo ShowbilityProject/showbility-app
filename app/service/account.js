@@ -34,13 +34,12 @@ export function requestSignIn(email, password) {
     });
 }
 
-export function requestSignUp(name, email, password, birth) {
+export async function requestSignUp(name, email, password) {
   let uri = HOST + '/user/';
   let body = {
-    nickname: name,
+    username: name,
     email: email,
     password: password,
-    date_of_birth: birth,
   };
   return post(uri, body)
     .then(res => {
@@ -53,6 +52,28 @@ export function requestSignUp(name, email, password, birth) {
     })
     .catch(err => {
       console.log(err);
+    });
+}
+
+// {
+//   "email": [
+//       "Enter a valid email address."
+//       "This field must be unique."
+//   ]
+// }
+export async function requestDuplicateEmailCheck(email) {
+  let uri = HOST + '/user/validate_email/';
+  let body = {
+    email: email,
+  };
+  return post(uri, body)
+    .then(res => {
+      if (res.ok) return true;
+      else return false;
+    })
+    .catch(err => {
+      console.log(err);
+      return false;
     });
 }
 
