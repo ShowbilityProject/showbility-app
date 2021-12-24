@@ -177,6 +177,7 @@ export function FindScreen({route, navigation}) {
           data={data}
           renderItem={renderItem}
           horizontal={false}
+          onRefresh={() => setRefreshing(true)}
           numColumns={2}
           refreshing={refreshing}
           style={[
