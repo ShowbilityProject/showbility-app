@@ -72,7 +72,7 @@ export function GroupDepthView({route}) {
         setRefreshing(false);
         setFetchingNext(false);
       });
-  }, [fetchType]);
+  }, [fetchType, refreshing]);
 
   const fetchNext = () => {
     if (nextURL === null) return;
@@ -154,6 +154,7 @@ export function GroupDepthView({route}) {
           horizontal={false}
           numColumns={2}
           refreshing={refreshing}
+          onRefresh={() => setRefreshing(true)}
           style={styles.flatListFrame}
           onScroll={({nativeEvent}) => {
             if (isScrollEnd(nativeEvent)) {
