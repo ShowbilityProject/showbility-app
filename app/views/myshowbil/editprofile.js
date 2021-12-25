@@ -164,7 +164,7 @@ export function EditProfileScreen({route}) {
   const handleSubmit = async () => {
     if (!validateInput()) return false;
     const formData = new FormData();
-    if (typeof image === 'object') {
+    if (!isEmpty(image) && typeof image === 'object') {
       const imageData = {
         type: image.type,
         uri: image.uri,
