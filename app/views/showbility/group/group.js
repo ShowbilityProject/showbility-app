@@ -6,6 +6,7 @@ import {
   Image,
   View,
   ScrollView,
+  RefreshControl,
 } from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
@@ -159,6 +160,7 @@ function GroupArea({title, fetchType}) {
 export function GroupScreen() {
   const [tagFilter, setTagFilter] = React.useState([]);
   const [rerenderKey, setRerenderKey] = React.useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   React.useEffect(() => {
     console.log(tagFilter);
@@ -185,8 +187,24 @@ export function GroupScreen() {
     addTagFilter(nativeEvent.text);
   };
 
+  const wait = timeout => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  };
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    wait(1000).then(() => {
+      setRefreshing(false);
+      setRerenderKey(!rerenderKey);
+    });
+  };
+
   return (
-    <ScrollView style={{paddingHorizontal: 15}}>
+    <ScrollView
+      style={{paddingHorizontal: 15}}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
       <FindBar
         key={rerenderKey}
         tagFilter={tagFilter}
@@ -194,8 +212,16 @@ export function GroupScreen() {
         handleTagSubmit={handleTagSubmit}
         onFocused={() => {}}
       />
-      <GroupArea title="마이 그룹" fetchType={GET_GROUP_TYPE.MY} />
-      <GroupArea title="쇼빌 그룹 둘러보기" fetchType={GET_GROUP_TYPE.ALL} />
+      <GroupArea
+        key={rerenderKey + 'my'}
+        title="마이 그룹"
+        fetchType={GET_GROUP_TYPE.MY}
+      />
+      <GroupArea
+        key={rerenderKey + 'all'}
+        title="쇼빌 그룹 둘러보기"
+        fetchType={GET_GROUP_TYPE.ALL}
+      />
     </ScrollView>
   );
 }
