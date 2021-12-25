@@ -112,3 +112,18 @@ export async function rawPost(uri, body) {
 
   return res.json();
 }
+
+export async function deleteReq(uri, addToken = true) {
+  let options = await getCommonOptions(addToken);
+  options.method = 'DELETE';
+
+  const res = await fetch(uri, options);
+
+  if (res.status === 401) removeToken();
+  if (!res.ok) {
+    const msg = `Error on post ${uri}, msg: ${res.status}`;
+    throw new Error(msg);
+  }
+
+  return res;
+}

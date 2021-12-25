@@ -1,5 +1,5 @@
 import {API_TOKEN, HOST} from '../common/constant';
-import {asyncGet, asyncPost, get, post, rawPost} from '../common/requester';
+import {asyncGet, asyncPost, deleteReq, get, post, rawPost} from '../common/requester';
 import {removeUserSession, retrieveUserSession, storeUserSession} from '../common/securestorage';
 import {isEmpty} from '../common/util';
 import base64 from 'react-native-base64';
@@ -201,4 +201,13 @@ export async function getCurrentUser() {
     infoString = infoString.replace(/\0/g, '');
     return JSON.parse(infoString);
   }
+}
+
+export async function requestUserWithdraw(user_id) {
+  let uri = HOST + `/user/${user_id}/`;
+  const res = await deleteReq(uri);
+  if (res.ok) {
+    removeUserSession(API_TOKEN);
+    return true;
+  } else return false;
 }

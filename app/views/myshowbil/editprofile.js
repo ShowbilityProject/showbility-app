@@ -14,7 +14,11 @@ import {
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {isEmpty} from '../../common/util';
-import {requestSignOut, updateMyProfile} from '../../service/account';
+import {
+  requestSignOut,
+  requestUserWithdraw,
+  updateMyProfile,
+} from '../../service/account';
 import {Color} from '../../style/colors';
 
 const styles = StyleSheet.create({
@@ -114,7 +118,7 @@ const styles = StyleSheet.create({
 
 export function EditProfileScreen({route}) {
   const navigation = useNavigation();
-  let {profile_image, nickname, description, tags, small_image} =
+  let {id, profile_image, nickname, description, tags, small_image} =
     route.params.data;
   const [image, setImage] = React.useState(small_image || profile_image);
   const [nname, setNname] = React.useState(nickname);
@@ -202,6 +206,12 @@ export function EditProfileScreen({route}) {
     return text;
   }, [categories, tgs]);
 
+  const handleWithdraw = async () => {
+    let ret = await requestUserWithdraw(id);
+    if (ret) navigation.navigate('Login');
+    else Alert.alert('오류', '오류가 발생하였습니다.');
+  };
+
   return (
     <View style={styles.baseView}>
       <View style={styles.imageWrapper}>
@@ -260,7 +270,8 @@ export function EditProfileScreen({route}) {
             {categories.length > 0 || tgs.length > 0 ? (
               <Text style={styles.tagsStyle}>{getReprTagText()}</Text>
             ) : (
-              <Text style={{fontSize: 17, textAlign: 'right', alignSelf: 'center'}}>
+              <Text
+                style={{fontSize: 17, textAlign: 'right', alignSelf: 'center'}}>
                 {'>'}
               </Text>
             )}
@@ -276,7 +287,17 @@ export function EditProfileScreen({route}) {
                   }}>
                   <Text style={styles.smallOptionText}>로그아웃</Text>
                 </Pressable>
-                <Pressable onPress={() => Alert.alert('준비 중입니다.')}>
+                <Pressable
+                  onPress={() =>
+                    Alert.alert('회원탈퇴', '회원탈퇴 하시겠습니까?', [
+                      {
+                        text: '취소',
+                        onPress: () => null,
+                        style: 'cancel',
+                      },
+                      {text: 'OK', onPress: async () => handleWithdraw()},
+                    ])
+                  }>
                   <Text style={styles.smallOptionText}>회원탈퇴</Text>
                 </Pressable>
               </View>
