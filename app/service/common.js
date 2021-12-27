@@ -29,7 +29,7 @@ export async function clearRecentSearchWord() {
 export async function getPrivacyText(tp = 'priv') {
   console.debug('Request getPrivacyText type=' + tp);
 
-  let uri = `${HOST}/static/privacy/`;
+  let uri = `${HOST}/static/privacy`;
   let ret = await fetch(uri, {method: 'GET'});
   if (ret.ok) return ret.text();
   else return false;
