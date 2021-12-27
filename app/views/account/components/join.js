@@ -48,6 +48,7 @@ const styles = new StyleSheet.create({
     letterSpacing: -0.41,
     fontFamily: 'JejuGothicOTF',
     flex: 1,
+    height: 60,
   },
   agreeText: {
     fontSize: 17,
