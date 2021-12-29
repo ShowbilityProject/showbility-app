@@ -232,6 +232,7 @@ export function JoinScreen() {
               setShowEmailError(false);
             }}
             onFocus={() => setFocusedInput('email')}
+            keyboardType="email-address"
           />
           {isEmailValid ? (
             <Text style={[styles.checkDup, {color: Color.birghtOrange}]}>

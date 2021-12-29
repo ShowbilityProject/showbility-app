@@ -59,13 +59,22 @@ const styles = new StyleSheet.create({
     fontFamily: 'JejuGothicOTF',
     fontSize: 17,
   },
+  errorText: {
+    fontFamily: 'JejuGothicOTF',
+    fontSize: 12,
+    lineHeight: 21,
+    letterSpacing: -0.1,
+    color: Color.birghtOrange,
+    position: 'absolute',
+    right: 0,
+    bottom: -31,
+  },
 });
 
 export function EmailLoginScreen({navigation}) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [focusedInput, setFocusedInput] = React.useState('');
-  const emailRexp = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 
   const getBorderStyle = value => {
     if (value === focusedInput) return styles.focusedBorderBottom;
@@ -77,9 +86,17 @@ export function EmailLoginScreen({navigation}) {
     setFocusedInput('');
   };
 
-  const validateInputs = () => {
-    return emailRexp.test(email) & (password.length >= 10);
-  };
+  const validateInputs = React.useCallback(() => {
+    const isEmailValidate = validateEmail();
+    // setShowEmailError(!ret);
+    return isEmailValidate & (password.length > 0);
+  }, [password, validateEmail]);
+
+  const validateEmail = React.useCallback(() => {
+    const emailRexp = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+    let ret = emailRexp.test(email);
+    return ret;
+  }, [email]);
 
   const getButtonBackColor = () => {
     return validateInputs() ? Color.birghtOrange : '#f7f7f7';
@@ -105,11 +122,18 @@ export function EmailLoginScreen({navigation}) {
       <View style={styles.container}>
         <View style={[styles.textInputWrapper, getBorderStyle('email')]}>
           <TextInput
-            style={styles.textInput}
+            style={[styles.textInput]}
             placeholder={'이메일'}
-            onChangeText={v => setEmail(v)}
+            onChangeText={v => {
+              setEmail(v);
+              validateEmail();
+            }}
             onFocus={() => setFocusedInput('email')}
+            keyboardType="email-address"
           />
+          {!validateEmail() ? (
+            <Text style={styles.errorText}>이메일 형식을 확인해주세요.</Text>
+          ) : null}
         </View>
         <View style={[styles.textInputWrapper, getBorderStyle('password')]}>
           <TextInput
