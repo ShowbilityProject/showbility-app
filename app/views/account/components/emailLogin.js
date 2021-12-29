@@ -9,6 +9,7 @@ import {
   TextInput,
   Keyboard,
 } from 'react-native';
+import { isEmpty } from '../../../common/util';
 import {requestSignIn} from '../../../service/account';
 import {Color} from '../../../style/colors';
 
@@ -93,6 +94,7 @@ export function EmailLoginScreen({navigation}) {
   }, [password, validateEmail]);
 
   const validateEmail = React.useCallback(() => {
+    if (isEmpty(email)) return true;
     const emailRexp = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
     let ret = emailRexp.test(email);
     return ret;
