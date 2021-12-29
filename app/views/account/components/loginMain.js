@@ -19,33 +19,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   centerContaier: {
-    flex: 6,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     fontFamily: 'JejuGothicOTF',
     paddingTop: 100,
   },
   buttonsContainer: {
-    flex: 3,
     justifyContent: 'center',
     alignItems: 'center',
-    // flexDirection: 'row',
     paddingHorizontal: 15,
   },
-  accountContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   joinContainer: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
     fontSize: 30,
+    paddingVertical: 15,
   },
   footerContainer: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 30,
@@ -64,13 +56,6 @@ const styles = StyleSheet.create({
   flexCenter: {
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  joinScreen: {
-    flex: 2,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    paddingTop: 30,
   },
   textinput: {
     fontFamily: 'JejuGothicOTF',
@@ -206,7 +191,7 @@ function LoginScreen() {
           onPress={() => navigation.navigate('이메일 로그인')}>
           <Text style={{fontSize: 17}}>이메일 로그인</Text>
         </TouchableOpacity>
-        <View style={{marginTop: 22, flexDirection: 'row', height: 24}}>
+        <View style={{marginTop: 22, flexDirection: 'row'}}>
           <Text style={[styles.beforeLoginText, {textDecorationLine: 'none'}]}>
             쇼빌리티가 처음이신가요?
           </Text>
