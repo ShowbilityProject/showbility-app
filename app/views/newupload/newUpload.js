@@ -12,6 +12,8 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {launchImageLibrary} from 'react-native-image-picker';
@@ -131,6 +133,7 @@ function NewUploadTab() {
   const [forceRefresh, setForceRefresh] = React.useState(false);
   const [loadingDisplay, setLoadingDisplay] = React.useState('none');
   const [selectedGroups, setSelectedGroups] = React.useState([]);
+  const [keyboardAvoid, setKeyboardAvoid] = React.useState(false);
 
   const freeTagInputRef = React.useRef();
 
@@ -262,7 +265,10 @@ function NewUploadTab() {
   };
 
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
+    <KeyboardAvoidingView
+      enabled={keyboardAvoid}
+      behavior={Platform.OS === 'ios' ? 'position' : 'height'}
+      style={{flex: 1, backgroundColor: 'white'}}>
       <View display={loadingDisplay} style={styles.loadingView}>
         <ActivityIndicator size={'large'} />
       </View>
@@ -272,6 +278,7 @@ function NewUploadTab() {
           onPress={() => {
             Keyboard.dismiss();
             setFreeTagFocused(false);
+            setKeyboardAvoid(false);
           }}>
           <View style={{flex: 1}}>
             <View style={styles.topWrapper}>
@@ -280,7 +287,10 @@ function NewUploadTab() {
                   style={styles.inputStyle}
                   placeholder="작품 제목"
                   onChangeText={handleTitleChange}
-                  onFocus={() => setFreeTagFocused(false)}
+                  onFocus={() => {
+                    setFreeTagFocused(false);
+                    setKeyboardAvoid(false);
+                  }}
                 />
               </View>
               <View style={[styles.inputWrapper, {flexDirection: 'row'}]}>
@@ -362,6 +372,7 @@ function NewUploadTab() {
                       ]}
                       onChangeText={value => onFreeTagInputChange(value)}
                       value={freeTagInput}
+                      onFocus={() => setKeyboardAvoid(false)}
                     />
                   </Pressable>
                 </View>
@@ -382,7 +393,10 @@ function NewUploadTab() {
                   placeholder="프로젝트 설명"
                   multiline={true}
                   onChangeText={value => setDesc(value)}
-                  onFocus={() => setFreeTagFocused(false)}
+                  onFocus={() => {
+                    setFreeTagFocused(false);
+                    setKeyboardAvoid(true);
+                  }}
                 />
               </View>
             </View>
@@ -414,7 +428,7 @@ function NewUploadTab() {
           </View>
         </TouchableWithoutFeedback>
       </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
