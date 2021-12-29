@@ -86,6 +86,22 @@ export async function requestDuplicateEmailCheck(email) {
     });
 }
 
+export async function requestDuplicateNicknameCheck(nickname) {
+  let uri = HOST + '/user/validate_nickname/';
+  let body = {
+    nickname: nickname,
+  };
+  return post(uri, body)
+    .then(res => {
+      if (res.ok) return true;
+      else return false;
+    })
+    .catch(err => {
+      console.log(err);
+      return false;
+    });
+}
+
 export function validateToken(token) {
   let uri = '/app/sign/validate-token';
   return post(uri).then(response => response);

@@ -12,8 +12,10 @@ import {
   Keyboard,
   Alert,
 } from 'react-native';
+import { isEmpty } from '../../../common/util';
 import {
   requestDuplicateEmailCheck,
+  requestDuplicateNicknameCheck,
   requestSignUp,
 } from '../../../service/account';
 import {Color} from '../../../style/colors';
@@ -125,9 +127,12 @@ export function JoinScreen() {
   const navigation = useNavigation();
   const [nickname, setNickname] = React.useState('');
   const [email, setEmail] = React.useState('');
+  const [isNicknameValid, setIsNicknameValid] = React.useState(false);
   const [isEmailValid, setIsEmailValid] = React.useState(false);
   const [showEmailError, setShowEmailError] = React.useState(false);
+  const [showNicknameError, setShowNicknameError] = React.useState(false);
   const [password, setPassword] = React.useState('');
+  const [passwordCheck, setPasswordCheck] = React.useState('');
   const [agreedRule, setAgreedRule] = React.useState(false);
   const [agreeMarketing, setAgreeMarketing] = React.useState(false);
   const [focusedInput, setFocusedInput] = React.useState('');
@@ -141,6 +146,15 @@ export function JoinScreen() {
       requestDuplicateEmailCheck(email).then(res => {
         setIsEmailValid(res);
         setShowEmailError(!res);
+      });
+  };
+
+  const handleNicknameDupCheck = () => {
+    if (isEmpty(nickname)) return false;
+    else
+      requestDuplicateNicknameCheck(nickname).then(res => {
+        setIsNicknameValid(res);
+        setShowNicknameError(!res);
       });
   };
 
@@ -224,9 +238,25 @@ export function JoinScreen() {
           <TextInput
             style={styles.textInput}
             placeholder={'닉네임'}
-            onChangeText={v => setNickname(v)}
+            onChangeText={v => {
+              setIsNicknameValid(false);
+              setNickname(v);
+              setShowNicknameError(false);
+            }}
             onFocus={() => setFocusedInput('nickname')}
           />
+          {isNicknameValid ? (
+            <Text style={[styles.checkDup, {color: Color.birghtOrange}]}>
+              확인완료
+            </Text>
+          ) : (
+            <TouchableOpacity onPress={() => handleNicknameDupCheck()}>
+              <Text style={styles.checkDup}>중복확인</Text>
+            </TouchableOpacity>
+          )}
+          {showNicknameError ? (
+            <Text style={styles.errorText}>이미 사용 중인 닉네임 입니다.</Text>
+          ) : null}
         </View>
         <View style={[styles.textInputWrapper, getBorderStyle('email')]}>
           <TextInput
@@ -265,6 +295,18 @@ export function JoinScreen() {
             <Text style={styles.errorText}>
               영문, 숫자, 특수문자 포함 10자 이상 입력해주세요.
             </Text>
+          ) : null}
+        </View>
+        <View style={[styles.textInputWrapper, getBorderStyle('passwordcheck')]}>
+          <TextInput
+            style={styles.textInput}
+            placeholder={'비밀번호를 다시 입력하세요.'}
+            onChangeText={v => setPasswordCheck(v)}
+            secureTextEntry={true}
+            onFocus={() => setFocusedInput('passwordcheck')}
+          />
+          {!isEmpty(passwordCheck) & (password !== passwordCheck) ? (
+            <Text style={styles.errorText}>비밀번호가 일치하지 않습니다.</Text>
           ) : null}
         </View>
         <View style={[styles.allAgreeWrapper, styles.borderBottom]}>
