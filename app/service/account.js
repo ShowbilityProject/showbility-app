@@ -35,12 +35,20 @@ export function requestSignIn(email, password) {
     });
 }
 
-export async function requestSignUp(nickname, email, password) {
+export async function requestSignUp(
+  nickname,
+  email,
+  password,
+  agreeRule,
+  agreeMarketing,
+) {
   let uri = HOST + '/user/';
   let body = {
     username: email,
     nickname: nickname,
     password: password,
+    agreeRule: agreeRule,
+    agreeMarketing: agreeMarketing,
   };
   return post(uri, body)
     .then(res => {

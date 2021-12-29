@@ -193,7 +193,13 @@ export function JoinScreen() {
   const handleSumbit = async () => {
     if (!validateInputs()) return false;
     else {
-      let ret = await requestSignUp(nickname, email, password);
+      let ret = await requestSignUp(
+        nickname,
+        email,
+        password,
+        agreedRule,
+        agreeMarketing,
+      );
       if (!ret) Alert.alert('회원가입 오류', '회원가입 오류입니다.');
       else {
         navigation.replace('App');
