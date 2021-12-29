@@ -108,6 +108,8 @@ const styles = StyleSheet.create({
     fontFamily: 'JejuGothicOTF',
     fontSize: 14,
     color: Color.birghtOrange,
+    marginLeft: 10,
+    textDecorationLine: 'underline',
   },
   emailLoginBox: {
     width: '100%',
@@ -204,15 +206,17 @@ function LoginScreen() {
           onPress={() => navigation.navigate('이메일 로그인')}>
           <Text style={{fontSize: 17}}>이메일 로그인</Text>
         </TouchableOpacity>
-        <View style={{marginTop: 22, flexDirection: 'row'}}>
+        <View style={{marginTop: 22, flexDirection: 'row', height: 24}}>
           <Text style={[styles.beforeLoginText, {textDecorationLine: 'none'}]}>
             쇼빌리티가 처음이신가요?
           </Text>
-          <Pressable
-            style={{marginLeft: 10}}
-            onPress={() => navigation.navigate('회원가입')}>
-            <Text style={styles.joinText}>회원가입</Text>
-          </Pressable>
+          <View>
+            <Text
+              style={styles.joinText}
+              onPress={() => navigation.navigate('회원가입')}>
+              회원가입
+            </Text>
+          </View>
         </View>
       </View>
       <View style={styles.joinContainer}>
