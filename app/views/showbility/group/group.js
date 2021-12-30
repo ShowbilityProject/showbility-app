@@ -202,6 +202,7 @@ export function GroupScreen() {
   return (
     <ScrollView
       style={{paddingHorizontal: 15}}
+      contentContainerStyle={{paddingTop: 15}}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }>

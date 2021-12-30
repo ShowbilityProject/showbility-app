@@ -658,7 +658,7 @@ export function GroupDetail({navigation, route}) {
   };
 
   return (
-    <ScrollView style={styles.baseView}>
+    <ScrollView style={styles.baseView} contentContainerStyle={{paddingTop: 15}}>
       <GroupDetailHeader
         repr_image={getImageUri(data)}
         followers={data.followers_count}
