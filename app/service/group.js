@@ -33,9 +33,12 @@ export const GET_GROUP_TYPE = {
   GATHERING: 'gathering',
 };
 
-export function getGroups(_type = GET_GROUP_TYPE.ALL) {
+export function getGroups(_type = GET_GROUP_TYPE.ALL, tags = []) {
   let url = `${HOST}/group/`;
   url += `?type=${_type}`;
+  for (let tag of tags) {
+    url += `&tags=${tag}`;
+  }
   console.log(url);
   return get(url)
     .then(res => res.json())

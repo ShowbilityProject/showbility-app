@@ -12,7 +12,7 @@ import {TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
 import {FindBar} from '../../components/find';
 import {isEmpty} from '../../../common/util';
-import {getGroups, GET_GROUP_TYPE} from '../../../service/group';
+import {getGroups, getNext, GET_GROUP_TYPE} from '../../../service/group';
 import {Color} from '../../../style/colors';
 
 const styles = StyleSheet.create({
@@ -161,6 +161,8 @@ export function GroupScreen() {
   const [tagFilter, setTagFilter] = React.useState([]);
   const [rerenderKey, setRerenderKey] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [refreshingFind, setRefreshingFind] = React.useState(false);
+  const [fetchingNext, setFetchingNext] = React.useState(true);
 
   React.useEffect(() => {
     console.log(tagFilter);
@@ -200,12 +202,7 @@ export function GroupScreen() {
   };
 
   return (
-    <ScrollView
-      style={{paddingHorizontal: 15}}
-      contentContainerStyle={{paddingTop: 15}}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }>
+    <View style={{flex: 1, paddingHorizontal: 15, paddingTop: 15}}>
       <FindBar
         key={rerenderKey}
         tagFilter={tagFilter}
@@ -213,16 +210,107 @@ export function GroupScreen() {
         handleTagSubmit={handleTagSubmit}
         onFocused={() => {}}
       />
-      <GroupArea
-        key={rerenderKey + 'my'}
-        title="마이 그룹"
-        fetchType={GET_GROUP_TYPE.MY}
-      />
-      <GroupArea
-        key={rerenderKey + 'all'}
-        title="쇼빌 그룹 둘러보기"
-        fetchType={GET_GROUP_TYPE.ALL}
-      />
-    </ScrollView>
+      {tagFilter.length > 0 ? (
+        <FindResult tagFilter={tagFilter} />
+      ) : (
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }>
+          <GroupArea
+            key={rerenderKey + 'my'}
+            title="마이 그룹"
+            fetchType={GET_GROUP_TYPE.MY}
+          />
+          <GroupArea
+            key={rerenderKey + 'all'}
+            title="쇼빌 그룹 둘러보기"
+            fetchType={GET_GROUP_TYPE.ALL}
+          />
+        </ScrollView>
+      )}
+    </View>
   );
+}
+
+function FindResult({tagFilter}) {
+  const navigation = useNavigation();
+  const [data, setData] = React.useState([]);
+  const [refreshing, setRefreshing] = React.useState(false);
+  const [fetchingNext, setFetchingNext] = React.useState(true);
+  const [nextURL, setNextURL] = React.useState();
+
+  React.useEffect(() => {
+    getGroups(GET_GROUP_TYPE.ALL, tagFilter)
+      .then(res => {
+        setData(res.results);
+        setNextURL(res.next);
+      })
+      .then(() => {
+        setRefreshing(false);
+        setFetchingNext(false);
+      });
+  }, [refreshing, JSON.stringify(tagFilter), tagFilter]);
+
+  const fetchNext = () => {
+    if (nextURL === null) return;
+    console.log('Fetch next');
+    setFetchingNext(true);
+    getNext(nextURL).then(res => {
+      data.push.apply(data, res.results);
+      setNextURL(res.next);
+      setData(data);
+      setFetchingNext(false);
+    });
+  };
+
+  const isScrollEnd = ({layoutMeasurement, contentOffset, contentSize}) => {
+    const paddingToBottom = 20;
+    const ret =
+      layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom;
+    return ret;
+  };
+
+  const getImageUri = d => {
+    let source = require('../../../../assets/imgs/add_image.png');
+    if (!isEmpty(d.small_image)) source = {uri: d.small_image};
+    else if (!isEmpty(d.repr_image)) source = {uri: d.repr_image};
+    return source;
+  };
+
+  const renderItem = itemObject => {
+    let item = itemObject.item;
+    return (
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate('GroupDetail', {id: item.id, name: item.name})
+        }
+        style={styles.abilityFrame}>
+        <Image source={getImageUri(item)} style={styles.flatListImage} />
+        <Text style={[styles.fontJeju, styles.abilityItemTitle]}>
+          {item.name}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
+  return (
+    <FlatList
+      key={'#'}
+      keyExtractor={item => '#' + item.id}
+      data={data}
+      renderItem={renderItem}
+      horizontal={false}
+      numColumns={2}
+      refreshing={refreshing}
+      onRefresh={() => setRefreshing(true)}
+      onScroll={({nativeEvent}) => {
+        if (isScrollEnd(nativeEvent)) {
+          console.log(fetchingNext);
+          if (!fetchingNext) fetchNext();
+        }
+      }}
+    />
+  )
 }
