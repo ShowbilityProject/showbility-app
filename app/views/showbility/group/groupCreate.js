@@ -9,6 +9,7 @@ import {
   Pressable,
   Alert,
   TouchableWithoutFeedback,
+  DeviceEventEmitter,
 } from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
@@ -265,6 +266,7 @@ export function GroupCreate() {
         ]);
       }
     });
+    return () => DeviceEventEmitter.emit('GroupCreate');
   }, []);
 
   const filter = {

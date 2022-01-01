@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, FlatList, Text, StyleSheet, Image, Alert} from 'react-native';
+import {View, FlatList, Text, StyleSheet, Image, Alert, DeviceEventEmitter} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
 import {getGroups, getNextGroupsList} from '../../../service/group';
@@ -72,6 +72,7 @@ export function GroupDepthView({route}) {
         setRefreshing(false);
         setFetchingNext(false);
       });
+    DeviceEventEmitter.addListener('GroupCreate', () => setRefreshing(true));
   }, [fetchType, refreshing]);
 
   const fetchNext = () => {
