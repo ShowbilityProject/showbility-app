@@ -1,4 +1,4 @@
-package com.sample2;
+package com.showbility;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "Sample2";
+    return "Showbility";
   }
 }

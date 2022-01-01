@@ -78,11 +78,12 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    enableHermes: false,  // clean and rebuild if changing
+    enableHermes: true,  // clean and rebuild if changing
     bundleInDebug: true,
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -132,7 +133,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.sample2"
+        applicationId "com.showbility"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -211,6 +212,9 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+    implementation "com.kakao.sdk:v2-user:2.8.4" // 카카오 로그인
+    implementation "com.kakao.sdk:v2-talk:2.8.4" // 친구, 메시지(카카오톡)
+    implementation "com.kakao.sdk:v2-link:2.8.4" // 메시지(카카오링크)
 }
 
 // Run this once to be able to run the application with BUCK
