@@ -25,7 +25,7 @@ import {
   requestLikeContent,
 } from '../../service/content';
 import {postComment} from '../../service/comment';
-import {askIfNotTokenValid, isEmpty} from '../../common/util';
+import {askIfNotTokenValid, getUserImageFromUser} from '../../common/util';
 import {
   getCurrentUser,
   getCurrentUserId,
@@ -289,10 +289,32 @@ export function ContentsModal({route, navigation}) {
     );
   }
 
-  const getUserImage = user => {
-    if (isEmpty(user.profile_image))
-      return require('../../../assets/imgs/default_profile.png');
-    else return {uri: user.small_image || user.profile_image};
+  const renderItem = itemObject => {
+    let image = itemObject.item;
+    let index = itemObject.index;
+    let width = image.width;
+    let height = image.height;
+    let source = {uri: image.original_image};
+    if (image.middle_size_image) {
+      console.debug('MIDDLESIZE');
+      width = image.middle_width;
+      height = image.middle_height;
+      source = {uri: image.middle_size_image};
+    }
+    const ratio = win.width / width;
+    return (
+      <View>
+        {index === 0 ? <TitleArea /> : null}
+        <Image
+          source={source}
+          style={{
+            width: '100%',
+            height: height * ratio,
+            marginBottom: 10,
+          }}
+        />
+      </View>
+    );
   };
 
   return (
@@ -307,33 +329,7 @@ export function ContentsModal({route, navigation}) {
         data={item.images}
         style={{paddingTop: 44}}
         contentContainerStyle={{paddingBottom: 150}}
-        renderItem={itemObject => {
-          let image = itemObject.item;
-          let index = itemObject.index;
-          let width = image.width;
-          let height = image.height;
-          let source = {uri: image.original_image};
-          if (image.middle_size_image) {
-            console.debug('MIDDLESIZE');
-            width = image.middle_width;
-            height = image.middle_height;
-            source = {uri: image.middle_size_image};
-          }
-          const ratio = win.width / width;
-          return (
-            <View>
-              {index === 0 ? <TitleArea /> : null}
-              <Image
-                source={source}
-                style={{
-                  width: '100%',
-                  height: height * ratio,
-                  marginBottom: 10,
-                }}
-              />
-            </View>
-          );
-        }}
+        renderItem={renderItem}
       />
       <Pressable
         onPress={() => navigation.goBack()}
@@ -346,7 +342,7 @@ export function ContentsModal({route, navigation}) {
             <View style={{flex: 1, height: 80, alignItems: 'center'}}>
               <Image
                 style={styles.profileImage}
-                source={getUserImage(item.user)}
+                source={getUserImageFromUser(item.user)}
               />
             </View>
             <View style={{flex: 4}}>

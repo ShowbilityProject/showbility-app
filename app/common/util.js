@@ -24,3 +24,9 @@ export function askIfNotTokenValid(navigation) {
     {text: 'OK', onPress: () => navigation.navigate('Login')},
   ]);
 }
+
+export function getUserImageFromUser(user) {
+  if (isEmpty(user.profile_image))
+    return require('../../assets/imgs/default_profile.png');
+  else return {uri: user.small_image || user.profile_image};
+}
