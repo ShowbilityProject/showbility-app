@@ -13,6 +13,7 @@ import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   Platform,
+  DeviceEventEmitter,
 } from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {launchImageLibrary} from 'react-native-image-picker';
@@ -129,19 +130,7 @@ function NewUploadTab() {
   const freeTagInputRef = React.useRef();
 
   React.useEffect(() => {
-    verifyToken().then(res => {
-      if (!res) {
-        console.info('Current token is not valid, go to login');
-        Alert.alert('로그인', '로그인 하시겠습니까?', [
-          {
-            text: '취소',
-            onPress: () => navigation.goBack(),
-            style: 'cancel',
-          },
-          {text: 'OK', onPress: () => navigation.navigate('Login')},
-        ]);
-      }
-    });
+    return () => DeviceEventEmitter.emit('NewUpload');
   }, []);
 
   const handleUploadImage = () => {

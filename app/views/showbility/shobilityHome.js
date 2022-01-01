@@ -6,6 +6,7 @@ import {
   Text,
   StyleSheet,
   Image,
+  DeviceEventEmitter,
 } from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -214,8 +215,7 @@ function ShowbilityScreen({categoryFilter, tagFilter}) {
     );
   };
 
-  const fetchData = () => {
-    console.log('Fetchdata Showbility Home');
+  React.useEffect(() => {
     getContentsList(1, 10, categoryFilter(), tagFilter())
       .then(d => {
         setData(d.results);
@@ -223,16 +223,8 @@ function ShowbilityScreen({categoryFilter, tagFilter}) {
         setFetchingNext(false);
       })
       .then(() => setRefreshing(false));
-  };
-
-  const onRefersh = () => {
-    setRefreshing(true);
-    fetchData();
-  };
-
-  React.useEffect(() => {
-    fetchData();
-  }, []);
+    DeviceEventEmitter.addListener('NewUpload', () => setRefreshing(true));
+  }, [categoryFilter, refreshing, tagFilter]);
 
   const fetchNext = () => {
     if (nextURL === null) return;
@@ -260,7 +252,7 @@ function ShowbilityScreen({categoryFilter, tagFilter}) {
       keyExtractor={item => '#' + item.url}
       data={data}
       renderItem={renderItem}
-      onRefresh={() => onRefersh()}
+      onRefresh={() => setRefreshing(true)}
       refreshing={refreshing}
       style={{overflow: 'hidden'}}
       contentContainerStyle={{
