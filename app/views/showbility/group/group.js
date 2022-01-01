@@ -161,12 +161,6 @@ export function GroupScreen() {
   const [tagFilter, setTagFilter] = React.useState([]);
   const [rerenderKey, setRerenderKey] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
-  const [refreshingFind, setRefreshingFind] = React.useState(false);
-  const [fetchingNext, setFetchingNext] = React.useState(true);
-
-  React.useEffect(() => {
-    console.log(tagFilter);
-  }, [Object.keys(tagFilter).join()]);
 
   const addTagFilter = value => {
     if (isEmpty(value)) return;
@@ -312,5 +306,5 @@ function FindResult({tagFilter}) {
         }
       }}
     />
-  )
+  );
 }
