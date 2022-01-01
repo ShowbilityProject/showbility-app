@@ -171,17 +171,17 @@ export function SHome2({route, navigation}) {
         </View>
       </View>
       <View style={styles.main}>
-        <View style={{flex: 1, display: visibility.showbility ? '' : 'none'}}>
+        <View style={{flex: 1, display: visibility.showbility ? 'flex' : 'none'}}>
           <ShowbilityScreen
             key={rerenderKey}
             categoryFilter={getCategoryFilter}
             tagFilter={getTagFilter}
           />
         </View>
-        <View style={{flex: 1, display: visibility.ability ? '' : 'none'}}>
+        <View style={{flex: 1, display: visibility.ability ? 'flex' : 'none'}}>
           <AbilityScreen />
         </View>
-        <View style={{flex: 1, display: visibility.group ? '' : 'none'}}>
+        <View style={{flex: 1, display: visibility.group ? 'flex' : 'none'}}>
           <GroupScreen />
         </View>
       </View>
