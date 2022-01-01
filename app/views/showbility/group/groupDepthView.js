@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     aspectRatio: 1.3,
     alignSelf: 'center',
     marginBottom: 7,
+    borderRadius: 5,
   },
   abilityFrame: {
     width: '50%',
