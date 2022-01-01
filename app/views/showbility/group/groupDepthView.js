@@ -1,9 +1,15 @@
 import * as React from 'react';
-import {View, FlatList, Text, StyleSheet, Image, Alert, DeviceEventEmitter} from 'react-native';
+import {
+  View,
+  FlatList,
+  Text,
+  StyleSheet,
+  Image,
+  DeviceEventEmitter,
+} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
 import {getGroups, getNextGroupsList} from '../../../service/group';
-import {verifyToken} from '../../../service/account';
 import {isEmpty} from '../../../common/util';
 import {Color} from '../../../style/colors';
 
