@@ -14,6 +14,7 @@ import {FindBar} from '../../components/find';
 import {isEmpty} from '../../../common/util';
 import {getGroups, getNext, GET_GROUP_TYPE} from '../../../service/group';
 import {Color} from '../../../style/colors';
+import { GroupImage } from '../../../component/image';
 
 const styles = StyleSheet.create({
   flatListImage: {
@@ -110,7 +111,7 @@ function GroupArea({title, fetchType}) {
         onPress={() =>
           navigation.navigate('GroupDetail', {id: item.id, name: item.name})
         }>
-        <Image source={imageSource} style={styles.flatListImage} />
+        <GroupImage source={imageSource} />
         <Text style={[styles.fontJeju, {fontSize: 17}]}>{item.name}</Text>
         <Text
           style={[{fontSize: 12, marginTop: 5, color: Color.veryLightPink}]}>

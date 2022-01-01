@@ -22,6 +22,7 @@ import {GroupMember} from './group/groupMember';
 import {CategoryList} from '../newupload/category';
 import {Color} from '../../style/colors';
 import { StackScreenOptions } from '../../style/common';
+import { MainFeedImage } from '../../component/image';
 
 const styles = StyleSheet.create({
   container: {
@@ -208,7 +209,7 @@ function ShowbilityScreen({categoryFilter, tagFilter}) {
       <TouchableOpacity
         style={styles.shadowBox}
         onPress={() => showModalOnShowbilityItemPressed(item.id)}>
-        <Image source={source} style={styles.flatListImage} />
+        <MainFeedImage source={source} />
       </TouchableOpacity>
     );
   };

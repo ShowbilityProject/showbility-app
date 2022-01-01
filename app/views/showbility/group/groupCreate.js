@@ -8,6 +8,7 @@ import {
   TextInput,
   Pressable,
   Alert,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
@@ -15,6 +16,7 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import {createGroup} from '../../../service/group';
 import {isEmpty} from '../../../common/util';
 import {verifyToken} from '../../../service/account';
+import { LoadingScreen } from '../../../component/loading';
 
 const styles = StyleSheet.create({
   baseContainer: {
@@ -247,6 +249,7 @@ export function GroupCreate() {
   const [categoryFilter, setCategoryFilter] = React.useState([]);
   const [tagFilter, setTagFilter] = React.useState([]);
   const [rerenderKey, setRerenderKey] = React.useState(false);
+  const [loadingDisplay, setLoadingDisplay] = React.useState('none');
 
   React.useEffect(() => {
     verifyToken().then(res => {
@@ -277,6 +280,7 @@ export function GroupCreate() {
 
   const handleButton = async () => {
     if (isFormValid()) {
+      setLoadingDisplay('flex');
       const ret = await createGroup(
         groupName,
         groupDetail,
@@ -314,19 +318,22 @@ export function GroupCreate() {
   };
 
   return (
-    <View style={styles.baseContainer}>
-      <GroupImage
-        key={groupImage}
-        setGroupImage={setGroupImage}
-        groupImage={groupImage}
-      />
-      <GroupDetail
-        key={rerenderKey}
-        group={group}
-        filter={filter}
-        rerender={rerender}
-      />
-      <BottomButton handleButton={handleButton} isFormValid={isFormValid} />
-    </View>
+    <TouchableWithoutFeedback>
+      <View style={styles.baseContainer}>
+        <LoadingScreen display={loadingDisplay} />
+        <GroupImage
+          key={groupImage}
+          setGroupImage={setGroupImage}
+          groupImage={groupImage}
+        />
+        <GroupDetail
+          key={rerenderKey}
+          group={group}
+          filter={filter}
+          rerender={rerender}
+        />
+        <BottomButton handleButton={handleButton} isFormValid={isFormValid} />
+      </View>
+    </TouchableWithoutFeedback>
   );
 }

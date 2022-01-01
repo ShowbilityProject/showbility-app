@@ -11,7 +11,6 @@ import {
   Alert,
   Keyboard,
   TouchableWithoutFeedback,
-  ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
@@ -25,6 +24,7 @@ import {verifyToken} from '../../service/account';
 import {Color} from '../../style/colors';
 import {SelectGroup} from './selectgroup';
 import {requestAddContentToGroup} from '../../service/group';
+import {LoadingScreen} from '../../component/loading';
 
 const styles = StyleSheet.create({
   container: {
@@ -86,15 +86,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     minHeight: 20,
-  },
-  loadingView: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
   },
   scrollStyle: {
     flexGrow: 1,
@@ -269,9 +260,7 @@ function NewUploadTab() {
       enabled={keyboardAvoid}
       behavior={Platform.OS === 'ios' ? 'position' : 'height'}
       style={{flex: 1, backgroundColor: 'white'}}>
-      <View display={loadingDisplay} style={styles.loadingView}>
-        <ActivityIndicator size={'large'} />
-      </View>
+      <LoadingScreen display={loadingDisplay} />
       <ScrollView contentContainerStyle={styles.scrollStyle}>
         <TouchableWithoutFeedback
           style={{flex: 1}}
