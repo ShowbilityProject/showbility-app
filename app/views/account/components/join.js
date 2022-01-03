@@ -328,7 +328,7 @@ export function JoinScreen() {
             {getSelectIcon(agreeMarketing)}
           </Pressable>
           <Text style={styles.smallAgreeText}>
-            [선텍] 마케팅 정보 수집 및 수신 동의
+            [선택] 마케팅 정보 수집 및 수신 동의
           </Text>
         </View>
         <View style={styles.buttonWrapper}>
