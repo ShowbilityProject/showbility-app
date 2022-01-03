@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Image,
   DeviceEventEmitter,
+  StatusBar,
 } from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -119,6 +120,7 @@ export function SHome2({route, navigation}) {
 
   return (
     <SafeAreaView style={[styles.flexCenter, styles.container]}>
+      <StatusBar barStyle={'dark-content'} />
       <View style={{width: '100%'}}>
         <View style={styles.tobBar}>
           <Text

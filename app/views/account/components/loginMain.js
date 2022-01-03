@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/core';
 import * as React from 'react';
-import {View, Text, StyleSheet, Image, Pressable, Alert, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, Image, Pressable, Alert, TouchableOpacity, StatusBar} from 'react-native';
 import {appleAuth} from '@invertase/react-native-apple-authentication';
 import {
   requestLoginApple,
@@ -158,6 +158,7 @@ function LoginScreen() {
 
   return (
     <View style={styles.container}>
+      <StatusBar barStyle={'dark-content'} />
       <View style={styles.centerContaier}>
         <Image style={{marginBottom: 30}} source={showbility_icon} />
         <Text
