@@ -152,6 +152,7 @@ export function ContentsModal({route, navigation}) {
       nickname: '',
     },
   });
+  const [isInit, setIsInit] = React.useState(true);
   const [cmtText, setCmtText] = React.useState('');
   const [isLiked, setIsLiked] = React.useState(false);
   const [likes, setLikes] = React.useState(0);
@@ -195,6 +196,7 @@ export function ContentsModal({route, navigation}) {
   };
 
   const adjustBottomSheetInitialHeight = it => {
+    setIsInit(false);
     let totalHeight = titleHeight + statusHeightApprox;
     for (let i = 0; i < it.images.length; i++) {
       let image = it.images[0];
@@ -218,9 +220,9 @@ export function ContentsModal({route, navigation}) {
 
   React.useEffect(() => {
     fetchData(id).then(it => {
-      if (it) adjustBottomSheetInitialHeight(it);
+      if (it && isInit) adjustBottomSheetInitialHeight(it);
     });
-  }, [id]);
+  }, [id, isLiked]);
 
   const handleLike = async () => {
     let ret = await verifyToken();
