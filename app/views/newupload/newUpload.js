@@ -355,12 +355,11 @@ function NewUploadTab() {
                   </Pressable>
                 </View>
               </View>
-              <View style={styles.inputWrapper}>
-                <SelectGroup
-                  selectedGroups={selectedGroups}
-                  setSelectedGroups={setSelectedGroups}
-                />
-              </View>
+              <SelectGroup
+                selectedGroups={selectedGroups}
+                setSelectedGroups={setSelectedGroups}
+                style={styles.inputWrapper}
+              />
               <View style={styles.inputWrapper}>
                 <Text style={styles.textStyle}>프로젝트 설명</Text>
                 <TextInput

@@ -46,7 +46,7 @@ const styles = new StyleSheet.create({
 });
 
 export function SelectGroup(props) {
-  const {selectedGroups, setSelectedGroups} = props;
+  const {selectedGroups, setSelectedGroups, style} = props;
   const [groups, setGroups] = React.useState([]);
   const [extraData, setExtraData] = React.useState(false);
   const [contentsHeight, setContentsHeight] = React.useState(0);
@@ -94,8 +94,8 @@ export function SelectGroup(props) {
     setExtraData(!extraData);
   };
 
-  return (
-    <View>
+  return groups.length ? (
+    <View style={style}>
       <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
         <Text style={styles.textStyle}>그룹 선택</Text>
         {isOpen ? (
@@ -134,5 +134,5 @@ export function SelectGroup(props) {
         </View>
       </Animated.View>
     </View>
-  );
+  ) : null;
 }
