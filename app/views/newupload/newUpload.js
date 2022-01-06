@@ -193,8 +193,15 @@ function NewUploadTab() {
         );
         for (let groupId of selectedGroups)
           requestAddContentToGroup(groupId, content.id);
-        navigation.goBack();
-        navigation.navigate('ContentsModal', content.id);
+        Alert.alert('업로드가 완료되었습니다.', '', [
+          {
+            text: '확인',
+            onPress: async () => {
+              navigation.goBack();
+              navigation.navigate('ContentsModal', content.id);
+            },
+          },
+        ]);
       } catch (err) {
         console.log(err);
         setLoadingDisplay('none');
