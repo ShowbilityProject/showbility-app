@@ -410,10 +410,21 @@ export function ContentsModal({route, navigation}) {
                       } else if (buttonIndex === 1) {
                         Alert.alert('준비 중입니다.');
                       } else if (buttonIndex === 2) {
-                        requestDeleteContent(id).then(res => {
-                          if (res) navigation.goBack();
-                          else Alert.alert('문제가 발생하였습니다.');
-                        });
+                        Alert.alert('해당 작품을 삭제하시겠습니까?', '', [
+                          {
+                            text: '취소',
+                            onPress: () => null,
+                            style: 'cancel',
+                          },
+                          {
+                            text: 'OK',
+                            onPress: async () =>
+                              requestDeleteContent(id).then(res => {
+                                if (res) navigation.goBack();
+                                else Alert.alert('문제가 발생하였습니다.');
+                              }),
+                          },
+                        ]);
                       }
                     },
                   );
