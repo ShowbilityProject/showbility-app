@@ -216,7 +216,9 @@ export function JoinScreen() {
       );
       if (!ret) Alert.alert('회원가입 오류', '회원가입 오류입니다.');
       else {
-        navigation.replace('App');
+        Alert.alert('회원가입이 완료되었습니다.', '', [
+          {text: '확인', onPress: async () => navigation.replace('App')},
+        ]);
       }
     }
   };
