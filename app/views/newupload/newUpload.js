@@ -160,15 +160,23 @@ function NewUploadTab() {
     setTags(value);
   };
 
+  const validateInputs = () => {
+    const missings = [];
+    if (isEmpty(title)) missings.push('작품 제목');
+    if (!categories.length) missings.push('카테고리');
+    if (isEmpty(desc)) missings.push('프로젝트 설명');
+    if (!images.length) missings.push('이미지');
+    if (missings.length) {
+      Alert.alert(
+        '필수 항목 누락',
+        '다음 항목을 채워주세요\n' + missings.join(', '),
+      );
+      return false;
+    } else return true;
+  };
+
   const handleSubmit = async () => {
-    if (
-      isEmpty(title) ||
-      isEmpty(categories) ||
-      isEmpty(desc) ||
-      images.length === 0
-    ) {
-      Alert.alert('필수 항목 누락', '모든 항목을 채워주세요');
-    } else {
+    if (validateInputs()) {
       setLoadingDisplay('flex');
       try {
         let imageIds = [];
