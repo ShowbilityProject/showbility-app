@@ -18,6 +18,7 @@ import {
 import {isEmpty} from '../../../common/util';
 import {
   getGroupById,
+  requestDeleteGroupJoin,
   requestGroupJoin,
   updateMemberStatus,
 } from '../../../service/group';
@@ -565,12 +566,16 @@ function BottomJoinButtonView({id, member_status}) {
   React.useEffect(() => setStatus(member_status), [member_status]);
 
   const handleJoin = () => {
-    if (!isValid[member_status]) {
+    if (status === MEMBER_STATUS_TYPE.NOT_JOINED)
       requestGroupJoin(id).then(res => {
         if (res === 401) Alert.alert('에러', '로그인이 필요합니다.');
-        else setStatus('PN');
+        else setStatus(MEMBER_STATUS_TYPE.PENDING);
       });
-    }
+    else if (status === MEMBER_STATUS_TYPE.PENDING)
+      requestDeleteGroupJoin(id).then(res => {
+        if (res === 401) Alert.alert('에러', '로그인이 필요합니다.');
+        else setStatus(MEMBER_STATUS_TYPE.NOT_JOINED);
+      });
   };
 
   const isValid = () => {

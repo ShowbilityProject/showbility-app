@@ -1,5 +1,5 @@
 import {GROUP_CONTENT_STATUS, HOST} from '../common/constant';
-import {get, post, rawPost} from '../common/requester';
+import {deleteReq, get, post, rawPost} from '../common/requester';
 
 export async function createGroup(
   name,
@@ -70,6 +70,16 @@ export function getGroupMembersByGroupId(groupId, status) {
 export function requestGroupJoin(groupId) {
   let url = `${HOST}/group/${groupId}/members/`;
   return post(url)
+    .then(res => {
+      if (res.ok) return res.json();
+      else return res.status;
+    })
+    .catch(err => console.log('Error request join group', err.message));
+}
+
+export function requestDeleteGroupJoin(groupId) {
+  let url = `${HOST}/group/${groupId}/members/`;
+  return deleteReq(url)
     .then(res => {
       if (res.ok) return res.json();
       else return res.status;
