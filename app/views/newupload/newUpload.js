@@ -129,10 +129,6 @@ function NewUploadTab() {
 
   const freeTagInputRef = React.useRef();
 
-  React.useEffect(() => {
-    return () => DeviceEventEmitter.emit('NewUpload');
-  }, []);
-
   const handleUploadImage = () => {
     let imagePickerOptions = {
       selectionLimit: 0,
@@ -197,6 +193,7 @@ function NewUploadTab() {
           {
             text: '확인',
             onPress: async () => {
+              DeviceEventEmitter.emit('NewUpload');
               navigation.goBack();
               navigation.navigate('ContentsModal', content.id);
             },
