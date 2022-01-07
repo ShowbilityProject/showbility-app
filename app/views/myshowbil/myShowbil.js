@@ -341,6 +341,7 @@ function MyItems({data}) {
       </View>
       <View style={{flexDirection: 'row'}}>
         {contents.map(content => {
+          console.log(content.id);
           let source =
             content.images.length > 0
               ? {uri: HOST + content.images[0]}
@@ -349,7 +350,7 @@ function MyItems({data}) {
             <Pressable
               key={content.id}
               style={styles.groupImageContainer}
-              onPress={() => navigation.navigate('ContentsModal', content.id)}>
+              onPress={() => navigation.push('ContentsModal', content.id)}>
               <Image source={source} style={styles.groupImage} />
             </Pressable>
           );
@@ -397,7 +398,7 @@ export function GroupDetail({route}) {
   });
 
   React.useEffect(() => {
-    getProfile(user_id).then(res => setData(res));
+    // getProfile(user_id).then(res => setData(res));
     const willFocusSubscription = navigation.addListener('focus', () => {
       getProfile(user_id).then(res => {
         if (res !== false) {

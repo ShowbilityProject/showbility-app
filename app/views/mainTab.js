@@ -6,7 +6,7 @@ import {ShowbilityHome} from './showbility/shobilityHome';
 import NewUploadTab from './newupload/newUpload';
 import MessageTab from './message/message';
 import MyShowbilTab from './myshowbil/myShowbil';
-import {createStackNavigator} from '@react-navigation/stack';
+import {CardStyleInterpolators, createStackNavigator} from '@react-navigation/stack';
 import {CategoryList} from './newupload/category';
 import {EditProfileScreen} from './myshowbil/editprofile';
 import {FindScreen} from './components/find';
@@ -17,6 +17,11 @@ import {ContentsModal} from './showbility/contentModal';
 import {verifyToken} from '../service/account';
 import {askIfNotTokenValid} from '../common/util';
 import {StackScreenOptions} from '../style/common';
+import {GroupContentsScreen} from './showbility/group/groupContent';
+import {GroupDepthView} from './showbility/group/groupDepthView';
+import {GroupDetail} from './showbility/group/groupDetail';
+import {GroupMember} from './showbility/group/groupMember';
+import {FollowMember} from './myshowbil/followMember';
 
 const MainTab = createBottomTabNavigator();
 
@@ -47,33 +52,82 @@ function BaseStackScreen() {
   return (
     <BaseStack.Navigator
       initialRouteName="Home"
-      screenOptions={StackScreenOptions}
-      mode="modal">
+      screenOptions={StackScreenOptions}>
       <BaseStack.Screen
         name="TabScreen"
         component={MainTabScreen}
         options={{headerShown: false, headerBackTitle: ''}}
       />
       <BaseStack.Screen
-        name="그룹 생성"
-        component={GroupCreateStack}
-        options={{headerBackTitle: ' ', headerShown: false}}
-      />
-      <BaseStack.Screen
-        name="ContentsModal"
-        component={ContentsModal}
-        options={{headerShown: false}}
-      />
-      <BaseStack.Screen
-        name="댓글"
-        component={CommentsView}
+        name="팔로우"
+        component={FollowMember}
         options={{headerBackTitle: ' '}}
       />
       <BaseStack.Screen
-        name="업로드"
-        component={NewUploadStack}
-        options={{headerShown: false}}
+        name="사용자정보"
+        component={MyShowbilTab}
+        options={{headerBackTitle: ' '}}
       />
+      <BaseStack.Screen
+        name="프로필 편집"
+        component={EditProfileScreen}
+        options={{headerBackTitle: ' '}}
+      />
+      <BaseStack.Screen
+        name="카테고리&태그 선택"
+        component={CategoryList}
+        options={{headerBackTitle: ' '}}
+      />
+      <BaseStack.Screen
+        name="FindStack"
+        component={FindScreen}
+        options={{headerBackTitle: ' '}}
+      />
+      <BaseStack.Screen
+        name="그룹 컨텐츠"
+        component={GroupContentsScreen}
+        options={{headerBackTitle: ' '}}
+      />
+      <BaseStack.Screen
+        name="GroupDepthView"
+        component={GroupDepthView}
+        options={{headerBackTitle: ' '}}
+      />
+      <BaseStack.Screen
+        name="GroupDetail"
+        component={GroupDetail}
+        options={{headerBackTitle: ' '}}
+      />
+      <BaseStack.Screen
+        name="GroupMember"
+        component={GroupMember}
+        options={{headerBackTitle: ' '}}
+      />
+      <BaseStack.Group
+        screenOptions={{
+          cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+        }}>
+        <BaseStack.Screen
+          name="그룹 생성"
+          component={GroupCreateStack}
+          options={{headerBackTitle: ' ', headerShown: false}}
+        />
+        <BaseStack.Screen
+          name="ContentsModal"
+          component={ContentsModal}
+          options={{headerShown: false}}
+        />
+        <BaseStack.Screen
+          name="댓글"
+          component={CommentsView}
+          options={{headerBackTitle: ' '}}
+        />
+        <BaseStack.Screen
+          name="업로드"
+          component={NewUploadStack}
+          options={{headerShown: false}}
+        />
+      </BaseStack.Group>
     </BaseStack.Navigator>
   );
 }

@@ -21,10 +21,15 @@ import {GroupContentsScreen} from './group/groupContent';
 import {GroupDepthView} from './group/groupDepthView';
 import {GroupDetail} from './group/groupDetail';
 import {GroupMember} from './group/groupMember';
-import {CategoryList} from '../newupload/category';
 import {Color} from '../../style/colors';
-import { StackScreenOptions } from '../../style/common';
-import { MainFeedImage } from '../../component/image';
+import {StackScreenOptions} from '../../style/common';
+import {MainFeedImage} from '../../component/image';
+import NewUploadTab from '../newupload/newUpload';
+import { CategoryList } from '../newupload/category';
+import { SelectGroup } from '../newupload/selectgroup';
+import { GroupCreate } from './group/groupCreate';
+import { CommentsView } from './comment';
+import { ContentsModal } from './contentModal';
 
 const styles = StyleSheet.create({
   container: {
@@ -279,31 +284,6 @@ export function ShowbilityHome() {
         name="Main"
         component={SHome2}
         options={{headerShown: false}}
-      />
-      <MainHomeStack.Screen
-        name="FindStack"
-        component={FindScreen}
-        options={{headerBackTitle: ' '}}
-      />
-      <MainHomeStack.Screen
-        name="그룹 컨텐츠"
-        component={GroupContentsScreen}
-        options={{headerBackTitle: ' '}}
-      />
-      <MainHomeStack.Screen
-        name="GroupDepthView"
-        component={GroupDepthView}
-        options={{headerBackTitle: ' '}}
-      />
-      <MainHomeStack.Screen
-        name="GroupDetail"
-        component={GroupDetail}
-        options={{headerBackTitle: ' '}}
-      />
-      <MainHomeStack.Screen
-        name="GroupMember"
-        component={GroupMember}
-        options={{headerBackTitle: ' '}}
       />
     </MainHomeStack.Navigator>
   );

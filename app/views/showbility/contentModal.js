@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
 
 export function ContentsModal({route, navigation}) {
   const id = route.params;
+  console.log('contentmodal', id);
   const [item, setItem] = React.useState({
     title: '',
     detail: '',
@@ -341,18 +342,32 @@ export function ContentsModal({route, navigation}) {
       <BottomSheet snapPoints={snapPoints} ref={bottomSheetRef}>
         <ScrollView contentContainerStyle={{paddingBottom: 40}}>
           <View style={{marginBottom: 20, flexDirection: 'row'}}>
-            <View style={{flex: 1, height: 80, alignItems: 'center'}}>
+            <Pressable
+              style={{flex: 1, height: 80, alignItems: 'center'}}
+              onPress={() =>
+                navigation.push('사용자정보', {
+                  user_id: item.user.id,
+                  isMy: false,
+                })
+              }>
               <Image
                 style={styles.profileImage}
                 source={getUserImageFromUser(item.user)}
               />
-            </View>
+            </Pressable>
             <View style={{flex: 4}}>
               <View style={{marginBottom: 10}}>
                 <Text style={{fontFamily: 'JejuGothicOTF', fontSize: 17}}>
                   {item.title}
                 </Text>
-                <Text style={{fontSize: 14, marginTop: 7}}>
+                <Text
+                  style={{fontSize: 14, marginTop: 7}}
+                  onPress={() =>
+                    navigation.push('사용자정보', {
+                      user_id: item.user.id,
+                      isMy: false,
+                    })
+                  }>
                   {item.user.nickname}
                 </Text>
               </View>
