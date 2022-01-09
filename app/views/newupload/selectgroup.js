@@ -101,7 +101,7 @@ export function SelectGroup(props) {
         {isOpen ? (
           <Button title="&or;" color="#d3d7e0" onPress={close} />
         ) : (
-          <Button title="<" color="#d3d7e0" onPress={open} />
+          <Button title="&and;" color="#d3d7e0" onPress={open} />
         )}
       </View>
       <Animated.View style={{height: animatedHeight, overflow: 'hidden'}}>
