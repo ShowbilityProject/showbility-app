@@ -266,7 +266,7 @@ export function FindBar({
         value={tagInput}
         onChangeText={v => setTagInput(v)}
         style={styles.textinput}
-        placeholder="태그 검색"
+        placeholder={tagFilter.length ? '' : '태그 검색'}
         onSubmitEditing={handleSubmit}
         onFocus={() => onFocused()}
       />
