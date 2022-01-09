@@ -130,7 +130,7 @@ export function FindScreen({route, navigation}) {
     }
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate('ContentsModal', item.id)}
+        onPress={() => navigation.push('ContentsModal', item.id)}
         style={styles.abilityFrame}>
         <Image source={source} style={styles.flatListImage} />
         {/* <Text style={[styles.fontJeju, styles.abilityItemTitle]}>
