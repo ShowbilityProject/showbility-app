@@ -245,6 +245,15 @@ export function FindBar({
     setTagInput('');
   };
 
+  const handleChangeText = text => {
+    setTagInput(text);
+    let last = text.charAt(text.length - 1);
+    if (last === ' ') {
+      let word = text.substring(0, text.length - 1);
+      handleSubmit({nativeEvent: {text: word}});
+    }
+  };
+
   return (
     <ScrollView
       style={styles.tagSearchWrapper}
@@ -264,7 +273,7 @@ export function FindBar({
       })}
       <TextInput
         value={tagInput}
-        onChangeText={v => setTagInput(v)}
+        onChangeText={v => handleChangeText(v)}
         style={styles.textinput}
         placeholder={tagFilter.length ? '' : '태그 검색'}
         onSubmitEditing={handleSubmit}
