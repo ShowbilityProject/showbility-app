@@ -11,6 +11,7 @@ import {
   Pressable,
   SafeAreaView,
   Keyboard,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {HOST} from '../../common/constant';
 import {isEmpty} from '../../common/util';
@@ -141,87 +142,92 @@ export function FindScreen({route, navigation}) {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-      <View style={styles.baseContainer}>
-        <View style={{flex: 1, flexDirection: 'row', maxHeight: 60}}>
-          <FindBar
-            tagFilter={tagFilter}
-            removeTagFromFilter={removeTagFromFilter}
-            handleTagSubmit={handleTagSubmit}
-            onFocused={onSearchInputFocused}
+      <TouchableWithoutFeedback onPress={() => {
+          Keyboard.dismiss();
+          setInputFocused(false);
+        }}>
+        <View style={styles.baseContainer}>
+          <View style={{flex: 1, flexDirection: 'row', maxHeight: 60}}>
+            <FindBar
+              tagFilter={tagFilter}
+              removeTagFromFilter={removeTagFromFilter}
+              handleTagSubmit={handleTagSubmit}
+              onFocused={onSearchInputFocused}
+            />
+            <TouchableOpacity
+              style={[styles.filterIcon, {display: isMain ? 'flex' : 'none'}]}
+              onPress={() =>
+                navigation.push('카테고리&태그 선택', {
+                  selectCategories: categories => {
+                    setCategoryFilter(categories);
+                    setRefreshing(true);
+                    // setRerenderKey(!rerenderKey);
+                  },
+                  selectTags: tags => {
+                    addSelectedTags(tags);
+                    setRefreshing(true);
+                    // setRerenderKey(!rerenderKey);
+                  },
+                  categories: categoryFilter,
+                  tags: tagFilter,
+                  isUpload: false,
+                })
+              }>
+              <Image source={require('../../../assets/imgs/ICON-24-Filter.png')} />
+            </TouchableOpacity>
+          </View>
+          <FlatList
+            key={'#'}
+            keyExtractor={item => '#' + item.id}
+            data={data}
+            renderItem={renderItem}
+            horizontal={false}
+            onRefresh={() => setRefreshing(true)}
+            numColumns={2}
+            refreshing={refreshing}
+            style={[
+              styles.flatListFrame,
+              {
+                display: inputFocused ? 'none' : 'flex',
+                flex: 1,
+              },
+            ]}
+            onScroll={({nativeEvent}) => {
+              if (isScrollEnd(nativeEvent)) {
+                if (!fetchingNext) fetchNext();
+              }
+            }}
           />
-          <TouchableOpacity
-            style={[styles.filterIcon, {display: isMain ? 'flex' : 'none'}]}
-            onPress={() =>
-              navigation.push('카테고리&태그 선택', {
-                selectCategories: categories => {
-                  setCategoryFilter(categories);
-                  setRefreshing(true);
-                  // setRerenderKey(!rerenderKey);
-                },
-                selectTags: tags => {
-                  addSelectedTags(tags);
-                  setRefreshing(true);
-                  // setRerenderKey(!rerenderKey);
-                },
-                categories: categoryFilter,
-                tags: tagFilter,
-                isUpload: false,
-              })
-            }>
-            <Image source={require('../../../assets/imgs/ICON-24-Filter.png')} />
-          </TouchableOpacity>
-        </View>
-        <FlatList
-          key={'#'}
-          keyExtractor={item => '#' + item.id}
-          data={data}
-          renderItem={renderItem}
-          horizontal={false}
-          onRefresh={() => setRefreshing(true)}
-          numColumns={2}
-          refreshing={refreshing}
-          style={[
-            styles.flatListFrame,
-            {
-              display: inputFocused ? 'none' : 'flex',
-              flex: 1,
-            },
-          ]}
-          onScroll={({nativeEvent}) => {
-            if (isScrollEnd(nativeEvent)) {
-              if (!fetchingNext) fetchNext();
-            }
-          }}
-        />
-        <View style={{flex: 1, display: inputFocused ? 'flex' : 'none'}}>
-          <TouchableOpacity onPress={() => clearSearch()}>
-            <Text style={{textAlign: 'right'}}>모두 지우기</Text>
-          </TouchableOpacity>
-          {recentSearchWords.map(word => {
-            return (
-              <TouchableOpacity
-                key={word}
-                style={{
-                  paddingVertical: 5,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  maxHeight: 70,
-                }}
-                onPress={() => handleTagSubmit({nativeEvent: {text: word}})}>
-                <Ionicons name="time-outline" size={20} color={'black'} />
-                <Text
+          <View style={{flex: 1, display: inputFocused ? 'flex' : 'none'}}>
+            <TouchableOpacity onPress={() => clearSearch()}>
+              <Text style={{textAlign: 'right'}}>모두 지우기</Text>
+            </TouchableOpacity>
+            {recentSearchWords.map(word => {
+              return (
+                <TouchableOpacity
+                  key={word}
                   style={{
-                    marginLeft: 10,
-                    fontSize: 15,
-                    justifyContent: 'center',
-                  }}>
-                  {word}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
+                    paddingVertical: 5,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    maxHeight: 70,
+                  }}
+                  onPress={() => handleTagSubmit({nativeEvent: {text: word}})}>
+                  <Ionicons name="time-outline" size={20} color={'black'} />
+                  <Text
+                    style={{
+                      marginLeft: 10,
+                      fontSize: 15,
+                      justifyContent: 'center',
+                    }}>
+                    {word}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 }
