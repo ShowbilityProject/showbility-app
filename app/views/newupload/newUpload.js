@@ -235,6 +235,7 @@ function NewUploadTab() {
       freeTags.push(value);
       setFreeTags(freeTags);
     }
+    setFreeTagInput('');
   };
 
   const onFreeTagInputChange = value => {
@@ -245,7 +246,6 @@ function NewUploadTab() {
       if (word !== ' ' && !isEmpty(word)) {
         convertFreeTagToLabel(word);
       }
-      setFreeTagInput('');
     }
   };
 
@@ -363,6 +363,10 @@ function NewUploadTab() {
                       onChangeText={value => onFreeTagInputChange(value)}
                       value={freeTagInput}
                       onFocus={() => setKeyboardAvoid(false)}
+                      onSubmitEditing={e => {
+                        convertFreeTagToLabel(e.nativeEvent.text);
+                        setFreeTagFocused(false);
+                      }}
                     />
                   </Pressable>
                 </View>
