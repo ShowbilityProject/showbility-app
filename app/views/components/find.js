@@ -28,10 +28,11 @@ export function FindScreen({route, navigation}) {
   const isMain = params.isMain ? params.isMain : false;
   const defaultCategory = params.categoryFilter ? params.categoryFilter : [];
   const groupFilter = params.groupFilter ? params.groupFilter : [];
+  const defaultTag = params.tagFilter ? params.tagFilter : [];
   const user_id = params.user_id;
   // const defaultTag = params.tagFilter ? params.tagFilter : [];
   const [categoryFilter, setCategoryFilter] = React.useState(defaultCategory);
-  const [tagFilter, setTagFilter] = React.useState([]);
+  const [tagFilter, setTagFilter] = React.useState(defaultTag);
   const [data, setData] = React.useState([]);
   const [nextURL, setNextURL] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
@@ -56,7 +57,7 @@ export function FindScreen({route, navigation}) {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      title: params.title,
+      title: params.title ? params.title : '검색',
     });
   });
 

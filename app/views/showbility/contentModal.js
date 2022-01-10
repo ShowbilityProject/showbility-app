@@ -485,9 +485,14 @@ export function ContentsModal({route, navigation}) {
               <ScrollView horizontal={true}>
                 {item.tags.map(tag => {
                   return (
-                    <View style={styles.suggestTagView} key={tag}>
+                    <Pressable
+                      style={styles.suggestTagView}
+                      key={tag}
+                      onPress={() =>
+                        navigation.push('FindStack', {tagFilter: [tag]})
+                      }>
                       <Text style={styles.suggestTagText}>{tag}</Text>
-                    </View>
+                    </Pressable>
                   );
                 })}
               </ScrollView>

@@ -302,13 +302,17 @@ function MyTag({data}) {
 
 function FilterItemsArea({items}) {
   items = items ? items : [];
+  const navigation = useNavigation();
   return (
     <View style={styles.searchArea}>
       {items.map(sgt => {
         return (
-          <View key={sgt} style={styles.suggestTagView}>
+          <Pressable
+            key={sgt}
+            style={styles.suggestTagView}
+            onPress={() => navigation.push('FindStack', {tagFilter: [sgt]})}>
             <Text style={styles.suggestTagText}>{sgt}</Text>
-          </View>
+          </Pressable>
         );
       })}
     </View>
