@@ -22,6 +22,8 @@ import {GroupDepthView} from './showbility/group/groupDepthView';
 import {GroupDetail} from './showbility/group/groupDetail';
 import {GroupMember} from './showbility/group/groupMember';
 import {FollowMember} from './myshowbil/followMember';
+import { Image } from 'react-native';
+import { imageSources } from '../component/image';
 
 const MainTab = createBottomTabNavigator();
 
@@ -186,23 +188,25 @@ function MainTabScreen() {
       }}
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
-          let iconName;
+          let s;
+          let imgSrc = imageSources.tab;
+          size = 30;
 
           if (route.name === '쇼빌리티') {
-            iconName = focused ? 'home-sharp' : 'home-outline';
+            s = !focused ? imgSrc.home : imgSrc.homeFocused;
           } else if (route.name === '검색') {
-            iconName = focused ? 'search-sharp' : 'search-outline';
+            s = !focused ? imgSrc.search : imgSrc.searchFocused;
           } else if (route.name === '메세지') {
-            iconName = focused ? 'chatbox-sharp' : 'chatbox-outline';
+            s = !focused ? imgSrc.message : imgSrc.messageFocused;
           } else if (route.name === '마이쇼빌') {
-            iconName = focused ? 'person-sharp' : 'person-outline';
+            s = !focused ? imgSrc.myshowbil : imgSrc.myshowbilFocused;
           } else if (route.name === 'NewUpload') {
-            iconName = 'add-circle-sharp';
+            s = imgSrc.upload;
             size = 42;
             color = '#F85B02';
           }
-
-          return <Ionicons name={iconName} size={size} color={color} />;
+          return <Image source={s} style={{width: size, height: size}} />;
+          // return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}>
       <MainTab.Screen
