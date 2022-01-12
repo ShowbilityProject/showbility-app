@@ -22,6 +22,7 @@ import {
 } from '../../service/common';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {getContentsList, getNestContentsList} from '../../service/content';
+import {normalizeFontSize} from '../../component/font';
 
 export function FindScreen({route, navigation}) {
   const params = route.params;
@@ -218,7 +219,7 @@ export function FindScreen({route, navigation}) {
                   <Text
                     style={{
                       marginLeft: 10,
-                      fontSize: 15,
+                      fontSize: normalizeFontSize(15),
                       justifyContent: 'center',
                     }}>
                     {word}
@@ -263,11 +264,11 @@ export function FindBar({
       {tagFilter.map(tag => {
         return (
           <View key={tag} style={styles.tagWrapper}>
-            <Text style={{flex: 1, color: 'white', fontSize: 12}}>{tag}</Text>
+            <Text style={{flex: 1, color: 'white', fontSize: normalizeFontSize(12),}}>{tag}</Text>
             <Pressable
               style={{flex: 1, marginLeft: 5, alignItems: ''}}
               onPress={() => removeTagFromFilter(tag)}>
-              <Text style={{color: 'white', fontSize: 12}}>x</Text>
+              <Text style={{color: 'white', fontSize: normalizeFontSize(12),}}>x</Text>
             </Pressable>
           </View>
         );
@@ -312,7 +313,7 @@ const styles = new StyleSheet.create({
     minWidth: 200,
     height: 40,
     backgroundColor: '#F6F7F9',
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
     padding: 10,
     paddingLeft: 0,
   },
@@ -337,7 +338,7 @@ const styles = new StyleSheet.create({
     fontFamily: 'JejuGothicOTF',
   },
   abilityItemTitle: {
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
   },
   filterIcon: {
     flex: 1,

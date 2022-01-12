@@ -26,6 +26,7 @@ import {Color} from '../../style/colors';
 import {SelectGroup} from './selectgroup';
 import {requestAddContentToGroup} from '../../service/group';
 import {LoadingScreen} from '../../component/loading';
+import {normalizeFontSize} from '../../component/font';
 
 const styles = StyleSheet.create({
   container: {
@@ -48,11 +49,11 @@ const styles = StyleSheet.create({
   inputStyle: {
     width: '90%',
     height: 60,
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
   },
   textStyle: {
     fontFamily: 'JejuGothicOTF',
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
     lineHeight: 60,
   },
   suggestTagView: {
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   suggestTagText: {
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
   },
   upperRightTopCloseBtn: {
     color: 'white',
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   hashTagText: {
-    fontSize: 14,
+    fontSize: normalizeFontSize(14),
     color: Color.veryLightPink,
   },
 });
@@ -381,7 +382,7 @@ function NewUploadTab() {
                 <TextInput
                   style={[
                     styles.inputStyle,
-                    {height: 'auto', minHeight: 100, fontSize: 15},
+                    {height: 'auto', minHeight: 100, fontSize: normalizeFontSize(15),},
                   ]}
                   placeholder="프로젝트 설명"
                   multiline={true}

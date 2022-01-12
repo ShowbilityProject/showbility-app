@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {isEmpty} from '../../common/util';
+import {normalizeFontSize} from '../../component/font';
 import {
   requestSignOut,
   requestUserWithdraw,
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
   },
   textInputStyle: {
     flex: 1,
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
     paddingTop: 10,
     lineHeight: 20,
   },
@@ -68,12 +69,12 @@ const styles = StyleSheet.create({
   applyButtonText: {
     fontFamily: 'JejuGothicOTF',
     lineHeight: 52,
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
     color: '#B2B2B5',
   },
   applyButtonTextValid: {
     lineHeight: 52,
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
     color: 'white',
     fontFamily: 'JejuGothicOTF',
   },
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   tagsStyle: {
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
     textAlign: 'right',
     color: '#F85B02',
     alignSelf: 'center',
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
     paddingBottom: 42,
   },
   smallOptionText: {
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
     color: Color.brownishGrey,
     textDecorationLine: 'underline',
   },
@@ -264,14 +265,14 @@ export function EditProfileScreen({route}) {
               styles.textInputWrapper,
               {justifyContent: 'center', flexDirection: 'row'},
             ]}>
-            <Text style={{fontSize: 17, alignSelf: 'center', flex: 1}}>
+            <Text style={{fontSize: normalizeFontSize(17), alignSelf: 'center', flex: 1}}>
               태그 설정
             </Text>
             {categories.length > 0 || tgs.length > 0 ? (
               <Text style={styles.tagsStyle}>{getReprTagText()}</Text>
             ) : (
               <Text
-                style={{fontSize: 17, textAlign: 'right', alignSelf: 'center'}}>
+                style={{fontSize: normalizeFontSize(17), textAlign: 'right', alignSelf: 'center'}}>
                 {'>'}
               </Text>
             )}

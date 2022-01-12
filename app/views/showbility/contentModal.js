@@ -33,6 +33,7 @@ import {
   requestUnfollow,
   verifyToken,
 } from '../../service/account';
+import {normalizeFontSize} from '../../component/font';
 
 const styles = StyleSheet.create({
   container: {
@@ -57,13 +58,13 @@ const styles = StyleSheet.create({
   modalContentTitle: {
     fontFamily: 'JejuGothicOTF',
     color: '#B2B2B5',
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
   },
   modalCount: {
     marginLeft: 10,
     marginRight: 20,
     color: '#BCBCBC',
-    fontSize: 14,
+    fontSize: normalizeFontSize(14),
   },
   upperRightTopCloseBtn: {
     color: 'white',
@@ -83,13 +84,13 @@ const styles = StyleSheet.create({
     padding: 10,
     textAlign: 'right',
     color: '#BCBCBC',
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
   },
   viewOption: {
     textAlign: 'right',
     fontFamily: 'JejuGothicOTF',
     color: '#F85B02',
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
   },
   commentWrapper: {
     paddingRight: 16,
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   suggestTagText: {
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
   },
   profileImage: {
     width: 51,
@@ -266,7 +267,7 @@ export function ContentsModal({route, navigation}) {
           <Text
             style={{
               flex: 1,
-              fontSize: 15,
+              fontSize: normalizeFontSize(15),
               fontFamily: 'JejuGothicOTF',
             }}>
             {item.title}
@@ -357,11 +358,11 @@ export function ContentsModal({route, navigation}) {
             </Pressable>
             <View style={{flex: 4}}>
               <View style={{marginBottom: 10}}>
-                <Text style={{fontFamily: 'JejuGothicOTF', fontSize: 17}}>
+                <Text style={{fontFamily: 'JejuGothicOTF', fontSize: normalizeFontSize(17),}}>
                   {item.title}
                 </Text>
                 <Text
-                  style={{fontSize: 14, marginTop: 7}}
+                  style={{fontSize: normalizeFontSize(14), marginTop: 7}}
                   onPress={() =>
                     navigation.push('사용자정보', {
                       user_id: item.user.id,
@@ -467,7 +468,7 @@ export function ContentsModal({route, navigation}) {
               </TouchableOpacity>
             </View>
             <View style={{padding: 16}}>
-              <Text style={{fontSize: 12, lineHeight: 18, letterSpacing: 0.9}}>
+              <Text style={{fontSize: normalizeFontSize(12), lineHeight: 18, letterSpacing: 0.9}}>
                 {item.detail.length > 100
                   ? fullDesc
                     ? item.detail
@@ -519,10 +520,10 @@ export function ContentsModal({route, navigation}) {
             </View>
             <View style={styles.commentWrapper}>
               <View style={{flexDirection: 'row'}}>
-                <Text style={{fontSize: 12, fontWeight: '600'}}>
+                <Text style={{fontSize: normalizeFontSize(12), fontWeight: '600'}}>
                   {item.comments.length ? item.comments[0].author.nickname : ''}
                 </Text>
-                <Text style={{marginLeft: 10, fontSize: 12}}>
+                <Text style={{marginLeft: 10, fontSize: normalizeFontSize(12),}}>
                   {item.comments.length ? item.comments[0].detail : ''}
                 </Text>
               </View>

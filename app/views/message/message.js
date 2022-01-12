@@ -7,6 +7,7 @@ import {
   Image,
   TextInput,
 } from 'react-native';
+import {normalizeFontSize} from '../../component/font';
 
 const styles = StyleSheet.create({
   container: {
@@ -21,17 +22,17 @@ const styles = StyleSheet.create({
     fontFamily: 'JejuGothicOTF',
     padding: 10,
     backgroundColor: '#F6F7F9',
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
     height: 40,
   },
   fixingText1: {
     fontFamily: 'JejuGothicOTF',
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
     lineHeight: 67
   },
   fixingText2: {
     fontFamily: 'JejuGothicOTF',
-    fontSize: 13,
+    fontSize: normalizeFontSize(13),
     lineHeight: 21
   },
   msgBodyArea: {
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
   },
   topText: {
     fontFamily: 'JejuGothicOTF',
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
     textAlign: 'center',
   },
 });
@@ -67,13 +68,13 @@ function MessageTab() {
     <SafeAreaView style={[styles.flexCenter, styles.container]}>
       <View style={styles.topContainer}>
         <View style={styles.topHeader}>
-          <Text style={{flex: 1, fontFamily: 'JejuGothicOTF', fontSize: 25}}>+</Text>
+          <Text style={{flex: 1, fontFamily: 'JejuGothicOTF', fontSize: normalizeFontSize(25),}}>+</Text>
           <View style={{flex: 1}}>
             <Text style={styles.topText}>메시지</Text>
           </View>
           <View
             style={{flex: 1, flexDirection: 'column', alignItems: 'flex-end'}}>
-            <Text style={{fontFamily: 'JejuGothicOTF', fontSize: 16}}>
+            <Text style={{fontFamily: 'JejuGothicOTF', fontSize: normalizeFontSize(16),}}>
               선택
             </Text>
           </View>

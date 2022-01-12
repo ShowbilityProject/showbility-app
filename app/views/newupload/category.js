@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {View, StyleSheet, Text, Pressable, ScrollView} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {normalizeFontSize} from '../../component/font';
 import {getCategoryList, getTagList} from '../../service/ability';
 
 export function CategoryList({route, navigation}) {
@@ -159,7 +160,11 @@ export function CategoryList({route, navigation}) {
       <View style={{flex: 1, paddingBottom: 20}}>
         <ScrollView style={{flexGrow: 1}}>
           <View style={{paddingVertical: 19}}>
-            <Text style={{fontFamily: 'JejuGothicOTF', fontSize: 17}}>
+            <Text
+              style={{
+                fontFamily: 'JejuGothicOTF',
+                fontSize: normalizeFontSize(17),
+              }}>
               {titleText[prevScreen]}
             </Text>
           </View>
@@ -241,7 +246,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'JejuGothicOTF',
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
     lineHeight: 60,
   },
   labelStyle: {
@@ -251,12 +256,12 @@ const styles = StyleSheet.create({
     width: 'auto',
   },
   labelNotSelected: {
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
     backgroundColor: '#F7F7F7',
     color: 'black',
   },
   labelSelected: {
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
     backgroundColor: '#F7F7F7',
     color: '#F85B02',
   },
@@ -270,24 +275,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   bottomLabelText: {
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
     color: '#F85B02',
   },
   titleArea: {
     fontFamily: 'JejuGothicOTF',
-    fontSize: 14,
+    fontSize: normalizeFontSize(14),
     paddingVertical: 13,
     paddingTop: 23,
   },
   bottomText: {
     flex: 1,
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
     fontFamily: 'JejuGothicOTF',
     color: '#b2b2b5',
   },
   allDeleteText: {
     flex: 1,
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
     color: '#f85b02',
     textAlign: 'right',
   },
@@ -320,12 +325,12 @@ const styles = StyleSheet.create({
   },
   applyButtonText: {
     fontFamily: 'JejuGothicOTF',
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
     lineHeight: 52,
   },
   applyButtonTextValid: {
     fontFamily: 'JejuGothicOTF',
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
     lineHeight: 52,
     color: 'white',
   },

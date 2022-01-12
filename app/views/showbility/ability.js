@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/core';
 import * as React from 'react';
 import {FlatList, Text, StyleSheet, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native';
+import {normalizeFontSize} from '../../component/font';
 import {getAbilityList} from '../../service/ability';
 
 const styles = StyleSheet.create({
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
     fontFamily: 'JejuGothicOTF',
   },
   abilityItemTitle: {
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
   },
   flatListFrame: {
     paddingHorizontal: 10,

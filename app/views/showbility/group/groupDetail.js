@@ -24,6 +24,7 @@ import {
 } from '../../../service/group';
 import {FOLLOW_STATUS} from '../../../common/constant';
 import {requestFollow, requestUnfollow} from '../../../service/account';
+import {normalizeFontSize} from '../../../component/font';
 
 const styles = StyleSheet.create({
   fontJeju: {
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: '#F6F7F9',
     marginBottom: 20,
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
     padding: 10,
   },
   suggestTagView: {
@@ -57,18 +58,18 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   suggestTagText: {
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
   },
   bodyHeaderFont: {
     color: '#B2B2B5',
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
   },
   bodyHaederSpaceBody: {
     marginBottom: 10,
   },
   showAllTextFont: {
     color: '#F85B02',
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
     textAlign: 'right',
   },
   bodyItemSpace: {
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     textAlignVertical: 'center',
     color: 'white',
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
   },
   denyButton: {
     alignSelf: 'flex-end',
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     textAlignVertical: 'center',
     color: 'black',
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
   },
   memberRow: {
     flex: 1,
@@ -140,7 +141,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   memberTypeText: {
-    fontSize: 9,
+    fontSize: normalizeFontSize(9),
     marginTop: 5,
   },
   followButton: {
@@ -165,16 +166,16 @@ function GroupDetailHeader({repr_image, followers, contents}) {
       <Image style={styles.imageStyle} source={repr_image} />
       <View style={{flexDirection: 'row'}}>
         <View style={{padding: 20, alignItems: 'center'}}>
-          <Text style={{color: '#B2B2B5', fontSize: 12, marginBottom: 5}}>
+          <Text style={{color: '#B2B2B5', fontSize: normalizeFontSize(12), marginBottom: 5}}>
             팔로워
           </Text>
-          <Text style={{fontSize: 20}}>{followers}</Text>
+          <Text style={{fontSize: normalizeFontSize(20),}}>{followers}</Text>
         </View>
         <View style={{padding: 20, alignItems: 'center'}}>
-          <Text style={{color: '#B2B2B5', fontSize: 12, marginBottom: 5}}>
+          <Text style={{color: '#B2B2B5', fontSize: normalizeFontSize(12), marginBottom: 5}}>
             작품
           </Text>
-          <Text style={{fontSize: 20}}>{contents}</Text>
+          <Text style={{fontSize: normalizeFontSize(20),}}>{contents}</Text>
         </View>
       </View>
     </View>
@@ -240,7 +241,7 @@ function GroupItems({contents, title, id}) {
     <View style={styles.bodyItemSpace}>
       <View style={[{flexDirection: 'row'}, styles.bodyHaederSpaceBody]}>
         <View style={{flex: 1}}>
-          <Text style={[{fontSize: 17}, styles.fontJeju]}>
+          <Text style={[{fontSize: normalizeFontSize(17),}, styles.fontJeju]}>
             그룹 작품 둘러보기
           </Text>
         </View>
@@ -279,7 +280,7 @@ function GroupPendingItems({contents, title, id}) {
     <View style={styles.bodyItemSpace}>
       <View style={[{flexDirection: 'row'}, styles.bodyHaederSpaceBody]}>
         <View style={{flex: 1}}>
-          <Text style={[{fontSize: 17}, styles.fontJeju]}>
+          <Text style={[{fontSize: normalizeFontSize(17),}, styles.fontJeju]}>
             승인 대기 중인 작품
           </Text>
         </View>
@@ -359,7 +360,7 @@ function GroupMembers({members, members_count, id, refresh, setRefersh}) {
     <View style={styles.bodyItemSpace}>
       <View style={[{flexDirection: 'row'}, styles.bodyHaederSpaceBody]}>
         <View style={{flex: 1}}>
-          <Text style={[{fontSize: 17}, styles.fontJeju]}>
+          <Text style={[{fontSize: normalizeFontSize(17),}, styles.fontJeju]}>
             그룹 멤버<Text>({members_count}명)</Text>
           </Text>
         </View>
@@ -391,12 +392,12 @@ function GroupMembers({members, members_count, id, refresh, setRefersh}) {
                     isMy: false,
                   })
                 }>
-                <Text style={{fontSize: 17}}>{user.nickname}</Text>
+                <Text style={{fontSize: normalizeFontSize(17),}}>{user.nickname}</Text>
                 <Text
                   style={{
                     color: memberTypeColor[member.member_type],
                     marginTop: 7,
-                    fontSize: 9,
+                    fontSize: normalizeFontSize(9),
                   }}>
                   {MEMBER_TYPE_STR[member.member_type]}
                 </Text>
@@ -467,7 +468,7 @@ function GroupPendingMembers({members, id}) {
     <View style={styles.bodyItemSpace}>
       <View style={[{flexDirection: 'row'}, styles.bodyHaederSpaceBody]}>
         <View style={{flex: 1}}>
-          <Text style={[{fontSize: 17}, styles.fontJeju]}>
+          <Text style={[{fontSize: normalizeFontSize(17),}, styles.fontJeju]}>
             승인 대기 중인 인원
           </Text>
         </View>
@@ -492,14 +493,14 @@ function GroupPendingMembers({members, id}) {
               <View style={{flex: 1}}>
                 <Text
                   style={[
-                    {fontSize: 17, alignSelf: 'stretch', marginBottom: 3},
+                    {fontSize: normalizeFontSize(17), alignSelf: 'stretch', marginBottom: 3},
                     styles.fontJeju,
                   ]}>
                   {member.user.nickname}
                 </Text>
                 <Text
                   style={{
-                    fontSize: 9,
+                    fontSize: normalizeFontSize(9),
                     alignSelf: 'baseline',
                     color: memberTypeColor[member.member_type],
                   }}>
@@ -611,7 +612,7 @@ function BottomJoinButtonView({id, member_status}) {
               textAlign: 'right',
               textAlignVertical: 'center',
               color: isValid() ? 'black' : 'white',
-              fontSize: 17,
+              fontSize: normalizeFontSize(17),
             },
           ]}>
           {getText()}

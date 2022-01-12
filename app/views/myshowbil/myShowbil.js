@@ -14,6 +14,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {FOLLOW_STATUS, HOST} from '../../common/constant';
 import { isEmpty } from '../../common/util';
+import {normalizeFontSize} from '../../component/font';
 import {getProfile, requestFollow, requestUnfollow} from '../../service/account';
 
 const styles = StyleSheet.create({
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: '#F6F7F9',
     marginBottom: 20,
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
     padding: 10,
   },
   suggestTagView: {
@@ -48,18 +49,18 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   suggestTagText: {
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
   },
   bodyHeaderFont: {
     color: '#B2B2B5',
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
   },
   bodyHaederSpaceBody: {
     marginBottom: 10,
   },
   showAllTextFont: {
     color: '#F85B02',
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
     textAlign: 'right',
   },
   bodyItemSpace: {
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   headerCount: {
-    fontSize: 20,
+    fontSize: normalizeFontSize(20),
     fontWeight: 'bold',
   },
   detailButtonsCommon: {
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderWidth: 1,
     borderRadius: 5,
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
     overflow: 'hidden',
   },
   detailHeaderWrapper: {
@@ -139,7 +140,7 @@ function MyDetailHeader({data, isMy, isFetched, refresh, setRefresh}) {
       <View style={{flex: 1, width: '100%'}}>
         <Text
           style={{
-            fontSize: 20,
+            fontSize: normalizeFontSize(20),
             textAlign: 'center',
             display: isMy ? 'flex' : 'none',
           }}>
@@ -174,7 +175,7 @@ function MyDetailHeader({data, isMy, isFetched, refresh, setRefresh}) {
               _type: 'followers',
             })
           }>
-          <Text style={{color: '#B2B2B5', fontSize: 12, marginBottom: 5}}>
+          <Text style={{color: '#B2B2B5', fontSize: normalizeFontSize(12), marginBottom: 5}}>
             팔로워
           </Text>
           <Text style={styles.headerCount}>{data.followers}</Text>
@@ -187,13 +188,13 @@ function MyDetailHeader({data, isMy, isFetched, refresh, setRefresh}) {
               _type: 'followings',
             })
           }>
-          <Text style={{color: '#B2B2B5', fontSize: 12, marginBottom: 5}}>
+          <Text style={{color: '#B2B2B5', fontSize: normalizeFontSize(12), marginBottom: 5}}>
             팔로잉
           </Text>
           <Text style={styles.headerCount}>{data.followings}</Text>
         </Pressable>
         <View style={{padding: 20, alignItems: 'center'}}>
-          <Text style={{color: '#B2B2B5', fontSize: 12, marginBottom: 5}}>
+          <Text style={{color: '#B2B2B5', fontSize: normalizeFontSize(12), marginBottom: 5}}>
             작품
           </Text>
           <Text style={styles.headerCount}>{data.contents_count}</Text>
@@ -329,7 +330,7 @@ function MyItems({data}) {
   return (
     <View style={styles.bodyItemSpace}>
       <View style={{flexDirection: 'row', marginBottom: 20}}>
-        <Text style={{flex: 1, fontFamily: 'JejuGothicOTF', fontSize: 17}}>
+        <Text style={{flex: 1, fontFamily: 'JejuGothicOTF', fontSize: normalizeFontSize(17),}}>
           {title}
         </Text>
         <TouchableOpacity
@@ -340,7 +341,7 @@ function MyItems({data}) {
               user_id: data.id,
             })
           }>
-          <Text style={{fontSize: 12, color: '#F85B02'}}>전체보기</Text>
+          <Text style={{fontSize: normalizeFontSize(12), color: '#F85B02'}}>전체보기</Text>
         </TouchableOpacity>
       </View>
       <View style={{flexDirection: 'row'}}>

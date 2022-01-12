@@ -11,6 +11,7 @@ import {
   Platform,
   Image,
 } from 'react-native';
+import {normalizeFontSize} from '../../component/font';
 import { getComment, postComment } from '../../service/comment';
 
 function ReplyView(reply) {
@@ -27,7 +28,7 @@ function ReplyView(reply) {
       paddingTop: 20,
     },
     additionalInfo: {
-      fontSize: 12,
+      fontSize: normalizeFontSize(12),
       color: '#B2B2B5',
       marginRight: 8,
     },
@@ -37,8 +38,8 @@ function ReplyView(reply) {
     <View style={CommentStyles.replyLayer}>
       <View>
         <View style={{flexDirection: 'row'}}>
-          <Text style={{fontSize: 12}}>{reply.author}</Text>
-          <Text style={{marginLeft: 10, fontSize: 12}}>{reply.detail}</Text>
+          <Text style={{fontSize: normalizeFontSize(12),}}>{reply.author}</Text>
+          <Text style={{marginLeft: 10, fontSize: normalizeFontSize(12),}}>{reply.detail}</Text>
         </View>
         <View style={{flexDirection: 'row', marginTop: 10}}>
           <Text style={CommentStyles.additionalInfo}>4분</Text>
@@ -64,7 +65,7 @@ export function CommentsView({route, navigation}) {
       paddingTop: 20,
     },
     additionalInfo: {
-      fontSize: 12,
+      fontSize: normalizeFontSize(12),
       color: '#B2B2B5',
       marginRight: 8,
     },
@@ -145,7 +146,7 @@ export function CommentsView({route, navigation}) {
                       <Text style={styles.authorText}>
                         {comment.author.nickname}
                       </Text>
-                      <Text style={{marginLeft: 10, fontSize: 12, lineHeight: 18}}>
+                      <Text style={{marginLeft: 10, fontSize: normalizeFontSize(12), lineHeight: 18}}>
                         {comment.detail}
                       </Text>
                     </View>
@@ -202,7 +203,7 @@ const styles = StyleSheet.create({
     paddingTop: 12,
   },
   authorText: {
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
     fontWeight: '600',
     lineHeight: 18,
   },

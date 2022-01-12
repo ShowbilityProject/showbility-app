@@ -3,6 +3,7 @@ import * as React from 'react';
 import {FlatList, View, Image, Text, StyleSheet, TextInput, Pressable} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import { FOLLOW_STATUS, MEMBER_STATUS_TYPE } from '../../../common/constant';
+import {normalizeFontSize} from '../../../component/font';
 import { requestFollow, requestUnfollow } from '../../../service/account';
 import {getGroupMembersByGroupId, getNext, updateMemberStatus} from '../../../service/group';
 
@@ -137,12 +138,12 @@ export function GroupMember({route}) {
               isMy: false,
             })
           }>
-          <Text style={{fontSize: 17}}>{user.nickname}</Text>
+          <Text style={{fontSize: normalizeFontSize(17)}}>{user.nickname}</Text>
           <Text
             style={{
               color: memberTypeColor[member.member_type],
               marginTop: 7,
-              fontSize: 9,
+              fontSize: normalizeFontSize(9),
             }}>
             {MEMBER_TYPE_STR[member.member_type]}
           </Text>
@@ -239,7 +240,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   memberTypeText: {
-    fontSize: 9,
+    fontSize: normalizeFontSize(9),
     marginTop: 5,
   },
   followButton: {
@@ -268,7 +269,7 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     textAlignVertical: 'center',
     color: 'white',
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
   },
   denyButton: {
     alignSelf: 'flex-end',
@@ -281,6 +282,6 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     textAlignVertical: 'center',
     color: 'black',
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
   },
 });

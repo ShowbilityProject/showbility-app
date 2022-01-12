@@ -9,6 +9,7 @@ import {
 } from '../../../service/account';
 import {login} from '@react-native-seoul/kakao-login';
 import {Color} from '../../../style/colors';
+import {normalizeFontSize} from '../../../component/font';
 
 const styles = StyleSheet.create({
   fontStyle: {
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    fontSize: 30,
+    fontSize: normalizeFontSize(30),
     paddingVertical: 15,
   },
   footerContainer: {
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#DDDDDD',
     borderBottomWidth: 1,
     marginBottom: 20,
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
   },
   circle: {
     height: 26,
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   privacyText: {
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
     color: Color.veryLightPink,
     lineHeight: 18,
   },
@@ -85,13 +86,13 @@ const styles = StyleSheet.create({
   },
   beforeLoginText: {
     fontFamily: 'JejuGothicOTF',
-    fontSize: 14,
+    fontSize: normalizeFontSize(14),
     color: Color.veryLightPink,
     textDecorationLine: 'underline',
   },
   joinText: {
     fontFamily: 'JejuGothicOTF',
-    fontSize: 14,
+    fontSize: normalizeFontSize(14),
     color: Color.birghtOrange,
     marginLeft: 10,
     textDecorationLine: 'underline',
@@ -162,10 +163,10 @@ function LoginScreen() {
       <View style={styles.centerContaier}>
         <Image style={{marginBottom: 30}} source={showbility_icon} />
         <Text
-          style={{fontFamily: 'JejuGothicOTF', fontSize: 24, marginBottom: 10}}>
+          style={{fontFamily: 'JejuGothicOTF', fontSize: normalizeFontSize(24), marginBottom: 10}}>
           세상에 당신의
         </Text>
-        <Text style={{fontFamily: 'JejuGothicOTF', fontSize: 24}}>
+        <Text style={{fontFamily: 'JejuGothicOTF', fontSize: normalizeFontSize(24),}}>
           재능을 보여주세요!
         </Text>
       </View>
@@ -190,7 +191,7 @@ function LoginScreen() {
         <TouchableOpacity
           style={styles.emailLoginBox}
           onPress={() => navigation.navigate('이메일 로그인')}>
-          <Text style={{fontSize: 17}}>이메일 로그인</Text>
+          <Text style={{fontSize: normalizeFontSize(17)}}>이메일 로그인</Text>
         </TouchableOpacity>
         <View style={{marginTop: 22, flexDirection: 'row'}}>
           <Text style={[styles.beforeLoginText, {textDecorationLine: 'none'}]}>

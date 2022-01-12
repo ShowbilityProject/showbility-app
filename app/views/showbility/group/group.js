@@ -15,6 +15,7 @@ import {isEmpty} from '../../../common/util';
 import {getGroups, getNext, GET_GROUP_TYPE} from '../../../service/group';
 import {Color} from '../../../style/colors';
 import { GroupImage } from '../../../component/image';
+import {normalizeFontSize} from '../../../component/font';
 
 const styles = StyleSheet.create({
   flatListImage: {
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
     fontFamily: 'JejuGothicOTF',
   },
   abilityItemTitle: {
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
   },
   flatListFrame: {
     paddingHorizontal: 10,
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: '#F6F7F9',
     marginBottom: 20,
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
     padding: 10,
   },
   suggestTagView: {
@@ -74,11 +75,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   suggestTagText: {
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
   },
   showAllText: {
     textAlign: 'right',
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
     color: '#F85B02',
   },
 });
@@ -112,9 +113,9 @@ function GroupArea({title, fetchType}) {
           navigation.navigate('GroupDetail', {id: item.id, name: item.name})
         }>
         <GroupImage source={imageSource} />
-        <Text style={[styles.fontJeju, {fontSize: 17}]}>{item.name}</Text>
+        <Text style={[styles.fontJeju, {fontSize: normalizeFontSize(17),}]}>{item.name}</Text>
         <Text
-          style={[{fontSize: 12, marginTop: 5, color: Color.veryLightPink}]}>
+          style={[{fontSize: normalizeFontSize(12), marginTop: 5, color: Color.veryLightPink}]}>
           {item.detail}
         </Text>
       </TouchableOpacity>

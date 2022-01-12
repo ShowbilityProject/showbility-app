@@ -12,6 +12,7 @@ import {useNavigation} from '@react-navigation/core';
 import {getGroups, getNextGroupsList} from '../../../service/group';
 import {isEmpty} from '../../../common/util';
 import {Color} from '../../../style/colors';
+import {normalizeFontSize} from '../../../component/font';
 
 const styles = StyleSheet.create({
   baseContainer: {
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
     fontFamily: 'JejuGothicOTF',
   },
   abilityItemTitle: {
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
   },
   flatListFrame: {
     paddingHorizontal: 10,
@@ -49,11 +50,11 @@ const styles = StyleSheet.create({
   },
   emptyTitleText: {
     fontFamily: 'JejuGothicOTF',
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
     lineHeight: 67,
   },
   emptyDetailText: {
-    fontSize: 13,
+    fontSize: normalizeFontSize(13),
     lineHeight: 21,
     color: Color.veryLightPink,
   },
@@ -106,7 +107,7 @@ export function GroupDepthView({route}) {
     <TouchableOpacity
       style={{paddingRight: 15}}
       onPress={() => navigation.navigate('그룹 생성')}>
-      <Text style={[styles.fontJeju, {fontSize: 13, color: '#F85B02'}]}>
+      <Text style={[styles.fontJeju, {fontSize: normalizeFontSize(13), color: '#F85B02'}]}>
         그룹 생성
       </Text>
     </TouchableOpacity>

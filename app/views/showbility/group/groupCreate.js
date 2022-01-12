@@ -18,6 +18,7 @@ import {createGroup} from '../../../service/group';
 import {isEmpty} from '../../../common/util';
 import {verifyToken} from '../../../service/account';
 import { LoadingScreen } from '../../../component/loading';
+import {normalizeFontSize} from '../../../component/font';
 
 const styles = StyleSheet.create({
   baseContainer: {
@@ -131,9 +132,9 @@ function GroupDetail({group, filter, rerender}) {
           styles.bottomBorder,
           styles.defaultVerticalPad,
         ]}>
-        <Text style={[styles.fontJeju, {fontSize: 17}]}>그룹명</Text>
+        <Text style={[styles.fontJeju, {fontSize: normalizeFontSize(17),}]}>그룹명</Text>
         <TextInput
-          style={[styles.fontJeju, {fontSize: 17, paddingHorizontal: 15}]}
+          style={[styles.fontJeju, {fontSize: normalizeFontSize(17), paddingHorizontal: 15}]}
           placeholder={'그룹명 입력'}
           placeholderTextColor={'#AAAAAA'}
           onChangeText={value => group.setName(value)}
@@ -141,7 +142,7 @@ function GroupDetail({group, filter, rerender}) {
         />
       </View>
       <View style={[styles.defaultVerticalPad, {marginTop: 10}]}>
-        <Text style={[styles.fontJeju, {fontSize: 12, color: '#B2B2B5'}]}>
+        <Text style={[styles.fontJeju, {fontSize: normalizeFontSize(12), color: '#B2B2B5'}]}>
           {groupNameGuide}
         </Text>
       </View>
@@ -152,7 +153,7 @@ function GroupDetail({group, filter, rerender}) {
           styles.defaultVerticalPad,
         ]}>
         <View style={{flex: 1}}>
-          <Text style={[styles.fontJeju, {fontSize: 17}]}>
+          <Text style={[styles.fontJeju, {fontSize: normalizeFontSize(17),}]}>
             그룹 대표 태그 설정
           </Text>
         </View>
@@ -183,7 +184,7 @@ function GroupDetail({group, filter, rerender}) {
         </Pressable>
       </View>
       <View style={[styles.defaultVerticalPad, {marginTop: 10}]}>
-        <Text style={[styles.fontJeju, {fontSize: 12, color: '#B2B2B5'}]}>
+        <Text style={[styles.fontJeju, {fontSize: normalizeFontSize(12), color: '#B2B2B5'}]}>
           {groupTagGuide}
         </Text>
       </View>
@@ -193,9 +194,9 @@ function GroupDetail({group, filter, rerender}) {
           styles.bottomBorder,
           styles.defaultVerticalPad,
         ]}>
-        <Text style={[styles.fontJeju, {fontSize: 17}]}>소개</Text>
+        <Text style={[styles.fontJeju, {fontSize: normalizeFontSize(17),}]}>소개</Text>
         <TextInput
-          style={[styles.fontJeju, {fontSize: 17, paddingHorizontal: 15}]}
+          style={[styles.fontJeju, {fontSize: normalizeFontSize(17), paddingHorizontal: 15}]}
           placeholder={'그룹 소개'}
           placeholderTextColor={'#AAAAAA'}
           onChangeText={value => group.setDetail(value)}
@@ -210,7 +211,7 @@ function GroupDetail({group, filter, rerender}) {
           {alignItems: 'center'},
         ]}>
         <View style={{flex: 1}}>
-          <Text style={[styles.fontJeju, {fontSize: 17}]}>그룹 공개 설정</Text>
+          <Text style={[styles.fontJeju, {fontSize: normalizeFontSize(17),}]}>그룹 공개 설정</Text>
         </View>
         <View style={{flex: 1, alignItems: 'flex-end'}}>
           <Switch
@@ -233,7 +234,7 @@ function BottomButton({handleButton, isFormValid}) {
         <Text
           style={[
             styles.fontJeju,
-            {fontSize: 17, color: isFormValid() ? 'white' : '#B2B2B5'},
+            {fontSize: normalizeFontSize(17), color: isFormValid() ? 'white' : '#B2B2B5'},
           ]}>
           그룹 생성하기
         </Text>

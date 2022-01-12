@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {FOLLOW_STATUS} from '../../common/constant';
+import {normalizeFontSize} from '../../component/font';
 import {
   getFollowers,
   requestFollow,
@@ -106,7 +107,7 @@ export function FollowMember({route}) {
               isMy: false,
             })
           }>
-          <Text style={{fontSize: 17}}>{item.nickname}</Text>
+          <Text style={{fontSize: normalizeFontSize(17)}}>{item.nickname}</Text>
         </Pressable>
         <TouchableOpacity
           style={[
@@ -191,7 +192,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   memberTypeText: {
-    fontSize: 9,
+    fontSize: normalizeFontSize(9),
     marginTop: 5,
   },
   followButton: {

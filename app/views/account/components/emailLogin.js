@@ -10,6 +10,7 @@ import {
   Keyboard,
 } from 'react-native';
 import { isEmpty } from '../../../common/util';
+import {normalizeFontSize} from '../../../component/font';
 import {requestSignIn} from '../../../service/account';
 import {Color} from '../../../style/colors';
 
@@ -38,7 +39,7 @@ const styles = new StyleSheet.create({
     borderBottomColor: Color.birghtOrange,
   },
   textInput: {
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
     lineHeight: 22,
     letterSpacing: -0.41,
     fontFamily: 'JejuGothicOTF',
@@ -58,11 +59,11 @@ const styles = new StyleSheet.create({
   },
   confirmText: {
     fontFamily: 'JejuGothicOTF',
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
   },
   errorText: {
     fontFamily: 'JejuGothicOTF',
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
     lineHeight: 21,
     letterSpacing: -0.1,
     color: Color.birghtOrange,

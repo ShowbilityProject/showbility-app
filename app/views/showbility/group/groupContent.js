@@ -9,6 +9,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import {GROUP_CONTENT_STATUS, HOST} from '../../../common/constant';
+import {normalizeFontSize} from '../../../component/font';
 import {
   getGroupContentList,
   getNext,
@@ -159,7 +160,7 @@ const styles = new StyleSheet.create({
     fontFamily: 'JejuGothicOTF',
   },
   abilityItemTitle: {
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
   },
   allowButton: {
     flex: 1,
@@ -173,7 +174,7 @@ const styles = new StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     color: 'white',
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
   },
   denyButton: {
     flex: 1,
@@ -186,6 +187,6 @@ const styles = new StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     color: 'black',
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
   },
 });

@@ -8,6 +8,7 @@ import {
   Animated,
   Button,
 } from 'react-native';
+import {normalizeFontSize} from '../../component/font';
 import {getGroups, GET_GROUP_TYPE} from '../../service/group';
 import {Color} from '../../style/colors';
 
@@ -19,7 +20,7 @@ const styles = new StyleSheet.create({
     alignItems: 'center',
   },
   groupItemFont: {
-    fontSize: 14,
+    fontSize: normalizeFontSize(14),
     lineHeight: 22,
     flex: 1,
   },
@@ -39,7 +40,7 @@ const styles = new StyleSheet.create({
   },
   textStyle: {
     fontFamily: 'JejuGothicOTF',
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
     lineHeight: 60,
     flex: 1,
   },

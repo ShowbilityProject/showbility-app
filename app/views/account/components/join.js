@@ -13,6 +13,7 @@ import {
   Alert,
 } from 'react-native';
 import { isEmpty } from '../../../common/util';
+import {normalizeFontSize} from '../../../component/font';
 import {
   requestDuplicateEmailCheck,
   requestDuplicateNicknameCheck,
@@ -45,7 +46,7 @@ const styles = new StyleSheet.create({
     borderBottomColor: Color.birghtOrange,
   },
   textInput: {
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
     lineHeight: 22,
     letterSpacing: -0.41,
     fontFamily: 'JejuGothicOTF',
@@ -53,13 +54,13 @@ const styles = new StyleSheet.create({
     height: 60,
   },
   agreeText: {
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
     lineHeight: 18,
     letterSpacing: 0.1,
     marginLeft: 10,
   },
   smallAgreeText: {
-    fontSize: 15,
+    fontSize: normalizeFontSize(15),
     lineHeight: 18,
     letterSpacing: 0.1,
     marginLeft: 10,
@@ -91,7 +92,7 @@ const styles = new StyleSheet.create({
   },
   joinConfirmText: {
     fontFamily: 'JejuGothicOTF',
-    fontSize: 17,
+    fontSize: normalizeFontSize(17),
   },
   selectImage: {
     width: 24,
@@ -107,13 +108,13 @@ const styles = new StyleSheet.create({
   checkDup: {
     fontFamily: 'JejuGothicOTF',
     color: Color.veryLightPink,
-    fontSize: 16,
+    fontSize: normalizeFontSize(16),
     letterSpacing: -0.16,
     paddingLeft: 10,
   },
   errorText: {
     fontFamily: 'JejuGothicOTF',
-    fontSize: 12,
+    fontSize: normalizeFontSize(12),
     lineHeight: 21,
     letterSpacing: -0.1,
     color: Color.birghtOrange,

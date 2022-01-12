@@ -30,6 +30,7 @@ import { SelectGroup } from '../newupload/selectgroup';
 import { GroupCreate } from './group/groupCreate';
 import { CommentsView } from './comment';
 import { ContentsModal } from './contentModal';
+import {normalizeFontSize} from '../../component/font';
 
 const styles = StyleSheet.create({
   container: {
@@ -51,13 +52,13 @@ const styles = StyleSheet.create({
   },
   tobBarText: {
     fontFamily: 'JejuGothicOTF',
-    fontSize: 18,
+    fontSize: normalizeFontSize(18),
     color: Color.lightBlueGrey,
     marginRight: 20,
   },
   tobBarTextFocused: {
     color: '#000000',
-    fontSize: 20,
+    fontSize: normalizeFontSize(20),
   },
   main: {
     flex: 1,
