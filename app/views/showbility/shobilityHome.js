@@ -154,7 +154,10 @@ export function SHome2({route, navigation}) {
             그룹
           </Text>
           <TouchableOpacity
-            style={styles.filterIcon}
+            style={[
+              styles.filterIcon,
+              {display: visibility.ability ? 'none' : 'flex'},
+            ]}
             onPress={() =>
               navigation.navigate('카테고리&태그 선택', {
                 selectCategories: categories => {
