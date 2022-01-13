@@ -124,6 +124,13 @@ export function SHome2({route, navigation}) {
     setChangeView(!changeView);
   };
 
+  const getFilterIcon = () => {
+    const filterIcon = require('../../../assets/imgs/ICON-24-Filter.png');
+    const filterFocusedIcon = require('../../../assets/imgs/filter_focused.png');
+    if (tagFilter.length + categoryFilter.length) return filterFocusedIcon;
+    else return filterIcon;
+  };
+
   return (
     <SafeAreaView style={[styles.flexCenter, styles.container]}>
       <StatusBar barStyle={'dark-content'} />
@@ -174,10 +181,7 @@ export function SHome2({route, navigation}) {
                 prevScreen: visibility.group ? 'GROUP' : 'FILTER',
               })
             }>
-            <Image
-              source={require('../../../assets/imgs/ICON-24-Filter.png')}
-              style={{width: 24, height: 24}}
-            />
+            <Image source={getFilterIcon()} style={{width: 24, height: 24}} />
           </TouchableOpacity>
         </View>
       </View>
