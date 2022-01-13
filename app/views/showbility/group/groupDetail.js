@@ -265,7 +265,7 @@ function GroupItems({contents, title, id}) {
               style={styles.groupImageContainer}
               onPress={() => navigation.navigate('ContentsModal', content.id)}>
               <Image source={source} style={styles.groupImage} />
-              <Text>test</Text>
+              {/* <Text>{content.title}</Text> */}
             </TouchableOpacity>
           );
         })}
