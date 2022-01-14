@@ -98,6 +98,8 @@ export function SHome2({route, navigation}) {
   });
   const [categoryFilter, setCategoryFilter] = React.useState([]);
   const [tagFilter, setTagFilter] = React.useState([]);
+  const [groupCategoryFilter, setGroupCategoryFilter] = React.useState([]);
+  const [groupTagFilter, setGroupTagFilter] = React.useState([]);
   const [rerenderKey, setRerenderKey] = React.useState(false);
   const [changeView, setChangeView] = React.useState(false);
 
@@ -124,11 +126,23 @@ export function SHome2({route, navigation}) {
     setChangeView(!changeView);
   };
 
+  const removeTagsAndCategoreis = value => {
+    if (visibility.group) {
+      setGroupTagFilter(groupTagFilter.filter(tag => tag !== value));
+      setGroupCategoryFilter(groupCategoryFilter.filter(c => c !== value));
+    }
+  };
+
   const getFilterIcon = () => {
     const filterIcon = require('../../../assets/imgs/ICON-24-Filter.png');
     const filterFocusedIcon = require('../../../assets/imgs/filter_focused.png');
-    if (tagFilter.length + categoryFilter.length) return filterFocusedIcon;
-    else return filterIcon;
+    if (visibility.showbility)
+      if (tagFilter.length + categoryFilter.length) return filterFocusedIcon;
+      else return filterIcon;
+    else if (visibility.group)
+      if (groupTagFilter.length + groupCategoryFilter.length)
+        return filterFocusedIcon;
+      else return filterIcon;
   };
 
   return (
@@ -168,15 +182,19 @@ export function SHome2({route, navigation}) {
             onPress={() =>
               navigation.navigate('카테고리&태그 선택', {
                 selectCategories: categories => {
-                  setCategoryFilter(categories);
+                  if (visibility.showbility) setCategoryFilter(categories);
+                  else if (visibility.group) setGroupCategoryFilter(categories);
                   setRerenderKey(!rerenderKey);
                 },
                 selectTags: tags => {
-                  setTagFilter(tags);
+                  if (visibility.showbility) setTagFilter(tags);
+                  else if (visibility.group) setGroupTagFilter(tags);
                   setRerenderKey(!rerenderKey);
                 },
-                categories: categoryFilter,
-                tags: tagFilter,
+                categories: visibility.showbility
+                  ? categoryFilter
+                  : groupCategoryFilter,
+                tags: visibility.showbility ? tagFilter : groupTagFilter,
                 isUpload: false,
                 prevScreen: visibility.group ? 'GROUP' : 'FILTER',
               })
@@ -197,7 +215,11 @@ export function SHome2({route, navigation}) {
           <AbilityScreen />
         </View>
         <View style={{flex: 1, display: visibility.group ? 'flex' : 'none'}}>
-          <GroupScreen />
+          <GroupScreen
+            key={JSON.stringify([...groupTagFilter, ...groupCategoryFilter])}
+            tags={[...groupTagFilter, ...groupCategoryFilter]}
+            removeTagsAndCategoreis={removeTagsAndCategoreis}
+          />
         </View>
       </View>
     </SafeAreaView>

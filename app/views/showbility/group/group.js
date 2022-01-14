@@ -20,7 +20,7 @@ import {normalizeFontSize} from '../../../component/font';
 const styles = StyleSheet.create({
   flatListImage: {
     width: 165,
-    height: 124,
+    // height: 124,
     aspectRatio: 1.3,
     alignSelf: 'center',
     marginBottom: 10,
@@ -81,6 +81,11 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     fontSize: normalizeFontSize(12),
     color: '#F85B02',
+  },
+  groupDetail: {
+    fontSize: normalizeFontSize(12),
+    marginTop: 5,
+    color: Color.veryLightPink,
   },
 });
 
@@ -159,8 +164,8 @@ function GroupArea({title, fetchType}) {
   );
 }
 
-export function GroupScreen() {
-  const [tagFilter, setTagFilter] = React.useState([]);
+export function GroupScreen({tags, removeTagsAndCategoreis}) {
+  const [tagFilter, setTagFilter] = React.useState(tags);
   const [rerenderKey, setRerenderKey] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
 
@@ -180,6 +185,7 @@ export function GroupScreen() {
       setTagFilter(tagFilter);
       setRerenderKey(!rerenderKey);
     }
+    removeTagsAndCategoreis(value);
   };
   const handleTagSubmit = ({nativeEvent}) => {
     addTagFilter(nativeEvent.text);
@@ -277,6 +283,7 @@ function FindResult({tagFilter}) {
 
   const renderItem = itemObject => {
     let item = itemObject.item;
+    console.log(item);
     return (
       <TouchableOpacity
         onPress={() =>
@@ -287,6 +294,7 @@ function FindResult({tagFilter}) {
         <Text style={[styles.fontJeju, styles.abilityItemTitle]}>
           {item.name}
         </Text>
+        <Text style={styles.groupDetail}>{item.detail}</Text>
       </TouchableOpacity>
     );
   };
