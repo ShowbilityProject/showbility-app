@@ -196,7 +196,7 @@ function GroupDetail({group, filter, rerender}) {
         ]}>
         <Text style={[styles.fontJeju, {fontSize: normalizeFontSize(17),}]}>소개</Text>
         <TextInput
-          style={[styles.fontJeju, {fontSize: normalizeFontSize(17), paddingHorizontal: 15}]}
+          style={[{fontSize: normalizeFontSize(17), paddingHorizontal: 15}]}
           placeholder={'그룹 소개'}
           placeholderTextColor={'#AAAAAA'}
           onChangeText={value => group.setDetail(value)}
