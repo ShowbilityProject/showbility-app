@@ -138,7 +138,7 @@ function GroupDetail({group, filter, rerender}) {
           placeholder={'그룹명 입력'}
           placeholderTextColor={'#AAAAAA'}
           onChangeText={value => group.setName(value)}
-          value={group.name}
+          // value={group.name}
         />
       </View>
       <View style={[styles.defaultVerticalPad, {marginTop: 10}]}>
@@ -200,7 +200,7 @@ function GroupDetail({group, filter, rerender}) {
           placeholder={'그룹 소개'}
           placeholderTextColor={'#AAAAAA'}
           onChangeText={value => group.setDetail(value)}
-          value={group.detail}
+          // value={group.detail}
         />
       </View>
       <View
