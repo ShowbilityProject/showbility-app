@@ -45,6 +45,8 @@ const styles = StyleSheet.create({
   touchableArea: {
     paddingHorizontal: 5,
     height: 190,
+    width: 165,
+    marginRight: 10,
   },
   groupTitle: {
     padding: 5,
@@ -118,9 +120,20 @@ function GroupArea({title, fetchType}) {
           navigation.navigate('GroupDetail', {id: item.id, name: item.name})
         }>
         <GroupImage source={imageSource} />
-        <Text style={[styles.fontJeju, {fontSize: normalizeFontSize(17),}]}>{item.name}</Text>
         <Text
-          style={[{fontSize: normalizeFontSize(12), marginTop: 5, color: Color.veryLightPink}]}>
+          numberOfLines={1}
+          style={[styles.fontJeju, {fontSize: normalizeFontSize(17)}]}>
+          {item.name}
+        </Text>
+        <Text
+          numberOfLines={1}
+          style={[
+            {
+              fontSize: normalizeFontSize(12),
+              marginTop: 5,
+              color: Color.veryLightPink,
+            },
+          ]}>
           {item.detail}
         </Text>
       </TouchableOpacity>
