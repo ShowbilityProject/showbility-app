@@ -34,35 +34,22 @@ const styles = StyleSheet.create({
   },
   centerContainer: {
     alignItems: 'center',
-    justifyContent: 'flex-end',
-    paddingTop: 137,
-    paddingBottom: 0,
+    justifyContent: 'center',
   },
   loginContainer: {
-    flexBasis: 265,
     paddingHorizontal: 30,
-    paddingTop: 23,
-    paddingBottom: 30,
   },
   accountContainer: {
     flexBasis: "auto",
-
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 30,
-    paddingVertical: 10,
   },
   buttonsContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 15,
-    paddingTop: 40,
-    paddingBottom: 30,
-  },
-  footerContainer: {
-    alignItems: 'center',
-    paddingBottom: 132,
   },
   textInputWrapper: {
     height: 60,
@@ -87,7 +74,6 @@ const styles = StyleSheet.create({
     height: 60,
   },
   loginButtonWrapper: {
-    flex: 1,
     height: 52,
   },
   loginButton: {
@@ -131,6 +117,8 @@ const styles = StyleSheet.create({
     bottom: -28,
   },
 });
+
+const Padding = ({height}) => <View style={{flex: height}}/>;
 
 function LoginScreen() {
   const kakao_icon = '../../../../assets/imgs/login/kakao_login_circle.png';
@@ -233,6 +221,9 @@ function LoginScreen() {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
         <StatusBar barStyle={'dark-content'}/>
+
+        <Padding height={137}/>
+
         <View style={styles.centerContainer}>
           <Text
             style={{fontFamily: 'JejuGothicOTF', fontSize: normalizeFontSize(16), marginBottom: 10}}>
@@ -241,6 +232,9 @@ function LoginScreen() {
           <Image style={{marginStart: 56, marginEnd: 55, resizeMode: "contain"}}
                  source={showbility_icon}/>
         </View>
+
+        <Padding height={23}/>
+
         <View style={styles.loginContainer}>
           <View style={[styles.textInputWrapper, getInputBorderStyle('email')]}>
             <TextInput
@@ -278,6 +272,9 @@ function LoginScreen() {
             </TouchableOpacity>
           </View>
         </View>
+
+        <Padding height={40}/>
+
         <View style={styles.accountContainer}>
           <Pressable style={styles.accountTextWrapper}>
             <Text style={styles.accountText}>이메일 찾기</Text>
@@ -294,6 +291,9 @@ function LoginScreen() {
             <Text style={styles.accountText}>회원가입</Text>
           </Pressable>
         </View>
+
+        <Padding height={50}/>
+
         <View style={styles.buttonsContainer}>
           <Text
             style={[
@@ -314,14 +314,15 @@ function LoginScreen() {
               <Image style={styles.icon} source={require(apple_icon)}/>
             </Pressable>
           </View>
-        </View>
-        <View style={styles.footerContainer}>
           <Text
-            style={styles.clickableText}
+            style={[styles.clickableText, {paddingTop: 30}]}
             onPress={() => navigation.navigate('App')}>
             로그인 전 둘러보기
           </Text>
         </View>
+
+        <Padding height={132}/>
+
         {/*<View style={styles.footerContainer}>*/}
         {/*  <Text style={styles.privacyText}>*/}
         {/*    당신의 재능 활동은 연결된 계정에 노출되지 않습니다.*/}
