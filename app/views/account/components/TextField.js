@@ -34,14 +34,16 @@ const styles = new StyleSheet.create({
 export default function TextField(
   {
     value, setValue, helperText,
-    validator, errorText,
+    error, validator, errorText,
     children,
     ...props
   }) {
   const [focus, setFocus] = React.useState(false);
   const validated = (validator !== undefined)
     ? validator(value)
-    : value.length > 0;
+    : (error !== undefined)
+      ? !error
+      : value.length > 0;
   const showError = !validated && value.length > 0;
 
   return (

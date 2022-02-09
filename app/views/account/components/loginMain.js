@@ -23,6 +23,8 @@ import {
 import {login} from '@react-native-seoul/kakao-login';
 import {Color} from '../../../style/colors';
 import {normalizeFontSize} from '../../../component/font';
+import TextField from "./TextField";
+import SubmitButton from "./SubmitButton";
 
 const styles = StyleSheet.create({
   fontStyle: {
@@ -133,31 +135,12 @@ function LoginScreen() {
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [focusedInput, setFocusedInput] = React.useState('');
-
-  const [wrongEmail, setWrongEmail] = React.useState(false);
-
-  const validateEmail = (validateWrong) => {
-    const emailRegex = /^[A-Za-z0-9_.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-    const valid = emailRegex.test(email);
-
-    if (wrongEmail && valid) setWrongEmail(false);
-    if (validateWrong && !valid) setWrongEmail(true);
-
-    return valid;
-  }
 
 
   const validateInputs = React.useCallback(() => {
-    return validateEmail() & password.length > 0;
-  }, [password, validateEmail]);
+    return email.length > 0 && password.length > 0;
+  }, [email, password]);
 
-
-  const getInputBorderStyle = (value) => {
-    return value === focusedInput
-      ? styles.focusedBorderBottom
-      : styles.borderBottom;
-  }
 
   const getButtonBackStyle = () => (
     {backgroundColor: validateInputs() ? Color.birghtOrange : Color.veryLightGrey}
@@ -241,41 +224,22 @@ function LoginScreen() {
         <Padding height={23}/>
 
         <View style={styles.loginContainer}>
-          <View style={[styles.textInputWrapper, getInputBorderStyle('email')]}>
-            <TextInput
-              style={styles.textInput}
-              placeholder={'이메일'}
-              onChangeText={setEmail}
-              onFocus={() => setFocusedInput('email')}
-              onBlur={() => {
-                setFocusedInput('');
-                validateEmail(true);
-              }}
-            />
-            {wrongEmail && <Text style={styles.errorText}>
-              이메일 형식을 확인해주세요.
-            </Text>}
-          </View>
-          <View style={[styles.textInputWrapper, getInputBorderStyle('password')]}>
-            <TextInput
-              style={styles.textInput}
-              placeholder={'비밀번호'}
-              onChangeText={setPassword}
-              onFocus={() => setFocusedInput('password')}
-              onBlur={() => setFocusedInput('')}
-              secureTextEntry={true}
-            />
-          </View>
-          <View style={styles.loginButtonWrapper}>
-            <TouchableOpacity
-              style={[styles.loginButton, getButtonBackStyle()]}
-              onPress={handleSubmit}
-              disabled={!validateInputs()}>
-              <Text style={[styles.loginButtonText, getButtonTextStyle()]}>
-                로그인
-              </Text>
-            </TouchableOpacity>
-          </View>
+          <TextField
+            placeholder='이메일'
+            value={email}
+            setValue={setEmail}
+          />
+          <TextField
+            placeholder='비밀번호'
+            value={password}
+            setValue={setPassword}
+            secureTextEntry
+          />
+          <SubmitButton
+            onPress={handleSubmit}
+            disabled={!validateInputs()}>
+            로그인
+          </SubmitButton>
         </View>
 
         <Padding height={40}/>
