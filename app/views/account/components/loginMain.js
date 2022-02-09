@@ -88,13 +88,18 @@ const styles = StyleSheet.create({
     fontSize: normalizeFontSize(17),
   },
   accountTextWrapper: {
-    width: "33%",
+    flex: 1,
     alignItems: "center",
     borderRightWidth: 1,
   },
   accountText: {
     fontFamily: 'JejuGothicOTF',
-    fontSize: normalizeFontSize(16),
+    fontSize: normalizeFontSize(14),
+  },
+  verticalBar: {
+    height: 16,
+    width: 1,
+    borderRightWidth: 1,
   },
   icon: {
     height: 60,
@@ -280,7 +285,9 @@ function LoginScreen() {
             <Text style={styles.accountText}>이메일 찾기</Text>
           </Pressable>
           <Pressable
-            style={styles.accountTextWrapper}
+            style={[styles.accountTextWrapper,
+              {flex: 1.2}
+            ]}
             onPress={() => navigation.navigate("이메일 로그인")}
           >
             <Text style={styles.accountText}>계정정보 찾기</Text>
