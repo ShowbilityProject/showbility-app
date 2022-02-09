@@ -53,42 +53,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 15,
   },
-  textInputWrapper: {
-    height: 60,
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  borderBottom: {
-    borderBottomWidth: 1,
-    borderBottomColor: Color.paleGray,
-  },
-  focusedBorderBottom: {
-    borderBottomWidth: 1,
-    borderBottomColor: Color.black,
-  },
-  textInput: {
-    fontSize: normalizeFontSize(17),
-    lineHeight: 22,
-    letterSpacing: -0.41,
-    fontFamily: 'JejuGothicOTF',
-    flex: 1,
-    height: 60,
-  },
-  loginButtonWrapper: {
-    height: 52,
-  },
-  loginButton: {
-    width: '100%',
-    height: 52,
-    borderRadius: 7,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loginButtonText: {
-    fontFamily: 'JejuGothicOTF',
-    fontSize: normalizeFontSize(17),
-  },
   accountTextWrapper: {
     flex: 1,
     alignItems: "center",
@@ -113,16 +77,6 @@ const styles = StyleSheet.create({
     color: Color.veryLightPink,
     textDecorationLine: 'underline',
   },
-  errorText: {
-    fontFamily: 'JejuGothicOTF',
-    fontSize: normalizeFontSize(12),
-    lineHeight: 21,
-    letterSpacing: -0.1,
-    color: Color.birghtOrange,
-    position: 'absolute',
-    right: 0,
-    bottom: -28,
-  },
 });
 
 const Padding = ({height}) => <View style={{flex: height}}/>;
@@ -140,15 +94,6 @@ function LoginScreen() {
   const validateInputs = React.useCallback(() => {
     return email.length > 0 && password.length > 0;
   }, [email, password]);
-
-
-  const getButtonBackStyle = () => (
-    {backgroundColor: validateInputs() ? Color.birghtOrange : Color.veryLightGrey}
-  )
-
-  const getButtonTextStyle = () => (
-    {color: validateInputs() ? Color.white : Color.veryLightPink}
-  )
 
 
   React.useEffect(() => {
