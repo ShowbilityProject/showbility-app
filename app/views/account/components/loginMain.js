@@ -190,13 +190,14 @@ function LoginScreen() {
         <Padding height={40}/>
 
         <View style={styles.accountContainer}>
-          <Pressable style={styles.accountTextWrapper}>
+          <Pressable
+            style={styles.accountTextWrapper}
+            onPress={() => navigation.navigate("")}
+          >
             <Text style={styles.accountText}>이메일 찾기</Text>
           </Pressable>
           <Pressable
-            style={[styles.accountTextWrapper,
-              {flex: 1.2}
-            ]}
+            style={[styles.accountTextWrapper, {flex: 1.2}]}
             onPress={() => navigation.navigate("이메일 로그인")}
           >
             <Text style={styles.accountText}>계정정보 찾기</Text>
