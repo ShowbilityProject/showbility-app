@@ -192,13 +192,13 @@ function LoginScreen() {
         <View style={styles.accountContainer}>
           <Pressable
             style={styles.accountTextWrapper}
-            onPress={() => navigation.navigate("")}
+            onPress={() => navigation.navigate("이메일 찾기")}
           >
             <Text style={styles.accountText}>이메일 찾기</Text>
           </Pressable>
           <Pressable
             style={[styles.accountTextWrapper, {flex: 1.2}]}
-            onPress={() => navigation.navigate("이메일 로그인")}
+            onPress={() => navigation.navigate("비밀번호 찾기")}
           >
             <Text style={styles.accountText}>계정정보 찾기</Text>
           </Pressable>

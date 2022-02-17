@@ -35,12 +35,14 @@ const styles = new StyleSheet.create({
     paddingTop: 24,
   },
   agreeText: {
+    fontFamily: 'JejuGothicOTF',
     fontSize: normalizeFontSize(17),
     lineHeight: 18,
     letterSpacing: 0.1,
     marginLeft: 10,
   },
   smallAgreeText: {
+    fontFamily: 'JejuGothicOTF',
     fontSize: normalizeFontSize(15),
     lineHeight: 18,
     letterSpacing: 0.1,
