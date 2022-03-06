@@ -9,9 +9,10 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
+  KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 
 import {isEmpty} from '../../../common/util';
 import {normalizeFontSize} from '../../../component/font';
@@ -33,6 +34,7 @@ const styles = new StyleSheet.create({
   scrollView: {
     paddingHorizontal: 15,
     paddingTop: 24,
+    paddingBottom: 10,
   },
   agreeText: {
     fontFamily: 'JejuGothicOTF',
@@ -216,125 +218,131 @@ export function JoinScreen() {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={styles.container}>
-        <KeyboardAwareScrollView
-          style={styles.scrollView}
-          keyboardOpeningTime={Number.MAX_SAFE_INTEGER}>
-          <TextField
-            placeholder='이름'
-            value={name}
-            setValue={setName}
-          />
-          <TextField
-            placeholder='전화번호'
-            keyboardType='numeric'
-            value={phoneNumber}
-            setValue={v => setPhoneNumber(v.replace(/[^0-9]/g, ''))}
-          />
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior="padding"
+        keyboardVerticalOffset={70}
+      >
+        <View style={styles.container}>
+          <ScrollView
+            style={styles.scrollView}
+            keyboardOpeningTime={Number.MAX_SAFE_INTEGER}>
+            <TextField
+              placeholder='이름'
+              value={name}
+              setValue={setName}
+            />
+            <TextField
+              placeholder='전화번호'
+              keyboardType='numeric'
+              value={phoneNumber}
+              setValue={v => setPhoneNumber(v.replace(/[^0-9]/g, ''))}
+            />
 
-          <TextField
-            placeholder='이메일'
-            value={email}
-            setValue={setEmail}
-            validator={validateEmail}
-            errorText={'이메일 형식을 확인해 주세요'}
-          >
-            <TextFieldButton>
-              인증요청
-            </TextFieldButton>
-          </TextField>
+            <TextField
+              placeholder='이메일'
+              value={email}
+              setValue={setEmail}
+              validator={validateEmail}
+              errorText={'이메일 형식을 확인해 주세요'}
+            >
+              <TextFieldButton>
+                인증요청
+              </TextFieldButton>
+            </TextField>
 
-          <TextField
-            placeholder='인증번호 입력'
-            value={validationCode}
-            setValue={setValidationCode}
-          >
-            <TextFieldButton>
-              인증하기
-            </TextFieldButton>
-          </TextField>
+            <TextField
+              placeholder='인증번호 입력'
+              value={validationCode}
+              setValue={setValidationCode}
+            >
+              <TextFieldButton>
+                인증하기
+              </TextFieldButton>
+            </TextField>
 
-          <TextField
-            placeholder='비밀번호'
-            value={password}
-            setValue={setPassword}
-            validator={validatePassword}
-            errorText={'영문 + 숫자 + 특수문자 포함 10자 이상 입력해주세요'}
-            secureTextEntry
-          />
+            <TextField
+              placeholder='비밀번호'
+              value={password}
+              setValue={setPassword}
+              validator={validatePassword}
+              errorText={'영문 + 숫자 + 특수문자 포함 10자 이상 입력해주세요'}
+              secureTextEntry
+            />
 
-          <TextField
-            placeholder={'비밀번호 확인'}
-            value={passwordCheck}
-            setValue={setPasswordCheck}
-            validator={v => v === password}
-            errorText={'비밀번호가 일치하지 않습니다'}
-            secureTextEntry
-          />
+            <TextField
+              placeholder={'비밀번호 확인'}
+              value={passwordCheck}
+              setValue={setPasswordCheck}
+              validator={v => v === password}
+              errorText={'비밀번호가 일치하지 않습니다'}
+              secureTextEntry
+            />
 
-          <TextField
-            placeholder='별명'
-            value={nickname}
-            setValue={setNickname}
-          >
-            <TextFieldButton>
-              중복확인
-            </TextFieldButton>
-          </TextField>
-        </KeyboardAwareScrollView>
+            <TextField
+              placeholder='별명'
+              value={nickname}
+              setValue={setNickname}
+            >
+              <TextFieldButton>
+                중복확인
+              </TextFieldButton>
+            </TextField>
+          </ScrollView>
 
 
-        <View style={styles.buttonWrapper}>
-          <SubmitButton
-            onPress={() => setModalVisible(true)}
-          >
-            회원가입
-          </SubmitButton>
-        </View>
-
-        <Modal
-          style={styles.modalWrapper}
-          backdropOpacity={0.4}
-          isVisible={isModalVisible}
-          onBackdropPress={() => setModalVisible(false)}
-        >
-          <View style={styles.modal}>
-            <View style={[styles.allAgreeWrapper, styles.borderBottom]}>
-              <Pressable onPress={() => handleAgreeAll()}>
-                {getSelectIcon(agreedRule & agreeMarketing)}
-              </Pressable>
-              <Text style={styles.agreeText}>서비스 이용약관 전체 동의</Text>
-            </View>
-            <View style={[styles.agreeWrapper, {marginTop: 20,}]}>
-              <Pressable onPress={() => setAgreedRule(!agreedRule)}>
-                {getSelectIcon(agreedRule)}
-              </Pressable>
-              <Text style={styles.smallAgreeText}>
-                [필수] 이용약관 및 개인정보 처리방침
-              </Text>
-            </View>
-            <View style={styles.agreeWrapper}>
-              <Pressable onPress={() => setAgreeMarketing(!agreeMarketing)}>
-                {getSelectIcon(agreeMarketing)}
-              </Pressable>
-              <Text style={styles.smallAgreeText}>
-                [선택] 마케팅 정보 수집 및 수신 동의
-              </Text>
-            </View>
-            <Text>
-              당신의 재능 활동은 연결된 계정에 노출되지 않습니다.
-            </Text>
-
+          <View style={styles.buttonWrapper}>
             <SubmitButton
               onPress={() => setModalVisible(true)}
             >
               회원가입
             </SubmitButton>
-
-
           </View>
-        </Modal>
-      </View>
+
+          <Modal
+            style={styles.modalWrapper}
+            backdropOpacity={0.4}
+            isVisible={isModalVisible}
+            onBackdropPress={() => setModalVisible(false)}
+          >
+            <View style={styles.modal}>
+              <View style={[styles.allAgreeWrapper, styles.borderBottom]}>
+                <Pressable onPress={() => handleAgreeAll()}>
+                  {getSelectIcon(agreedRule & agreeMarketing)}
+                </Pressable>
+                <Text style={styles.agreeText}>서비스 이용약관 전체 동의</Text>
+              </View>
+              <View style={[styles.agreeWrapper, {marginTop: 20,}]}>
+                <Pressable onPress={() => setAgreedRule(!agreedRule)}>
+                  {getSelectIcon(agreedRule)}
+                </Pressable>
+                <Text style={styles.smallAgreeText}>
+                  [필수] 이용약관 및 개인정보 처리방침
+                </Text>
+              </View>
+              <View style={styles.agreeWrapper}>
+                <Pressable onPress={() => setAgreeMarketing(!agreeMarketing)}>
+                  {getSelectIcon(agreeMarketing)}
+                </Pressable>
+                <Text style={styles.smallAgreeText}>
+                  [선택] 마케팅 정보 수집 및 수신 동의
+                </Text>
+              </View>
+              <Text>
+                당신의 재능 활동은 연결된 계정에 노출되지 않습니다.
+              </Text>
+
+              <SubmitButton
+                onPress={() => setModalVisible(true)}
+              >
+                회원가입
+              </SubmitButton>
+
+
+            </View>
+          </Modal>
+        </View>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 }
