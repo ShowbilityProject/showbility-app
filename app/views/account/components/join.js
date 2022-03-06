@@ -162,14 +162,13 @@ export function JoinScreen() {
     else return validatePassword();
   };
 
-  const validateInputs = () => {
-    if (nickname.length === 0) return false;
-    else if (!emailRexp.test(email)) return false;
-    else if (!validatePassword()) return false;
-    else if (!agreedRule) return false;
-    else if (!isEmailValid) return false;
-    else return true;
-  };
+  const validateInputs = () => (
+    nickname.length === 0
+    && !emailRexp.test(email)
+    && !validatePassword()
+    && !agreedRule
+    && !isEmailValid
+  );
 
   const handleAgreeAll = React.useCallback(() => {
     let value = true;
