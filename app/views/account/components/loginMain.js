@@ -96,7 +96,7 @@ function LoginScreen({route}) {
   }, [email, password]);
 
   React.useEffect(() => {
-    if (route.params.email) {
+    if (route.params?.email) {
       setEmail(route.params.email);
       navigation.setParams({
         email: "",
