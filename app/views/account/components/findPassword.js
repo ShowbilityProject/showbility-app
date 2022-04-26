@@ -33,10 +33,10 @@ const styles = new StyleSheet.create({
   },
 });
 
-export function FindPasswordScreen() {
+export function FindPasswordScreen({route}) {
   const [name, setName] = React.useState('');
   const [phoneNumber, setPhoneNumber] = React.useState('');
-  const [email, setEmail] = React.useState('');
+  const [email, setEmail] = React.useState(route.params?.email || '');
   const [validationCode, setValidationCode] = React.useState('');
 
   const validateEmail = email => {

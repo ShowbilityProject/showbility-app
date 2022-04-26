@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
 
 const Padding = ({height}) => <View style={{flex: height}}/>;
 
-function LoginScreen() {
+function LoginScreen({route}) {
   const kakao_icon = '../../../../assets/imgs/login/kakao_login_circle.png';
   const apple_icon = '../../../../assets/imgs/login/apple_login_circle.png';
   const showbility_icon = require('../../../../assets/imgs/showbility.png');
@@ -95,6 +95,14 @@ function LoginScreen() {
     return email.length > 0 && password.length > 0;
   }, [email, password]);
 
+  React.useEffect(() => {
+    if (route.params.email) {
+      setEmail(route.params.email);
+      navigation.setParams({
+        email: "",
+      });
+    };
+  }, [route.params?.email]);
 
   React.useEffect(() => {
     verifyToken().then(res => {

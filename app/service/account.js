@@ -66,6 +66,21 @@ export async function verifyEmailCode(email, code) {
     })
 }
 
+export async function requestFindEmail(name, phoneNumber) {
+  let uri = HOST + '/user/request_find_email';
+  let body = {
+    name: name,
+    phoneNumber: phoneNumber,
+  };
+  return post(uri, body)
+    .then(res => res)
+    .catch(err => {
+      console.log(err);
+      return false;
+    })
+}
+
+
 export async function requestSignUp(
   nickname,
   email,

@@ -20,21 +20,22 @@ const styles = new StyleSheet.create({
   },
 });
 
-export default function SubmitButton({onPress, disabled, children}) {
+export default function SubmitButton({onPress, disabled, children, variant, style}) {
+  const secondary = variant === "secondary";
   return (
-    <View style={styles.wrapper}>
+    <View style={{...styles.wrapper, ...style}}>
       <TouchableOpacity
         style={[styles.button, {
           backgroundColor: disabled
             ? Color.veryLightGrey
-            : Color.birghtOrange
+            : secondary ? Color.veryLightGrey : Color.birghtOrange
         }]}
         onPress={onPress}
         disabled={disabled}>
         <Text style={[styles.text, {
           color: disabled
             ? Color.veryLightPink
-            : Color.white
+            : secondary ? Color.veryLightPink : Color.white
         }]}>
           {children}
         </Text>
