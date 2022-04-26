@@ -35,6 +35,37 @@ export function requestSignIn(email, password) {
     });
 }
 
+export async function requestEmailValidationCode(email) {
+  let uri = HOST + '/user/request_code';
+  let body = {
+    email: email,
+  };
+  return post(uri, body)
+    .then(res => {
+      return res;
+    })
+    .catch(err => {
+      console.log(err);
+      return false;
+    })
+}
+
+export async function verifyEmailCode(email, code) {
+  let uri = HOST + '/user/verify_email_code';
+  let body = {
+    email: email,
+    code: code,
+  };
+  return post(uri, body)
+    .then(res => {
+      return res;
+    })
+    .catch(err => {
+      console.log(err);
+      return false;
+    })
+}
+
 export async function requestSignUp(
   nickname,
   email,

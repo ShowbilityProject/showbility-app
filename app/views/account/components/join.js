@@ -17,6 +17,8 @@ import Modal from 'react-native-modal';
 import {isEmpty} from '../../../common/util';
 import {normalizeFontSize} from '../../../component/font';
 import {
+  requestEmailValidationCode,
+  verifyEmailCode,
   requestDuplicateEmailCheck,
   requestDuplicateNicknameCheck,
   requestSignUp,
@@ -123,9 +125,33 @@ export function JoinScreen() {
 
   const [isModalVisible, setModalVisible] = React.useState(false);
 
+  const [emailSent, setEmailSent] = React.useState(false);
+  const [emailVerified, setEmailVerified] = React.useState(false);
+
 
   const selectIcon = require('../../../../assets/imgs/select_icon_3x.png');
   const emailRexp = /^[A-Za-z0-9_.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+
+  const handleEmailValidationRequest = () => {
+    if (!emailRexp.test(email)) return false;
+    requestEmailValidationCode(email).then(res => {
+      if (res) {
+        setEmailSent(true);
+      } else {
+        alert("이미 사용중인 이메일입니다.");
+      }
+    })
+  }
+
+  const handleVerifyEmailCode = () => {
+    verifyEmailCode(email, validationCode).then(res => {
+      if (res) {
+        setEmailVerified(true);
+      } else {
+        alert("인증번호가 일치하지 않습니다. 다시 입력해주세요.");
+      }
+    })
+  }
 
   const handleDuplicateCheck = () => {
     if (!emailRexp.test(email)) return false;
@@ -214,6 +240,14 @@ export function JoinScreen() {
     else return styles.borderBottom;
   };
 
+  const alert = (message) =>
+    Alert.alert(
+      "Alert",
+      message,
+      [
+        {text: "확인"}
+      ]
+    );
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -244,9 +278,13 @@ export function JoinScreen() {
               setValue={setEmail}
               validator={validateEmail}
               errorText={'이메일 형식을 확인해 주세요'}
+              error={true}
             >
-              <TextFieldButton>
-                인증요청
+              <TextFieldButton
+                onPress={handleEmailValidationRequest}
+                disabled={emailSent}
+              >
+                {emailSent ? "발송완료" : "인증요청"}
               </TextFieldButton>
             </TextField>
 
@@ -255,8 +293,11 @@ export function JoinScreen() {
               value={validationCode}
               setValue={setValidationCode}
             >
-              <TextFieldButton>
-                인증하기
+              <TextFieldButton
+                onPress={handleVerifyEmailCode}
+                disabled={emailVerified}
+              >
+                {emailVerified ? "확인 완료" : "인증하기"}
               </TextFieldButton>
             </TextField>
 
