@@ -4,6 +4,7 @@ import LoginScreen from './components/loginMain';
 import {PrivacyScreen} from './components/privacy';
 import {FindEmailScreen} from "./components/findEmail";
 import {FindPasswordScreen} from "./components/findPassword";
+import {ResetPassword} from "./components/resetPassword";
 import {JoinScreen} from './components/join';
 import {StackScreenOptions} from '../../style/common';
 import {EmailLoginScreen} from './components/emailLogin';
@@ -31,6 +32,11 @@ function LoginStackScreen() {
       <Stack.Screen
         name="비밀번호 찾기"
         component={FindPasswordScreen}
+        options={{headerBackTitle: ' '}}
+      />
+      <Stack.Screen
+        name="비밀번호 재설정"
+        component={ResetPassword}
         options={{headerBackTitle: ' '}}
       />
       <Stack.Screen

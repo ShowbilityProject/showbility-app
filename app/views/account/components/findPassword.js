@@ -7,10 +7,16 @@ import {
   KeyboardAvoidingView,
   ScrollView,
 } from "react-native";
+import {
+  requestFindPasswordEmailVerification,
+  verifyPasswordResetCode,
+  requestResetPassword,
+} from "../../../service/account";
 import TextField from "./TextField";
 import TextFieldButton from "./TextFieldButton";
 import SubmitButton from "./SubmitButton";
 import {normalizeFontSize} from "../../../component/font";
+import {useNavigation} from "@react-navigation/native";
 
 
 const styles = new StyleSheet.create({
@@ -34,14 +40,50 @@ const styles = new StyleSheet.create({
 });
 
 export function FindPasswordScreen({route}) {
+  const navigation = useNavigation();
   const [name, setName] = React.useState('');
   const [phoneNumber, setPhoneNumber] = React.useState('');
   const [email, setEmail] = React.useState(route.params?.email || '');
   const [validationCode, setValidationCode] = React.useState('');
 
+  const [emailSent, setEmailSent] = React.useState(false);
+
+  const [authHash, setAuthHash] = React.useState('');
+
   const validateEmail = email => {
     const emailRegex = /^[A-Za-z0-9_.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
     return emailRegex.test(email);
+  }
+
+  const validateReset = () => (
+    name
+    && phoneNumber
+    && email
+    && emailSent
+    && validationCode
+    && authHash
+  )
+
+  const handleEmailRequest = () => {
+    if (!validateEmail()) return false;
+    requestFindPasswordEmailVerification(name, phoneNumber, email).then(res => {
+      if (res) {
+        setEmailSent(true);
+      } else {
+        alert("이미 사용중인 이메일입니다.");
+      }
+    })
+  }
+
+  const handleValidateEmailCode = () => {
+    if (!validationCode) return false;
+    verifyPasswordResetCode(email, validationCode).then(authHash => {
+      if (authHash) {
+        setAuthHash(authHash);
+      } else {
+        alert("인증번호가 일치하지 않습니다. 다시 입력해주세요.");
+      }
+    })
   }
 
   return (
@@ -76,8 +118,11 @@ export function FindPasswordScreen({route}) {
               validator={validateEmail}
               errorText={'이메일 형식을 확인해 주세요'}
             >
-              <TextFieldButton>
-                인증요청
+              <TextFieldButton
+                onPress={handleEmailRequest}
+                disabled={emailSent}
+              >
+                {emailSent ? "발송완료" : "인증요청"}
               </TextFieldButton>
             </TextField>
 
@@ -86,15 +131,19 @@ export function FindPasswordScreen({route}) {
               value={validationCode}
               setValue={setValidationCode}
             >
-              <TextFieldButton>
-                인증하기
+              <TextFieldButton
+                onPress={handleValidateEmailCode}
+                disabled={authHash}
+              >
+                {authHash ? "인증 완료" : "인증하기"}
               </TextFieldButton>
             </TextField>
 
           </ScrollView>
           <View style={styles.buttonWrapper}>
             <SubmitButton
-              // onPress={() => setModalVisible(true)}
+              onPress={() => navigation.navigate("비밀번호 재설정", {email, authHash})}
+              disabled={!validateReset()}
             >
               비밀번호 재설정하기
             </SubmitButton>
