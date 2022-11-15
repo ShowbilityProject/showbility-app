@@ -138,7 +138,9 @@ export function GroupDepthView({route}) {
         }
         style={styles.abilityFrame}>
         <Image source={getImageUri(item)} style={styles.flatListImage} />
-        <Text style={[styles.fontJeju, styles.abilityItemTitle]}>
+        <Text
+          numberOfLines={1}
+          style={[styles.fontJeju, styles.abilityItemTitle]}>
           {item.name}
         </Text>
       </TouchableOpacity>

@@ -14,7 +14,7 @@
     "@invertase/react-native-apple-authentication": "^2.1.5",
     "@react-native-async-storage/async-storage": "^1.15.14",
     "@react-native-community/masked-view": "^0.1.11",
-    "@react-native-seoul/kakao-login": "^3.4.2",
+    "@react-native-seoul/kakao-login": "^5.2.3",
     "@react-navigation/bottom-tabs": "^5.11.11",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/stack": "^6.0.11",
