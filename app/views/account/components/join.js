@@ -14,7 +14,6 @@ import {
   KeyboardAvoidingView,
   ScrollView,
 } from 'react-native';
-import { isEmpty } from '../../../common/util';
 import Modal from 'react-native-modal';
 
 import {isEmpty} from '../../../common/util';
