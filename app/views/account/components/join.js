@@ -11,15 +11,26 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
+  KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native';
 import { isEmpty } from '../../../common/util';
+import Modal from 'react-native-modal';
+
+import {isEmpty} from '../../../common/util';
 import {normalizeFontSize} from '../../../component/font';
 import {
+  requestEmailValidationCode,
+  verifyEmailCode,
   requestDuplicateEmailCheck,
   requestDuplicateNicknameCheck,
   requestSignUp,
 } from '../../../service/account';
 import {Color} from '../../../style/colors';
+
+import TextField from "./TextField";
+import TextFieldButton from "./TextFieldButton";
+import SubmitButton from "./SubmitButton";
 
 const styles = new StyleSheet.create({
   container: {
@@ -53,13 +64,20 @@ const styles = new StyleSheet.create({
     flex: 1,
     height: 60,
   },
+  scrollView: {
+    paddingHorizontal: 15,
+    paddingTop: 24,
+    paddingBottom: 10,
+  },
   agreeText: {
+    fontFamily: 'JejuGothicOTF',
     fontSize: normalizeFontSize(17),
     lineHeight: 18,
     letterSpacing: 0.1,
     marginLeft: 10,
   },
   smallAgreeText: {
+    fontFamily: 'JejuGothicOTF',
     fontSize: normalizeFontSize(15),
     lineHeight: 18,
     letterSpacing: 0.1,
@@ -81,6 +99,7 @@ const styles = new StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'flex-end',
+    paddingHorizontal: 15,
     paddingBottom: 30,
   },
   buttonStyle: {
@@ -105,12 +124,23 @@ const styles = new StyleSheet.create({
     borderWidth: 1,
     borderColor: Color.veryLightPink,
   },
+  modalWrapper: {
+    margin: 0,
+    justifyContent: "flex-end",
+  },
+  modal: {
+    backgroundColor: Color.white,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    paddingHorizontal: 15,
+    paddingBottom: 30,
+  },
   checkDup: {
-    fontFamily: 'JejuGothicOTF',
-    color: Color.veryLightPink,
-    fontSize: normalizeFontSize(16),
-    letterSpacing: -0.16,
-    paddingLeft: 10,
+      fontFamily: 'JejuGothicOTF',
+      color: Color.veryLightPink,
+      fontSize: normalizeFontSize(16),
+      letterSpacing: -0.16,
+      paddingLeft: 10,
   },
   errorText: {
     fontFamily: 'JejuGothicOTF',
@@ -124,22 +154,55 @@ const styles = new StyleSheet.create({
   },
 });
 
+
 export function JoinScreen() {
   const navigation = useNavigation();
-  const [nickname, setNickname] = React.useState('');
+  const [name, setName] = React.useState('');
+  const [phoneNumber, setPhoneNumber] = React.useState('');
+
   const [email, setEmail] = React.useState('');
   const [isNicknameValid, setIsNicknameValid] = React.useState(false);
   const [isEmailValid, setIsEmailValid] = React.useState(false);
   const [showEmailError, setShowEmailError] = React.useState(false);
-  const [showNicknameError, setShowNicknameError] = React.useState(false);
+  const [validationCode, setValidationCode] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [passwordCheck, setPasswordCheck] = React.useState('');
+  const [nickname, setNickname] = React.useState('');
+  const [showNicknameError, setShowNicknameError] = React.useState(false);
+
   const [agreedRule, setAgreedRule] = React.useState(false);
   const [agreeMarketing, setAgreeMarketing] = React.useState(false);
   const [focusedInput, setFocusedInput] = React.useState('');
 
+  const [isModalVisible, setModalVisible] = React.useState(false);
+
+  const [emailSent, setEmailSent] = React.useState(false);
+  const [emailVerified, setEmailVerified] = React.useState(false);
+
+
   const selectIcon = require('../../../../assets/imgs/select_icon_3x.png');
-  const emailRexp = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+  const emailRexp = /^[A-Za-z0-9_.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+
+  const handleEmailValidationRequest = () => {
+    if (!emailRexp.test(email)) return false;
+    requestEmailValidationCode(email).then(res => {
+      if (res) {
+        setEmailSent(true);
+      } else {
+        alert("이미 사용중인 이메일입니다.");
+      }
+    })
+  }
+
+  const handleVerifyEmailCode = () => {
+    verifyEmailCode(email, validationCode).then(res => {
+      if (res) {
+        setEmailVerified(true);
+      } else {
+        alert("인증번호가 일치하지 않습니다. 다시 입력해주세요.");
+      }
+    })
+  }
 
   const handleDuplicateCheck = () => {
     if (!emailRexp.test(email)) return false;
@@ -159,31 +222,30 @@ export function JoinScreen() {
       });
   };
 
-  const validatePassword = React.useCallback(() => {
-    if (password.legnth < 10) {
-      return false;
-    } else if (!/[0-9]/g.test(password)) {
-      return false;
-    } else if (!/[a-zA-Z]/g.test(password)) {
-      return false;
-    } else if (!/[!|@|#|$|%|^|&|*|\-|_]/g.test(password)) {
-      return false;
-    } else return true;
-  }, [password]);
+  const validateEmail = email => {
+    const emailRegex = /^[A-Za-z0-9_.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+    return emailRegex.test(email);
+  }
+
+  const validatePassword = password => (
+    password.length >= 10
+    && /[0-9]/g.test(password)
+    && /[a-zA-Z]/g.test(password)
+    && /[!@#$%^&*\-_]/g.test(password)
+  );
 
   const validatePasswordSync = () => {
     if (password.length === 0) return true;
     else return validatePassword();
   };
 
-  const validateInputs = () => {
-    if (nickname.length === 0) return false;
-    else if (!emailRexp.test(email)) return false;
-    else if (!validatePassword()) return false;
-    else if (!agreedRule) return false;
-    else if (!isEmailValid) return false;
-    else return true;
-  };
+  const validateInputs = () => (
+    nickname.length === 0
+    && !emailRexp.test(email)
+    && !validatePassword()
+    && !agreedRule
+    && !isEmailValid
+  );
 
   const handleAgreeAll = React.useCallback(() => {
     let value = true;
@@ -193,8 +255,8 @@ export function JoinScreen() {
   }, [agreeMarketing, agreedRule]);
 
   const getSelectIcon = value => {
-    if (value) return <Image style={styles.selectImage} source={selectIcon} />;
-    else return <View style={styles.circle} />;
+    if (value) return <Image style={styles.selectImage} source={selectIcon}/>;
+    else return <View style={styles.circle}/>;
   };
 
   const getButtonBackColor = () => {
@@ -229,128 +291,149 @@ export function JoinScreen() {
     else return styles.borderBottom;
   };
 
-  const handleDismiss = () => {
-    Keyboard.dismiss();
-    setFocusedInput('');
-  };
+  const alert = (message) =>
+    Alert.alert(
+      "Alert",
+      message,
+      [
+        {text: "확인"}
+      ]
+    );
 
   return (
-    <TouchableWithoutFeedback onPress={() => handleDismiss()}>
-      <View style={styles.container}>
-        <View style={[styles.textInputWrapper, getBorderStyle('nickname')]}>
-          <TextInput
-            style={styles.textInput}
-            placeholder={'닉네임'}
-            onChangeText={v => {
-              setIsNicknameValid(false);
-              setNickname(v);
-              setShowNicknameError(false);
-            }}
-            onFocus={() => setFocusedInput('nickname')}
-          />
-          {isNicknameValid ? (
-            <Text style={[styles.checkDup, {color: Color.birghtOrange}]}>
-              확인완료
-            </Text>
-          ) : (
-            <TouchableOpacity onPress={() => handleNicknameDupCheck()}>
-              <Text style={styles.checkDup}>중복확인</Text>
-            </TouchableOpacity>
-          )}
-          {showNicknameError ? (
-            <Text style={styles.errorText}>이미 사용 중인 닉네임 입니다.</Text>
-          ) : null}
-        </View>
-        <View style={[styles.textInputWrapper, getBorderStyle('email')]}>
-          <TextInput
-            style={styles.textInput}
-            placeholder={'이메일'}
-            onChangeText={v => {
-              setIsEmailValid(false);
-              setEmail(v);
-              setShowEmailError(false);
-            }}
-            onFocus={() => setFocusedInput('email')}
-            keyboardType="email-address"
-          />
-          {isEmailValid ? (
-            <Text style={[styles.checkDup, {color: Color.birghtOrange}]}>
-              확인완료
-            </Text>
-          ) : (
-            <TouchableOpacity onPress={() => handleDuplicateCheck()}>
-              <Text style={styles.checkDup}>중복확인</Text>
-            </TouchableOpacity>
-          )}
-          {showEmailError ? (
-            <Text style={styles.errorText}>이미 사용 중인 이메일 입니다.</Text>
-          ) : null}
-        </View>
-        <View style={[styles.textInputWrapper, getBorderStyle('password')]}>
-          <TextInput
-            style={styles.textInput}
-            placeholder={'비밀번호(영문+숫자+특수문자 10자 이상)'}
-            onChangeText={v => setPassword(v)}
-            secureTextEntry={true}
-            onFocus={() => setFocusedInput('password')}
-          />
-          {!validatePasswordSync() ? (
-            <Text style={styles.errorText}>
-              영문, 숫자, 특수문자 포함 10자 이상 입력해주세요.
-            </Text>
-          ) : null}
-        </View>
-        <View style={[styles.textInputWrapper, getBorderStyle('passwordcheck')]}>
-          <TextInput
-            style={styles.textInput}
-            placeholder={'비밀번호를 다시 입력하세요.'}
-            onChangeText={v => setPasswordCheck(v)}
-            secureTextEntry={true}
-            onFocus={() => setFocusedInput('passwordcheck')}
-          />
-          {!isEmpty(passwordCheck) & (password !== passwordCheck) ? (
-            <Text style={styles.errorText}>비밀번호가 일치하지 않습니다.</Text>
-          ) : null}
-        </View>
-        <View style={[styles.allAgreeWrapper, styles.borderBottom]}>
-          <Pressable onPress={() => handleAgreeAll()}>
-            {getSelectIcon(agreedRule & agreeMarketing)}
-          </Pressable>
-          <Text style={styles.agreeText}>서비스 이용약관 전체 동의</Text>
-        </View>
-        <View style={[styles.agreeWrapper, {marginTop: 20,}]}>
-          <Pressable onPress={() => setAgreedRule(!agreedRule)}>
-            {getSelectIcon(agreedRule)}
-          </Pressable>
-          <Text style={styles.smallAgreeText}>
-            [필수] 이용약관 및 개인정보 처리방침
-          </Text>
-        </View>
-        <View style={styles.agreeWrapper}>
-          <Pressable onPress={() => setAgreeMarketing(!agreeMarketing)}>
-            {getSelectIcon(agreeMarketing)}
-          </Pressable>
-          <Text style={styles.smallAgreeText}>
-            [선택] 마케팅 정보 수집 및 수신 동의
-          </Text>
-        </View>
-        <View style={styles.buttonWrapper}>
-          <TouchableOpacity
-            style={[
-              styles.buttonStyle,
-              {
-                backgroundColor: getButtonBackColor(),
-              },
-            ]}
-            title={'회원가입'}
-            onPress={() => handleSumbit()}>
-            <Text
-              style={[styles.joinConfirmText, {color: getButtonTextColor()}]}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior="padding"
+        keyboardVerticalOffset={70}
+      >
+        <View style={styles.container}>
+          <ScrollView
+            style={styles.scrollView}
+            keyboardOpeningTime={Number.MAX_SAFE_INTEGER}>
+            <TextField
+              placeholder='이름'
+              value={name}
+              setValue={setName}
+            />
+            <TextField
+              placeholder='전화번호'
+              keyboardType='numeric'
+              value={phoneNumber}
+              setValue={v => setPhoneNumber(v.replace(/[^0-9]/g, ''))}
+            />
+
+            <TextField
+              placeholder='이메일'
+              value={email}
+              setValue={setEmail}
+              validator={validateEmail}
+              errorText={'이메일 형식을 확인해 주세요'}
+              error={true}
+            >
+              <TextFieldButton
+                onPress={handleEmailValidationRequest}
+                disabled={emailSent}
+              >
+                {emailSent ? "발송완료" : "인증요청"}
+              </TextFieldButton>
+            </TextField>
+
+            <TextField
+              placeholder='인증번호 입력'
+              value={validationCode}
+              setValue={setValidationCode}
+            >
+              <TextFieldButton
+                onPress={handleVerifyEmailCode}
+                disabled={emailVerified}
+              >
+                {emailVerified ? "확인 완료" : "인증하기"}
+              </TextFieldButton>
+            </TextField>
+
+            <TextField
+              placeholder='비밀번호'
+              value={password}
+              setValue={setPassword}
+              validator={validatePassword}
+              errorText={'영문 + 숫자 + 특수문자 포함 10자 이상 입력해주세요'}
+              secureTextEntry
+            />
+
+            <TextField
+              placeholder={'비밀번호 확인'}
+              value={passwordCheck}
+              setValue={setPasswordCheck}
+              validator={v => v === password}
+              errorText={'비밀번호가 일치하지 않습니다'}
+              secureTextEntry
+            />
+
+            <TextField
+              placeholder='별명'
+              value={nickname}
+              setValue={setNickname}
+            >
+              <TextFieldButton>
+                중복확인
+              </TextFieldButton>
+            </TextField>
+          </ScrollView>
+
+
+          <View style={styles.buttonWrapper}>
+            <SubmitButton
+              onPress={() => setModalVisible(true)}
+            >
               회원가입
-            </Text>
-          </TouchableOpacity>
+            </SubmitButton>
+          </View>
+
+          <Modal
+            style={styles.modalWrapper}
+            backdropOpacity={0.4}
+            isVisible={isModalVisible}
+            onBackdropPress={() => setModalVisible(false)}
+          >
+            <View style={styles.modal}>
+              <View style={[styles.allAgreeWrapper, styles.borderBottom]}>
+                <Pressable onPress={() => handleAgreeAll()}>
+                  {getSelectIcon(agreedRule & agreeMarketing)}
+                </Pressable>
+                <Text style={styles.agreeText}>서비스 이용약관 전체 동의</Text>
+              </View>
+              <View style={[styles.agreeWrapper, {marginTop: 20,}]}>
+                <Pressable onPress={() => setAgreedRule(!agreedRule)}>
+                  {getSelectIcon(agreedRule)}
+                </Pressable>
+                <Text style={styles.smallAgreeText}>
+                  [필수] 이용약관 및 개인정보 처리방침
+                </Text>
+              </View>
+              <View style={styles.agreeWrapper}>
+                <Pressable onPress={() => setAgreeMarketing(!agreeMarketing)}>
+                  {getSelectIcon(agreeMarketing)}
+                </Pressable>
+                <Text style={styles.smallAgreeText}>
+                  [선택] 마케팅 정보 수집 및 수신 동의
+                </Text>
+              </View>
+              <Text>
+                당신의 재능 활동은 연결된 계정에 노출되지 않습니다.
+              </Text>
+
+              <SubmitButton
+                onPress={() => setModalVisible(true)}
+              >
+                회원가입
+              </SubmitButton>
+
+
+            </View>
+          </Modal>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 }

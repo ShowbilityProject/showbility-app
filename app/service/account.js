@@ -35,6 +35,102 @@ export function requestSignIn(email, password) {
     });
 }
 
+export async function requestEmailValidationCode(email) {
+  let uri = HOST + '/user/request_code';
+  let body = {
+    email: email,
+  };
+  return post(uri, body)
+    .then(res => {
+      return res;
+    })
+    .catch(err => {
+      console.log(err);
+      return false;
+    })
+}
+
+export async function verifyEmailCode(email, code) {
+  let uri = HOST + '/user/verify_email_code';
+  let body = {
+    email: email,
+    code: code,
+  };
+  return post(uri, body)
+    .then(res => {
+      return res;
+    })
+    .catch(err => {
+      console.log(err);
+      return false;
+    })
+}
+
+export async function requestFindEmail(name, phoneNumber) {
+  let uri = HOST + '/user/request_find_email';
+  let body = {
+    name: name,
+    phoneNumber: phoneNumber,
+  };
+  return post(uri, body)
+    .then(res => res)
+    .catch(err => {
+      console.log(err);
+      return false;
+    })
+}
+
+export async function requestFindPasswordEmailVerification(
+  name,
+  phoneNumber,
+  email,
+) {
+  let uri = HOST + '/user/request-email-verification/';
+  let body = {
+    name: name,
+    phoneNumber: phoneNumber,
+    email: email,
+  };
+  return post(uri, body)
+    .then(res => res)
+    .catch(err => {
+      console.log(err);
+      return false;
+    })
+}
+
+export async function verifyPasswordResetCode(email, code) {
+  let uri = HOST + '/user/verify-code/';
+  let body = {
+    email: email,
+    code: code,
+  };
+  return post(uri, body)
+    .then(res => res.json())
+    .then(data => {
+      return data?.auth_hash || false;
+    })
+    .catch(err => {
+      console.log(err);
+      return false;
+    })
+}
+
+export async function requestResetPassword(email, password, authHash) {
+  let uri = HOST + '/user/reset-password/';
+  let body = {
+    email: email,
+    password: password,
+    auth_hash: authHash,
+  };
+  return post(uri, body)
+    .then(res => res)
+    .catch(err => {
+      console.log(err);
+      return false;
+    })
+}
+
 export async function requestSignUp(
   nickname,
   email,
