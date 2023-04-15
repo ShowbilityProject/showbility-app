@@ -1,8 +1,8 @@
-import EncryptedStorage from 'react-native-encrypted-storage';
+import * as SecureStore from "expo-secure-store";
 
 async function storeUserSession(key, data) {
   try {
-    await EncryptedStorage.setItem(key, data);
+    await SecureStore.setItemAsync(key, data);
     return true;
   } catch (error) {
     console.log(error);
@@ -12,7 +12,7 @@ async function storeUserSession(key, data) {
 
 async function retrieveUserSession(key) {
   try {
-    const session = await EncryptedStorage.getItem(key);
+    const session = await SecureStore.getItemAsync(key);
 
     if (session !== undefined) {
       return session;
@@ -25,7 +25,7 @@ async function retrieveUserSession(key) {
 
 async function removeUserSession(key) {
   try {
-    await EncryptedStorage.removeItem(key);
+    await SecureStore.deleteItemAsync(key);
     return true;
   } catch (error) {
     return false;
