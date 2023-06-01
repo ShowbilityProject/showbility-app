@@ -13,8 +13,9 @@ import TopStackScreen from "./app/views/mainTab";
 
 import { AppRegistry } from "react-native";
 
-import { expo } from "./app.json";
+import config from "./app.config";
 
+const { expo } = config();
 const RootStack = createStackNavigator();
 
 export default function App() {
