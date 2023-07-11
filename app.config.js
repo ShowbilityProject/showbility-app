@@ -17,9 +17,10 @@ export default () => ({
     ],
     ios: {
       supportsTablet: true,
-      bundleIdentifier: "com.showbility.showbility"
+      bundleIdentifier: "com.showbility.app.Showbility"
     },
     android: {
+      package: "com.showbility.app.Showbility",
       adaptiveIcon: {
         foregroundImage: "./assets/adaptive-icon.png",
         backgroundColor: "#ffffff"
@@ -34,12 +35,12 @@ export default () => ({
       }
     },
     plugins: [
+      "expo-build-properties",
       [
         "@react-native-seoul/kakao-login",
         {
-          kakaoAppKey: process.env.KAKAO_APP_KEY,
-          // overrideKakaoSDKVersion: "2.9.0",
-          // kotlinVersion: "1.5.10"
+          kakaoAppKey: process.env.EXPO_PUBLIC_KAKAO_KEY,
+          kotlinVersion: "1.8.0"
         }
       ]
     ]
