@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { View, AppRegistry } from "react-native";
+import { View, AppRegistry, StatusBar } from "react-native";
 
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
@@ -51,6 +51,10 @@ export default function App() {
 
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+      <StatusBar
+        backgroundColor="#FFF"
+        barStyle="light-content"
+      />
       <NavigationContainer>
         <RootStack.Navigator
           initialRouteName={iScreen}
