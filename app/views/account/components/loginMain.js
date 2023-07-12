@@ -7,13 +7,11 @@ import {
   Image,
   Pressable,
   Alert,
-  TouchableOpacity,
   StatusBar,
-  TextInput,
   TouchableWithoutFeedback,
-  Keyboard, KeyboardAvoidingView, Platform, ScrollView, Dimensions,
+  Keyboard,
+  Dimensions, Platform,
 } from 'react-native';
-import { appleAuth } from '@invertase/react-native-apple-authentication';
 import {
   requestLoginApple,
   requestLoginKakao,
@@ -25,6 +23,7 @@ import { Color } from '../../../style/colors';
 import { normalizeFontSize } from '../../../component/font';
 import TextField from "./TextField";
 import SubmitButton from "./SubmitButton";
+import * as AppleAuthentication from "expo-apple-authentication";
 
 const styles = StyleSheet.create({
   fontStyle: {
@@ -126,23 +125,20 @@ function LoginScreen({ route }) {
   };
 
   const signInWithApple = async () => {
-    // performs login request
-    const appleAuthRequestResponse = await appleAuth.performRequest({
-      requestedOperation: appleAuth.Operation.LOGIN,
-      requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
-    });
-    // get current authentication state for user
-    // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
-    const credentialState = await appleAuth.getCredentialStateForUser(
-      appleAuthRequestResponse.user,
-    );
-    // use credentialState response to ensure the user is authenticated
-    if (credentialState === appleAuth.State.AUTHORIZED) {
-      let ret = await requestLoginApple(appleAuthRequestResponse);
-      if (ret) navigation.navigate('App');
-      else Alert.alert('로그인 실패', '문제가 발생하였습니다.');
-    } else {
-      Alert.alert('로그인 실패', 'Apple 인증 서버 응답이 적절하지 않습니다.');
+    try {
+      const credentials = await AppleAuthentication.signInAsync({
+        requestedScopes: [
+          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+          AppleAuthentication.AppleAuthenticationScope.EMAIL,
+        ],
+      });
+
+      const res = await requestLoginApple(credentials);
+      if (!res) Alert.alert('로그인 실패', '문제가 발생하였습니다.');
+
+      navigation.navigate('App');
+    } catch (e) {
+      Alert.alert('로그인 실패', 'Apple 로그인에 실패하였습니다.');
     }
   }
 
@@ -233,11 +229,13 @@ function LoginScreen({ route }) {
               style={{ paddingHorizontal: 25 }}>
               <Image style={styles.icon} source={require(kakao_icon)}/>
             </Pressable>
-            <Pressable
-              onPress={signInWithApple}
-              style={{ paddingHorizontal: 25 }}>
-              <Image style={styles.icon} source={require(apple_icon)}/>
-            </Pressable>
+            {Platform.OS === "ios" &&
+              <Pressable
+                onPress={signInWithApple}
+                style={{ paddingHorizontal: 25 }}>
+                <Image style={styles.icon} source={require(apple_icon)}/>
+              </Pressable>
+            }
           </View>
           <Text
             style={[styles.clickableText, { paddingTop: 30 }]}

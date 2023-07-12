@@ -36,6 +36,7 @@ export default () => ({
     },
     plugins: [
       "expo-build-properties",
+      "expo-apple-authentication",
       [
         "@react-native-seoul/kakao-login",
         {
