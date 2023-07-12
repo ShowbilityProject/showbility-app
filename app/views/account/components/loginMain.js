@@ -1,4 +1,4 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
 import {
   View,
@@ -11,18 +11,18 @@ import {
   StatusBar,
   TextInput,
   TouchableWithoutFeedback,
-  Keyboard,
+  Keyboard, KeyboardAvoidingView, Platform, ScrollView, Dimensions,
 } from 'react-native';
-import {appleAuth} from '@invertase/react-native-apple-authentication';
+import { appleAuth } from '@invertase/react-native-apple-authentication';
 import {
   requestLoginApple,
   requestLoginKakao,
   requestSignIn,
   verifyToken,
 } from '../../../service/account';
-import {login} from '@react-native-seoul/kakao-login';
-import {Color} from '../../../style/colors';
-import {normalizeFontSize} from '../../../component/font';
+import { login } from '@react-native-seoul/kakao-login';
+import { Color } from '../../../style/colors';
+import { normalizeFontSize } from '../../../component/font';
 import TextField from "./TextField";
 import SubmitButton from "./SubmitButton";
 
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     fontFamily: 'JejuGothicOTF',
   },
   container: {
-    flex: 1,
+    height: Dimensions.get('window').height,
     backgroundColor: Color.white,
   },
   centerContainer: {
@@ -79,9 +79,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const Padding = ({height}) => <View style={{flex: height}}/>;
+const Padding = ({ height }) => <View style={{ flex: height }}/>;
 
-function LoginScreen({route}) {
+function LoginScreen({ route }) {
   const kakao_icon = '../../../../assets/imgs/login/kakao_login_circle.png';
   const apple_icon = '../../../../assets/imgs/login/apple_login_circle.png';
   const showbility_icon = require('../../../../assets/imgs/showbility.png');
@@ -101,7 +101,7 @@ function LoginScreen({route}) {
       navigation.setParams({
         email: "",
       });
-    };
+    }
   }, [route.params?.email]);
 
   React.useEffect(() => {
@@ -167,10 +167,10 @@ function LoginScreen({route}) {
 
         <View style={styles.centerContainer}>
           <Text
-            style={{fontFamily: 'JejuGothicOTF', fontSize: normalizeFontSize(16), marginBottom: 10}}>
+            style={{ fontFamily: 'JejuGothicOTF', fontSize: normalizeFontSize(16), marginBottom: 10 }}>
             세상에 너의 재능을 보여줘!
           </Text>
-          <Image style={{marginStart: 56, marginEnd: 55, resizeMode: "contain"}}
+          <Image style={{ marginStart: 56, marginEnd: 55, resizeMode: "contain" }}
                  source={showbility_icon}/>
         </View>
 
@@ -205,13 +205,13 @@ function LoginScreen({route}) {
             <Text style={styles.accountText}>이메일 찾기</Text>
           </Pressable>
           <Pressable
-            style={[styles.accountTextWrapper, {flex: 1.2}]}
+            style={[styles.accountTextWrapper, { flex: 1.2 }]}
             onPress={() => navigation.navigate("비밀번호 찾기")}
           >
             <Text style={styles.accountText}>계정정보 찾기</Text>
           </Pressable>
           <Pressable
-            style={[styles.accountTextWrapper, {borderRightWidth: 0}]}
+            style={[styles.accountTextWrapper, { borderRightWidth: 0 }]}
             onPress={() => navigation.navigate('회원가입')}>
             <Text style={styles.accountText}>회원가입</Text>
           </Pressable>
@@ -223,24 +223,24 @@ function LoginScreen({route}) {
           <Text
             style={[
               styles.clickableText,
-              {paddingBottom: 20, textDecorationLine: 'none'},
+              { paddingBottom: 20, textDecorationLine: 'none' },
             ]}>
             SNS 간편 로그인
           </Text>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row' }}>
             <Pressable
               onPress={signInWithKakao}
-              style={{paddingHorizontal: 25}}>
+              style={{ paddingHorizontal: 25 }}>
               <Image style={styles.icon} source={require(kakao_icon)}/>
             </Pressable>
             <Pressable
               onPress={signInWithApple}
-              style={{paddingHorizontal: 25}}>
+              style={{ paddingHorizontal: 25 }}>
               <Image style={styles.icon} source={require(apple_icon)}/>
             </Pressable>
           </View>
           <Text
-            style={[styles.clickableText, {paddingTop: 30}]}
+            style={[styles.clickableText, { paddingTop: 30 }]}
             onPress={() => navigation.navigate('App')}>
             로그인 전 둘러보기
           </Text>

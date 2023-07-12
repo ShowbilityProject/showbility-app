@@ -10,7 +10,7 @@ import {
   Keyboard,
   Alert,
   KeyboardAvoidingView,
-  ScrollView,
+  ScrollView, Platform,
 } from 'react-native';
 import Modal from 'react-native-modal';
 
@@ -253,7 +253,7 @@ export function JoinScreen() {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <KeyboardAvoidingView
         style={styles.container}
-        behavior="padding"
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={70}
       >
         <View style={styles.container}>
