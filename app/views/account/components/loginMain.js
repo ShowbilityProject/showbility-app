@@ -1,5 +1,5 @@
-import { useNavigation } from '@react-navigation/native';
-import * as React from 'react';
+import { useNavigation } from "@react-navigation/native";
+import * as React from "react";
 import {
   View,
   Text,
@@ -10,46 +10,52 @@ import {
   StatusBar,
   TouchableWithoutFeedback,
   Keyboard,
-  Dimensions, Platform,
-} from 'react-native';
+  Dimensions,
+  Platform,
+} from "react-native";
 import {
   requestLoginApple,
   requestLoginKakao,
   requestSignIn,
   verifyToken,
-} from '../../../service/account';
-import { login } from '@react-native-seoul/kakao-login';
-import { Color } from '../../../style/colors';
-import { normalizeFontSize } from '../../../component/font';
+} from "../../../service/account";
+import { login } from "@react-native-seoul/kakao-login";
+import { Color } from "../../../style/colors";
+import { normalizeFontSize } from "../../../component/font";
 import TextField from "./TextField";
 import SubmitButton from "./SubmitButton";
 import * as AppleAuthentication from "expo-apple-authentication";
 
+import { Spacer, Input, ActionButton } from "../../../component/atoms";
+import { useInput } from "../../../common/hooks";
+import { useCallback, useMemo } from "react";
+
 const styles = StyleSheet.create({
   fontStyle: {
-    fontFamily: 'JejuGothicOTF',
+    fontFamily: "JejuGothicOTF",
   },
   container: {
-    height: Dimensions.get('window').height,
+    height: Dimensions.get("window").height,
     backgroundColor: Color.white,
   },
   centerContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   loginContainer: {
     paddingHorizontal: 30,
+    gap: 10,
   },
   accountContainer: {
     flexBasis: "auto",
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     paddingHorizontal: 30,
   },
   buttonsContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     paddingHorizontal: 15,
   },
   accountTextWrapper: {
@@ -58,7 +64,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
   },
   accountText: {
-    fontFamily: 'JejuGothicOTF',
+    fontFamily: "JejuGothicOTF",
     fontSize: normalizeFontSize(14),
   },
   verticalBar: {
@@ -71,28 +77,33 @@ const styles = StyleSheet.create({
     width: 60,
   },
   clickableText: {
-    fontFamily: 'JejuGothicOTF',
+    fontFamily: "JejuGothicOTF",
     fontSize: normalizeFontSize(14),
     color: Color.veryLightPink,
-    textDecorationLine: 'underline',
+    textDecorationLine: "underline",
   },
 });
 
-const Padding = ({ height }) => <View style={{ flex: height }}/>;
-
 function LoginScreen({ route }) {
-  const kakao_icon = '../../../../assets/imgs/login/kakao_login_circle.png';
-  const apple_icon = '../../../../assets/imgs/login/apple_login_circle.png';
-  const showbility_icon = require('../../../../assets/imgs/showbility.png');
+  const kakao_icon = "../../../../assets/imgs/login/kakao_login_circle.png";
+  const apple_icon = "../../../../assets/imgs/login/apple_login_circle.png";
+  const showbility_icon = require("../../../../assets/imgs/showbility.png");
   const navigation = useNavigation();
 
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const email = useInput();
+  const password = useInput();
 
+  // const [email, setEmail] = React.useState("");
+  // const [password, setPassword] = React.useState("");
 
   const validateInputs = React.useCallback(() => {
     return email.length > 0 && password.length > 0;
   }, [email, password]);
+
+  const invalidInput = useMemo(
+    () => !email.value || !password.value,
+    [email.value, password.value],
+  );
 
   React.useEffect(() => {
     if (route.params?.email) {
@@ -106,8 +117,8 @@ function LoginScreen({ route }) {
   React.useEffect(() => {
     verifyToken().then(res => {
       if (res) {
-        console.log('Current token is valid, move to app');
-        navigation.navigate('App');
+        console.log("Current token is valid, move to app");
+        navigation.navigate("App");
       }
     });
   }, []);
@@ -116,11 +127,11 @@ function LoginScreen({ route }) {
     try {
       const token = await login();
       let ret = await requestLoginKakao(token);
-      if (ret) navigation.navigate('App');
-      else Alert.alert('로그인 실패', '문제가 발생하였습니다.');
+      if (ret) navigation.navigate("App");
+      else Alert.alert("로그인 실패", "문제가 발생하였습니다.");
     } catch (err) {
       // console.error(err);
-      Alert.alert('로그인 실패', '취소되었습니다.');
+      Alert.alert("로그인 실패", "취소되었습니다.");
     }
   };
 
@@ -134,117 +145,123 @@ function LoginScreen({ route }) {
       });
 
       const res = await requestLoginApple(credentials);
-      if (!res) Alert.alert('로그인 실패', '문제가 발생하였습니다.');
+      if (!res) Alert.alert("로그인 실패", "문제가 발생하였습니다.");
 
-      navigation.navigate('App');
+      navigation.navigate("App");
     } catch (e) {
-      Alert.alert('로그인 실패', 'Apple 로그인에 실패하였습니다.');
-    }
-  }
-
-  const handleSubmit = async () => {
-    if (!validateInputs()) return false;
-    else {
-      let ret = await requestSignIn(email, password);
-      if (!ret) Alert.alert('로그인 오류', '이메일과 비밀번호를 확인해주세요.');
-      else {
-        navigation.replace('App');
-      }
+      Alert.alert("로그인 실패", "Apple 로그인에 실패하였습니다.");
     }
   };
 
+  const handleSubmit = useCallback(async () => {
+    if (invalidInput) return false;
+    else {
+      let ret = await requestSignIn(email.value, password.value);
+      if (!ret) Alert.alert("로그인 오류", "이메일과 비밀번호를 확인해주세요.");
+      else {
+        navigation.replace("App");
+      }
+    }
+  }, [email.value, password.value, invalidInput, navigation]);
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
-        <StatusBar barStyle={'dark-content'}/>
+        <StatusBar barStyle={"dark-content"} />
 
-        <Padding height={137}/>
+        <Spacer y={137} />
 
         <View style={styles.centerContainer}>
           <Text
-            style={{ fontFamily: 'JejuGothicOTF', fontSize: normalizeFontSize(16), marginBottom: 10 }}>
+            style={{
+              fontFamily: "JejuGothicOTF",
+              fontSize: normalizeFontSize(16),
+              marginBottom: 10,
+            }}
+          >
             세상에 너의 재능을 보여줘!
           </Text>
-          <Image style={{ marginStart: 56, marginEnd: 55, resizeMode: "contain" }}
-                 source={showbility_icon}/>
+          <Image
+            style={{ marginStart: 56, marginEnd: 55, resizeMode: "contain" }}
+            source={showbility_icon}
+          />
         </View>
 
-        <Padding height={23}/>
+        <Spacer y={23} />
 
         <View style={styles.loginContainer}>
-          <TextField
-            placeholder='이메일'
-            value={email}
-            setValue={setEmail}
-          />
-          <TextField
-            placeholder='비밀번호'
-            value={password}
-            setValue={setPassword}
-            secureTextEntry
-          />
-          <SubmitButton
-            onPress={handleSubmit}
-            disabled={!validateInputs()}>
+          <Input placeholder="이메일" {...email} />
+          <Input placeholder="비밀번호" secureTextEntry {...password} />
+          <ActionButton onPress={handleSubmit} disabled={invalidInput}>
             로그인
-          </SubmitButton>
+          </ActionButton>
+          <ActionButton
+            onPress={() => navigation.navigate("회원가입")}
+            secondary
+          >
+            회원가입
+          </ActionButton>
         </View>
 
-        <Padding height={40}/>
+        <Spacer y={40} />
 
-        <View style={styles.accountContainer}>
-          <Pressable
-            style={styles.accountTextWrapper}
-            onPress={() => navigation.navigate("이메일 찾기")}
-          >
-            <Text style={styles.accountText}>이메일 찾기</Text>
-          </Pressable>
-          <Pressable
-            style={[styles.accountTextWrapper, { flex: 1.2 }]}
-            onPress={() => navigation.navigate("비밀번호 찾기")}
-          >
-            <Text style={styles.accountText}>계정정보 찾기</Text>
-          </Pressable>
-          <Pressable
-            style={[styles.accountTextWrapper, { borderRightWidth: 0 }]}
-            onPress={() => navigation.navigate('회원가입')}>
-            <Text style={styles.accountText}>회원가입</Text>
-          </Pressable>
-        </View>
-
-        <Padding height={50}/>
+        {/*<View style={styles.accountContainer}>*/}
+        {/*  <Pressable*/}
+        {/*    style={styles.accountTextWrapper}*/}
+        {/*    onPress={() => navigation.navigate("이메일 찾기")}*/}
+        {/*  >*/}
+        {/*    <Text style={styles.accountText}>이메일 찾기</Text>*/}
+        {/*  </Pressable>*/}
+        {/*  <Pressable*/}
+        {/*    style={[styles.accountTextWrapper, {flex: 1.2}]}*/}
+        {/*    onPress={() => navigation.navigate("비밀번호 찾기")}*/}
+        {/*  >*/}
+        {/*    <Text style={styles.accountText}>계정정보 찾기</Text>*/}
+        {/*  </Pressable>*/}
+        {/*  <Pressable*/}
+        {/*    style={[styles.accountTextWrapper, { borderRightWidth: 0 }]}*/}
+        {/*    onPress={() => navigation.navigate("회원가입")}*/}
+        {/*  >*/}
+        {/*    <Text style={styles.accountText}>회원가입</Text>*/}
+        {/*  </Pressable>*/}
+        {/*</View>*/}
+        {/**/}
+        {/*<Spacer y={50} />*/}
 
         <View style={styles.buttonsContainer}>
           <Text
             style={[
               styles.clickableText,
-              { paddingBottom: 20, textDecorationLine: 'none' },
-            ]}>
+              { paddingBottom: 20, textDecorationLine: "none" },
+            ]}
+          >
             SNS 간편 로그인
           </Text>
-          <View style={{ flexDirection: 'row' }}>
+          <View style={{ flexDirection: "row" }}>
             <Pressable
               onPress={signInWithKakao}
-              style={{ paddingHorizontal: 25 }}>
-              <Image style={styles.icon} source={require(kakao_icon)}/>
+              style={{ paddingHorizontal: 25 }}
+            >
+              <Image style={styles.icon} source={require(kakao_icon)} />
             </Pressable>
-            {Platform.OS === "ios" &&
+            {Platform.OS === "ios" && (
               <Pressable
                 onPress={signInWithApple}
-                style={{ paddingHorizontal: 25 }}>
-                <Image style={styles.icon} source={require(apple_icon)}/>
+                style={{ paddingHorizontal: 25 }}
+              >
+                <Image style={styles.icon} source={require(apple_icon)} />
               </Pressable>
-            }
+            )}
           </View>
           <Text
             style={[styles.clickableText, { paddingTop: 30 }]}
-            onPress={() => navigation.navigate('App')}>
+            onPress={() => navigation.navigate("App")}
+          >
             로그인 전 둘러보기
           </Text>
         </View>
 
-        <Padding height={132}/>
+        <Spacer y={132} />
 
         {/*<View style={styles.footerContainer}>*/}
         {/*  <Text style={styles.privacyText}>*/}

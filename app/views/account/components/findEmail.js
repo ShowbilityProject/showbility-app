@@ -1,30 +1,31 @@
-import * as React from 'react';
+import * as React from "react";
 import {
   StyleSheet,
   TouchableWithoutFeedback,
   View,
   Text,
-  KeyboardAvoidingView, ScrollView, Alert
+  KeyboardAvoidingView,
+  ScrollView,
+  Alert,
 } from "react-native";
-import {requestFindEmail} from "../../../service/account";
+import { requestFindEmail } from "../../../service/account";
 import TextField from "./TextField";
 import SubmitButton from "./SubmitButton";
-import {normalizeFontSize} from "../../../component/font";
-import {useNavigation} from "@react-navigation/native";
+import { normalizeFontSize } from "../../../component/font";
+import { useNavigation } from "@react-navigation/native";
+import { ActionButton } from "../../../component/atoms";
 
 const styles = new StyleSheet.create({
   container: {
     flex: 1,
   },
-  containerFound: {
-
-  },
+  containerFound: {},
   scrollView: {
     paddingHorizontal: 15,
     paddingTop: 24,
   },
   details: {
-    fontFamily: 'JejuGothicOTF',
+    fontFamily: "JejuGothicOTF",
     fontSize: normalizeFontSize(16),
     paddingTop: 91,
     paddingBottom: 15,
@@ -38,13 +39,13 @@ const styles = new StyleSheet.create({
   button: {
     flex: 1,
     marginHorizontal: 10,
-  }
+  },
 });
 
 export function FindEmailScreen() {
   const navigation = useNavigation();
-  const [name, setName] = React.useState('');
-  const [phoneNumber, setPhoneNumber] = React.useState('');
+  const [name, setName] = React.useState("");
+  const [phoneNumber, setPhoneNumber] = React.useState("");
 
   const [email, setEmail] = React.useState("");
 
@@ -58,19 +59,12 @@ export function FindEmailScreen() {
       if (res?.data?.email) {
         setEmail(res.data.email);
       } else {
-        alert("일치하는 계정이 없습니다. 다시 입력해주세요.")
+        alert("일치하는 계정이 없습니다. 다시 입력해주세요.");
       }
-    })
-  }
+    });
+  };
 
-  const alert = (message) =>
-    Alert.alert(
-      "Alert",
-      message,
-      [
-        {text: "확인"}
-      ]
-    );
+  const alert = message => Alert.alert("Alert", message, [{ text: "확인" }]);
 
   return (
     <TouchableWithoutFeedback>
@@ -79,29 +73,27 @@ export function FindEmailScreen() {
         behavior="padding"
         keyboardVerticalOffset={70}
       >
-        {!email
-          ? <View style={styles.container}>
+        {!email ? (
+          <View style={styles.container}>
             <ScrollView
               style={styles.scrollView}
-              keyboardOpeningTime={Number.MAX_SAFE_INTEGER}>
-              <Text style={styles.details}>쇼빌리티 가입시 등록한 정보를 입력해주세요</Text>
+              keyboardOpeningTime={Number.MAX_SAFE_INTEGER}
+            >
+              <Text style={styles.details}>
+                쇼빌리티 가입시 등록한 정보를 입력해주세요
+              </Text>
 
+              <TextField placeholder="이름" value={name} setValue={setName} />
               <TextField
-                placeholder='이름'
-                value={name}
-                setValue={setName}
-              />
-              <TextField
-                placeholder='전화번호'
-                keyboardType='numeric'
+                placeholder="전화번호"
+                keyboardType="numeric"
                 value={phoneNumber}
-                setValue={v => setPhoneNumber(v.replace(/[^0-9]/g, ''))}
+                setValue={v => setPhoneNumber(v.replace(/[^0-9]/g, ""))}
               />
-
             </ScrollView>
             <View style={styles.buttonWrapper}>
               <SubmitButton
-                style={{flex: 1}}
+                style={{ flex: 1 }}
                 onPress={handleSubmit}
                 disabled={!validateFields()}
               >
@@ -109,36 +101,36 @@ export function FindEmailScreen() {
               </SubmitButton>
             </View>
           </View>
-          : <View style={styles.containerFound}>
+        ) : (
+          <View style={styles.containerFound}>
             <ScrollView
               style={styles.scrollView}
-              keyboardOpeningTime={Number.MAX_SAFE_INTEGER}>
-              <Text style={styles.details}>입력하신 정보와 일치하는 메일정보입니다</Text>
+              keyboardOpeningTime={Number.MAX_SAFE_INTEGER}
+            >
+              <Text style={styles.details}>
+                입력하신 정보와 일치하는 메일정보입니다
+              </Text>
 
-              <TextField
-                placeholder='이메일'
-                value={email}
-              />
-
+              <TextField placeholder="이메일" value={email} />
             </ScrollView>
             <View style={styles.buttonWrapper}>
-              <SubmitButton
+              <ActionButton
                 style={styles.button}
-                onPress={() => navigation.navigate("Home", {email})}
+                onPress={() => navigation.navigate("Home", { email })}
               >
                 로그인
-              </SubmitButton>
-              <SubmitButton
+              </ActionButton>
+              <ActionButton
+                secondary
                 style={styles.button}
-                variant="secondary"
-                onPress={() => navigation.navigate("비밀번호 찾기", {email})}
+                onPress={() => navigation.navigate("비밀번호 찾기", { email })}
               >
                 비밀번호 찾기
-              </SubmitButton>
+              </ActionButton>
             </View>
           </View>
-        }
+        )}
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
-  )
+  );
 }
