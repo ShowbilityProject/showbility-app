@@ -1,5 +1,5 @@
 export default () => ({
-  "expo": {
+  expo: {
     name: "쇼빌리티",
     slug: "showbility",
     owner: "showbility",
@@ -10,29 +10,27 @@ export default () => ({
     splash: {
       image: "./assets/splash.png",
       resizeMode: "contain",
-      backgroundColor: "#ffffff"
+      backgroundColor: "#ffffff",
     },
-    assetBundlePatterns: [
-      "**/*"
-    ],
+    assetBundlePatterns: ["**/*"],
     ios: {
       supportsTablet: true,
-      bundleIdentifier: "com.showbility.app.Showbility"
+      bundleIdentifier: "com.showbility.app.Showbility",
     },
     android: {
       package: "com.showbility.app.Showbility",
       adaptiveIcon: {
         foregroundImage: "./assets/adaptive-icon.png",
-        backgroundColor: "#ffffff"
-      }
+        backgroundColor: "#ffffff",
+      },
     },
     web: {
-      favicon: "./assets/favicon.png"
+      favicon: "./assets/favicon.png",
     },
     extra: {
       eas: {
-        projectId: "c78be390-3769-4983-be83-9888018dbb02"
-      }
+        projectId: "c78be390-3769-4983-be83-9888018dbb02",
+      },
     },
     plugins: [
       "expo-build-properties",
@@ -41,9 +39,13 @@ export default () => ({
         "@react-native-seoul/kakao-login",
         {
           kakaoAppKey: process.env.EXPO_PUBLIC_KAKAO_KEY,
-          kotlinVersion: "1.8.0"
-        }
-      ]
-    ]
-  }
+          kotlinVersion: "1.8.0",
+        },
+      ],
+    ],
+    updates: {
+      url: "https://u.expo.dev/c78be390-3769-4983-be83-9888018dbb02",
+    },
+    runtimeVersion: "1.0.0",
+  },
 });
