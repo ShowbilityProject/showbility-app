@@ -3,7 +3,7 @@ export default () => ({
     name: "쇼빌리티",
     slug: "showbility",
     owner: "showbility",
-    version: "1.0.0",
+    version: "1.2.0",
     orientation: "portrait",
     icon: "./assets/icon.png",
     userInterfaceStyle: "light",
