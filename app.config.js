@@ -14,7 +14,7 @@ export default () => ({
     },
     assetBundlePatterns: ["**/*"],
     ios: {
-      supportsTablet: true,
+      supportsTablet: false,
       bundleIdentifier: "com.showbility.app.Showbility",
       infoPlist: {
         NSPhotoLibraryUsageDescription: "사진 업로드를 위해 사진 접근 권한이 필요합니다.",
