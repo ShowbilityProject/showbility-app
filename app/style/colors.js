@@ -11,4 +11,5 @@ export const Color = {
   veryLightPink: '#bcbcbc',
   lightBlueGrey: '#d5d5d6',
   paleGray: '#f4f4f6',
+  veryLightGrey: '#f7f7f7',
 };
