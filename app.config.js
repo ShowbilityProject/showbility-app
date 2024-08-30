@@ -38,6 +38,7 @@ export default () => ({
       },
     },
     plugins: [
+      "expo-secure-store",
       "expo-build-properties",
       "expo-apple-authentication",
       [
