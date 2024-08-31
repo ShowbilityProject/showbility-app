@@ -7,15 +7,33 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "android": {
+        "image": "auto"
+      },
+      "ios": {
+        "image": "auto"
+      }
     },
     "preview": {
       "distribution": "internal",
-      "channel": "preview"
+      "channel": "preview",
+      "android": {
+        "image": "auto"
+      },
+      "ios": {
+        "image": "auto"
+      }
     },
     "production": {
       "channel": "production",
-      "autoIncrement": true
+      "autoIncrement": true,
+      "android": {
+        "image": "auto"
+      },
+      "ios": {
+        "image": "auto"
+      }
     }
   },
   "submit": {
