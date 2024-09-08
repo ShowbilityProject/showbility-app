@@ -2,8 +2,7 @@ import { ExpoConfig, ConfigContext } from "expo/config";
 
 const isDev = process.env.APP_VARIANT === "development";
 
-export default ({ config }: ConfigContext): ExpoConfig => ({
-  ...config,
+export default (): ExpoConfig => ({
   name: isDev ? "쇼빌리티 Dev" : "쇼빌리티",
   slug: "showbility",
   owner: "showbility",

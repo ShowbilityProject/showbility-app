@@ -15,7 +15,7 @@ import TopStackScreen from "./app/views/mainTab";
 import config from "./app.config";
 import { useAuthState } from "./app/common/hooks";
 
-const { expo } = config();
+const expoConfig = config();
 const RootStack = createStackNavigator();
 
 SplashScreen.preventAutoHideAsync();
@@ -59,4 +59,4 @@ export default function App() {
   );
 }
 
-AppRegistry.registerComponent(expo.name, () => App);
+AppRegistry.registerComponent(expoConfig.name, () => App);
