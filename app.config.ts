@@ -19,7 +19,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   assetBundlePatterns: ["**/*"],
   ios: {
     supportsTablet: false,
-    bundleIdentifier: `com.showbility.app.Showbility${isDev ? ".dev" : ""}`,
+    bundleIdentifier: `com.showbility.app.Showbility${isDev ? "Dev" : ""}`,
     infoPlist: {
       NSPhotoLibraryUsageDescription:
         "사진 업로드를 위해 사진 접근 권한이 필요합니다.",
