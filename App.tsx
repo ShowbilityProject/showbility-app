@@ -12,10 +12,9 @@ import { StackScreenOptions } from "./app/style/common";
 import LoginStackScreen from "./app/views/account/loginStack";
 import TopStackScreen from "./app/views/mainTab";
 
-import config from "./app.config";
+import appConfig from "./app.config";
 import { useAuthState } from "./app/common/hooks";
 
-const expoConfig = config();
 const RootStack = createStackNavigator();
 
 SplashScreen.preventAutoHideAsync();
@@ -59,4 +58,4 @@ export default function App() {
   );
 }
 
-AppRegistry.registerComponent(expoConfig.name, () => App);
+AppRegistry.registerComponent(appConfig.name, () => App);

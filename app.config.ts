@@ -1,12 +1,13 @@
-import { ExpoConfig, ConfigContext } from "expo/config";
+import { ExpoConfig } from "expo/config";
 
 const isDev = process.env.APP_VARIANT === "development";
 
-export default (): ExpoConfig => ({
+const config: ExpoConfig = {
   name: isDev ? "쇼빌리티 Dev" : "쇼빌리티",
   slug: "showbility",
   owner: "showbility",
   version: "1.2.0",
+  runtimeVersion: "1.1.0",
   orientation: "portrait",
   icon: "./assets/icon.png",
   userInterfaceStyle: "light",
@@ -17,8 +18,9 @@ export default (): ExpoConfig => ({
   },
   assetBundlePatterns: ["**/*"],
   ios: {
+    usesAppleSignIn: true,
     supportsTablet: false,
-    bundleIdentifier: `com.showbility.app.Showbility${isDev ? "Dev" : ""}`,
+    bundleIdentifier: `com.showbility.app.${isDev ? "ShowbilityDev" : "Showbility"}`,
     infoPlist: {
       NSPhotoLibraryUsageDescription:
         "사진 업로드를 위해 사진 접근 권한이 필요합니다.",
@@ -26,7 +28,7 @@ export default (): ExpoConfig => ({
     },
   },
   android: {
-    package: `com.showbility.app.Showbility${isDev ? ".dev" : ""}`,
+    package: `com.showbility.app.${isDev ? "ShowbilityDev" : "Showbility"}`,
     adaptiveIcon: {
       foregroundImage: "./assets/adaptive-icon.png",
       backgroundColor: "#ffffff",
@@ -55,5 +57,6 @@ export default (): ExpoConfig => ({
   updates: {
     url: "https://u.expo.dev/c78be390-3769-4983-be83-9888018dbb02",
   },
-  runtimeVersion: "1.0.0",
-});
+};
+
+export default config;
