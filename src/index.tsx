@@ -13,46 +13,30 @@ import LoginStackScreen from "./views/account/loginStack";
 import TopStackScreen from "./views/mainTab";
 
 import { useAuthState } from "./common/hooks";
-
-const RootStack = createStackNavigator();
+import { Routes } from "./Routes";
+import { registerRootComponent } from "expo";
 
 SplashScreen.preventAutoHideAsync();
 
-export function App() {
-  const [fontsLoaded] = useFonts({
-    JejuGothicOTF: require("./assets/fonts/JejuGothicOTF.otf"),
-  });
+function App() {
+  // const [fontsLoaded] = useFonts({
+  //   JejuGothicOTF: require("./assets/fonts/JejuGothicOTF.otf"),
+  // });
   const { authenticated, loading } = useAuthState();
 
   // setVisible(true);
-  const iScreen = authenticated ? "App" : "Login";
 
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded && !loading) await SplashScreen.hideAsync();
-  }, [fontsLoaded, loading]);
-
-  if (!fontsLoaded || loading) return null;
+  const onLayoutRootView = useCallback(() => {
+    if (!loading) SplashScreen.hideAsync();
+  }, [loading]);
 
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <StatusBar backgroundColor="#FFF" barStyle="light-content" />
       <NavigationContainer>
-        <RootStack.Navigator
-          initialRouteName={iScreen}
-          screenOptions={StackScreenOptions}
-        >
-          <RootStack.Screen
-            name="App"
-            component={TopStackScreen}
-            options={{ headerShown: false, gestureEnabled: false }}
-          />
-          <RootStack.Screen
-            name="Login"
-            component={LoginStackScreen}
-            options={{ headerShown: false }}
-          />
-        </RootStack.Navigator>
+        <Routes />
       </NavigationContainer>
     </View>
   );
 }
+
+registerRootComponent(App);

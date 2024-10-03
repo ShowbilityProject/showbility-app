@@ -2,5 +2,6 @@ import { AppRegistry } from "react-native";
 
 import appConfig from "./app.config";
 import { App } from "./src";
+import { registerRootComponent } from "expo";
 
-AppRegistry.registerComponent(appConfig.name, () => App);
+registerRootComponent(App);
