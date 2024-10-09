@@ -7,7 +7,7 @@ const config: ExpoConfig = {
   slug: "showbility",
   owner: "showbility",
   version: "1.2.0",
-  runtimeVersion: "1.1.0",
+  runtimeVersion: "1.2.0",
   orientation: "portrait",
   icon: "./assets/icon.png",
   userInterfaceStyle: "light",
@@ -67,6 +67,14 @@ const config: ExpoConfig = {
       {
         kakaoAppKey: process.env.EXPO_PUBLIC_KAKAO_KEY,
         kotlinVersion: "1.8.0",
+      },
+    ],
+
+    [
+      "expo-image-picker",
+      {
+        photosPermission: "사진 업로드를 위해 사진 접근 권한이 필요합니다.",
+        cameraPermission: "사진 업로드를 위해 카메라 접근 권한이 필요합니다.",
       },
     ],
   ],
