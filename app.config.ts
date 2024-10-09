@@ -50,16 +50,16 @@ const config: ExpoConfig = {
       "expo-font",
       {
         fonts: [
-          "Thin", // 100
-          "ExtraLight", // 200
-          "Light", // 300
-          "Regular", // 400
-          "Medium", // 500
-          "SemiBold", // 600
-          "Bold", // 700
-          "ExtraBold", // 800
-          "Black", // 900
-        ].map(weight => `./assets/fonts/Pretendard-${weight}.otf`),
+          "Pretendard-thin",
+          "Pretendard-ExtraLight",
+          "Pretendard-Light",
+          "Pretendard-Regular",
+          "Pretendard-Medium",
+          "Pretendard-SemiBold",
+          "Pretendard-Bold",
+          "Pretendard-ExtraBold",
+          "Pretendard-Black",
+        ].map(fontName => `./assets/fonts/${fontName}.otf`),
       },
     ],
     [
