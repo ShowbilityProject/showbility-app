@@ -47,6 +47,22 @@ const config: ExpoConfig = {
     "expo-build-properties",
     "expo-apple-authentication",
     [
+      "expo-font",
+      {
+        fonts: [
+          "Thin", // 100
+          "ExtraLight", // 200
+          "Light", // 300
+          "Regular", // 400
+          "Medium", // 500
+          "SemiBold", // 600
+          "Bold", // 700
+          "ExtraBold", // 800
+          "Black", // 900
+        ].map(weight => `./assets/fonts/Pretendard-${weight}.otf`),
+      },
+    ],
+    [
       "@react-native-seoul/kakao-login",
       {
         kakaoAppKey: process.env.EXPO_PUBLIC_KAKAO_KEY,
