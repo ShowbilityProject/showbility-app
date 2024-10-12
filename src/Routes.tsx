@@ -1,4 +1,5 @@
 import {
+  CardStyleInterpolators,
   StackNavigationOptions,
   TransitionPresets,
   createStackNavigator,
@@ -16,6 +17,10 @@ import { ArrowLeftIcon } from "./icons/ArrowLeftIcon";
 import { typo } from "./styles/typography";
 import { colors } from "./styles/colors";
 
+import { Stack, Tab } from "@/navigation";
+import { ImageViewerPage } from "./pages/ImageViewerPage";
+import { Dimensions } from "react-native";
+
 const defaultHeaderOptions: StackNavigationOptions &
   BottomTabNavigationOptions = {
   headerStatusBarHeight: 56,
@@ -30,8 +35,6 @@ const defaultHeaderOptions: StackNavigationOptions &
   },
   headerShadowVisible: false,
 };
-
-const Stack = createStackNavigator<StackParams>();
 
 export function Routes() {
   return (
@@ -60,11 +63,21 @@ export function Routes() {
         component={ContentDetailPage}
         options={{ title: "작품" }}
       />
+      <Stack.Screen
+        name="ImageViewer"
+        component={ImageViewerPage}
+        options={{
+          gestureDirection: "vertical",
+          gestureResponseDistance: Dimensions.get("screen").height,
+          headerShown: false,
+          cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+
+          // ...TransitionPresets.ModalTransition,
+        }}
+      />
     </Stack.Navigator>
   );
 }
-
-const Tab = createBottomTabNavigator<TabParams>();
 
 function MainTabs() {
   return (

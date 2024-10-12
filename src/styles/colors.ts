@@ -1,3 +1,5 @@
+import type { ColorValue } from "react-native";
+
 export const colors = {
   primary: "#FF5E00",
   secondary: "#3385FF",
@@ -14,4 +16,4 @@ export const colors = {
   white: "#FFFFFF",
   positive: "#00C400",
   negative: "#EF2B2A",
-} as const satisfies Record<string, string>;
+} as const satisfies Record<string, ColorValue>;

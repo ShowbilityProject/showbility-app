@@ -2,14 +2,20 @@ import { StyleProp, FlexStyle } from "react-native";
 
 interface Props {
   dir: "v" | "h";
-  justify: FlexStyle["justifyContent"];
-  align: FlexStyle["alignItems"];
+  justify?: FlexStyle["justifyContent"];
+  align?: FlexStyle["alignItems"];
+  gap?: number;
 }
 
-export const flex = ({ dir, justify, align }: Props) =>
-  ({
+export function flex({ dir, justify, align, gap }: Props) {
+  return {
     display: "flex",
     flexDirection: ({ h: "row", v: "column" } as const)[dir],
     justifyContent: justify,
     alignItems: align,
-  }) satisfies StyleProp<FlexStyle>;
+    gap: gap,
+  } satisfies StyleProp<FlexStyle>;
+}
+
+flex.v = (props: Omit<Props, "dir"> = {}) => flex({ dir: "v", ...props });
+flex.h = (props: Omit<Props, "dir"> = {}) => flex({ dir: "h", ...props });
