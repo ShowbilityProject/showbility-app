@@ -8,6 +8,7 @@ import type { StackScreenProps } from "@react-navigation/stack";
 export type StackParams = {
   MainTab: NavigatorScreenParams<TabParams>;
   Login: undefined;
+  ContentDetail: { id: string };
 };
 
 export type TabParams = {
@@ -28,6 +29,6 @@ export type TabPageProps<T extends keyof TabParams> = CompositeScreenProps<
 
 declare global {
   namespace ReactNavigation {
-    interface RootParamList extends StackParams { }
+    interface RootParamList extends StackParams {}
   }
 }
