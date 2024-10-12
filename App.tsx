@@ -47,11 +47,6 @@ export default function App() {
             component={TopStackScreen}
             options={{ headerShown: false, gestureEnabled: false }}
           />
-          <RootStack.Screen
-            name="Login"
-            component={LoginStackScreen}
-            options={{ headerShown: false }}
-          />
         </RootStack.Navigator>
       </NavigationContainer>
     </View>
