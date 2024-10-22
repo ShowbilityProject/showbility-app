@@ -2,29 +2,24 @@ import {
   CardStyleInterpolators,
   StackNavigationOptions,
   TransitionPresets,
-  createStackNavigator,
 } from "@react-navigation/stack";
-import { TabParams, StackParams } from "./navigation/types";
-import {
-  BottomTabNavigationOptions,
-  createBottomTabNavigator,
-} from "@react-navigation/bottom-tabs";
+import { BottomTabNavigationOptions } from "@react-navigation/bottom-tabs";
 
-import { LoginPage } from "@/pages";
+import { LoginPage, ImageViewerPage, ContentDetailPage } from "@/pages";
 import { HomePage, SearchPage, MyPage } from "@/pages/MainTabs";
-import { ContentDetailPage } from "./pages/ContentDetailPage";
-import { ArrowLeftIcon } from "./icons/ArrowLeftIcon";
-import { typo } from "./styles/typography";
-import { colors } from "./styles/colors";
+
+import { text, colors, h, padding } from "@/styles";
 
 import { Stack, Tab } from "@/navigation";
-import { ImageViewerPage } from "./pages/ImageViewerPage";
-import { Dimensions } from "react-native";
+import { Dimensions, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import { SearchIcon, MyIcon, HomeIcon, ArrowLeftIcon } from "@/icons";
 
 const defaultHeaderOptions: StackNavigationOptions &
   BottomTabNavigationOptions = {
   headerStatusBarHeight: 56,
-  headerTitleStyle: [typo.h3],
+  headerTitleStyle: [text.h3],
   headerBackTitleVisible: false,
   headerBackImage: () => (
     <ArrowLeftIcon width={24} height={24} style={{ margin: 10 }} />
@@ -71,8 +66,6 @@ export function Routes() {
           gestureResponseDistance: Dimensions.get("screen").height,
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
-
-          // ...TransitionPresets.ModalTransition,
         }}
       />
     </Stack.Navigator>
@@ -80,25 +73,57 @@ export function Routes() {
 }
 
 function MainTabs() {
+  const { bottom } = useSafeAreaInsets();
+
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      screenOptions={{ ...defaultHeaderOptions }}
+      screenOptions={{
+        ...defaultHeaderOptions,
+        tabBarActiveTintColor: colors.black,
+        tabBarInactiveTintColor: colors.gray700,
+        tabBarStyle: [
+          h(46 + bottom),
+          padding.top(4),
+          padding.bottom(bottom - 8),
+          { borderTopColor: colors.gray200, borderTopWidth: 1 },
+        ],
+        tabBarLabelStyle: [
+          text.custom({ weight: 600, size: 10, lineHeight: 14 }),
+        ],
+      }}
     >
       <Tab.Screen
         name="Search"
-        options={{ title: "검색" }}
+        options={{
+          title: "검색",
+          tabBarIcon: ({ focused, color }) => (
+            <SearchIcon width={24} height={24} filled={focused} color={color} />
+          ),
+        }}
         component={SearchPage}
       />
       <Tab.Screen
         name="Home"
         options={{
-          tabBarLabel: "홈",
+          title: "홈",
           headerShown: false,
+          tabBarIcon: ({ focused, color }) => (
+            <HomeIcon width={24} height={24} filled={focused} color={color} />
+          ),
         }}
         component={HomePage}
       />
-      <Tab.Screen name="My" options={{ title: "마이" }} component={MyPage} />
+      <Tab.Screen
+        name="My"
+        options={{
+          title: "마이",
+          tabBarIcon: ({ focused, color }) => (
+            <MyIcon width={24} height={24} filled={focused} color={color} />
+          ),
+        }}
+        component={MyPage}
+      />
     </Tab.Navigator>
   );
 }

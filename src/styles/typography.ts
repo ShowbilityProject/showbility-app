@@ -1,4 +1,4 @@
-import type { StyleProp, TextStyle } from "react-native";
+import type { ColorValue, StyleProp, TextStyle } from "react-native";
 
 export const weightFontMap = {
   100: "Pretendard-thin",
@@ -70,8 +70,28 @@ export const typography = {
   }),
   body2: createTypography({
     weight: 400,
+    size: 14,
+    lineHeight: 22,
+  }),
+  body3: createTypography({
+    weight: 400,
+    size: 13,
+    lineHeight: 20,
+  }),
+  caption1: createTypography({
+    weight: 400,
+    size: 12,
+    lineHeight: 18,
+  }),
+  caption2: createTypography({
+    weight: 400,
+    size: 11,
+    lineHeight: 16,
   }),
   custom: createTypography,
 } as const;
 
-export const typo = typography; // alias for `typography`
+export const textColor = (color: ColorValue) =>
+  ({ color }) as const satisfies StyleProp<TextStyle>;
+
+export const text = { ...typography, color: textColor }; // alias for text styles

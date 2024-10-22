@@ -19,3 +19,5 @@ export function flex({ dir, justify, align, gap }: Props) {
 
 flex.v = (props: Omit<Props, "dir"> = {}) => flex({ dir: "v", ...props });
 flex.h = (props: Omit<Props, "dir"> = {}) => flex({ dir: "h", ...props });
+
+export const flexFill = { flex: 1 } as const;
