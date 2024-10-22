@@ -10,6 +10,7 @@ export type StackParams = {
   Login: undefined;
   ContentDetail: { id: string };
   ImageViewer: { uri: string };
+  AbilityDetail: { title: string };
 };
 
 export type TabParams = {

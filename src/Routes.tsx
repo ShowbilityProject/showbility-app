@@ -15,6 +15,7 @@ import { Dimensions, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { SearchIcon, MyIcon, HomeIcon, ArrowLeftIcon } from "@/icons";
+import { AbilityDetailPage } from "./pages/AbilityDetailPage";
 
 const defaultHeaderOptions: StackNavigationOptions &
   BottomTabNavigationOptions = {
@@ -57,6 +58,11 @@ export function Routes() {
         name="ContentDetail"
         component={ContentDetailPage}
         options={{ title: "작품" }}
+      />
+      <Stack.Screen
+        name="AbilityDetail"
+        component={AbilityDetailPage}
+        options={({ route }) => ({ title: route.params.title })}
       />
       <Stack.Screen
         name="ImageViewer"
