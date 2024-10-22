@@ -16,20 +16,23 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { SearchIcon, MyIcon, HomeIcon, ArrowLeftIcon } from "@/icons";
 import { AbilityDetailPage } from "./pages/AbilityDetailPage";
+import { SettingsIcon } from "./icons/SettingsIcon";
 
 const defaultHeaderOptions: StackNavigationOptions &
   BottomTabNavigationOptions = {
   headerStatusBarHeight: 56,
   headerTitleStyle: [text.h3],
   headerBackTitleVisible: false,
-  headerBackImage: () => (
-    <ArrowLeftIcon width={24} height={24} style={{ margin: 10 }} />
-  ),
-  headerBackgroundContainerStyle: {
-    borderBottomWidth: 1,
-    borderBottomColor: colors.gray300,
-  },
+  headerBackImage: () => <ArrowLeftIcon width={24} height={24} />,
+  headerBackgroundContainerStyle: [
+    {
+      borderBottomWidth: 1,
+      borderBottomColor: colors.gray300,
+    },
+  ],
   headerShadowVisible: false,
+  headerRightContainerStyle: padding.right(20),
+  headerLeftContainerStyle: padding.left(20),
 };
 
 export function Routes() {
@@ -125,9 +128,11 @@ function MainTabs() {
         name="My"
         options={{
           title: "마이",
+          headerTitle: "",
           tabBarIcon: ({ focused, color }) => (
             <MyIcon width={24} height={24} filled={focused} color={color} />
           ),
+          headerRight: () => <SettingsIcon width={24} height={24} />,
         }}
         component={MyPage}
       />
