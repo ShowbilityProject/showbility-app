@@ -97,6 +97,7 @@ function MainTabs() {
         name="Search"
         options={{
           title: "검색",
+          headerShown: false,
           tabBarIcon: ({ focused, color }) => (
             <SearchIcon width={24} height={24} filled={focused} color={color} />
           ),

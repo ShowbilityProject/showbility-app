@@ -33,7 +33,7 @@ export function ContentDetailPage({}: StackPageProps<"ContentDetail">) {
   return (
     <>
       <ScrollView
-        contentContainerStyle={[flex.v({ gap: 4 }), { paddingBottom: 190 }]}
+        contentContainerStyle={[flex.y({ gap: 4 }), { paddingBottom: 190 }]}
       >
         {mockImages.map((image, index) => (
           <TouchableWithoutFeedback
@@ -57,10 +57,10 @@ export function ContentDetailPage({}: StackPageProps<"ContentDetail">) {
       >
         <BottomSheetView style={[flexFill, padding.top(8), padding.x(24)]}>
           <View
-            style={[flex.v({ gap: 16 }), h(TOP_AREA - 32)]}
+            style={[flex.y({ gap: 16 }), h(TOP_AREA - 32)]}
             onLayout={e => setTopAreaHeight(e.nativeEvent.layout.height)}
           >
-            <View style={[flex.h({ align: "center", gap: 8 })]}>
+            <View style={[flex.x({ align: "center", gap: 8 })]}>
               <Image style={[size(24), round.full, bg(colors.gray300)]} />
               <Text style={text.h4}>이쇼빌</Text>
               <TouchableOpacity onPress={() => {}}>

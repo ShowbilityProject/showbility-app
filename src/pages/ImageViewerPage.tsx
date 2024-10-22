@@ -16,7 +16,7 @@ export function ImageViewerPage({
     <View
       style={[
         { flex: 1, backgroundColor: colors.black },
-        flex.v({ justify: "center" }),
+        flex.y({ justify: "center" }),
       ]}
     >
       <TouchableOpacity

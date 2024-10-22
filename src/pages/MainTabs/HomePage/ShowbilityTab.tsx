@@ -13,7 +13,7 @@ export function ShowbilityTab() {
     <>
       <ScrollView
         contentContainerStyle={[
-          flex.v({ gap: 12 }),
+          flex.y({ gap: 12 }),
           {
             paddingVertical: 16,
             paddingHorizontal: 20,
