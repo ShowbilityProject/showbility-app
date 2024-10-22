@@ -9,6 +9,7 @@ export type StackParams = {
   MainTab: NavigatorScreenParams<TabParams>;
   Login: undefined;
   ContentDetail: { id: string };
+  Comments: { id: string };
   ImageViewer: { uri: string };
   AbilityDetail: { title: string };
 };

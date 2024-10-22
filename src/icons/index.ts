@@ -5,3 +5,5 @@ export * from "./HomeIcon";
 export * from "./MyIcon";
 export * from "./SearchIcon";
 export * from "./SettingsIcon";
+export * from "./LikeIcon";
+export * from "./CommentIcon";

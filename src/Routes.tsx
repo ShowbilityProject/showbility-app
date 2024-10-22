@@ -5,7 +5,12 @@ import {
 } from "@react-navigation/stack";
 import { BottomTabNavigationOptions } from "@react-navigation/bottom-tabs";
 
-import { LoginPage, ImageViewerPage, ContentDetailPage } from "@/pages";
+import {
+  LoginPage,
+  ImageViewerPage,
+  ContentDetailPage,
+  CommentsPage,
+} from "@/pages";
 import { HomePage, SearchPage, MyPage } from "@/pages/MainTabs";
 
 import { text, colors, h, padding } from "@/styles";
@@ -61,6 +66,11 @@ export function Routes() {
         name="ContentDetail"
         component={ContentDetailPage}
         options={{ title: "작품" }}
+      />
+      <Stack.Screen
+        name="Comments"
+        component={CommentsPage}
+        options={{ title: "댓글 15" }}
       />
       <Stack.Screen
         name="AbilityDetail"

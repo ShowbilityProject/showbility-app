@@ -19,16 +19,23 @@ import {
   TouchableWithoutFeedback,
   View,
   TouchableOpacity,
+  StyleProp,
+  TextStyle,
 } from "react-native";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { mockImages } from "@/mocks/images";
 import { useState } from "react";
+import { CommentIcon, LikeIcon } from "@/icons";
 
 const TOP_AREA = 190;
 
-export function ContentDetailPage({}: StackPageProps<"ContentDetail">) {
+export function ContentDetailPage({
+  route: {
+    params: { id },
+  },
+}: StackPageProps<"ContentDetail">) {
   const navigation = useNavigation();
-  const [topAreaHeight, setTopAreaHeight] = useState(1);
+  const [liked, setLiked] = useState(false);
 
   return (
     <>
@@ -56,10 +63,7 @@ export function ContentDetailPage({}: StackPageProps<"ContentDetail">) {
         ]}
       >
         <BottomSheetView style={[flexFill, padding.top(8), padding.x(24)]}>
-          <View
-            style={[flex.y({ gap: 16 }), h(TOP_AREA - 32)]}
-            onLayout={e => setTopAreaHeight(e.nativeEvent.layout.height)}
-          >
+          <View style={[flex.y({ gap: 16 }), h(TOP_AREA - 32)]}>
             <View style={[flex.x({ align: "center", gap: 8 })]}>
               <Image style={[size(24), round.full, bg(colors.gray300)]} />
               <Text style={text.h4}>이쇼빌</Text>
@@ -74,6 +78,40 @@ export function ContentDetailPage({}: StackPageProps<"ContentDetail">) {
               작품 제목입니다 작품 제목입니다 작품 제목입니다작품 제목입니다
               작품 제목입니다
             </Text>
+
+            <View
+              style={[flex.x({ align: "center", justify: "space-between" })]}
+            >
+              <View style={[flex.x({ align: "center", gap: 16 })]}>
+                <TouchableOpacity
+                  style={[flex.x({ align: "center", gap: 4 })]}
+                  onPress={() => setLiked(t => !t)}
+                >
+                  <LikeIcon
+                    filled={liked}
+                    width={24}
+                    height={24}
+                    color={liked ? colors.primary : colors.gray700}
+                  />
+                  <Text style={[text.body3, text.color(colors.gray700)]}>
+                    {liked ? "1,235" : "1,234"}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[flex.x({ align: "center", gap: 4 })]}
+                  onPress={() => navigation.navigate("Comments", { id })}
+                >
+                  <CommentIcon width={24} height={24} color={colors.gray700} />
+                  <Text style={[text.body3, text.color(colors.gray700)]}>
+                    1,234
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              <Text style={[text.body3, text.color(colors.gray500)]}>
+                2024.09.30
+              </Text>
+            </View>
           </View>
 
           <View
@@ -91,8 +129,39 @@ export function ContentDetailPage({}: StackPageProps<"ContentDetail">) {
             일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오
             일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오일이삼사오
           </Text>
+
+          <Text
+            style={[
+              text.h4,
+              text.color(colors.black),
+              padding.top(32),
+              padding.bottom(8),
+            ]}
+          >
+            태그 정보
+          </Text>
+          <View style={flex.x({ gap: 8 })}>
+            <View style={tagStyle}>
+              <Text style={[text.h5, text.color(colors.gray800)]}>#로고</Text>
+            </View>
+            <View style={tagStyle}>
+              <Text style={[text.h5, text.color(colors.gray800)]}>
+                #졸업작품
+              </Text>
+            </View>
+            <View style={tagStyle}>
+              <Text style={[text.h5, text.color(colors.gray800)]}>#심플한</Text>
+            </View>
+          </View>
         </BottomSheetView>
       </BottomSheet>
     </>
   );
 }
+
+const tagStyle: StyleProp<TextStyle> = [
+  padding.x(14),
+  padding.y(8),
+  bg(colors.gray200),
+  round.full,
+];
