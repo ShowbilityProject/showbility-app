@@ -8,6 +8,7 @@ import type { StackScreenProps } from "@react-navigation/stack";
 export type StackParams = {
   MainTab: NavigatorScreenParams<TabParams>;
   Login: undefined;
+  Upload: undefined;
   ContentDetail: { id: string };
   Comments: { id: string };
   ImageViewer: { uri: string };

@@ -55,16 +55,20 @@ export function ShowbilityTab() {
           </Pressable>
         ))}
       </ScrollView>
-      <FloatingActionButton expanded={expand} />
+      <FloatingActionButton
+        expanded={expand}
+        onPress={() => navigation.navigate("Upload")}
+      />
     </>
   );
 }
 
 interface Props {
   expanded: boolean;
+  onPress?: () => void;
 }
 
-function FloatingActionButton({ expanded }: Props) {
+function FloatingActionButton({ expanded, onPress }: Props) {
   const width = useSharedValue<number>(0);
 
   useEffect(() => {
@@ -77,6 +81,7 @@ function FloatingActionButton({ expanded }: Props) {
 
   return (
     <Pressable
+      onPress={onPress}
       style={[
         h(48),
         widthStyle,

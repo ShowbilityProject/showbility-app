@@ -1,5 +1,8 @@
 import {
   CardStyleInterpolators,
+  HeaderStyleInterpolators,
+  StackHeaderInterpolatedStyle,
+  StackHeaderInterpolationProps,
   StackNavigationOptions,
   TransitionPresets,
 } from "@react-navigation/stack";
@@ -10,18 +13,35 @@ import {
   ImageViewerPage,
   ContentDetailPage,
   CommentsPage,
+  UploadPage,
 } from "@/pages";
 import { HomePage, SearchPage, MyPage } from "@/pages/MainTabs";
 
 import { text, colors, h, padding } from "@/styles";
 
 import { Stack, Tab } from "@/navigation";
-import { Dimensions, View } from "react-native";
+import { Animated, Dimensions, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { SearchIcon, MyIcon, HomeIcon, ArrowLeftIcon } from "@/icons";
+import {
+  SearchIcon,
+  MyIcon,
+  HomeIcon,
+  ArrowLeftIcon,
+  CloseIcon,
+} from "@/icons";
 import { AbilityDetailPage } from "./pages/AbilityDetailPage";
 import { SettingsIcon } from "./icons/SettingsIcon";
+import { useNavigation } from "@react-navigation/core";
+
+function HeaderCloseButton() {
+  const navigation = useNavigation();
+  return (
+    <TouchableOpacity onPress={navigation.goBack}>
+      <CloseIcon color={colors.black} width={24} height={24} />
+    </TouchableOpacity>
+  );
+}
 
 const defaultHeaderOptions: StackNavigationOptions &
   BottomTabNavigationOptions = {
@@ -60,6 +80,17 @@ export function Routes() {
           headerShown: false,
           gestureEnabled: false,
           ...TransitionPresets.ModalTransition,
+        }}
+      />
+      <Stack.Screen
+        name="Upload"
+        component={UploadPage}
+        options={{
+          title: "내 작품 올리기",
+          headerMode: "screen",
+          headerLeft: () => null,
+          headerRight: () => <HeaderCloseButton />,
+          ...TransitionPresets.ModalSlideFromBottomIOS,
         }}
       />
       <Stack.Screen

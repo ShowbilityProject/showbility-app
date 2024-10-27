@@ -1,7 +1,7 @@
 import { StyleProp, FlexStyle } from "react-native";
 
 interface Props {
-  dir: "x" | "y";
+  dir?: "x" | "y";
   justify?: FlexStyle["justifyContent"];
   align?: FlexStyle["alignItems"];
   gap?: number;
@@ -10,7 +10,7 @@ interface Props {
 export function flex({ dir, justify, align, gap }: Props) {
   return {
     display: "flex",
-    flexDirection: ({ x: "row", y: "column" } as const)[dir],
+    flexDirection: dir && ({ x: "row", y: "column" } as const)[dir],
     justifyContent: justify,
     alignItems: align,
     gap: gap,
@@ -19,5 +19,8 @@ export function flex({ dir, justify, align, gap }: Props) {
 
 flex.y = (props: Omit<Props, "dir"> = {}) => flex({ dir: "y", ...props });
 flex.x = (props: Omit<Props, "dir"> = {}) => flex({ dir: "x", ...props });
+
+flex.center = (props: Props = {}) =>
+  flex({ justify: "center", align: "center", ...props });
 
 export const flexFill = { flex: 1 } as const;
