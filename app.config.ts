@@ -50,7 +50,7 @@ const config: ExpoConfig = {
       "expo-font",
       {
         fonts: [
-          "Pretendard-thin",
+          "Pretendard-Thin",
           "Pretendard-ExtraLight",
           "Pretendard-Light",
           "Pretendard-Regular",
