@@ -10,6 +10,8 @@ import { Routes } from "./Routes";
 import { registerRootComponent } from "expo";
 import { colors } from "./styles/colors";
 
+import "./defaultProps";
+
 SplashScreen.preventAutoHideAsync();
 
 function App() {
