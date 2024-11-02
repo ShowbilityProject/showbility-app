@@ -27,11 +27,12 @@ export function HomePage(props: TabPageProps<"Home">) {
         renderTabBar={props => (
           <TabBar
             style={{
+              height: 56,
+              paddingTop: 16,
               backgroundColor: "transparent",
               paddingHorizontal: 20,
               borderBottomColor: colors.gray300,
               borderBottomWidth: 0.4,
-              marginTop: 16,
             }}
             gap={16}
             contentContainerStyle={{
