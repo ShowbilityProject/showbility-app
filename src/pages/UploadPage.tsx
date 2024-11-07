@@ -63,6 +63,7 @@ export function UploadPage({
             onPress={async () => {
               const { assets } = await launchImageLibraryAsync({
                 allowsMultipleSelection: true,
+                orderedSelection: true,
               });
 
               if (!assets) return;
