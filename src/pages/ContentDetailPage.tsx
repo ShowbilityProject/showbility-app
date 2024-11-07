@@ -40,7 +40,11 @@ export function ContentDetailPage({
   return (
     <>
       <ScrollView
-        contentContainerStyle={[flex.y({ gap: 4 }), { paddingBottom: 190 }]}
+        contentContainerStyle={[
+          flex.y({ gap: 4 }),
+          { paddingBottom: 190 },
+          bg(colors.gray200),
+        ]}
       >
         {mockImages.map((image, index) => (
           <TouchableWithoutFeedback

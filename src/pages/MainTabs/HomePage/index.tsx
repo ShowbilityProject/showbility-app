@@ -5,6 +5,10 @@ import { ShowbilityTab } from "./ShowbilityTab";
 import { AbilityTab } from "./AbilityTab";
 import { colors } from "@/styles/colors";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { TouchableOpacity, View } from "react-native";
+import { FilterIcon } from "@/icons";
+import { flex, padding } from "@/styles";
+import { Pressable } from "@/components";
 
 export function HomePage(props: TabPageProps<"Home">) {
   const [tabIndex, setTabIndex] = useState(0);
@@ -25,41 +29,53 @@ export function HomePage(props: TabPageProps<"Home">) {
           ability: AbilityTab,
         })}
         renderTabBar={props => (
-          <TabBar
-            style={{
-              height: 56,
-              paddingTop: 16,
-              backgroundColor: "transparent",
-              paddingHorizontal: 20,
-              borderBottomColor: colors.gray300,
-              borderBottomWidth: 0.4,
-            }}
-            gap={16}
-            contentContainerStyle={{
-              position: "relative",
-            }}
-            tabStyle={{
-              width: "auto",
-              padding: 4,
-              minHeight: 0,
-            }}
-            indicatorContainerStyle={{ marginHorizontal: 20 }}
-            activeColor="black"
-            inactiveColor="grey"
-            labelStyle={{
-              margin: 0,
-              fontSize: 20,
-              fontWeight: 700,
-              lineHeight: 28,
-            }}
-            indicatorStyle={{
-              backgroundColor: "black",
-              height: 2,
-              bottom: -1,
-              // left: 20,
-            }}
-            {...props}
-          />
+          <View
+            style={[
+              flex.x({ align: "center" }),
+              padding.x(20),
+              {
+                borderBottomColor: colors.gray300,
+                borderBottomWidth: 0.5,
+              },
+            ]}
+          >
+            <TabBar
+              style={{
+                flex: 1,
+                height: 56,
+                paddingTop: 16,
+                backgroundColor: "transparent",
+              }}
+              gap={16}
+              contentContainerStyle={{
+                position: "relative",
+              }}
+              tabStyle={{
+                width: "auto",
+                padding: 4,
+                minHeight: 0,
+              }}
+              // indicatorContainerStyle={{ marginHorizontal: 20 }}
+              activeColor="black"
+              inactiveColor="grey"
+              labelStyle={{
+                margin: 0,
+                fontSize: 20,
+                fontWeight: 700,
+                lineHeight: 28,
+              }}
+              indicatorStyle={{
+                backgroundColor: "black",
+                height: 2,
+                bottom: -1,
+                // left: 20,
+              }}
+              {...props}
+            />
+            <TouchableOpacity>
+              <FilterIcon width={24} height={24} />
+            </TouchableOpacity>
+          </View>
         )}
       />
     </SafeAreaView>
