@@ -11,8 +11,11 @@ import { registerRootComponent } from "expo";
 import { colors } from "./styles/colors";
 
 import "./defaultProps";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 SplashScreen.preventAutoHideAsync();
+
+const queryClient = new QueryClient();
 
 function App() {
   const { authenticated, loading } = useAuthState();
@@ -24,23 +27,25 @@ function App() {
   }, [loading]);
 
   return (
-    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <NavigationContainer
-        theme={{
-          dark: false,
-          colors: {
-            primary: colors.primary,
-            background: colors.white,
-            card: colors.white,
-            text: colors.gray900,
-            border: colors.gray300,
-            notification: colors.primary,
-          },
-        }}
-      >
-        <Routes />
-      </NavigationContainer>
-    </View>
+    <QueryClientProvider client={queryClient}>
+      <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+        <NavigationContainer
+          theme={{
+            dark: false,
+            colors: {
+              primary: colors.primary,
+              background: colors.white,
+              card: colors.white,
+              text: colors.gray900,
+              border: colors.gray300,
+              notification: colors.primary,
+            },
+          }}
+        >
+          <Routes />
+        </NavigationContainer>
+      </View>
+    </QueryClientProvider>
   );
 }
 
