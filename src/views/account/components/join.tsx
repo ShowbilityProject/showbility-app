@@ -11,7 +11,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import Modal from "react-native-modal";
+// import Modal from "react-native-modal";
 
 import { isEmpty } from "../../../common/util";
 import { normalizeFontSize } from "../../../component/font";
@@ -276,41 +276,41 @@ export function JoinScreen() {
             </ActionButton>
           </View>
 
-          <Modal
-            style={styles.modalWrapper}
-            backdropOpacity={0.4}
-            isVisible={isModalVisible}
-            onBackdropPress={() => setModalVisible(false)}
-          >
-            <View style={styles.modal}>
-              <View style={[styles.allAgreeWrapper, styles.borderBottom]}>
-                <CheckBox
-                  checked={agreedRule && agreeMarketing}
-                  toggle={[setAgreedRule, setAgreeMarketing]}
-                />
-                <Text style={styles.agreeText}>서비스 이용약관 전체 동의</Text>
-              </View>
-              <View style={[styles.agreeWrapper, { marginTop: 20 }]}>
-                <CheckBox checked={agreedRule} toggle={setAgreedRule} />
-                <Text style={styles.smallAgreeText}>
-                  [필수] 이용약관 및 개인정보 처리방침
-                </Text>
-              </View>
-              <View style={styles.agreeWrapper}>
-                <CheckBox checked={agreeMarketing} toggle={setAgreeMarketing} />
-                <Text style={styles.smallAgreeText}>
-                  [선택] 마케팅 정보 수집 및 수신 동의
-                </Text>
-              </View>
-              <Text style={styles.termsText}>
-                당신의 재능 활동은 연결된 계정에 노출되지 않습니다.{"\n"}
-                회원가입시 개인정보 처리방침과 이용약관을 확인하였으며,
-                동의합니다.
-              </Text>
-
-              <ActionButton onPress={signUp}>회원가입</ActionButton>
-            </View>
-          </Modal>
+          {/* <Modal */}
+          {/*   style={styles.modalWrapper} */}
+          {/*   backdropOpacity={0.4} */}
+          {/*   isVisible={isModalVisible} */}
+          {/*   onBackdropPress={() => setModalVisible(false)} */}
+          {/* > */}
+          {/*   <View style={styles.modal}> */}
+          {/*     <View style={[styles.allAgreeWrapper, styles.borderBottom]}> */}
+          {/*       <CheckBox */}
+          {/*         checked={agreedRule && agreeMarketing} */}
+          {/*         toggle={[setAgreedRule, setAgreeMarketing]} */}
+          {/*       /> */}
+          {/*       <Text style={styles.agreeText}>서비스 이용약관 전체 동의</Text> */}
+          {/*     </View> */}
+          {/*     <View style={[styles.agreeWrapper, { marginTop: 20 }]}> */}
+          {/*       <CheckBox checked={agreedRule} toggle={setAgreedRule} /> */}
+          {/*       <Text style={styles.smallAgreeText}> */}
+          {/*         [필수] 이용약관 및 개인정보 처리방침 */}
+          {/*       </Text> */}
+          {/*     </View> */}
+          {/*     <View style={styles.agreeWrapper}> */}
+          {/*       <CheckBox checked={agreeMarketing} toggle={setAgreeMarketing} /> */}
+          {/*       <Text style={styles.smallAgreeText}> */}
+          {/*         [선택] 마케팅 정보 수집 및 수신 동의 */}
+          {/*       </Text> */}
+          {/*     </View> */}
+          {/*     <Text style={styles.termsText}> */}
+          {/*       당신의 재능 활동은 연결된 계정에 노출되지 않습니다.{"\n"} */}
+          {/*       회원가입시 개인정보 처리방침과 이용약관을 확인하였으며, */}
+          {/*       동의합니다. */}
+          {/*     </Text> */}
+          {/**/}
+          {/*     <ActionButton onPress={signUp}>회원가입</ActionButton> */}
+          {/*   </View> */}
+          {/* </Modal> */}
         </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>

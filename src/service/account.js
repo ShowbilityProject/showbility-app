@@ -1,22 +1,34 @@
-import {API_TOKEN, HOST} from '../common/constant';
-import {asyncGet, asyncPost, deleteReq, get, post, rawPost} from '../common/requester';
-import {removeUserSession, retrieveUserSession, storeUserSession} from '../common/securestorage';
-import {isEmpty} from '../common/util';
-import base64 from 'react-native-base64';
+import { API_TOKEN, HOST } from "../common/constant";
+import {
+  asyncGet,
+  asyncPost,
+  deleteReq,
+  get,
+  post,
+  rawPost,
+} from "../common/requester";
+import {
+  removeUserSession,
+  retrieveUserSession,
+  storeUserSession,
+} from "../common/securestorage";
+import { isEmpty } from "../common/util";
+// import base64 from 'react-native-base64';
+const base64 = {};
 
 function saveToken(token) {
   return storeUserSession(API_TOKEN, token).then(r => {
     if (r === true) {
-      console.log('Save Token Succeed');
+      console.log("Save Token Succeed");
     } else {
-      console.log('Save Token failed');
+      console.log("Save Token failed");
     }
     return r;
   });
 }
 
 export function requestSignIn(email, password) {
-  let uri = HOST + '/getToken/';
+  let uri = HOST + "/getToken/";
   let body = {
     username: email,
     password: password,
@@ -30,13 +42,13 @@ export function requestSignIn(email, password) {
       else return saveToken(token);
     })
     .catch(err => {
-      console.log('Error in requestSignIn:' + err);
+      console.log("Error in requestSignIn:" + err);
       return false;
     });
 }
 
 export async function requestEmailValidationCode(email) {
-  let uri = HOST + '/user/request_code';
+  let uri = HOST + "/user/request_code";
   let body = {
     email: email,
   };
@@ -47,11 +59,11 @@ export async function requestEmailValidationCode(email) {
     .catch(err => {
       console.log(err);
       return false;
-    })
+    });
 }
 
 export async function verifyEmailCode(email, code) {
-  let uri = HOST + '/user/verify_email_code';
+  let uri = HOST + "/user/verify_email_code";
   let body = {
     email: email,
     code: code,
@@ -63,11 +75,11 @@ export async function verifyEmailCode(email, code) {
     .catch(err => {
       console.log(err);
       return false;
-    })
+    });
 }
 
 export async function requestFindEmail(name, phoneNumber) {
-  let uri = HOST + '/user/request_find_email';
+  let uri = HOST + "/user/request_find_email";
   let body = {
     name: name,
     phoneNumber: phoneNumber,
@@ -77,7 +89,7 @@ export async function requestFindEmail(name, phoneNumber) {
     .catch(err => {
       console.log(err);
       return false;
-    })
+    });
 }
 
 export async function requestFindPasswordEmailVerification(
@@ -85,7 +97,7 @@ export async function requestFindPasswordEmailVerification(
   phoneNumber,
   email,
 ) {
-  let uri = HOST + '/user/request-email-verification/';
+  let uri = HOST + "/user/request-email-verification/";
   let body = {
     name: name,
     phoneNumber: phoneNumber,
@@ -96,11 +108,11 @@ export async function requestFindPasswordEmailVerification(
     .catch(err => {
       console.log(err);
       return false;
-    })
+    });
 }
 
 export async function verifyPasswordResetCode(email, code) {
-  let uri = HOST + '/user/verify-code/';
+  let uri = HOST + "/user/verify-code/";
   let body = {
     email: email,
     code: code,
@@ -113,11 +125,11 @@ export async function verifyPasswordResetCode(email, code) {
     .catch(err => {
       console.log(err);
       return false;
-    })
+    });
 }
 
 export async function requestResetPassword(email, password, authHash) {
-  let uri = HOST + '/user/reset-password/';
+  let uri = HOST + "/user/reset-password/";
   let body = {
     email: email,
     password: password,
@@ -128,7 +140,7 @@ export async function requestResetPassword(email, password, authHash) {
     .catch(err => {
       console.log(err);
       return false;
-    })
+    });
 }
 
 export async function requestSignUp(
@@ -138,7 +150,7 @@ export async function requestSignUp(
   agreeRule,
   agreeMarketing,
 ) {
-  let uri = HOST + '/user/';
+  let uri = HOST + "/user/";
   let body = {
     username: email,
     nickname: nickname,
@@ -153,7 +165,7 @@ export async function requestSignUp(
     })
     .then(response => response.json())
     .then(json => {
-      return saveToken(json['token']);
+      return saveToken(json["token"]);
     })
     .catch(err => {
       console.log(err);
@@ -167,7 +179,7 @@ export async function requestSignUp(
 //   ]
 // }
 export async function requestDuplicateEmailCheck(email) {
-  let uri = HOST + '/user/validate_email/';
+  let uri = HOST + "/user/validate_email/";
   let body = {
     username: email,
   };
@@ -183,7 +195,7 @@ export async function requestDuplicateEmailCheck(email) {
 }
 
 export async function requestDuplicateNicknameCheck(nickname) {
-  let uri = HOST + '/user/validate_nickname/';
+  let uri = HOST + "/user/validate_nickname/";
   let body = {
     nickname: nickname,
   };
@@ -199,11 +211,11 @@ export async function requestDuplicateNicknameCheck(nickname) {
 }
 
 export function validateToken(token) {
-  let uri = '/app/sign/validate-token';
+  let uri = "/app/sign/validate-token";
   return post(uri).then(response => response);
 }
 
-export function getProfile(user_id = 'my') {
+export function getProfile(user_id = "my") {
   let uri = HOST + `/user/${user_id}/`;
   return get(uri)
     .then(res => {
@@ -220,7 +232,7 @@ export function getProfile(user_id = 'my') {
 }
 
 export async function updateMyProfile(formData) {
-  let uri = HOST + '/user/my/';
+  let uri = HOST + "/user/my/";
   return await rawPost(uri, formData);
 }
 
@@ -246,7 +258,7 @@ export function requestFollow(user_id) {
 export function requestUnfollow(user_id) {
   let uri = HOST + `/user/${user_id}/follow/`;
   console.log(uri);
-  return post(uri, undefined, true, 'DELETE')
+  return post(uri, undefined, true, "DELETE")
     .then(res => {
       return res.ok;
     })
@@ -258,7 +270,7 @@ export function requestUnfollow(user_id) {
 
 export async function verifyToken() {
   let token = await retrieveUserSession(API_TOKEN);
-  let uri = HOST + '/verify-token/';
+  let uri = HOST + "/verify-token/";
   let body = {
     token: token,
   };
@@ -274,7 +286,7 @@ export async function verifyToken() {
 
 export async function refreshToken() {
   let token = await retrieveUserSession(API_TOKEN);
-  let uri = HOST + '/refresh-token/';
+  let uri = HOST + "/refresh-token/";
   let body = {
     token: token,
   };
@@ -290,7 +302,7 @@ export async function refreshToken() {
 
 export async function requestLoginKakao(data) {
   await requestSignOut();
-  let uri = HOST + '/user/kakao/';
+  let uri = HOST + "/user/kakao/";
   let ret = await asyncPost(uri, data);
   let token = ret.token;
   if (isEmpty(token)) return false;
@@ -299,7 +311,7 @@ export async function requestLoginKakao(data) {
 
 export async function requestLoginApple(data) {
   await requestSignOut();
-  let uri = HOST + '/user/apple/';
+  let uri = HOST + "/user/apple/";
   let ret = await asyncPost(uri, data);
   let token = ret.token;
   if (isEmpty(token)) return false;
@@ -316,9 +328,9 @@ export async function getCurrentUser() {
   let token = await retrieveUserSession(API_TOKEN);
   if (isEmpty(token)) return {};
   else {
-    let infos = token.split('.');
+    let infos = token.split(".");
     let infoString = await base64.decode(infos[1]);
-    infoString = infoString.replace(/\0/g, '');
+    infoString = infoString.replace(/\0/g, "");
     return JSON.parse(infoString);
   }
 }
