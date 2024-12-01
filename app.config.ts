@@ -29,10 +29,6 @@ const config: ExpoConfig = {
   },
   android: {
     package: `com.showbility.app.${isDev ? "ShowbilityDev" : "Showbility"}`,
-    adaptiveIcon: {
-      foregroundImage: "./assets/adaptive-icon.png",
-      backgroundColor: "#ffffff",
-    },
   },
   web: {
     favicon: "./assets/favicon.png",
