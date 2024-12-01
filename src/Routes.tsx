@@ -20,7 +20,7 @@ import { HomePage, SearchPage, MyPage } from "@/pages/MainTabs";
 
 import { text, colors, h, padding } from "@/styles";
 
-import { Stack, Tab } from "@/navigation";
+// import { Stack, Tab } from "@/navigation";
 import { Animated, Dimensions, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -34,6 +34,7 @@ import {
 import { AbilityDetailPage } from "./pages/AbilityDetailPage";
 import { SettingsIcon } from "./icons/SettingsIcon";
 import { useNavigation } from "@react-navigation/core";
+import { createStaticNavigation } from "@react-navigation/native";
 
 function HeaderCloseButton() {
   const navigation = useNavigation();
@@ -110,7 +111,7 @@ const MainTabs = createBottomTabNavigator({
   },
 });
 
-export const Routes = createStackNavigator({
+const Stack = createStackNavigator({
   screenOptions: { ...defaultHeaderOptions },
   screens: {
     MainTab: {
@@ -157,3 +158,5 @@ export const Routes = createStackNavigator({
     },
   },
 });
+
+export const Routes = createStaticNavigation(Stack);
