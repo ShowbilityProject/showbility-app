@@ -11,7 +11,7 @@ import {
 
 type Variant = "outlined" | "filled";
 
-interface InputProps extends TextInputProps {
+interface InputProps extends Omit<TextInputProps, "style"> {
   variant?: Variant;
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;
@@ -51,13 +51,13 @@ export function Input({
   );
 }
 
-const commonStyles: StyleProp<TextStyle> = [
+const commonStyles: StyleProp<ViewStyle> = [
   round.sm,
   padding.x(16),
   flex.x({ align: "center" }),
 ];
 
-const variantStyles: Record<Variant, (state: State) => StyleProp<TextStyle>> = {
+const variantStyles: Record<Variant, (state: State) => StyleProp<ViewStyle>> = {
   outlined: state => [
     {
       borderColor: state === "focused" ? colors.black : colors.gray300,

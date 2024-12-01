@@ -1,3 +1,4 @@
+import React from "react";
 import Svg, { SvgProps, Mask, Path } from "react-native-svg";
 
 interface Props extends SvgProps {

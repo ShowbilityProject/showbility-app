@@ -1,3 +1,4 @@
+import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Text, RefreshControl, ScrollView } from "react-native";
 import { Image } from "expo-image";
