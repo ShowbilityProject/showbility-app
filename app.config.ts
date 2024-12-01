@@ -7,7 +7,7 @@ const config: ExpoConfig = {
   slug: "showbility",
   owner: "showbility",
   version: "1.2.0",
-  runtimeVersion: "1.2.0",
+  runtimeVersion: "1.3.0",
   orientation: "portrait",
   icon: "./assets/icon.png",
   userInterfaceStyle: "light",
