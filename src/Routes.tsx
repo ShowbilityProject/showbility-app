@@ -7,6 +7,7 @@ import {
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
+  BottomTabBar,
 } from "@react-navigation/bottom-tabs";
 
 import {
@@ -21,8 +22,8 @@ import { HomePage, SearchPage, MyPage } from "@/pages/MainTabs";
 import { text, colors, h, padding } from "@/styles";
 
 // import { Stack, Tab } from "@/navigation";
-import { Animated, Dimensions, TouchableOpacity, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Dimensions, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import {
   SearchIcon,
@@ -64,6 +65,11 @@ const defaultHeaderOptions: StackNavigationOptions &
 
 const MainTabs = createBottomTabNavigator({
   initialRouteName: "Home",
+  tabBar: props => (
+    <SafeAreaView edges={["bottom"]}>
+      <BottomTabBar {...props} />
+    </SafeAreaView>
+  ),
   screenOptions: {
     ...defaultHeaderOptions,
     tabBarActiveTintColor: colors.black,
