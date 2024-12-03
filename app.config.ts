@@ -58,13 +58,7 @@ const config: ExpoConfig = {
         ].map(fontName => `./assets/fonts/${fontName}.otf`),
       },
     ],
-    [
-      "@react-native-seoul/kakao-login",
-      {
-        kakaoAppKey: process.env.EXPO_PUBLIC_KAKAO_KEY,
-        kotlinVersion: "1.8.0",
-      },
-    ],
+    ["@react-native-seoul/kakao-login", { kakaoAppKey: process.env.KAKAO_KEY }],
 
     [
       "expo-image-picker",
