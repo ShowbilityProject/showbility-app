@@ -1,8 +1,7 @@
-import { StackPageProps } from "@/navigation/types";
 import { useNavigation } from "@react-navigation/native";
 import { Button, View } from "react-native";
 
-export function LoginPage(props: StackPageProps<"Login">) {
+export function LoginPage() {
   const navigation = useNavigation();
 
   return (

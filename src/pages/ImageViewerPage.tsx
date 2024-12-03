@@ -1,16 +1,16 @@
 import { CloseIcon } from "@/icons/CloseIcon";
-import { StackPageProps } from "@/navigation";
 import { colors, flex } from "@/styles";
+import { StaticScreenProps, useNavigation } from "@react-navigation/native";
 
 import { Image } from "expo-image";
 import { TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export function ImageViewerPage({
-  navigation,
   route: { params },
-}: StackPageProps<"ImageViewer">) {
+}: StaticScreenProps<{ uri: string }>) {
   const { top } = useSafeAreaInsets();
+  const navigation = useNavigation();
 
   return (
     <View

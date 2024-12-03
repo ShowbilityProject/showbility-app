@@ -1,9 +1,10 @@
-import { TabPageProps } from "@/navigation/types";
+import React from "react";
+
 import { bg, colors, flex, padding, round, size, text, w, h } from "@/styles";
 import { Image } from "expo-image";
 import { View, Text } from "react-native";
 
-export function MyPage(props: TabPageProps<"My">) {
+export function MyPage() {
   return (
     <>
       <View

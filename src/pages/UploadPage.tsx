@@ -1,5 +1,4 @@
 import { CameraIcon } from "@/icons/CameraIcon";
-import { StackPageProps } from "@/navigation";
 import {
   KeyboardAvoidingView,
   ScrollView,
@@ -30,10 +29,7 @@ import {
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 
-export function UploadPage({
-  navigation,
-  route: { params },
-}: StackPageProps<"Upload">) {
+export function UploadPage() {
   const [pickedImages, setPickedImages] = useState<ImagePickerAsset[]>([]);
   const { top, bottom } = useSafeAreaInsets();
 

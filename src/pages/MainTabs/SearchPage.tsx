@@ -1,7 +1,6 @@
 import { Input } from "@/components";
 import { FilterIcon } from "@/icons";
 import { mockImages } from "@/mocks/images";
-import { TabPageProps } from "@/navigation/types";
 import { flexFill, padding, h, flex, margin, round, colors } from "@/styles";
 import { FlatList, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -9,7 +8,7 @@ import { Image } from "expo-image";
 import { useState } from "react";
 import { SceneRendererProps, TabBar, TabView } from "react-native-tab-view";
 
-export function SearchPage(props: TabPageProps<"Search">) {
+export function SearchPage() {
   const [tabIndex, setTabIndex] = useState(0);
 
   return (

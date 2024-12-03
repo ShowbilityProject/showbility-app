@@ -1,4 +1,3 @@
-import { TabPageProps } from "@/navigation/types";
 import { useState } from "react";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { ShowbilityTab } from "./ShowbilityTab";
@@ -8,9 +7,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { TouchableOpacity, View } from "react-native";
 import { FilterIcon } from "@/icons";
 import { flex, padding } from "@/styles";
-import { Pressable } from "@/components";
 
-export function HomePage(props: TabPageProps<"Home">) {
+export function HomePage() {
   const [tabIndex, setTabIndex] = useState(0);
 
   return (

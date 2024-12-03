@@ -1,4 +1,5 @@
-import { StackPageProps } from "@/navigation";
+import React from "react";
+
 import {
   colors,
   flex,
@@ -11,7 +12,7 @@ import {
   h,
   margin,
 } from "@/styles";
-import { useNavigation } from "@react-navigation/native";
+import { StaticScreenProps, useNavigation } from "@react-navigation/native";
 import { Image } from "expo-image";
 import {
   Text,
@@ -20,7 +21,7 @@ import {
   View,
   TouchableOpacity,
   StyleProp,
-  TextStyle,
+  ViewStyle,
 } from "react-native";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { mockImages } from "@/mocks/images";
@@ -33,7 +34,9 @@ export function ContentDetailPage({
   route: {
     params: { id },
   },
-}: StackPageProps<"ContentDetail">) {
+}: StaticScreenProps<{
+  id: string;
+}>) {
   const navigation = useNavigation();
   const [liked, setLiked] = useState(false);
 
@@ -163,7 +166,7 @@ export function ContentDetailPage({
   );
 }
 
-const tagStyle: StyleProp<TextStyle> = [
+const tagStyle: StyleProp<ViewStyle> = [
   padding.x(14),
   padding.y(8),
   bg(colors.gray200),

@@ -1,9 +1,10 @@
 import { Input } from "@/components";
 import { flexFill, padding } from "@/styles";
+import { StaticScreenProps } from "@react-navigation/native";
 import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-export function CommentsPage() {
+export function CommentsPage({}: StaticScreenProps<{ id: string }>) {
   const { top, bottom } = useSafeAreaInsets();
 
   return (

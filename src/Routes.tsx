@@ -34,7 +34,7 @@ import {
 } from "@/icons";
 import { AbilityDetailPage } from "./pages/AbilityDetailPage";
 import { SettingsIcon } from "./icons/SettingsIcon";
-import { useNavigation } from "@react-navigation/core";
+import { StaticParamList, useNavigation } from "@react-navigation/core";
 import { createStaticNavigation } from "@react-navigation/native";
 
 function HeaderCloseButton() {
@@ -166,3 +166,9 @@ const Stack = createStackNavigator({
 });
 
 export const Routes = createStaticNavigation(Stack);
+
+declare global {
+  namespace ReactNavigation {
+    interface RootParamList extends StaticParamList<typeof Stack> {}
+  }
+}

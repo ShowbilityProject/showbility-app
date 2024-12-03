@@ -1,3 +1,5 @@
+import React from "react";
+
 import { colors, padding, round, bg } from "@/styles";
 import { text } from "@/styles/typography";
 import { FlatList, Text, View } from "react-native";

@@ -1,5 +1,4 @@
 import { Input } from "@/components";
-import { StackPageProps } from "@/navigation";
 import { Text, View } from "react-native";
 import { padding, text } from "@/styles";
 import { StaticScreenProps } from "@react-navigation/native";
