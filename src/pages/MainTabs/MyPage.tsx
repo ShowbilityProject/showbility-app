@@ -3,8 +3,27 @@ import React from "react";
 import { bg, colors, flex, padding, round, size, text, w, h } from "@/styles";
 import { Image } from "expo-image";
 import { View, Text } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Effect } from "@/components/Effect";
+import { Button } from "@/components";
+
+const isLoggedIn = false;
 
 export function MyPage() {
+  const navigation = useNavigation();
+
+  if (!isLoggedIn) {
+    return (
+      <Button
+        onPress={() => {
+          navigation.navigate("Login");
+        }}
+      >
+        로그인
+      </Button>
+    );
+  }
+
   return (
     <>
       <View

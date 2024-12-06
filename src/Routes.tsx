@@ -129,7 +129,7 @@ const Stack = createStackNavigator({
       options: {
         headerShown: false,
         gestureEnabled: false,
-        ...TransitionPresets.ModalTransition,
+        ...TransitionPresets.ModalSlideFromBottomIOS,
       },
     },
     Upload: {
