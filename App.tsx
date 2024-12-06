@@ -1,61 +1,46 @@
-import React, { useCallback } from "react";
-import { View, AppRegistry, StatusBar } from "react-native";
+import React from "react";
+import { SafeAreaView, AppRegistry, Text, Image } from "react-native";
 
 import * as SplashScreen from "expo-splash-screen";
-import { useFonts } from "expo-font";
-
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-
-import { StackScreenOptions } from "./app/style/common";
-
-import LoginStackScreen from "./app/views/account/loginStack";
-import TopStackScreen from "./app/views/mainTab";
 
 import config from "./app.config";
-import { useAuthState } from "./app/common/hooks";
 
 const { expo } = config();
-const RootStack = createStackNavigator();
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
-    JejuGothicOTF: require("./assets/fonts/JejuGothicOTF.otf"),
-  });
-  const { authenticated, loading } = useAuthState();
-
-  // setVisible(true);
-  const iScreen = authenticated ? "App" : "Login";
-
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded && !loading) await SplashScreen.hideAsync();
-  }, [fontsLoaded, loading]);
-
-  if (!fontsLoaded || loading) return null;
-
   return (
-    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <StatusBar backgroundColor="#FFF" barStyle="light-content" />
-      <NavigationContainer>
-        <RootStack.Navigator
-          initialRouteName={iScreen}
-          screenOptions={StackScreenOptions}
-        >
-          <RootStack.Screen
-            name="App"
-            component={TopStackScreen}
-            options={{ headerShown: false, gestureEnabled: false }}
-          />
-          <RootStack.Screen
-            name="Login"
-            component={LoginStackScreen}
-            options={{ headerShown: false }}
-          />
-        </RootStack.Navigator>
-      </NavigationContainer>
-    </View>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Image
+        source={{
+          uri: "https://raw.githubusercontent.com/ShowbilityProject/showbility-app/refs/heads/deploy/close-v1/assets/caution.png",
+        }}
+        style={{ width: 96, height: 96, marginBottom: 12 }}
+      />
+      <Text style={{ fontSize: 20, fontWeight: "600", lineHeight: 28 }}>
+        쇼빌리티는 지금 준비 중..
+      </Text>
+      <Text
+        style={{
+          color: "#9B9B9B",
+          fontSize: 16,
+          fontWeight: "400",
+          lineHeight: 24,
+          marginTop: 4,
+          marginBottom: 10,
+        }}
+      >
+        곧, 멋진 모습으로 찾아뵐게요!
+      </Text>
+    </SafeAreaView>
   );
 }
 
