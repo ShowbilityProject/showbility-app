@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "app": "pnpm -F @showbility/app",
-    "api": "dotenv -- pnpm -F @showbility/api",
-    "dev": "dotenv -- pnpm -r --stream --parallel dev",
+    "api": "pnpm -F @showbility/api",
+    "dev": "pnpm -r --stream --parallel dev",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
