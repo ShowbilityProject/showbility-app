@@ -1,5 +1,6 @@
 {
   "buildCommand": "pnpm build",
+  "outputDirectory": ".vercel/output/functions",
   "rewrites": [
     {
       "source": "/(.*)",
