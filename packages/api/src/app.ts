@@ -1,6 +1,6 @@
 import { Hono } from "hono";
-import { db } from "./db";
-import { users } from "@/db/schema";
+import { db } from "./db.js";
+import { users } from "@/db/schema.js";
 
 import { migrate } from "drizzle-orm/libsql/migrator";
 

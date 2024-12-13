@@ -1,8 +1,8 @@
 import { serve } from "@hono/node-server";
-import { app } from "./app";
+import { app } from "./app.js";
 
 import { migrate } from "drizzle-orm/libsql/migrator";
-import { db } from "./db";
+import { db } from "./db.js";
 
 const port = 3000;
 

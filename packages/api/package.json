@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "tsx watch src/dev.ts",
     "deploy": "vercel",
-    "build": "tsc",
+    "typecheck": "tsc --noEmit",
     "db:push": "drizzle-kit push"
   },
   "dependencies": {
