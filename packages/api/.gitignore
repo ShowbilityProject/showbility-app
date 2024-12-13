@@ -29,4 +29,3 @@ lerna-debug.log*
 .DS_Store
 
 dist/
-api/

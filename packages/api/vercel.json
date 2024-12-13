@@ -1,9 +1,13 @@
 {
-  "buildCommand": "pnpm build",
   "rewrites": [
     {
       "source": "/(.*)",
       "destination": "/api"
     }
-  ]
+  ],
+  "functions": {
+    "api/index.ts": {
+      "includeFiles": "./src/**/*"
+    }
+  }
 }
