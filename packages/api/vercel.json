@@ -1,6 +1,5 @@
 {
   "buildCommand": "pnpm build",
-  "outputDirectory": "dist",
   "rewrites": [
     {
       "source": "/(.*)",
@@ -9,8 +8,7 @@
   ],
   "functions": {
     "api/index.js": {
-      "runtime": "@vercel/node@5.0.0"
+      "includeFiles": "./**"
     }
   }
 }
-
