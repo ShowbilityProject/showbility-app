@@ -7,7 +7,7 @@
     "skipLibCheck": true,
     "strict": true,
     "baseUrl": ".",
-    "outDir": "./.vercel/output/functions/api",
+    "outDir": "./.vercel/output/functions/api.func",
     "paths": {
       "@/*": ["src/*"]
     }
