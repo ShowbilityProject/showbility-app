@@ -1,13 +1,22 @@
 {
   "name": "@showbility/api",
+  "type": "module",
   "scripts": {
-    "dev": "vercel dev",
-    "deploy": "vercel"
+    "dev": "tsx watch src/dev.ts",
+    "deploy": "vercel",
+    "db:push": "drizzle-kit push"
   },
   "dependencies": {
-    "hono": "^4.6.13"
+    "@libsql/client": "^0.14.0",
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.38.1",
+    "hono": "^4.6.13",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@hono/node-server": "^1.13.7",
+    "drizzle-kit": "^0.30.0",
+    "tsx": "^4.7.1",
     "vercel": "^32.4.1"
   }
 }
