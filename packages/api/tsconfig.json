@@ -7,7 +7,7 @@
     "skipLibCheck": true,
     "strict": true,
     "baseUrl": ".",
-    "outDir": "./api",
+    "outDir": "dist/api",
     "paths": {
       "@/*": ["src/*"]
     }
