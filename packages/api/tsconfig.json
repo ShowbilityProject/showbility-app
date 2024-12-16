@@ -8,5 +8,5 @@
     "skipLibCheck": true,
     "strict": true
   },
-  "include": ["src", "api", "drizzle.config.ts"]
+  "include": ["src", "api"]
 }

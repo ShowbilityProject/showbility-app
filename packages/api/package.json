@@ -5,7 +5,8 @@
     "dev": "tsx watch src/dev.ts",
     "deploy": "vercel",
     "typecheck": "tsc --noEmit",
-    "db:push": "drizzle-kit push"
+    "db:push": "drizzle-kit push",
+    "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
     "@libsql/client": "^0.14.0",
