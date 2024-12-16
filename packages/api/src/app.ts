@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 import { db } from "./db.js";
-import { users } from "@/db/schema.js";
 
 import { migrate } from "drizzle-orm/libsql/migrator";
+import { users } from "./db/schema.js";
 
 export const config = {
   runtime: "edge",

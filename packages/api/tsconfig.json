@@ -6,12 +6,7 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "strict": true,
-    "baseUrl": ".",
-    "outDir": "./.vercel/output/functions/api.func",
-    "paths": {
-      "@/*": ["src/*"]
-    }
+    "strict": true
   },
   "include": ["src", "api", "drizzle.config.ts"]
 }
