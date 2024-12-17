@@ -1,4 +1,4 @@
-import { drizzle } from "drizzle-orm/libsql";
+import { drizzle } from "drizzle-orm/libsql/node";
 import { env } from "./env.js";
 
 export const db = drizzle({
