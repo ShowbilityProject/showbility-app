@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { db } from "./db/index.js";
+import { db } from "@/db";
 
 import { migrate } from "drizzle-orm/libsql/migrator";
 import { auth } from "./db/schema/auth.js";

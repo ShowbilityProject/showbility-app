@@ -4,7 +4,6 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
-    "deploy": "vercel",
     "typecheck": "tsc --noEmit",
     "db:push": "drizzle-kit push",
     "db:migrate": "drizzle-kit migrate"
@@ -22,9 +21,8 @@
     "@hono/vite-build": "^1.2.0",
     "@hono/vite-dev-server": "^0.17.0",
     "drizzle-kit": "^0.30.0",
-    "tsx": "^4.7.1",
-    "vercel": "^32.4.1",
     "vite": "^5.0.2",
-    "vite-plugin-vercel": "^9.0.3"
+    "vite-plugin-vercel": "^9.0.3",
+    "vite-tsconfig-paths": "^5.1.4"
   }
 }

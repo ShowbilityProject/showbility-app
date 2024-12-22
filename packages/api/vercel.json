@@ -2,7 +2,7 @@
   "buildCommand": "pnpm build",
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/api/(.*)",
       "destination": "/api"
     }
   ],
