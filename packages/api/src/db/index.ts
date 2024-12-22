@@ -1,9 +1,10 @@
 import { drizzle } from "drizzle-orm/libsql/node";
-import { env } from "../env.js";
+import { env } from "@/env";
+import { createClient } from "@libsql/client/web";
 
-export const db = drizzle({
-  connection: {
-    url: env.DB_URL,
-    authToken: env.DB_AUTH_TOKEN,
-  },
+const client = createClient({
+  url: env.DB_URL,
+  authToken: env.DB_AUTH_TOKEN,
 });
+
+export const db = drizzle(client);
