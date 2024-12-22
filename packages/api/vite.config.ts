@@ -10,6 +10,9 @@ import tsconfigPaths from "vite-tsconfig-paths";
 const entry = "./src/index.ts";
 
 export default defineConfig({
+  build: {
+    rollupOptions: { external: ["@libsql/client"] },
+  },
   plugins: [
     tsconfigPaths(),
     devServer({ entry: "./src/dev.ts", adapter: nodeAdapter }),
