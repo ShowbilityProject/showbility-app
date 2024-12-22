@@ -1,17 +1,13 @@
 import { Hono } from "hono";
-import { db } from "./db.js";
+import { db } from "./db/index.js";
 
 import { migrate } from "drizzle-orm/libsql/migrator";
-import { users } from "./db/schema.js";
-
-export const config = {
-  runtime: "edge",
-};
+import { auth } from "./db/schema/auth.js";
 
 const app = new Hono().basePath("/api");
 
 app.get("/", async c => {
-  const result = await db.select().from(users);
+  const result = await db.select().from(auth);
 
   return c.json({ message: "Hello Hono!", result });
 });

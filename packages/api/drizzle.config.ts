@@ -4,7 +4,7 @@ import { env } from "./src/env";
 
 export default defineConfig({
   out: "./migrations",
-  schema: "./src/db/schema.ts",
+  schema: "./src/db/schema/*",
   dialect: "turso",
   dbCredentials: {
     url: env.DB_URL,
