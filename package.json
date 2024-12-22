@@ -4,6 +4,7 @@
   "scripts": {
     "app": "pnpm -F @showbility/app",
     "api": "pnpm -F @showbility/api",
+    "web": "pnpm -F @showbility/web",
     "dev": "pnpm -r --stream --parallel dev",
     "typecheck": "tsc --noEmit"
   },
