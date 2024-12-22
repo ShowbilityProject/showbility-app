@@ -2,7 +2,8 @@
   "name": "@showbility/api",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/dev.ts",
+    "dev": "vite dev",
+    "build": "vite build",
     "deploy": "vercel",
     "typecheck": "tsc --noEmit",
     "db:push": "drizzle-kit push",
@@ -18,8 +19,12 @@
   },
   "devDependencies": {
     "@hono/node-server": "^1.13.7",
+    "@hono/vite-build": "^1.2.0",
+    "@hono/vite-dev-server": "^0.17.0",
     "drizzle-kit": "^0.30.0",
     "tsx": "^4.7.1",
-    "vercel": "^32.4.1"
+    "vercel": "^32.4.1",
+    "vite": "^5.0.2",
+    "vite-plugin-vercel": "^9.0.3"
   }
 }
