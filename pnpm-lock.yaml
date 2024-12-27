@@ -17,6 +17,9 @@ importers:
 
   packages/api:
     dependencies:
+      '@hono/zod-validator':
+        specifier: ^0.4.2
+        version: 0.4.2(hono@4.6.13)(zod@3.24.1)
       '@libsql/client':
         specifier: ^0.14.0
         version: 0.14.0
@@ -35,6 +38,9 @@ importers:
       zod:
         specifier: ^3.24.1
         version: 3.24.1
+      zod-openapi:
+        specifier: ^4.2.1
+        version: 4.2.1(zod@3.24.1)
     devDependencies:
       '@hono/node-server':
         specifier: ^1.13.7
@@ -151,6 +157,9 @@ importers:
       '@expo/prebuild-config':
         specifier: ^8.0.20
         version: 8.0.20
+      '@showbility/api':
+        specifier: workspace:*
+        version: link:../api
       '@types/react':
         specifier: ^18.3.12
         version: 18.3.12
@@ -1517,6 +1526,12 @@ packages:
     engines: {node: '>=18.14.1'}
     peerDependencies:
       hono: ^4
+
+  '@hono/zod-validator@0.4.2':
+    resolution: {integrity: sha512-1rrlBg+EpDPhzOV4hT9pxr5+xDVmKuz6YJl+la7VCwK6ass5ldyKm5fD+umJdV2zhHD6jROoCCv8NbTwyfhT0g==}
+    peerDependencies:
+      hono: '>=3.9.0'
+      zod: ^3.19.1
 
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
@@ -5453,6 +5468,12 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
+  zod-openapi@4.2.1:
+    resolution: {integrity: sha512-/JRJUIrg2W6rxiy90QNYiThSgD27+IQncK3l6JIxtXwu6I68TV66qlS/6gpdFOmvYfLOyafqTfxOj3OldUPOUA==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3.21.4
+
   zod@3.24.1:
     resolution: {integrity: sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==}
 
@@ -6988,6 +7009,11 @@ snapshots:
   '@hono/node-server@1.13.7(hono@4.6.13)':
     dependencies:
       hono: 4.6.13
+
+  '@hono/zod-validator@0.4.2(hono@4.6.13)(zod@3.24.1)':
+    dependencies:
+      hono: 4.6.13
+      zod: 3.24.1
 
   '@isaacs/cliui@8.0.2':
     dependencies:
@@ -11299,5 +11325,9 @@ snapshots:
   yn@3.1.1: {}
 
   yocto-queue@0.1.0: {}
+
+  zod-openapi@4.2.1(zod@3.24.1):
+    dependencies:
+      zod: 3.24.1
 
   zod@3.24.1: {}

@@ -2,15 +2,14 @@ import { serve } from "@hono/node-server";
 import { app } from "./app.js";
 
 import { migrate } from "drizzle-orm/libsql/migrator";
-import { db } from "./db.js";
+import { db } from "./db/index.js";
 
-const port = 3000;
+const PORT = 3000;
 
-console.log(`Server is running on http://localhost:${port}`);
+migrate(db, { migrationsFolder: `migrations` }).then(() => {
+  console.log(
+    `Server is running on \x1b[4m\x1b[34mhttp://localhost:${PORT}\x1b[0m`,
+  );
 
-migrate(db, { migrationsFolder: `migrations` }).then(() =>
-  serve({
-    fetch: app.fetch,
-    port,
-  }),
-);
+  serve({ fetch: app.fetch, port: PORT });
+});

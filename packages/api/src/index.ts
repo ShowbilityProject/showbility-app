@@ -1,4 +1,3 @@
-import { handle } from "hono/vercel";
 import { app } from "./app.js";
 
-export default handle(app);
+export type AppType = typeof app;

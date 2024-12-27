@@ -1,20 +1,24 @@
 {
   "name": "@showbility/api",
   "type": "module",
+  "main": "src/index.ts",
   "scripts": {
     "dev": "tsx watch src/dev.ts",
     "deploy": "vercel",
     "typecheck": "tsc --noEmit",
-    "db:push": "drizzle-kit push",
-    "db:migrate": "drizzle-kit migrate"
+    "db:generate": "NODE_OPTIONS='--import tsx' drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@hono/zod-validator": "^0.4.2",
     "@libsql/client": "^0.14.0",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.38.2",
     "hono": "^4.6.13",
     "tsconfig-paths": "^4.2.0",
-    "zod": "^3.24.1"
+    "zod": "^3.24.1",
+    "zod-openapi": "^4.2.1"
   },
   "devDependencies": {
     "@hono/node-server": "^1.13.7",
