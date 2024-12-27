@@ -6,9 +6,10 @@
     "dev": "tsx watch src/dev.ts",
     "deploy": "vercel",
     "typecheck": "tsc --noEmit",
-    "db:generate": "NODE_OPTIONS='--import tsx' drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
-    "db:studio": "drizzle-kit studio"
+    "db": "NODE_OPTIONS='--import tsx' drizzle-kit",
+    "db:generate": "pnpm db generate",
+    "db:migrate": "pnpm db migrate",
+    "db:studio": "pnpm db studio"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.4.2",
