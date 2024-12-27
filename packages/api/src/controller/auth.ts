@@ -2,7 +2,7 @@ import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { z } from "zod";
 import { db } from "../db/index.js";
-import { userAuth, users } from "../db/schema/users.js";
+// import { userAuth, users } from "../db/schema/userAuth.js";
 import { eq } from "drizzle-orm";
 
 type AuthResponse =
@@ -19,13 +19,13 @@ const auth = new Hono()
     async c => {
       const email = "";
 
-      const user = await db
-        .insert(userAuth)
-        .values({
-          email,
-        })
-        .onConflictDoUpdate({ target: [userAuth.email], set: { email } })
-        .returning();
+      // const user = await db
+      //   .insert(userAuth)
+      //   .values({
+      //     email,
+      //   })
+      //   .onConflictDoUpdate({ target: [userAuth.email], set: { email } })
+      //   .returning();
 
       // const user = await db
       //   .select()
