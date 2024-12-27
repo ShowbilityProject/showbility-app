@@ -6,4 +6,5 @@ export const db = drizzle({
     url: env.DB_URL,
     authToken: env.DB_AUTH_TOKEN,
   },
+  casing: "snake_case",
 });
