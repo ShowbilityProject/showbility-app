@@ -1,7 +1,11 @@
 import { Hono } from "hono";
 
-import { auth } from "./auth.js";
+import { authController } from "./auth.js";
+import { userController } from "./user.js";
 
-const app = new Hono().basePath("/api").route("/auth", auth);
+const app = new Hono()
+  .basePath("/api")
+  .route("/auth", authController)
+  .route("/user", userController);
 
 export { app };

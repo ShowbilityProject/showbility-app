@@ -9,6 +9,7 @@ import {
   uniqueIndex,
 } from "drizzle-orm/sqlite-core";
 import { sql } from "drizzle-orm";
+import { userAuth } from "../auth.js";
 
 export const tags = sqliteTable(
   "tags",

@@ -2,14 +2,29 @@ import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { z } from "zod";
 import { db } from "../db/index.js";
-// import { userAuth, users } from "../db/schema/userAuth.js";
-import { eq } from "drizzle-orm";
+import { userAuth } from "../db/schema/auth.js";
+import {
+  createEmailValidationToken,
+  createRegisterToken,
+  createUserToken,
+  verifyEmailValidationToken,
+} from "../core/auth.js";
 
 type AuthResponse =
   | { isRegistered: true; token: string }
   | { isRegistered: false; registerToken: string; prefill: { name?: string } };
 
-const auth = new Hono()
+const authController = new Hono()
+  .post(
+    "/email/send",
+    zValidator("json", z.object({ email: z.string().email() })),
+    async c => {
+      const { email } = c.req.valid("json");
+      const emailToken = await createEmailValidationToken(email);
+
+      return c.json({ token: emailToken });
+    },
+  )
   /**
    * 이메일 로그인
    */
@@ -17,24 +32,34 @@ const auth = new Hono()
     "/email",
     zValidator("json", z.object({ token: z.string() })),
     async c => {
-      const email = "";
+      const { token } = c.req.valid("json");
 
-      // const user = await db
-      //   .insert(userAuth)
-      //   .values({
-      //     email,
-      //   })
-      //   .onConflictDoUpdate({ target: [userAuth.email], set: { email } })
-      //   .returning();
+      const verifiedEmail = await verifyEmailValidationToken(token);
 
-      // const user = await db
-      //   .select()
-      //   .from(userAuth)
-      //   .where(eq(userAuth.email, ""))
-      //   .leftJoin(users, eq(userAuth.id, users.authId))
-      //   .get();
+      const auth = await db
+        .insert(userAuth)
+        .values({
+          verifiedEmail,
+        })
+        .onConflictDoUpdate({
+          target: [userAuth.verifiedEmail],
+          set: { verifiedEmail },
+        })
+        .returning()
+        .get();
 
-      return c.json<AuthResponse>({ isRegistered: true, token: "qwer" });
+      if (auth.userId === null) {
+        return c.json<AuthResponse>({
+          isRegistered: false,
+          registerToken: await createRegisterToken(auth.id),
+          prefill: {},
+        });
+      }
+
+      return c.json<AuthResponse>({
+        isRegistered: true,
+        token: await createUserToken(auth.userId),
+      });
     },
   )
 
@@ -52,4 +77,4 @@ const auth = new Hono()
     return c.json({});
   });
 
-export { auth };
+export { authController };
