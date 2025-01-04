@@ -9,12 +9,29 @@ import {
   createUserToken,
   verifyEmailValidationToken,
 } from "../core/auth.js";
+import { validator } from "hono/validator";
 
 type AuthResponse =
   | { isRegistered: true; token: string }
   | { isRegistered: false; registerToken: string; prefill: { name?: string } };
 
 const authController = new Hono()
+  .post(
+    "/test/nothing",
+
+    async c => {
+      console.log(await c.req.text());
+      return c.json({ message: "test" });
+    },
+  )
+  .post(
+    "/test/plain",
+    validator("json", (value, c) => {
+      console.log("validator", value);
+      return value;
+    }),
+    c => c.json({ message: "test" }),
+  )
   .post("/test", zValidator("json", z.object({ email: z.string() })), c =>
     c.json({ message: "test" }),
   )
