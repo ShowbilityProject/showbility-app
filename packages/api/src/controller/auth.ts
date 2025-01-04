@@ -19,8 +19,12 @@ const authController = new Hono()
     "/email/send",
     zValidator("json", z.object({ email: z.string().email() })),
     async c => {
+      console.log("email/send");
       const { email } = c.req.valid("json");
+
+      console.log({ email });
       const emailToken = await createEmailValidationToken(email);
+      console.log({ emailToken });
 
       return c.json({ token: emailToken });
     },
