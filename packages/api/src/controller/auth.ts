@@ -15,7 +15,11 @@ type AuthResponse =
   | { isRegistered: false; registerToken: string; prefill: { name?: string } };
 
 const authController = new Hono()
-  .post("/test", c => c.json({ message: "test" }))
+  .post(
+    "/test",
+    zValidator("json", z.object({ email: z.string().email() })),
+    c => c.json({ message: "test" }),
+  )
   .post(
     "/email/send",
     zValidator("json", z.object({ email: z.string().email() })),
