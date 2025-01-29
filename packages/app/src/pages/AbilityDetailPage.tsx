@@ -2,12 +2,17 @@ import { Input } from "@/components";
 import { Text, View } from "react-native";
 import { padding, text } from "@/styles";
 import { StaticScreenProps } from "@react-navigation/native";
+import { stackRoute } from "@/utils/navigation";
 
-type Props = StaticScreenProps<{
+export const AbilityDetailRoute = stackRoute({
+  screen: AbilityDetailPage,
+});
+
+function AbilityDetailPage({
+  route: { params },
+}: StaticScreenProps<{
   title: string;
-}>;
-
-export function AbilityDetailPage({ route: { params } }: Props) {
+}>) {
   return (
     <View style={[padding(20)]}>
       <Text style={[text.h3, padding.bottom(12)]}>

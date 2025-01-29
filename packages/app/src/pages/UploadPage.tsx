@@ -28,8 +28,32 @@ import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
+import { stackRoute } from "@/utils/navigation";
+import { TransitionPresets } from "@react-navigation/stack";
+import { useNavigation } from "@react-navigation/native";
+import { CloseIcon } from "@/icons";
 
-export function UploadPage() {
+function HeaderCloseButton() {
+  const navigation = useNavigation();
+  return (
+    <TouchableOpacity onPress={navigation.goBack}>
+      <CloseIcon color={colors.black} width={24} height={24} />
+    </TouchableOpacity>
+  );
+}
+
+export const UploadRoute = stackRoute({
+  screen: UploadPage,
+  options: {
+    title: "내 작품 올리기",
+    headerMode: "screen",
+    headerLeft: () => null,
+    headerRight: () => <HeaderCloseButton />,
+    ...TransitionPresets.ModalSlideFromBottomIOS,
+  },
+});
+
+function UploadPage() {
   const [pickedImages, setPickedImages] = useState<ImagePickerAsset[]>([]);
   const { top, bottom } = useSafeAreaInsets();
 

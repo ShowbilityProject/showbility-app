@@ -1,10 +1,16 @@
 import { Input } from "@/components";
 import { flexFill, padding } from "@/styles";
+import { stackRoute } from "@/utils/navigation";
 import { StaticScreenProps } from "@react-navigation/native";
 import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-export function CommentsPage({}: StaticScreenProps<{ id: string }>) {
+export const CommentsRoute = stackRoute({
+  screen: CommentsPage,
+  options: { title: "댓글 15" },
+});
+
+function CommentsPage({}: StaticScreenProps<{ id: string }>) {
   const { top, bottom } = useSafeAreaInsets();
 
   return (

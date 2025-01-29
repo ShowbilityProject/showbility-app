@@ -1,5 +1,5 @@
 import { bg, colors, padding, round, text, h, flex, flexFill } from "@/styles";
-import { useMemo, useState } from "react";
+import { forwardRef, useMemo, useState } from "react";
 import {
   StyleProp,
   TextInput,
@@ -20,13 +20,10 @@ interface InputProps extends Omit<TextInputProps, "style"> {
 
 type State = "disabled" | "focused" | "normal";
 
-export function Input({
-  variant = "outlined",
-  disabled = false,
-  style,
-  textStyle,
-  ...props
-}: InputProps) {
+export const Input = forwardRef<TextInput, InputProps>(function Input(
+  { variant = "outlined", disabled = false, style, textStyle, ...props },
+  ref,
+) {
   const [focused, setFocused] = useState(false);
 
   const state = useMemo(
@@ -37,6 +34,7 @@ export function Input({
   return (
     <View style={[h(48), commonStyles, variantStyles[variant](state), style]}>
       <TextInput
+        ref={ref}
         editable={!disabled}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
@@ -49,7 +47,9 @@ export function Input({
       />
     </View>
   );
-}
+});
+
+export type Input = TextInput;
 
 const commonStyles: StyleProp<ViewStyle> = [
   round.sm,

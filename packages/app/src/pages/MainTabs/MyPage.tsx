@@ -2,27 +2,44 @@ import React from "react";
 
 import { bg, colors, flex, padding, round, size, text, w, h } from "@/styles";
 import { Image } from "expo-image";
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Effect } from "@/components/Effect";
 import { Button } from "@/components";
+import { bottomTabRoute } from "@/utils/navigation";
+import { MyIcon, SettingsIcon } from "@/icons";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { BottomTabBarButtonProps } from "@react-navigation/bottom-tabs";
+import { loginStatus } from "@/api/user";
 
-const isLoggedIn = false;
+export const MyRoute = bottomTabRoute({
+  screen: MyPage,
+  options: {
+    title: "마이",
+    headerTitle: "",
+    tabBarIcon: ({ focused, color }) => (
+      <MyIcon width={24} height={24} filled={focused} color={color} />
+    ),
+    tabBarButton: InterceptPress,
 
-export function MyPage() {
+    headerRight: () => <SettingsIcon width={24} height={24} />,
+  },
+});
+
+function InterceptPress({ onPress, ...props }: BottomTabBarButtonProps) {
+  const { data: loggedIn } = useSuspenseQuery(loginStatus);
   const navigation = useNavigation();
 
-  if (!isLoggedIn) {
-    return (
-      <Button
-        onPress={() => {
-          navigation.navigate("Login");
-        }}
-      >
-        로그인
-      </Button>
-    );
-  }
+  return (
+    <Pressable
+      {...props}
+      onPress={loggedIn ? onPress : () => navigation.navigate("Login")}
+    />
+  );
+}
+
+function MyPage() {
+  const navigation = useNavigation();
 
   return (
     <>

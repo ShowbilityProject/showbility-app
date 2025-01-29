@@ -1,4 +1,16 @@
-import { hc } from "hono/client";
-import { AppType } from "@showbility/api";
+import ky from "ky";
+import { tokenStore } from "@/utils/tokenStore";
 
-export const { api } = hc<AppType>("https://localhost:3000");
+export const api = ky.create({
+  prefixUrl: "https://dev.showbility.vercel.app/",
+  hooks: {
+    beforeRequest: [
+      async req => {
+        const authToken = await tokenStore.getToken();
+        if (authToken) {
+          req.headers.set("X-Auth-Token", authToken);
+        }
+      },
+    ],
+  },
+});

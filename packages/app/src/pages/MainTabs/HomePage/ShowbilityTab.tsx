@@ -52,7 +52,13 @@ export function ShowbilityTab() {
             style={{ borderRadius: 16, overflow: "hidden" }}
             onPress={() => navigation.navigate("ContentDetail", { id: "test" })}
           >
-            <Image source={image} style={{ aspectRatio: 335 / 250 }} />
+            <Image
+              source={image}
+              style={{
+                backgroundColor: colors.gray200,
+                aspectRatio: 335 / 250,
+              }}
+            />
           </Pressable>
         ))}
       </ScrollView>

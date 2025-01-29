@@ -1,7 +1,13 @@
-import { createContext, PropsWithChildren, ReactNode, useContext } from "react";
+import {
+  createContext,
+  PropsWithChildren,
+  ReactNode,
+  useContext,
+  useMemo,
+} from "react";
 import { ensure } from "@/utils/assert";
-import { TouchableOpacity, View, Text } from "react-native";
-import { colors, flex, padding, text } from "@/styles";
+import { TouchableOpacity, View, StyleProp, ViewStyle } from "react-native";
+import { flex } from "@/styles";
 
 export function createTabs<T>() {
   interface Props {
@@ -11,12 +17,14 @@ export function createTabs<T>() {
 
   const TabContext = createContext<Props | null>(null);
 
-  function Tabs({ children, ...props }: PropsWithChildren<Props>) {
+  function Tabs({
+    children,
+    style,
+    ...props
+  }: PropsWithChildren<Props> & { style?: StyleProp<ViewStyle> }) {
     return (
       <TabContext.Provider value={props}>
-        <View style={[flex.x({ align: "center" }), padding.x(12)]}>
-          {children}
-        </View>
+        <View style={[flex.x({ align: "center" }), style]}>{children}</View>
       </TabContext.Provider>
     );
   }
@@ -24,27 +32,26 @@ export function createTabs<T>() {
   Tabs.Item = ({
     value,
     children,
+    style,
   }: {
     value: T;
-    children: ReactNode | ((color: string) => ReactNode);
+    children: ReactNode | ((isActive: boolean) => ReactNode);
+    style?:
+      | StyleProp<ViewStyle>
+      | ((isActive: boolean) => StyleProp<ViewStyle>);
   }) => {
     const { value: currentValue, onChange } = ensure(useContext(TabContext));
-
-    const color = value === currentValue ? colors.black : colors.gray500;
+    const isActive = useMemo(
+      () => value === currentValue,
+      [value, currentValue],
+    );
 
     return (
       <TouchableOpacity
-        style={[padding.x(8), padding.y(14)]}
+        style={[typeof style === "function" ? style(isActive) : style]}
         onPress={() => onChange(value)}
       >
-        <Text
-          style={[
-            text.custom({ size: 22, lineHeight: 28, weight: 600 }),
-            { color },
-          ]}
-        >
-          {typeof children === "function" ? children(color) : children}
-        </Text>
+        {typeof children === "function" ? children(isActive) : children}
       </TouchableOpacity>
     );
   };

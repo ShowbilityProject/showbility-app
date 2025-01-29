@@ -1,28 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { colors, padding, round, bg } from "@/styles";
+import { colors, padding, round, bg, margin } from "@/styles";
 import { text } from "@/styles/typography";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, ScrollView, Text, View } from "react-native";
 import { Pressable } from "@/components";
 import { useNavigation } from "@react-navigation/core";
+import { createTabs } from "@/components/Tabs";
+import { CategoryTabs } from "@/components/composed/CategoryTabs";
 
-const abilities = [
-  "시각 디자인",
-  "일러스트레이션",
-  "제품 디자인",
-  "포토그래피",
-  "UX/UI",
+const categories = [
+  "브랜딩",
+  "회화",
+  "일러스트",
+  "사진",
+  "그래픽",
+  "UI/UX",
+  "건축",
+  "패션",
+  "제품",
+  "공예",
+  "조형예술",
   "기타",
 ];
 
-export function AbilityTab() {
+export function ZapTab() {
   const navigation = useNavigation();
 
   return (
     <>
+      <CategoryTabs />
+
       <FlatList
         numColumns={2}
-        data={abilities}
+        data={categories}
         renderItem={({ item }) => (
           <Pressable
             style={{ flex: 1 / 2 }}

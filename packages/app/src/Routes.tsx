@@ -1,6 +1,7 @@
 import {
   CardStyleInterpolators,
   StackNavigationOptions,
+  StackNavigationProp,
   TransitionPresets,
   createStackNavigator,
 } from "@react-navigation/stack";
@@ -8,6 +9,7 @@ import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
   BottomTabBar,
+  BottomTabBarButtonProps,
 } from "@react-navigation/bottom-tabs";
 
 import {
@@ -21,7 +23,6 @@ import { HomePage, SearchPage, MyPage } from "@/pages/MainTabs";
 
 import { text, colors, h, padding } from "@/styles";
 
-// import { Stack, Tab } from "@/navigation";
 import { Dimensions, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -34,8 +35,12 @@ import {
 } from "@/icons";
 import { AbilityDetailPage } from "./pages/AbilityDetailPage";
 import { SettingsIcon } from "./icons/SettingsIcon";
-import { StaticParamList, useNavigation } from "@react-navigation/core";
+import { StaticParamList, useNavigation } from "@react-navigation/native";
 import { createStaticNavigation } from "@react-navigation/native";
+import { Register } from "./pages/Register";
+import { Pressable } from "./components";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { loginStatus } from "./api/user";
 
 function HeaderCloseButton() {
   const navigation = useNavigation();
@@ -81,6 +86,7 @@ const MainTabs = createBottomTabNavigator({
       { borderTopColor: colors.gray200, borderTopWidth: 1 },
     ],
     tabBarLabelStyle: [text.custom({ weight: 600, size: 10, lineHeight: 14 })],
+    animation: "shift",
   },
   screens: {
     Search: {
@@ -111,18 +117,41 @@ const MainTabs = createBottomTabNavigator({
         tabBarIcon: ({ focused, color }) => (
           <MyIcon width={24} height={24} filled={focused} color={color} />
         ),
+        tabBarButton: InterceptPress,
+
         headerRight: () => <SettingsIcon width={24} height={24} />,
       },
     },
   },
 });
 
-const Stack = createStackNavigator({
+function InterceptPress({ onPress, ...props }: BottomTabBarButtonProps) {
+  const { data: loggedIn } = useSuspenseQuery(loginStatus);
+  const navigation = useNavigation();
+
+  return (
+    <Pressable
+      {...props}
+      onPress={loggedIn ? onPress : () => navigation.navigate("Login")}
+    />
+  );
+}
+
+export const Stack = createStackNavigator({
   screenOptions: { ...defaultHeaderOptions },
   screens: {
     MainTab: {
       screen: MainTabs,
       options: { headerShown: false },
+    },
+    "Register.Agreement": {
+      screen: Register.AgreementPage,
+      options: { title: "회원가입" },
+    },
+
+    "Register.Info": {
+      screen: Register.InfoPage,
+      options: { title: "회원가입" },
     },
     Login: {
       screen: LoginPage,
@@ -167,8 +196,14 @@ const Stack = createStackNavigator({
 
 export const Routes = createStaticNavigation(Stack);
 
+type ParamList = StaticParamList<typeof Stack>;
+
 declare global {
   namespace ReactNavigation {
-    interface RootParamList extends StaticParamList<typeof Stack> {}
+    interface RootParamList extends ParamList {}
   }
+}
+
+declare module "@react-navigation/native" {
+  export function useNavigation<T = StackNavigationProp<ParamList>>(): T;
 }

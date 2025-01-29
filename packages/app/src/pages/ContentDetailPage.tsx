@@ -27,10 +27,16 @@ import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { mockImages } from "@/mocks/images";
 import { useState } from "react";
 import { CommentIcon, LikeIcon } from "@/icons";
+import { stackRoute } from "@/utils/navigation";
 
 const TOP_AREA = 190;
 
-export function ContentDetailPage({
+export const ContentDetailRoute = stackRoute({
+  screen: ContentDetailPage,
+  options: { title: "작품" },
+});
+
+function ContentDetailPage({
   route: {
     params: { id },
   },

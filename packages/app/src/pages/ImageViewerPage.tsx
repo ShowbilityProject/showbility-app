@@ -1,12 +1,24 @@
 import { CloseIcon } from "@/icons/CloseIcon";
 import { colors, flex } from "@/styles";
+import { stackRoute } from "@/utils/navigation";
 import { StaticScreenProps, useNavigation } from "@react-navigation/native";
+import { CardStyleInterpolators } from "@react-navigation/stack";
 
 import { Image } from "expo-image";
-import { TouchableOpacity, View } from "react-native";
+import { Dimensions, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-export function ImageViewerPage({
+export const ImageViewerRoute = stackRoute({
+  screen: ImageViewerPage,
+  options: {
+    gestureDirection: "vertical",
+    gestureResponseDistance: Dimensions.get("screen").height,
+    headerShown: false,
+    cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+  },
+});
+
+function ImageViewerPage({
   route: { params },
 }: StaticScreenProps<{ uri: string }>) {
   const { top } = useSafeAreaInsets();
