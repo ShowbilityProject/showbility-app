@@ -6,6 +6,9 @@ import { useNavigation } from "@react-navigation/native";
 import { useLoading } from "@/hooks/useLoading";
 import { stackRoute } from "@/utils/navigation";
 import { TransitionPresets } from "@react-navigation/stack";
+import { useQueryClient } from "@tanstack/react-query";
+import { loginStatus } from "@/api/user";
+import { tokenStore } from "@/utils/tokenStore";
 
 export const LoginRoute = stackRoute({
   screen: LoginPage,
@@ -18,6 +21,7 @@ export const LoginRoute = stackRoute({
 
 function LoginPage() {
   const navigation = useNavigation();
+  const queryClient = useQueryClient();
 
   const { isLoading, loadingFn } = useLoading();
 
@@ -34,6 +38,9 @@ function LoginPage() {
             const res = await authenticateKakao(accessToken);
 
             if (res.isRegistered) {
+              await tokenStore.setToken(res.token);
+              queryClient.invalidateQueries(loginStatus);
+
               navigation.popTo("MainTab");
               return;
             }

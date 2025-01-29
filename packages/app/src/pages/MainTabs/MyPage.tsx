@@ -1,14 +1,10 @@
-import React from "react";
-
 import { bg, colors, flex, padding, round, size, text, w, h } from "@/styles";
 import { Image } from "expo-image";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Effect } from "@/components/Effect";
-import { Button } from "@/components";
 import { bottomTabRoute } from "@/utils/navigation";
 import { MyIcon, SettingsIcon } from "@/icons";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { BottomTabBarButtonProps } from "@react-navigation/bottom-tabs";
 import { loginStatus } from "@/api/user";
 
@@ -20,27 +16,42 @@ export const MyRoute = bottomTabRoute({
     tabBarIcon: ({ focused, color }) => (
       <MyIcon width={24} height={24} filled={focused} color={color} />
     ),
-    tabBarButton: InterceptPress,
-
+    tabBarButton: InterceptLoginPress,
     headerRight: () => <SettingsIcon width={24} height={24} />,
   },
 });
 
-function InterceptPress({ onPress, ...props }: BottomTabBarButtonProps) {
-  const { data: loggedIn } = useSuspenseQuery(loginStatus);
+function InterceptLoginPress({ onPress, ...props }: BottomTabBarButtonProps) {
+  const queryClient = useQueryClient();
   const navigation = useNavigation();
+
+  const promptLogin = () =>
+    Alert.alert(
+      "",
+      "로그인을 해야 사용할 수 있는 서비스입니다.\n로그인 하시겠습니까?",
+      [
+        {
+          text: "취소",
+        },
+        { text: "확인", onPress: () => navigation.navigate("Login") },
+      ],
+    );
 
   return (
     <Pressable
       {...props}
-      onPress={loggedIn ? onPress : () => navigation.navigate("Login")}
+      onPress={(...props) =>
+        queryClient
+          .ensureQueryData({ ...loginStatus, staleTime: Infinity })
+          .then(isLoggedIn =>
+            isLoggedIn ? onPress?.(...props) : promptLogin(),
+          )
+      }
     />
   );
 }
 
 function MyPage() {
-  const navigation = useNavigation();
-
   return (
     <>
       <View
