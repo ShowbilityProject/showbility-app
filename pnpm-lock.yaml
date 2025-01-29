@@ -72,6 +72,9 @@ importers:
       '@react-navigation/stack':
         specifier: ^7.0.14
         version: 7.0.14(lpafakpcrdhphipwix4q3fzkc4)
+      '@suspensive/react':
+        specifier: ^2.18.12
+        version: 2.18.12(react@18.3.1)
       '@tanstack/react-query':
         specifier: ^5.61.3
         version: 5.62.0(react@18.3.1)
@@ -1828,6 +1831,11 @@ packages:
 
   '@sinonjs/fake-timers@10.3.0':
     resolution: {integrity: sha512-V4BG07kuYSUkTCSBHG8G8TNhM+F19jXFWnQtzj+we8DrkpSBCee9Z3Ms8yiGer/dlmhe35/Xdgyo3/0rQKg7YA==}
+
+  '@suspensive/react@2.18.12':
+    resolution: {integrity: sha512-De3sVLxLnMpTSOfW3t3D8uh8+/bK8+L/mV8YRAwjW2PyR8BBe9+nctFRVO+ZCIFKUs7VPtnIXnb+5bKfBQ1vog==}
+    peerDependencies:
+      react: ^18 || ^19
 
   '@szmarczak/http-timer@4.0.6':
     resolution: {integrity: sha512-4BAffykYOgO+5nzBWYwE3W90sBgLJoUPRWWcL8wlyiM8IB8ipJz3UMJ9KXQd1RKQXpKp8Tutn80HZtWsu2u76w==}
@@ -7481,6 +7489,10 @@ snapshots:
   '@sinonjs/fake-timers@10.3.0':
     dependencies:
       '@sinonjs/commons': 3.0.1
+
+  '@suspensive/react@2.18.12(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
 
   '@szmarczak/http-timer@4.0.6':
     dependencies:
