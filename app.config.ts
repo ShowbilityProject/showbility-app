@@ -3,6 +3,7 @@ import { ExpoConfig } from "expo/config";
 const isDev = process.env.APP_VARIANT === "development";
 
 const config: ExpoConfig = {
+  newArchEnabled: true,
   name: isDev ? "쇼빌리티 Dev" : "쇼빌리티",
   slug: "showbility",
   owner: "showbility",
